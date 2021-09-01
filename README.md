@@ -7,17 +7,11 @@ For more information please visit: [https://tokenscript.org/](tokenscript.org).
 
 ## Examples
 
-See read me inside each example for setup.
-
-## Examples URL
-
 https://tokenscript.github.io/token-negotiator-examples/
 
 ## Documentation
 
-[guides and deployment](https://tokenscript.org/guides/Intro.html)
-
-[Token-Negotiator NPM Package Origin](https://github.com/TokenScript/token-negotiator)
+https://github.com/TokenScript/token-negotiator
 
 ## Usage
 
