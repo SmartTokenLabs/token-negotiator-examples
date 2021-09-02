@@ -28,7 +28,7 @@ function App() {
   };
 
   // create new instance of the Negotiator with params
-  let negotiator = new Negotiator(filter, tokenName, options);
+  let negotiator = new window.Negotiator(filter, tokenName, options);
 
   // devcont tickets (react state of tokens)
   let [tokens, setTokens] = useState([]);

@@ -37,7 +37,7 @@ function App() {
   const filter = {};
   const token = "devcon-ticket";
   const options = {};
-  const negotiator = new Negotiator(filter, token, options);
+  const negotiator = new window.Negotiator(filter, token, options);
   
   useEffect(async () => {
     // retrieve existing tokens on initialisation of this component
