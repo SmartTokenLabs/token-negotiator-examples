@@ -4,7 +4,7 @@
   "description": "outlet for tokens.",
   "main": "index.js",
   "dependencies": {
-    "@tokenscript/token-negotiator": "^1.0.0-alpha.4"
+    "@tokenscript/token-negotiator": "^1.0.0-alpha.5"
   },
   "devDependencies": {
     "webpack": "^5.57.1",
