@@ -4,8 +4,13 @@ A overlay provides a gateway to negotiate tokens from the token outlet to the cl
 
 ## theme
 
-## installation / build / deploy
+See `./src/theme` directory for styles and assets.
+## build / deploy
 
+`npm run build`
+
+`/dist` can be deployed to a chsoen web server location.
 ## serve locally
 
+`npm run start`
 

@@ -1,89 +1,52 @@
-const webpack = require('webpack');
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const nodeEnv = process.env.NODE_ENV || 'development';
-const isProd = nodeEnv === 'production';
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-const plugins = [
-  new webpack.DefinePlugin({
-    'process.env': {
-      NODE_ENV: JSON.stringify(nodeEnv)
-    }
-  }),
-  new HtmlWebpackPlugin({
-    title: 'Devcon Token Overlay',
-    description: 'Gateway provider of tokens to client website',
-    webpackmode: nodeEnv !== 'production' ? 'development' : 'production',
-    template: '!!ejs-loader!src/index.html'
-  }),
-  new webpack.LoaderOptionsPlugin({
-    options: {
-      tslint: {
-        emitErrors: true,
-        failOnHint: true
-      }
-    }
-  })
-];
-
-var config = {
-  devtool: isProd ? 'hidden-source-map' : 'source-map',
-  context: path.resolve('./src'),
-  entry: {
-    app: './index.ts'
-  },
-  output: {
-    path: path.resolve('./dist'),
-    filename: '[name].bundle.js',
-  },
+module.exports = {
+  plugins: 
+    [
+      new HtmlWebpackPlugin({
+      title: 'token overlay website',
+      template: path.resolve(__dirname, './src/index.html'),
+      filename: 'index.html',
+    })  
+  ],
+  mode: 'production',
+  entry: './src/index.ts',
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {
-        enforce: 'pre',
         test: /\.tsx?$/,
-        exclude: [/\/node_modules\//],
-        use: ['awesome-typescript-loader', 'source-map-loader']
+        use: 'ts-loader',
+        exclude: /node_modules/,
       },
       {
-        test: /\.svg$/i,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              encoding: false,
-            },
-          },
-        ],
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
       },
-      !isProd
-        ? {
-            test: /\.(js|ts)$/,
-            loader: 'istanbul-instrumenter-loader',
-            exclude: [/\/node_modules\//],
-            query: {
-              esModules: true
-            }
-          }
-        : null,
-      { test: /\.html$/, loader: 'html-loader' },
-      { test: /\.css$/i, use: ['style-loader', 'css-loader'] },
-      // { test: /\.(jpg|png|svg)$/, use: { loader: 'url-loader', }, },
-    ].filter(Boolean)
+      {
+        test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
+        type: 'asset/inline',
+      },
+    ],
   },
   resolve: {
-    extensions: ['.ts', '.js'],
-    alias: {
-      images: path.resolve(__dirname, 'src/img')
-    }
+    extensions: ['.tsx', '.ts', '.js'],
   },
-  plugins: plugins,
+  output: {
+    path: path.resolve(__dirname, './build'),
+    filename: '[name].bundle.js',
+  },
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000,
+  },
   devServer: {
-    contentBase: path.join(__dirname, 'dist/'),
+    static: {
+      directory: path.join(__dirname, 'public'),
+    },
     compress: true,
     port: 3002,
-    hot: true,
-    headers: {'Access-Control-Allow-Origin': '*'}
-  }
+  },
 };
-
-module.exports = config;

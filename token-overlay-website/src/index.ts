@@ -1,5 +1,5 @@
 // Opens overlay for end user to select from their tokens.
-import { Overlay, Outlet } from './dist/index';
+import { Overlay, Outlet } from '@tokenscript/token-negotiator';
 
 // peronalise styles here
 import "./theme/style.css";

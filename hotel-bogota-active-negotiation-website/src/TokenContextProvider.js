@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-import { Client } from './dist/client/index';
+import { Client } from '@tokenscript/token-negotiator';
 
 const TokenContext = createContext({ tokens: [] });
 
@@ -28,7 +28,7 @@ class TokenNegotiatorInstance  extends React.Component {
     const filter = {};
     // apply the tokenName to negotiate tokens from e.g. devcon-ticket.
     const tokenName = "devcon-ticket";
-    // set required negotiator options. // TODO tokenOverlayContainer
+    // set required negotiator options.
     const options = { useOverlay: true, tokenSelectorContainer: ".tokenSelectorContainerElement" };
     // create new instance of the Negotiator with params
     window.negotiator = new Client(filter, tokenName, options);

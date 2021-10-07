@@ -5,7 +5,7 @@ import TokenNotificationCard from './TokenNotificationCard';
 import Typography from '@material-ui/core/Typography';
 import EthereumLogo from './EthereumLogo';
 import BookingDate from './BookingDate';
-import { Client } from './dist/client/index';
+import { Client } from '@tokenscript/token-negotiator';
 import './App.css';
   
 // mock data e.g. server side hotel room price database

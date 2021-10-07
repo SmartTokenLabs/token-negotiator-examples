@@ -1,16 +1,12 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "declaration": true,
+    "outDir": "./build/",
     "sourceMap": true,
-    "experimentalDecorators": true,
-    "outDir": "dist",
-    "lib": ["es2017", "dom"],
     "noImplicitAny": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "removeComments": true
-  },
-  "include": ["src/components", "src/custom.d.ts"],
-  "exclude": ["node_modules", "dist"]
+    "module": "es6",
+    "target": "es5",
+    "jsx": "react",
+    "allowJs": true,
+    "moduleResolution": "node"
+  }
 }
