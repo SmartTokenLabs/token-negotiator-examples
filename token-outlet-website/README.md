@@ -1,38 +1,18 @@
-# token-outlet
+# token outlet
 
-The token outlet component of the token negotiator is a location in which tokens should be read via magic link, stored and provided back to a token negotiating
-component such as the configured Client or Overlay modules.
+The token outlet is the location where tokens are stored and dispatched.
 
-Note: 
+## build / deploy
 
-If you are using the overlay component - this can be configured to double to function as the overlay + outlet. See the token-overlay example of how this can be acheived. 
+`npm run build`
 
-## Development Commands
+`/dist` can be deployed to a chsoen web server location.
 
-build `npm run build`
-start `npm run start`
-test `npm run test`
+## Development of this library.
 
-# Installation
+See Developers Page inside Wiki
 
-To install this component:
+### Help / Questions / Improvements
 
-1. run `npm run build`
-2. deploy the output website to your server (preferably the token issuer website)
-3. configure the index.ts file with the token data this page will host / manage
-4. configure other components that wish to negotiate with this component.
-
-// TODO: The package can only support this current configuration at this time.
-
-tokenName: 'devcon-ticket',
-attestationOrigin: "https://stage.attestation.id",
-tokenOrigin: "http://localhost:3002",
-tokenUrlName: 'ticket',
-tokenSecretName: 'secret',
-tokenIdName: 'id',
-unsignedTokenDataName: 'ticket',
-tokenParser: SignedDevconTicket,
-localStorageItemName: 'dcTokens',
-localStorageEthKeyItemName: 'dcEthKeys',
-fabButton: '<svg></svg>'
-
+Please contact us or open an issue via github:
+Alphawallet <info@alphawallet.com>

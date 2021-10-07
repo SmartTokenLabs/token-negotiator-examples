@@ -50,7 +50,11 @@ tokens can be utilised.
 5. Once complete, a discount should be applied (and the attestation for the ticket stored inside the Dapp ready for later)
 6. If you choose to click 'Pay Now' the attestion is sent to the backend, where a transaction process can first veryify the ticket with the data given in the previous step.
 
-### for support, please contact us where we're happy to help or hear any feedback you have to improve this demo and Token-Negotiator
+## Development of this library.
 
+See Developers Page inside Wiki
+
+### Help / Questions / Improvements
+
+Please contact us or open an issue via github:
 Alphawallet <info@alphawallet.com>
- 

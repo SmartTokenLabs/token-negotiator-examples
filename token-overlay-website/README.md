@@ -14,3 +14,11 @@ See `./src/theme` directory for styles and assets.
 
 `npm run start`
 
+## Development of this library.
+
+See Developers Page inside Wiki
+
+### Help / Questions / Improvements
+
+Please contact us or open an issue via github:
+Alphawallet <info@alphawallet.com>

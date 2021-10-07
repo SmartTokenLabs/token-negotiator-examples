@@ -35,8 +35,11 @@ from within each project folder. Please note the negotiator requires a client an
 5. When you select this meta mask will ask you to sign a message, click sign
 6. Once complete, a discount should be applied (and the attestation for the ticket stored inside the Dapp ready for later)
 7. If you choose to click 'Pay Now' the attestion is sent to the backend, where a transaction process can first veryify the ticket with the data given in the previous step.
+## Development of this library.
 
-### for support, please contact us where we're happy to help or hear any feedback you have to improve this demo and Token-Negotiator
+See Developers Page inside Wiki
 
+### Help / Questions / Improvements
+
+Please contact us or open an issue via github:
 Alphawallet <info@alphawallet.com>
- 
