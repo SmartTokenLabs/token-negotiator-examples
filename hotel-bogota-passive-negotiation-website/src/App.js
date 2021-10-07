@@ -3,7 +3,6 @@ import LogoCard from './LogoCard';
 import RoomCard from './RoomCard';
 import TokenNotificationCard from './TokenNotificationCard';
 import Typography from '@material-ui/core/Typography';
-import EthereumLogo from './EthereumLogo';
 import BookingDate from './BookingDate';
 import { Client } from '@tokenscript/token-negotiator';
 import './App.css';
@@ -19,8 +18,11 @@ function App() {
   // add filters when specific tokens are required
   const filter = {};
   
-  // apply the tokenName to negotiate tokens from e.g. devcon-ticket.
-  const tokenName = "devcon-ticket";
+  // for localhost development token use:
+  const tokenName = "devcon-ticket-local-3002";
+
+  // for remote token use:
+  // const tokenName = "devcon-ticket";
 
   // set required negotiator options
   const options = { useOverlay: false };
@@ -122,7 +124,7 @@ function App() {
   // before this time, the token-negotiator is not used.
   const getTokens = () => {
     negotiator.negotiate().then(tokens => {
-      if(tokens){
+      if(tokens.length > 0){
         setTokens(tokens);
         setFreeShuttle(true);
       }
@@ -161,7 +163,6 @@ function App() {
       {
         freeShuttle &&
         <div>
-          <EthereumLogo />
           <Typography
             style={{ padding: '20px' }}
             className="applyDiscountCopyContainer"

@@ -48,7 +48,7 @@ function App() {
   const openTicketInIframe = async ({event, ticket, secret, id}) => {
     event.preventDefault();
     // add token through magic link
-    const magicLink = `http://127.0.0.1:3002/?ticket=${ticket}&secret=${secret}&id=${id}`;
+    const magicLink = `http://localhost:3002/?ticket=${ticket}&secret=${secret}&id=${id}`;
     negotiator.addTokenThroughIframe(magicLink); 
     // apply token to react state
     const devconData = await negotiator.negotiate();
