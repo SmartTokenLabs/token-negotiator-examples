@@ -49,9 +49,9 @@ function App() {
     event.preventDefault();
     // add token through magic link
     // local
-    // const magicLink = `http://localhost:3002/?ticket=${ticket}&secret=${secret}&id=${id}`;
+    const magicLink = `http://localhost:3002/?ticket=${ticket}&secret=${secret}&id=${id}`;
     // github pages / 
-    const magicLink = `https://tokenscript.github.io/token-negotiator-examples/token-outlet-website/build/index.html/?ticket=${ticket}&secret=${secret}&id=${id}`;
+    // const magicLink = `https://tokenscript.github.io/token-negotiator-examples/token-outlet-website/build/index.html/?ticket=${ticket}&secret=${secret}&id=${id}`;
     negotiator.addTokenThroughIframe(magicLink); 
     // apply token to react state
     const devconData = await negotiator.negotiate();
