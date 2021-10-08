@@ -63,8 +63,8 @@ function App() {
       </div>
       <div className="flexCenter">
       <form onSubmit={handleSubmit}>
-        <label>Email: 
-        <input type="email" value={email} onChange={handleChange} />
+        <label><span style={{ fontSize: '14px', marginRight: '7px' }}>Email:</span>
+        <input style={{ marginRight: '7px' }} type="email" value={email} onChange={handleChange} />
         </label>
         <input type="submit" value="Submit" />
       </form>
