@@ -1,6 +1,6 @@
-.tokenCard { position: relative; width: 300px; cursor: pointer; }
-.tokenCard:hover:not(.selected) { transition: opacity 0.2s; opacity: 0.9; animation: hueCycle 5s ease-in-out infinite; }
-.tokenCard.selected { transition: opacity 0.2s; opacity: 0.5; }
+.tokenCard { position: relative; width: 300px; cursor: pointer; opacity: 0.5; }
+.tokenCard:hover:not(.selected) { transition: opacity 0.2s; opacity: 0.5; animation: hueCycle 5s ease-in-out infinite; }
+.tokenCard.selected { transition: opacity 0.2s; opacity: 0.9; }
 .ticketDetails { position: absolute; width: 100%; }
 .ticketClass { position: absolute; top: 12px; right: 16px; }
 .ticketId { position: absolute; top: 52px; right: 34px; }
