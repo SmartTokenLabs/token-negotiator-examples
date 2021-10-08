@@ -21,9 +21,6 @@ function App() {
   // for localhost development token use:
   const tokenName = "devcon-ticket-local-3002";
 
-  // for remote token use:
-  // const tokenName = "devcon-ticket";
-
   // set required negotiator options
   const options = { useOverlay: false };
 

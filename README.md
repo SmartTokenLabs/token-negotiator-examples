@@ -9,7 +9,10 @@ For more information please visit: [https://tokenscript.org/](tokenscript.org).
 
 https://tokenscript.github.io/token-negotiator-examples/
 
-## Documentation
+Each of examples by default are configured for use in a local environment.
+See the README's inside each example for configuration and deployment.
+
+## Library Documentation
 
 https://github.com/TokenScript/token-negotiator
 

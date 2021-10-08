@@ -36,9 +36,6 @@ function App() {
   // create configuration and instance of Negotiator.
   const filter = {};
 
-  // github pages config
-  // const token = "devcon-ticket";
-  
   // localhost config
   const token = "devcon-ticket-local-3002";
 
@@ -52,13 +49,11 @@ function App() {
   }, []);
 
   const openTicketInIframe = async ({event, ticket, secret, id}) => {
+    
     event.preventDefault();
 
     // add token through magic link local
-    const magicLink = `http://localhost:3002/?ticket=${ticket}&secret=${secret}&id=${id}`;
-    
-    // github pages link
-    // const magicLink = `https://tokenscript.github.io/token-negotiator-examples/token-outlet-website/build/index.html/?ticket=${ticket}&secret=${secret}&id=${id}`;
+    const magicLink = `${negotiator.config.tokenOrigin}/?ticket=${ticket}&secret=${secret}&id=${id}`;
     
     negotiator.addTokenThroughIframe(magicLink); 
 

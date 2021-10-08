@@ -7,11 +7,6 @@ import "./theme/style.css";
 // instantiate overlay module
 new Overlay();
 
-// token source github pages version / live version
-// new Outlet({
-//   tokenName: 'devcon-ticket'
-// });
-
 // local token source
 new Outlet({
   tokenName: 'devcon-ticket-local-3002'
