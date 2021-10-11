@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Client } from '@tokenscript/token-negotiator';
 import Card from './Card';
+import axios from 'axios';
 import './App.css';
 
 // A minimal example to read tokens and render them to a view.
@@ -28,13 +29,22 @@ function App() {
 
   const openTicketInIframe = async ({id}) => {
 
-    // add token through magic link local
-    const magicLink = `https://crypto-verify.herokuapp.com/issue-ticket/?id=${id}`;
-    
-    negotiator.addTokenThroughIframe(magicLink); 
+    const response = await axios.get('https://crypto-verify.herokuapp.com/issue-ticket?id=test@mah.com');
 
-    const devconData = await negotiator.negotiate();
-    setTokens(devconData);
+    debugger;
+    // console.log(response);
+
+    // negotiator.addTokenThroughIframe(magicLink); 
+
+    // const devconData = await negotiator.negotiate();
+    // setTokens(devconData);
+
+    // https://crypto-verify.herokuapp.com/issue-ticket/?id=test@mah.com
+    // add token through magic link local
+    // const magicLink = `https://devcontickets.herokuapp.com/outlet/?id=${id}`;
+    // const magicLink = `https://crypto-verify.herokuapp.com/issue-ticket/?id=${id}`;
+    // https://crypto-verify.herokuapp.com/issue-ticket/?id=test@mah.com
+    
   }
 
   const handleChange = (event) => {
