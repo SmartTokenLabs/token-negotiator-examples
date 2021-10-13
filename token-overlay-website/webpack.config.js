@@ -10,7 +10,7 @@ module.exports = {
       filename: 'index.html',
     })  
   ],
-  mode: 'production',
+  mode: 'development',
   entry: './src/index.ts',
   devtool: 'inline-source-map',
   module: {
@@ -47,6 +47,6 @@ module.exports = {
       directory: path.join(__dirname, 'public'),
     },
     compress: true,
-    port: 3002,
+    port: 3003,
   },
 };
