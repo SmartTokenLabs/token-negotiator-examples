@@ -22,6 +22,6 @@ https://github.com/TokenScript/token-negotiator
 
 ## Support
 
-Alphawallet <info@alphawallet.com>
+Alchemynft <info@alchemynft.org>
 
 We look forward to hearing your feedback.
