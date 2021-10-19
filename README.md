@@ -16,6 +16,10 @@ See the README's inside each example for configuration and deployment.
 
 https://github.com/TokenScript/token-negotiator
 
+## Quick Start
+
+https://github.com/TokenScript/token-negotiator/wiki/quick-start
+
 ## Usage
 
 [NPM Package](https://www.npmjs.com/package/@alphawallet/token-negotiator)
