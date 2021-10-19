@@ -18,7 +18,7 @@ https://github.com/TokenScript/token-negotiator
 
 ## Quick Start
 
-https://github.com/TokenScript/token-negotiator/wiki/quick-start
+https://github.com/TokenScript/token-negotiator-examples/wiki/quick-start
 
 ## Usage
 
