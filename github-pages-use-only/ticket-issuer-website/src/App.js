@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Client } from '@tokenscript/token-negotiator';
 import Card from './Card';
 import axios from 'axios';
 import './App.css';
@@ -8,6 +7,8 @@ import './App.css';
 // these sent to the input entered email address which will present a magic link.
 // After clicking on a magic link, when you return to this web page the token will be presented
 // inside the view.
+
+// note uses version 1 of the Token Negotiator. 
 
 function App() {
 
@@ -18,17 +19,12 @@ function App() {
   
   // create configuration and instance of Negotiator.
   const filter = {};
-
-  // github pages config
-  const token = "devcon-ticket-heroku";
-  
-  const options = {};
-  const negotiator = new Client(filter, token, options);
+  let tokensURL = 'https://devcontickets.herokuapp.com/outlet/';
+  const negotiator = new Negotiator(filter, "devcon-ticket", { tokenOrigin: tokensURL });
   
   useEffect(async () => {
-    // retrieve existing tokens on initialisation of this component
     negotiator.negotiate().then(tokens => { 
-      setTokens(tokens); 
+      setTokens(tokens.tokens); 
     }).catch(e => {});
   }, []);
 

@@ -4,7 +4,6 @@ import RoomCard from './RoomCard';
 import TokenNotificationCard from './TokenNotificationCard';
 import Typography from '@material-ui/core/Typography';
 import BookingDate from './BookingDate';
-import { Client } from '@tokenscript/token-negotiator';
 import './App.css';
   
 // mock data e.g. server side hotel room price database
@@ -18,15 +17,10 @@ function App() {
   // add filters when specific tokens are required
   const filter = {};
   
-  // for localhost development token use:
-  const tokenName = "devcon-ticket-heroku";
-
-  // set required negotiator options
-  const options = { useOverlay: false };
-
   // create new instance of the Negotiator with params
-  let negotiator = new Client(filter, tokenName, options);
-
+  let tokensURL = 'https://devcontickets.herokuapp.com/outlet/';
+  const negotiator = new Negotiator(filter, "devcon-ticket", { tokenOrigin: tokensURL });
+  
   // devcont tickets (react state of tokens)
   let [tokens, setTokens] = useState([]);
 
@@ -120,14 +114,9 @@ function App() {
   // negotiation happens when this method is triggered
   // before this time, the token-negotiator is not used.
   const getTokens = () => {
-    negotiator.negotiate().then(tokens => {
-      if(tokens.length > 0){
-        setTokens(tokens);
-        setFreeShuttle(true);
-      }
-    }).catch((err) => {
-      console.log('error', err);
-    });
+    negotiator.negotiate().then(tokens => { 
+      setTokens(tokens.tokens); 
+    }).catch(e => {});
   }
 
   // react effect
