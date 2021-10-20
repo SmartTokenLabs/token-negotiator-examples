@@ -3,7 +3,10 @@ import { Client } from '@tokenscript/token-negotiator';
 import Card from './Card';
 import './App.css';
 
-// A minimal example to read tokens and render them to a view.
+// A minimal example to generate and view tokens.
+// the mock ticket data provides a way to generate tokens without a backend service (updates to this will be coming soon).
+// for further help or info please reach out to us: Alchemynft <info@alchemynft.org>.
+// Thanks for your support. 
 
 const mockTicketData = [
   {

@@ -11,8 +11,8 @@ See `./src/theme` directory for styles and assets.
 
 `npm run build`
 
-`/dist` can be deployed to a chsoen web server location.
-## serve locally
+`/build` can be deployed to a chsoen web server location.
+## serve
 
 `npm run start`
 
