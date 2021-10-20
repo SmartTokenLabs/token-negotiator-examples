@@ -4,13 +4,17 @@ import Card from './Card';
 import axios from 'axios';
 import './App.css';
 
-// A minimal example to read tokens and render them to a view.
+// An example of how tokens/tickets can be generated via a form
+// these sent to the input entered email address which will present a magic link.
+// After clicking on a magic link, when you return to this web page the token will be presented
+// inside the view.
 
 function App() {
 
   // local react state for tokens
   let [tokens, setTokens] = useState([]);
   let [email, setEmail] = useState('');
+  let [disabledState, setDisabledState] = useState(false);
   
   // create configuration and instance of Negotiator.
   const filter = {};
@@ -23,28 +27,23 @@ function App() {
   
   useEffect(async () => {
     // retrieve existing tokens on initialisation of this component
-    const tokens = await negotiator.negotiate();
-    if(tokens) setTokens(tokens);
+    negotiator.negotiate().then(tokens => { 
+      setTokens(tokens); 
+    }).catch(e => {});
   }, []);
 
-  const openTicketInIframe = async ({id}) => {
+  const openTicketInIframe = ({id}) => {
 
-    const response = await axios.get('https://crypto-verify.herokuapp.com/issue-ticket?id=test@mah.com');
-
-    debugger;
-    // console.log(response);
-
-    // negotiator.addTokenThroughIframe(magicLink); 
-
-    // const devconData = await negotiator.negotiate();
-    // setTokens(devconData);
-
-    // https://crypto-verify.herokuapp.com/issue-ticket/?id=test@mah.com
-    // add token through magic link local
-    // const magicLink = `https://devcontickets.herokuapp.com/outlet/?id=${id}`;
-    // const magicLink = `https://crypto-verify.herokuapp.com/issue-ticket/?id=${id}`;
-    // https://crypto-verify.herokuapp.com/issue-ticket/?id=test@mah.com
-    
+    // e.g. https://crypto-verify.herokuapp.com/issue-ticket?id=test@mah.com
+          
+    axios.get(`https://crypto-verify.herokuapp.com/issue-ticket?id=${id}`).then(
+      (result) => {
+        alert('Please check your email');
+      }
+    ).catch(err => { 
+      alert('Email could not be sent, please try again later.');
+      setDisabledState(false);
+    });
   }
 
   const handleChange = (event) => {
@@ -53,7 +52,9 @@ function App() {
 
   const handleSubmit = (event) => {
     event.preventDefault();    
-    openTicketInIframe({ id: email});
+    const email = event.target[0].value;
+    setDisabledState(true);
+    openTicketInIframe({ id: email });
   }
 
   return (
@@ -76,7 +77,7 @@ function App() {
         <label><span style={{ fontSize: '14px', marginRight: '7px' }}>Email:</span>
         <input style={{ marginRight: '7px' }} type="email" value={email} onChange={handleChange} />
         </label>
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Submit" disabled={disabledState} />
       </form>
       </div>
       { tokens.length > 0 &&
