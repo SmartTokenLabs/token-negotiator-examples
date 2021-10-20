@@ -3,11 +3,8 @@ import Typography from '@material-ui/core/Typography';
 import './Card.css';
 
 function Card({ tokenInstance }) {
-
-  // New Data Structure:
   const { ticketClass, ticketId, devconId } = tokenInstance;
   if(!ticketClass || !ticketId || !devconId) return;
-  
   return (
     <div className="ticketContainer">
       <div className="ticketDetails">
