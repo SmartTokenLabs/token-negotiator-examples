@@ -1,0 +1,253 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Inter, sans-serif, Arial;
+  font-size: 16px;
+  line-height: 1.5em;
+}
+#screen_wrapper {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #eee9e3;
+  position: relative;
+
+}
+#screen_wrapper:before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: block;
+  background-image: url(img/grid.9ad1b52.svg);
+  opacity: 0.2;
+}
+
+.header {
+  margin-top: 0;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.content {
+  flex-grow: 1;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+.footer {
+  margin-bottom: 0;
+  background: #17599e;
+  display: flex;
+  justify-content: center;
+  padding-top: 45px;
+  padding-bottom: 45px;
+  position: relative;
+  font-size: 14px;
+}
+.footer a {
+  color:  #fff;
+}
+.footer a:hover {
+  text-decoration: none;
+}
+.footer img {
+  margin-top: 5px;
+}
+.top-menu-col {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.faq_link {
+  font-size: 24px;
+  font-weight: 700;
+  color: #17599e;
+
+}
+h1 {
+  font-size: 64px;
+  line-height: 70px;
+  font-weight: 700;
+  margin-bottom: 37px;
+}
+.form {
+  width: 534px;
+  display: inline-flex;
+  margin-top: 36px;
+  border-radius: 8px;
+  overflow: hidden;
+  max-width: 100%;
+}
+.form input {
+  width: 67%;
+  color: #000;
+  font-size: 24px;
+  padding: 22px 5px 22px 22px;
+  border: 0;
+}
+.form input:focus {
+  outline: none;
+}
+.form .submit {
+  padding: 22px 5px;
+  width: 33%;
+  background: #f4bd02;
+  color: #fff;
+  font-weight: 700;
+  font-size: 24px;
+  text-align: center;
+  letter-spacing: 0;
+  cursor: pointer;
+
+}
+::placeholder {
+  color: #929292;
+}
+
+.status.ok {
+  color: #4da322;
+  font-weight: 700;
+  margin-top: 36px;
+}
+
+.status.ok:before {
+  content: '';
+  width: 28px;
+  height: 28px;
+  display: inline-block;
+  background: url(img/icons-check.svg);
+  vertical-align: bottom;
+  margin-right: 10px;
+}
+.tickets {
+  margin: 36px auto 0;
+  text-align: center;
+  width: 480px;
+  max-width:  100%;
+}
+
+.ticket {
+  width: 480px;
+  position: relative;
+  overflow: hidden;
+  /*margin: 0 auto;*/
+  margin: 0 100px 0 0;
+  max-width: calc(100vw - 96px);
+}
+.ticket .item {
+
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+
+}
+.ticket:before {
+  content: '';
+  display: block;
+  padding-top: 46%;
+}
+
+.ticket .item .bg {
+  position: absolute;
+  background: url(img/shapes-5.svg);
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.ticket .item .number {
+  font-size: 45px;
+  color: #025099;
+  top: 25%;
+  left: 62%;
+  position: absolute;
+  z-index: 2;
+  font-weight: 600;
+  letter-spacing: 0px;
+}
+.ticket .item .number:before {
+  content:  '#';
+}
+button.slick-arrow {
+  color: transparent;
+  width: 48px;
+  height: 48px;
+  display: block;
+  background-image: url(img/icons-slide-right.svg);
+  border: none;
+  position: absolute;
+  top: 50%;
+  margin-top: -23px;
+  left: -200px;
+  overflow: hidden;
+  border-radius: 100%;
+  transition: opacity 0.3s;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+button.slick-arrow:hover {
+  opacity: 0.8;
+}
+button.slick-arrow:focus {
+  outline: none;
+}
+.slick-prev{
+  transform: rotateY(180deg);
+  z-index: 2;
+}
+.slick-next{
+  right: -200px;
+  left: auto !important;
+}
+@media (max-width:  900px){
+  button.slick-arrow {
+      left: -30px;
+  }
+  .slick-next{
+      right: -30px;
+  }
+}
+@media (max-width:  550px){
+  button.slick-arrow {
+      left: -10px;
+      width: 40px;
+      height: 40px;
+      margin-top: -20px;
+  }
+  .slick-next{
+      right: -10px;
+  }
+}
+@media (max-width:  768px){
+  h1 {
+      font-size: 40px;
+      line-height: 1.2em;
+      margin-bottom: 20px;
+  }
+  .form {
+      width: 450px;
+      margin-top: 20px;
+  }
+  .form input {
+      font-size: 16px;
+      padding: 10px 5px 10px 10px;
+  }
+  .form .submit {
+      padding: 10px 5px;
+      font-size: 18px;
+  }
+}
+@media (max-width:  480px){
+  .ticket .item .number {
+      font-size: 7vw;
+  }
+}
+#proof {
+  margin-top: 30px;
+  overflow-wrap: anywhere;
+}

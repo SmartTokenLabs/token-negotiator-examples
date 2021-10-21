@@ -23,15 +23,12 @@ function App() {
   const negotiator = new Negotiator(filter, "devcon-ticket", { tokenOrigin: tokensURL });
   
   useEffect(async () => {
-    negotiator.negotiate().then(tokens => { 
+    negotiator.negotiate().then(tokens => {
       setTokens(tokens.tokens); 
     }).catch(e => {});
   }, []);
 
-  const openTicketInIframe = ({id}) => {
-
-    // e.g. https://crypto-verify.herokuapp.com/issue-ticket?id=test@mah.com
-          
+  const openTicketInIframe = ({id}) => {          
     axios.get(`https://crypto-verify.herokuapp.com/issue-ticket?id=${id}`).then(
       (result) => {
         alert('Please check your email');

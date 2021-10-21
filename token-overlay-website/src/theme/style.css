@@ -18,8 +18,18 @@
 }
 
 /* animation fix: https://stackoverflow.com/questions/3331353/transitions-on-the-css-display-property */
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-.tk-overlay .overlay.open { animation: fadeIn 0.5s; opacity: 1; }
+@keyframes fadeIn { 
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.tk-overlay .overlay.open { 
+  animation: fadeIn 0.5s; opacity: 1; 
+  -webkit-animation-name: fadeIn;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-iteration-count: 1;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-fill-mode: forwards;
+}
 
 .tk-overlay .overlay {
   opacity: 0;
