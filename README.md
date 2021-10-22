@@ -22,9 +22,9 @@ https://github.com/TokenScript/token-negotiator-examples/wiki/quick-start
 
 ## Quick Start with Liscon Tickets
 
-[Liscon Development Website](https://github.com/TokenScript/token-negotiator-examples/tree/main/liscon-website)
-
 This uses a custom example of the Token Negotiator (some of the API is not included inside the NPM package at this time).
+
+[Liscon Development Website](https://github.com/TokenScript/token-negotiator-examples/tree/main/liscon-website)
 
 Using [HTTP-Server](https://www.npmjs.com/package/http-server), or any means you choose to serve this website, inspect the index.html
 negotiation and authentication steps to read Liscon Tickets and complete full attestation with them.
