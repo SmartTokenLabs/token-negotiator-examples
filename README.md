@@ -29,7 +29,7 @@ This uses a custom example of the Token Negotiator (some of the API is not inclu
 Using [HTTP-Server](https://www.npmjs.com/package/http-server), or any means you choose to serve this website, inspect the index.html
 negotiation and authentication steps to read Liscon Tickets and complete full attestation.
 
-Example use cases include; using this example to make a third party website that uses the same Liscon Ticket for an entriely different purpose / or extends the functionality of the power of the ticket within the event virtually or in the real world e.g. discounts on food, vip entry to a VR Dapp. 
+Example use cases include; using this example to make a third party website that uses the Liscon Ticket for an entriely different purpose / or extends the functionality of the power of the ticket at the event or virtually e.g. discounts on food, vip entry to a VR Dapp. 
 
 ## Usage
 
