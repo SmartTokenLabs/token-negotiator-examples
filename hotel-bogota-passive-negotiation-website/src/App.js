@@ -4,7 +4,8 @@ import RoomCard from './RoomCard';
 import TokenNotificationCard from './TokenNotificationCard';
 import Typography from '@material-ui/core/Typography';
 import BookingDate from './BookingDate';
-import { Client } from '@tokenscript/token-negotiator';
+// import { Client } from '@tokenscript/token-negotiator';
+import { Client } from './dist/index';
 import './App.css';
   
 // mock data e.g. server side hotel room price database
@@ -97,24 +98,11 @@ function App() {
     }
   }
 
-  // This is the example point at which the hotel would send payment with booking & discount details
+  // This is the example at which the hotel would begin a hotel room booking transaction.
   const book = async (formData) => {
-
-    const checkoutEndPoint = "https://raw.githubusercontent.com/TokenScript/token-negotiator/main/examples/hotel-bogota/mockbackend-responses/pay.json";
-
-    const params = {
-      discount: useDiscountProof,
-      bookingData: { formData }
-    }
-
-    // data for backend to validate discount
-    console.log("useDiscountProof", params);
-
-    // final attestation step to authenticate the proof and finalise transaction.
-    fetch(checkoutEndPoint + new URLSearchParams(params)).then(data => {
-      alert('Transaction Complete, we look forward to your stay with us!');
-    });
-  
+    const params = { discount: useDiscountProof, bookingData: { formData } };
+    // Make Transaction
+    if(params.discount.proof) alert('Transaction Complete, we look forward to your stay with us!');
   }
 
   // negotiation happens when this method is triggered

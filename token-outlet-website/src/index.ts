@@ -1,4 +1,5 @@
-import { Outlet } from '@tokenscript/token-negotiator';
+// import { Outlet } from '@tokenscript/token-negotiator';
+import { Outlet } from './dist/outlet/index';
 
 // instantiate the outlet class()
 // - reads tokens from query string (token outlet).
