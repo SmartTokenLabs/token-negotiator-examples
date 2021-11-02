@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "@tokenscript/token-negotiator": "^1.0.0-alpha.8"
+    "@tokenscript/token-negotiator": "^1.0.0-alpha.87"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
