@@ -74,8 +74,8 @@
             document.querySelector(titleSelector).innerHTML = noTokensH1;
             document.querySelector(messageSelector).innerHTML = noTokensMessage;
 
-            let tokensURL = window.location.origin + window.location.pathname;
-            negotiator = new Negotiator({},"devcon-ticket", {
+            let tokensURL = "https://liscon.alchemynft.org/";
+            negotiator = new Negotiator({},"liscon-ticket", {
                 tokenOrigin: tokensURL,
                 attestationOrigin: "https://liscon.attestation.id",
             });

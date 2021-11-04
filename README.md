@@ -16,6 +16,21 @@ See the README's inside each example for configuration and deployment.
 
 https://github.com/TokenScript/token-negotiator
 
+## Quick Start with localhost
+
+https://github.com/TokenScript/token-negotiator-examples/wiki/quick-start
+
+## Quick Start with Liscon Tickets
+
+This uses a custom example of the Token Negotiator (some of the API is not included inside the NPM package at this time).
+
+[Liscon Development Website](https://github.com/TokenScript/token-negotiator-examples/tree/main/liscon-website)
+
+Using [HTTP-Server](https://www.npmjs.com/package/http-server), or any means you choose to serve this website, inspect the index.html
+negotiation and authentication steps to read Liscon Tickets and complete full attestation.
+
+Example use cases include; using this example to make a third party website that uses the Liscon Ticket for an entriely different purpose / or extends the functionality of the power of the ticket at the event or virtually e.g. discounts on food, vip entry to a VR Dapp. 
+
 ## Usage
 
 [NPM Package](https://www.npmjs.com/package/@alphawallet/token-negotiator)
