@@ -4,8 +4,7 @@ import RoomCard from './RoomCard';
 import TokenNotificationCard from './TokenNotificationCard';
 import Typography from '@material-ui/core/Typography';
 import BookingDate from './BookingDate';
-// import { Client } from '@tokenscript/token-negotiator';
-import { Client } from './dist/index';
+import { Client } from '@tokenscript/token-negotiator';
 import './App.css';
   
 // mock data e.g. server side hotel room price database
