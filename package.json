@@ -1,0 +1,26 @@
+{
+  "name": "examples-package",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "outlet": "cd token-outlet-website && npm start",
+    "overlay": "cd token-overlay-website && npm start",
+    "token-issuer": "cd ticket-issuer-website && npm start",
+    "hotel-bogota-passive": "cd hotel-bogota-passive-negotiation-website && npm start",
+    "hotel-bogota-active": "cd hotel-bogota-active-negotiation-website && npm start",
+    "start": "concurrently \"npm run outlet\" \"npm run overlay\" \"npm run token-issuer\"  \"npm run hotel-bogota-passive\" \"npm run hotel-bogota-active\" "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TokenScript/token-negotiator-examples.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TokenScript/token-negotiator-examples/issues"
+  },
+  "homepage": "https://github.com/TokenScript/token-negotiator-examples#readme",
+  "dependencies": {
+    "concurrently": "^6.3.0"
+  }
+}
