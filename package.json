@@ -8,7 +8,20 @@
     "token-issuer": "cd ticket-issuer-website && npm start",
     "hotel-bogota-passive": "cd hotel-bogota-passive-negotiation-website && npm start",
     "hotel-bogota-active": "cd hotel-bogota-active-negotiation-website && npm start",
-    "start": "concurrently \"npm run outlet\" \"npm run overlay\" \"npm run token-issuer\"  \"npm run hotel-bogota-passive\" \"npm run hotel-bogota-active\" "
+    "outlet-build": "cd token-outlet-website && npm run build",
+    "overlay-build": "cd token-overlay-website && npm run build",
+    "token-issuer-build": "cd ticket-issuer-website && npm run build",
+    "hotel-bogota-passive-build": "cd hotel-bogota-passive-negotiation-website && npm run build",
+    "hotel-bogota-active-build": "cd hotel-bogota-active-negotiation-website && npm run build",
+    "outlet-install": "cd token-outlet-website && npm i",
+    "overlay-install": "cd token-overlay-website && npm i",
+    "token-issuer-install": "cd ticket-issuer-website && npm i",
+    "hotel-bogota-passive-install": "cd hotel-bogota-passive-negotiation-website && npm i",
+    "hotel-bogota-active-install": "cd hotel-bogota-active-negotiation-website && npm i",
+    "start": "concurrently \"npm run outlet\" \"npm run overlay\" \"npm run token-issuer\"  \"npm run hotel-bogota-passive\" \"npm run hotel-bogota-active\" ",
+    "build": "npm run clean --loglevel verbose && concurrently \"npm run outlet-build\" \"npm run overlay-build\" \"npm run token-issuer-build\"  \"npm run hotel-bogota-passive-build\" \"npm run hotel-bogota-active-build\" ",
+    "install": "npm run clean --loglevel verbose && concurrently \"npm run outlet-install\" \"npm run overlay-install\" \"npm run token-issuer-install\"  \"npm run hotel-bogota-passive-install\" \"npm run hotel-bogota-active-install\" ",
+    "clean": "shx rm -rf ./hotel-bogota-active-negotiation-website/build ./hotel-bogota-passive-negotiation-website/build ./ticket-issuer-website/build ./token-outlet-website/build ./token-overlay-website/build"
   },
   "repository": {
     "type": "git",
@@ -20,7 +33,8 @@
     "url": "https://github.com/TokenScript/token-negotiator-examples/issues"
   },
   "homepage": "https://github.com/TokenScript/token-negotiator-examples#readme",
-  "dependencies": {
-    "concurrently": "^6.3.0"
+  "devDependencies": {
+    "concurrently": "^6.3.0",
+    "shx": "^0.3.3"
   }
 }
