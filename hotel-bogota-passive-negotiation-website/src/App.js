@@ -25,8 +25,8 @@ function App() {
   const options = { useOverlay: false };
 
   // create new instance of the Negotiator with params
-  let negotiator = new Client(filter, tokenName, options);
-
+  let negotiator = new Client({ tokenName, filter, options });
+  
   // devcont tickets (react state of tokens)
   let [tokens, setTokens] = useState([]);
 
