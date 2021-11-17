@@ -43,8 +43,9 @@ function App() {
   const token = "devcon-ticket-local-3002";
 
   const options = {};
-  const negotiator = new Client(filter, token, options);
   
+  let negotiator = new Client({ tokenName: token, filter, options });
+
   useEffect(async () => {
     // retrieve existing tokens on initialisation of this component
     const tokens = await negotiator.negotiate();

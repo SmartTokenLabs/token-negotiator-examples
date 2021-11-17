@@ -29,7 +29,7 @@
 
 /*! ../utils */
 
-/*! ./../Attestation/SignedDevonTicket.js */
+/*! ./../Attestation/SignedDevonTicket */
 
 /*! ./../config */
 
@@ -41,13 +41,15 @@
 
 /*! ./../utils */
 
+/*! ./../utils/index */
+
 /*! ./256 */
 
 /*! ./512 */
 
-/*! ./AlgorithmIdentifier.js */
+/*! ./AlgorithmIdentifier */
 
-/*! ./PublicKeyInfo.js */
+/*! ./PublicKeyInfo */
 
 /*! ./_version */
 
@@ -570,8 +572,8 @@
 /**
  * [js-sha3]{@link https://github.com/emn178/js-sha3}
  *
- * @version 0.5.7
+ * @version 0.8.0
  * @author Chen, Yi-Cyuan [emn178@gmail.com]
- * @copyright Chen, Yi-Cyuan 2015-2016
+ * @copyright Chen, Yi-Cyuan 2015-2018
  * @license MIT
  */

@@ -7,7 +7,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "@tokenscript/token-negotiator": "^1.0.0-alpha.84",
+    "@tokenscript/token-negotiator": "^1.0.0-alpha.92",
     "axios": "^0.22.0",
     "npm-check-updates": "^11.8.5",
     "react": "^17.0.1",

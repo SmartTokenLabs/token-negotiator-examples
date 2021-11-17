@@ -4,7 +4,7 @@
   "description": "gateway to negotiate tokens from the token outlet",
   "main": "index.js",
   "dependencies": {
-    "@tokenscript/token-negotiator": "^1.0.0-alpha.8"
+    "@tokenscript/token-negotiator": "^1.0.0-alpha.91"
   },
   "devDependencies": {
     "webpack": "^5.57.1",
@@ -27,6 +27,6 @@
     "build": "webpack",
     "start": "webpack serve --open"
   },
-  "author": "",
+  "author": "alphawallet",
   "license": "ISC"
 }
