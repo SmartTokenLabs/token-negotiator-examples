@@ -44,7 +44,7 @@ function App() {
 
   const options = {};
   
-  let negotiator = new Client({ tokenName: token, filter, options });
+  let negotiator = new Client(filter, token, options);
 
   useEffect(async () => {
     // retrieve existing tokens on initialisation of this component

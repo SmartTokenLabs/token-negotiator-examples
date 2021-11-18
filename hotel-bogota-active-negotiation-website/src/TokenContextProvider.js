@@ -27,11 +27,12 @@ class TokenNegotiatorInstance  extends React.Component {
     // add filters when specific tokens are required.
     const filter = {};
     // for localhost development token use:
-    const tokenName = "devcon-ticket-local-3002";
+    const token = "devcon-ticket-local-3002";
     // set required negotiator options.
     const options = { useOverlay: true, tokenSelectorContainer: ".tokenSelectorContainerElement" };
     // create new instance of the Negotiator with params
-    window.negotiator = new Client({ tokenName, filter, options });
+    // window.negotiator = new Client({ tokenName, filter, options });
+    window.negotiator = new Client(filter, token, options);
     // instance of negotiator
     this.state = { negotiator: window.negotiator };
     window.negotiator.negotiate();

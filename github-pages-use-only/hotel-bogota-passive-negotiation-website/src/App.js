@@ -5,7 +5,8 @@ import TokenNotificationCard from './TokenNotificationCard';
 import Typography from '@material-ui/core/Typography';
 import BookingDate from './BookingDate';
 import './App.css';
-  
+import { Client } from '@tokenscript/token-negotiator';
+
 // mock data e.g. server side hotel room price database
 const mockRoomData = [{"type":"Deluxe Room","price": 200000,"frequency":"per night","image":"./hotel_3.jpg"},{"type":"King Suite","price": 320000,"frequency":"per night","image":"./hotel_2.png"},{"type":"Superior Deluxe Suite","price": 250030,"frequency":"per night","image":"./hotel_1.jpg"}]
 
@@ -19,7 +20,9 @@ function App() {
   
   // create new instance of the Negotiator with params
   let tokensURL = 'https://devcontickets.herokuapp.com/outlet/';
-  const negotiator = new Negotiator(filter, "devcon-ticket", { tokenOrigin: tokensURL });
+
+  // 
+  const negotiator = new Client(filter, "devcon-ticket", { tokenOrigin: tokensURL });
   
   // devcont tickets (react state of tokens)
   let [tokens, setTokens] = useState([]);

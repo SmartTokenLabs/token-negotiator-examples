@@ -2,25 +2,17 @@ import React, { useState, useEffect } from 'react';
 import Card from './Card';
 import axios from 'axios';
 import './App.css';
-
-// An example of how tokens/tickets can be generated via a form
-// these sent to the input entered email address which will present a magic link.
-// After clicking on a magic link, when you return to this web page the token will be presented
-// inside the view.
-
-// note uses version 1 of the Token Negotiator. 
+import { Client } from '@tokenscript/token-negotiator';
 
 function App() {
 
-  // local react state for tokens
   let [tokens, setTokens] = useState([]);
   let [email, setEmail] = useState('');
   let [disabledState, setDisabledState] = useState(false);
   
-  // create configuration and instance of Negotiator.
   const filter = {};
   let tokensURL = 'https://devcontickets.herokuapp.com/outlet/';
-  const negotiator = new Negotiator(filter, "devcon-ticket", { tokenOrigin: tokensURL });
+  const negotiator = new Client(filter, "devcon-ticket", { tokenOrigin: tokensURL });
   
   useEffect(async () => {
     negotiator.negotiate().then(tokens => {
