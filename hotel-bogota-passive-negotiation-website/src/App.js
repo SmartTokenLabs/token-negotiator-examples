@@ -19,13 +19,13 @@ function App() {
   const filter = {};
   
   // for localhost development token use:
-  const tokenName = "devcon-ticket-local-3002";
+  const token = "devcon-ticket-local-3002";
 
   // set required negotiator options
   const options = { useOverlay: false };
 
   // create new instance of the Negotiator with params
-  let negotiator = new Client({ tokenName, filter, options });
+  let negotiator = new Client(filter, token, options);
   
   // devcont tickets (react state of tokens)
   let [tokens, setTokens] = useState([]);

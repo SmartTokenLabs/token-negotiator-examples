@@ -29,7 +29,7 @@
 
 /*! ../utils */
 
-/*! ./../Attestation/SignedDevonTicket.js */
+/*! ./../Attestation/SignedDevonTicket */
 
 /*! ./../config */
 
@@ -41,13 +41,15 @@
 
 /*! ./../utils */
 
+/*! ./../utils/index */
+
 /*! ./256 */
 
 /*! ./512 */
 
-/*! ./AlgorithmIdentifier.js */
+/*! ./AlgorithmIdentifier */
 
-/*! ./PublicKeyInfo.js */
+/*! ./PublicKeyInfo */
 
 /*! ./_version */
 
