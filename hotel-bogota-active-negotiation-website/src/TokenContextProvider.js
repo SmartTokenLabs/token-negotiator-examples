@@ -1,5 +1,6 @@
 import React, { createContext, useState } from 'react';
-import { Client } from '@tokenscript/token-negotiator';
+// import { Client } from '@tokenscript/token-negotiator';
+import { Client } from './dist/client/index';
 
 const TokenContext = createContext({ tokens: [] });
 

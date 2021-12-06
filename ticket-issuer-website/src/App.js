@@ -4,30 +4,6 @@ import { Client } from './dist/client/index';
 import Card from './Card';
 import './App.css';
 
-// check iphone
-// Code inspect
-// Add localstorage tokens using console
-// check ticket issuer site true/false
-
-// A minimal example to generate and view tokens.
-// the mock ticket data provides a way to generate tokens without a backend service (updates to this will be coming soon).
-// for further help or info please reach out to us: Alchemynft <info@alchemynft.org>.
-// Thanks for your support. 
-
-const getCookie = function(name) {
-  var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-  if (match) return match[2];
-}
-
-var x = 'false';
-
-const c = getCookie('dcTokens');
-if(c && c !== "null"){
-  console.log('nick', c);
-  document.cookie = localStorage.setItem('dcTokens', getCookie('dcTokens'));
-  x = 'true';
-}
-
 const mockTicketData = [
   {
     ticket: "MIGWMA0MATYCBWE3ap3-AgEABEEEKJZVxMEXbkSZZBWnNUTX_5ieu8GUqf0bx_a0tBPF6QYskABaMJBYhDOXsmQt3csk_TfMZ2wdmfRkK7ePCOI2kgNCAOOZKRpcE6tLBuPbfE_SmwPk2wNjbj5vpa6kkD7eqQXvBOCa0WNo8dEHKvipeUGZZEWWjJKxooB44dEYdQO70Vgc",
@@ -90,7 +66,7 @@ function App() {
     <main>
       <a href="/"><img className="logo" src="./devcon.svg"></img></a>
       <div className="flexCenter">
-        <p>[DEMO Ticket Issuer Website] {x}</p>
+        <p>[DEMO Ticket Issuer Website]</p>
       </div>
       <div className="flexCenter">
         <img className="devcon_bogota" src="./devcon_bogota.svg"></img>
