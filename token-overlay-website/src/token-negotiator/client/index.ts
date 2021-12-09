@@ -74,6 +74,19 @@ export class Client {
 
         });
 
+        window.addEventListener('message', (event) => {
+
+            switch(event.data.evt) {
+
+              case 'setSelectedTokens':
+
+                console.log('client delivered tokens', event.data.selectedTokens);
+
+                break;
+            }
+            
+          }, false);
+
     }
 
     async setWebTokens (offChainTokens:any) {
@@ -133,7 +146,7 @@ export class Client {
 
     async passiveNegotiationStrategy() {
 
-        return [ ...this.onChainTokens, ...this.offChainTokens ];
+        return { ...this.onChainTokens, ...this.offChainTokens };
 
     }
 
@@ -163,11 +176,17 @@ export class Client {
 
                 if (i.tokens.length) {
 
-                    refTokenContainerSelector.innerHTML = createToken(
-                        'data', 
-                        0, 
-                        tokenLookup[tokenName].emblem
-                    );
+                    // title, detail, index, emblem
+                    const { title, detail, emblem } = tokenLookup[tokenName];
+
+                    refTokenContainerSelector.innerHTML = createToken({
+                        data: tokenLookup[tokenName],
+                        tokenKey: tokenName,
+                        index: 0,
+                        title: title,
+                        detail: detail,
+                        emblem: emblem
+                    });
 
                 }
 
@@ -218,9 +237,28 @@ export class Client {
 
       }
 
-      tokenToggleSelection () {
+      tokenToggleSelection (event:any) {
 
-        logger('share token with client');
+        window.testingEvent = event;
+
+        let selectedTokens = {};
+
+        document.querySelectorAll('.token .mobileToggle').forEach((token: any) => {
+
+            if (token.checked === true) {
+
+                selectedTokens[token.dataset.key] = selectedTokens[JSON.parse(token.dataset.token)];
+
+            }
+
+            console.log('selectedTokens', JSON.parse(token.dataset.token));
+
+        });
+
+        window.top.postMessage({
+            evt: 'setSelectedTokens',
+            selectedTokens: selectedTokens
+        }, '*');
 
       }
 

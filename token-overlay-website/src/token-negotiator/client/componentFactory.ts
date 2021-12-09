@@ -11,18 +11,28 @@ export const createOverlayMarkup = () => {
   `;
 };
 
-export const createToken = (data: any, index: any, image: string) => {
+interface CreateTokenInterface {
+  tokenKey: string;
+  title: string;
+  detail: string[];
+  index: number;
+  emblem: string;
+  data: any;
+}
+
+export const createToken = (config: CreateTokenInterface) => {
+  const { tokenKey, title, data, detail, index, emblem } = config;
   return `
     <div class='token'>
       <div class='content'>
-        <img class='emblem' src=${image} />
+        <img class='emblem' src=${emblem} />
         <div class='data'>
-          <p class='title'>Devcon Ticket #${index}</p>
-          <p class='detail'>Discount for Hotels and VIP Section</p>
+          <p class='title'>${title}</p>
+          <p class='detail'>${detail}</p>
         </div>
       </div>
       <div class='toggle'>
-        <input onClick='tokenToggleSelection(event)' data-index='${index}' data-token='${JSON.stringify(data)}' type='checkbox' name='toggle${index}' class='mobileToggle toggle-tn' id='toggle${index}'>
+        <input data-key='${tokenKey}' data-token='${JSON.stringify(data)}' onClick='tokenToggleSelection(event)' data-index='${index}' type='checkbox' name='toggle${index}' class='mobileToggle toggle-tn' id='toggle${index}'>
         <label for='toggle${index}'></label>
       </div>
     </div>
