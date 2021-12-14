@@ -1,14 +1,21 @@
-// @ts-nocheck
-import { requiredParams, logger } from './../utils/index';
+import { asyncHandle, requiredParams, logger } from './../utils/index';
 import { getTokens } from "../core/index";
 import { createOverlayMarkup, createFabButton, createToken } from './componentFactory';
 import { tokenLookup } from './../tokenLookup';
-import "./../../theme/style.css";
+import './../vendor/keyShape';
+import "./../theme/style.css";
 
 interface NegotiationInterface {
     type: string;
     issuers: string[];
     options: any
+}
+
+declare global {
+    interface Window {
+        KeyshapeJS?: any;
+        tokenToggleSelection: any;
+    }
 }
 
 export class Client {
@@ -19,31 +26,29 @@ export class Client {
     offChainTokens: any;
     onChainTokens: any;
 
-    // @ts-ignore
     constructor(config: NegotiationInterface) {
 
         const { type, issuers, options } = config;
-        
+
         requiredParams(type, 'Type is required');
-        
+
         requiredParams(issuers, 'Issuers are missing');
 
         this.type = type;
-        
+
         this.options = options;
-        
-        this.issuers = issuers; 
-        
+
+        this.issuers = issuers;
+
         this.offChainTokens = { tokenKeys: [] };
-        
+
         this.onChainTokens = { tokenKeys: [] };
-        
+
         /*
 
             this.onChainTokens / this.offChainTokens: {
                 tokenKeys: ['devcon'],
-                devcon: {
-                    active: '', 
+                devcon: { 
                     tokens: [] 
                 }
             }
@@ -52,23 +57,17 @@ export class Client {
 
         issuers.map((issuer: any) => {
 
-            if(tokenLookup[issuer]?.onChain === true) {
+            if (tokenLookup[issuer].onChain === true) {
 
                 this.onChainTokens.tokenKeys.push(issuer);
 
-                this.onChainTokens[issuer] = {
-                    active: this.type === 'passive' ? true : false,
-                    tokens: []
-                };
+                this.onChainTokens[issuer] = { tokens: [] };
 
             } else {
 
                 this.offChainTokens.tokenKeys.push(issuer);
-                
-                this.offChainTokens[issuer] = {
-                    active: this.type === 'passive' ? true : false,
-                    tokens: []
-                };
+
+                this.offChainTokens[issuer] = { tokens: [] };
 
             }
 
@@ -76,33 +75,36 @@ export class Client {
 
         window.addEventListener('message', (event) => {
 
-            switch(event.data.evt) {
+            switch (event.data.evt) {
 
-              case 'setSelectedTokens':
+                case 'setSelectedTokens':
 
-                console.log('client delivered tokens', event.data.selectedTokens);
+                    /*
 
-                break;
+                        {
+                            devcon: ["a", "b", "c"],
+                            liscon: ["d", "r", "z"],
+                            kitties: ["s", "w"]
+                        }
+
+                    */
+
+                    console.log('client delivered tokens', event.data.selectedTokens);
+
+                    break;
             }
-            
-          }, false);
+
+        }, false);
 
     }
 
-    async setWebTokens (offChainTokens:any) {
+    async setWebTokens(offChainTokens: any) {
 
-        await Promise.all(offChainTokens.tokenKeys.map(async (issuer): Promise<any> => {
+        await Promise.all(offChainTokens.tokenKeys.map(async (issuer: string): Promise<any> => {
 
-            const { tokenName, tokenOrigin, itemName, tokenParser, unsignedTokenDataName } = tokenLookup[issuer];
+            const { tokenOrigin, itemName, tokenParser, unsignedTokenDataName } = tokenLookup[issuer];
 
-            const tokens = await getTokens({
-                filter: {},
-                tokenName: tokenName,
-                tokensOrigin: tokenOrigin,
-                localStorageItemName: itemName,
-                tokenParser: tokenParser,
-                unsignedTokenDataName: unsignedTokenDataName
-            });
+            const tokens = await getTokens({ filter: {}, tokensOrigin: tokenOrigin, localStorageItemName: itemName, tokenParser: tokenParser, unsignedTokenDataName: unsignedTokenDataName });
 
             this.offChainTokens[issuer].tokens = tokens;
 
@@ -111,7 +113,7 @@ export class Client {
         }));
     }
 
-    async setBlockChainTokens (issuers:string[]) {
+    async setBlockChainTokens(issuers: string[]) {
 
         /*
 
@@ -123,31 +125,35 @@ export class Client {
             )
 
         */
-       
+
         return true;
 
     }
 
-    async negotiate () {
+    async negotiate() {
 
-        await this.setWebTokens(this.offChainTokens);
-        // await this.setBlockchainTokens(this.issuers);
+        let [webTokens, webTokensErr] = await asyncHandle(this.setWebTokens(this.offChainTokens));
+        if (!webTokens || webTokensErr) {
+            logger('token negotiator: no web tokens found.');
+        }
 
-        if (this.type === 'active'){
+        // TODO: await this.setBlockchainTokens(this.issuers);
+
+        if (this.type === 'active') {
 
             this.activeNegotiationStrategy();
 
-        } else { 
+        } else {
 
-            this.passiveNegotiationStrategy() 
+            this.passiveNegotiationStrategy();
 
         }
     }
 
     async passiveNegotiationStrategy() {
-
-        return { ...this.onChainTokens, ...this.offChainTokens };
-
+        logger('on chain: ' + this.onChainTokens);
+        logger('off chain: ' + this.offChainTokens);
+        return [...this.onChainTokens, ...this.offChainTokens];
     }
 
     async activeNegotiationStrategy() {
@@ -156,110 +162,137 @@ export class Client {
 
     }
 
-    embedClientOverlay(tokenName) {
+    embedClientOverlay(tokenName: string) {
 
-        setTimeout(() => {
+        let _index = 0;
 
-          let refTokenSelector = document.querySelector(".overlay-tn");
+        let refTokenSelector = document.querySelector(".overlay-tn");
 
-          if (refTokenSelector) {
+        if (refTokenSelector) {
 
-            refTokenSelector.innerHTML += createOverlayMarkup();
-            
-            refTokenSelector.innerHTML += createFabButton("");
+            refTokenSelector.innerHTML += createOverlayMarkup(this.options?.overlay?.heading);
 
-            let refTokenContainerSelector = document.querySelector(".token-container");
+            refTokenSelector.innerHTML += createFabButton();
 
-            this.offChainTokens.tokenKeys.map(issuer => {
+            let refTokenContainerSelector = document.querySelector(".token-container-tn");
+
+            this.offChainTokens.tokenKeys.map((issuer: string) => {
 
                 const i = this.offChainTokens[issuer];
 
                 if (i.tokens.length) {
 
-                    // title, detail, index, emblem
-                    const { title, detail, emblem } = tokenLookup[tokenName];
+                    refTokenContainerSelector.innerHTML = "";
 
-                    refTokenContainerSelector.innerHTML = createToken({
-                        data: tokenLookup[tokenName],
-                        tokenKey: tokenName,
-                        index: 0,
-                        title: title,
-                        detail: detail,
-                        emblem: emblem
+                    i.tokens.map((t: any) => {
+
+                        const { title, emblem } = tokenLookup[tokenName];
+
+                        refTokenContainerSelector.innerHTML += createToken({
+                            data: t,
+                            tokenKey: tokenName,
+                            index: _index,
+                            title: title,
+                            emblem: emblem
+                        });
+
+                        _index++;
+
                     });
 
                 }
 
             });
 
-          }
-
-          window.tokenToggleSelection = this.tokenToggleSelection;
-
-        }, 0);
-
-      }
-    
-      openOverlay(openOverlay:boolean){
-        
-        const element = document.querySelector(".overlay-tn .overlay");
-        
-        element.classList.toggle("open");
-        
-        if(openOverlay) {
-            
-            element.classList.add("open");
-        
-        } else {
-            
-            element.classList.remove("open");
+            this.assignFabButtonAnimation();
+            this.addTheme();
 
         }
-      }
-      
-      overlayClickHandler() {
 
-        const element = document.querySelector(".overlay-tn .overlay");
-        
-        const isOpen = element.classList.contains("open");
-        
+        window.tokenToggleSelection = this.tokenToggleSelection;
+
+    }
+
+    addTheme(){
+        let refTokenSelector = document.querySelector(".overlay-tn");
+        refTokenSelector.classList.add(this.options?.overlay?.theme ? this.options?.overlay?.theme : 'light');
+    }
+
+    assignFabButtonAnimation() {
+        if (window.KeyshapeJS) {
+            window.KeyshapeJS.globalPause();
+            window.KeyshapeJS.animate("#svg-tn-left", [{ p: 'mpath', t: [0, 400], v: ['0%', '100%'], e: [[1, 0, 0, .6, 1], [0]], mp: "M13,28.5L27.1,28.1" }, { p: 'rotate', t: [0, 400], v: [0, 0], e: [[1, 0, 0, .6, 1], [0]] }, { p: 'scaleX', t: [0, 400], v: [1, 1], e: [[1, 0, 0, .6, 1], [0]] }, { p: 'scaleY', t: [0, 400], v: [1, 1], e: [[1, 0, 0, .6, 1], [0]] }, { p: 'anchorX', t: [0, 400], v: [-13, -17.1], e: [[1, 0, 0, .6, 1], [0]] }, { p: 'anchorY', t: [0, 400], v: [-13.5, -17.1], e: [[1, 0, 0, .6, 1], [0]] }, { p: 'd', t: [0, 400], v: ["path('M25.5,26C25.5,26,20.5,26,20.5,26C20.5,23.1,19.9,20.4,18.8,17.9C17.8,15.6,16.4,13.6,14.6,11.8C12.7,9.9,10.3,8.4,7.8,7.4C5.5,6.5,3,6,.5,6L.5,1C.5,1,.5,1,.5,1C.5,1,7.5,1,7.5,1L25.5,1L25.5,7.2C25.5,7.2,25.5,12.8,25.5,12.8C25.5,12.8,25.5,19,25.5,19Z')", "path('M31.8,32.8C31.5,33.2,30.9,33.4,30.4,33.4C29.9,33.4,29.4,33.2,29,32.8C29,32.8,1.4,5.2,1.4,5.2C1,4.8,.8,4.3,.8,3.8C.8,3.3,1,2.8,1.4,2.4L2.4,1.4C2.7,1,3.3,.8,3.8,.8C4.3,.8,4.8,1,5.2,1.4L5.2,1.4L32.8,29C33.2,29.4,33.4,29.9,33.4,30.4C33.4,30.9,33.2,31.5,32.8,31.8Z')"], e: [[1, 0, 0, .6, 1], [0]] }], "#svg-tn-right", [{ p: 'mpath', t: [0, 400], v: ['0%', '100%'], e: [[1, 0, 0, .6, 1], [0]], mp: "M41.5,28.7L27.1,28.1" }, { p: 'rotate', t: [0, 400], v: [0, 0], e: [[1, 0, 0, .6, 1], [0]] }, { p: 'anchorX', t: [0, 400], v: [-40.5, -17.1], e: [[1, 0, 0, .6, 1], [0]] }, { p: 'anchorY', t: [0, 400], v: [-13.5, -17.1], e: [[1, 0, 0, .6, 1], [0]] }, { p: 'd', t: [0, 400], v: ["path('M53,1C53,1,53,1,53,1C53,1,53,12.9,53,12.9L53,19C53,19,53,26,53,26C53,26,40.2,26,40.2,26L34.1,26C34.1,26,28,26,28,26C28,26,28,12.6,28,12.6L28,7.4C28,7.4,28,1,28,1C28,1,40.6,1,40.6,1C40.6,1,45.9,1,45.9,1Z')", "path('M29,1.4C29.4,1,29.9,.8,30.4,.8C30.9,.8,31.5,1,31.8,1.4L32.8,2.4C33.2,2.7,33.4,3.3,33.4,3.8C33.4,4.3,33.2,4.8,32.8,5.2L5.2,32.8C4.8,33.2,4.3,33.4,3.8,33.4C3.3,33.4,2.8,33.2,2.4,32.8L1.4,31.8C1,31.5,.8,30.9,.8,30.4C.8,29.9,1,29.4,1.4,29C1.4,29,29,1.4,29,1.4Z')"], e: [[1, 0, 0, .6, 1], [0]] }], { autoremove: false }).range(0, 400);
+        }
+    }
+
+    openOverlay(openOverlay: boolean) {
+
+        const element = document.querySelector(".overlay-tn");
+
         element.classList.toggle("open");
-        
-        if (!isOpen) { 
-            
+
+        if (openOverlay) {
+
+            element.classList.add("open");
+
+            window.KeyshapeJS.timelines()[0].time(0);
+
+            window.KeyshapeJS.globalPlay();
+
+        } else {
+
+            element.classList.remove("open");
+
+            window.KeyshapeJS.timelines()[0].time(0);
+
+            window.KeyshapeJS.globalPause();
+
+        }
+    }
+
+    overlayClickHandler() {
+
+        const element = document.querySelector(".overlay-tn");
+
+        const isOpen = element.classList.contains("open");
+
+        element.classList.toggle("open");
+
+        if (!isOpen) {
+
             this.openOverlay(true);
 
         } else {
-            
-            this.openOverlay(false); 
+
+            this.openOverlay(false);
 
         }
 
-      }
+    }
 
-      tokenToggleSelection (event:any) {
+    tokenToggleSelection() {
 
-        window.testingEvent = event;
+        let selectedTokens: any = { "tokenKeys": [] };
 
-        let selectedTokens = {};
+        document.querySelectorAll('.token-tn .mobileToggle-tn').forEach((token: any, index: number) => {
 
-        document.querySelectorAll('.token .mobileToggle').forEach((token: any) => {
+            if (index === 0) {
+                selectedTokens[token.dataset.key] = {};
+                selectedTokens[token.dataset.key]['tokens'] = [];
+                selectedTokens.tokenKeys.push(token.dataset.key);
+            }
 
             if (token.checked === true) {
 
-                selectedTokens[token.dataset.key] = selectedTokens[JSON.parse(token.dataset.token)];
+                let output = JSON.parse(token.dataset.token);
+                selectedTokens[token.dataset.key].tokens.push(output);
 
             }
 
-            console.log('selectedTokens', JSON.parse(token.dataset.token));
-
         });
 
-        window.top.postMessage({
-            evt: 'setSelectedTokens',
-            selectedTokens: selectedTokens
-        }, '*');
+        window.top.postMessage({ evt: 'setSelectedTokens', selectedTokens: selectedTokens }, window.location.origin);
 
-      }
+    }
 
 }

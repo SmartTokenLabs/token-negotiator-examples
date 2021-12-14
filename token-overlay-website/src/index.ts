@@ -6,17 +6,20 @@ declare global {
     }
 }
 
-// create new instance of the Negotiator with params
 window.negotiator = new Client({
+    // type: 'passive',
     type: 'active',
     issuers: [
         'devcon'
     ],
     options: {
+        overlay: {
+            heading: "Get discount with Ticket",
+            theme: "light",
+            position: "bottom-right"
+        },
         filters: {},
     }
 });
 
-// instance of negotiator
 window.negotiator.negotiate();
-
