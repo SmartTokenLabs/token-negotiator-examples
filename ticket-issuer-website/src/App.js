@@ -27,33 +27,51 @@ const mockTicketData = [
   },
 ];
 
+const tokenIssuers = ['devcon'];
+
 function App() {
 
-  // local react state for tokens
+  // // local react state for tokens
   let [tokens, setTokens] = useState([]);
   
-  // create configuration and instance of Negotiator.
-  const filter = {};
+  let negotiator = new Client({
+    type: 'passive',
+    issuers: tokenIssuers,
+    options: {}
+  });
 
-  // localhost config
-  const token = "devcon-ticket-local-3002";
+  // useEffect(async () => {
+  //   // retrieve existing tokens on initialisation of this component
+  //   const tokens = await negotiator.negotiate();
+  //   if(tokens) setTokens(tokens);
+  // }, []);
 
-  const options = {};
-  
-  let negotiator = new Client(filter, token, options);
-
-  useEffect(async () => {
-    // retrieve existing tokens on initialisation of this component
-    const tokens = await negotiator.negotiate();
-    if(tokens) setTokens(tokens);
+  // react effect
+  useEffect(() => {
+    // async event to acquire tokens
+    getTokens();
   }, []);
+
+  const getTokens = () => {
+    negotiator.negotiate().then((issuerTokens) => {
+      let tokens = [];
+      tokenIssuers.map(( issuer ) => {
+        tokens.push(...issuerTokens[issuer].tokens);
+      });
+      if (tokens.length > 0) {
+        setTokens(tokens);
+      }
+    }).catch((err) => {
+      console.log('error', err);
+    });
+  }
 
   const openTicketInIframe = async ({event, ticket, secret, id}) => {
     
     event.preventDefault();
 
     // add token through magic link local
-    const magicLink = `${negotiator.config.tokenOrigin}/?ticket=${ticket}&secret=${secret}&id=${id}`;
+    const magicLink = `https://tokenscript.github.io/token-negotiator-examples/github-pages-use-only/token-outlet-website/build/index.html/?ticket=${ticket}&secret=${secret}&id=${id}`;
     
     negotiator.addTokenThroughIframe(magicLink); 
 

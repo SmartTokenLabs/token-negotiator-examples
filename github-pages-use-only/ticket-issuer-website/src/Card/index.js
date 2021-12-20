@@ -2,9 +2,10 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import './Card.css';
 
-function Card({ tokenInstance }) {
+function MediaCard({ tokenInstance }) {
+
+  // New Data Structure:
   const { ticketClass, ticketId, devconId } = tokenInstance;
-  if(!ticketClass || !ticketId || !devconId) return;
   return (
     <div className="ticketContainer">
       <div className="ticketDetails">
@@ -23,4 +24,4 @@ function Card({ tokenInstance }) {
   );
 }
 
-export default Card;
+export default MediaCard;
