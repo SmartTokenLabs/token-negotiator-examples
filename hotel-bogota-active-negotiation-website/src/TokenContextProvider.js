@@ -1,44 +1,78 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 // import { Client } from '@tokenscript/token-negotiator';
 import { Client } from './dist/client/index';
 
 const TokenContext = createContext({ tokens: [] });
 
+// List of keys the Token Negotiator wishes to read from (onchain & offchain).
+const tokenKeys = ['devcon'];
+
 const TokenContextProvider = (props) => {
   const [tokens, setTokens] = useState([]);
-  window.addEventListener('message', (event) => {
-    switch(event.data.evt) {
-      case 'setSelectedTokens':
-        setTokens(event.data.selectedTokens);
-        break;
+
+  useEffect(() => {
+    window.addEventListener('message', handleTokenUpdate);
+
+    // cleanup this component
+    return () => {
+      window.removeEventListener('message', handleTokenUpdate);
+    };
+  }, []);
+
+  const handleTokenUpdate = (event) => {
+
+    switch (event.data.evt) {
+
+      case 'negotiatedTokensEvt':
+
+        /*
+
+            {
+                devcon: ["token", "token", "token"],
+                liscon: ["token", "token", "token"],
+                kitties: ["token", "token"]
+            }
+
+        */
+
+        let selectedTokens = [];
+
+        tokenKeys.map((token) => {
+            selectedTokens.push(...event.data.selectedTokens[token].tokens);
+        });
+
+        setTokens(selectedTokens);
+
+      break;
     }
-  }, false);
+  }
 
   return (
     <TokenNegotiatorInstance render={({ negotiator, modalContainer }) => (
-        <TokenContext.Provider value={{ tokens, negotiator, modalContainer }}>
-          {props.children}
-        </TokenContext.Provider>
-      )} /> 
-    )
+      <TokenContext.Provider value={{ tokens, negotiator, modalContainer }}>
+        {props.children}
+      </TokenContext.Provider>
+    )} />
+  )
 }
-class TokenNegotiatorInstance  extends React.Component {
+class TokenNegotiatorInstance extends React.Component {
   constructor(props) {
     super(props);
-    // add filters when specific tokens are required.
-    const filter = {};
-    // for localhost development token use:
-    const token = "devcon-ticket-local-3002";
-    // set required negotiator options.
-    const options = { useOverlay: true, tokenSelectorContainer: ".tokenSelectorContainerElement" };
-    // create new instance of the Negotiator with params
-    // window.negotiator = new Client({ tokenName, filter, options });
-    window.negotiator = new Client(filter, token, options);
-    // instance of negotiator
-    this.state = { negotiator: window.negotiator };
+    window.negotiator = new Client({
+      type: 'active',
+      issuers: tokenKeys,
+      options: {
+        overlay: {
+          heading: "Get discount with Ticket",
+          theme: "light",
+          position: "bottom-right"
+        },
+        filters: {},
+      }
+    });
     window.negotiator.negotiate();
   }
-  render() { return this.props.render({ negotiator: negotiator, modalContainer: this.state.modalContainer }) };
+  render() { return this.props.render({ negotiator: negotiator, modalContainer: null }) };
 }
 
 export { TokenContext, TokenContextProvider }
