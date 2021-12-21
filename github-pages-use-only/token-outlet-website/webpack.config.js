@@ -13,7 +13,7 @@ module.exports = {
       filename: 'index.html',
     })  
   ],
-  mode: 'development',
+  mode: 'production',
   entry: './src/index.ts',
   devtool: 'inline-source-map',
   module: {

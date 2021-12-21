@@ -4,26 +4,26 @@ import RoomCard from './RoomCard';
 import TokenNotificationCard from './TokenNotificationCard';
 import Typography from '@material-ui/core/Typography';
 import BookingDate from './BookingDate';
-// import { Client } from '@tokenscript/token-negotiator';
-import { Client } from './dist/client/index';
 import './App.css';
+import { Client } from '@tokenscript/token-negotiator';
 
 // mock data e.g. server side hotel room price database
-const mockRoomData = [{ "type": "Deluxe Room", "price": 200000, "frequency": "per night", "image": "./hotel_3.jpg" }, { "type": "King Suite", "price": 320000, "frequency": "per night", "image": "./hotel_2.png" }, { "type": "Superior Deluxe Suite", "price": 250030, "frequency": "per night", "image": "./hotel_1.jpg" }]
+const mockRoomData = [{"type":"Deluxe Room","price": 200000,"frequency":"per night","image":"./hotel_3.jpg"},{"type":"King Suite","price": 320000,"frequency":"per night","image":"./hotel_2.png"},{"type":"Superior Deluxe Suite","price": 250030,"frequency":"per night","image":"./hotel_1.jpg"}]
 
 // mock discount of 10% applied to any ticket selected. In a real world scenario, this maybe different per ticket type and retrieved from a backend service.
 const mockRoomDiscountData = 10;
 
-const tokenIssuers = ['devcon'];
-
 function App() {
 
-  let negotiator = new Client({
-    type: 'passive',
-    issuers: tokenIssuers,
-    options: {}
-  });
+  // add filters when specific tokens are required
+  const filter = {};
+  
+  // create new instance of the Negotiator with params
+  let tokensURL = 'https://devcontickets.herokuapp.com/outlet/';
 
+  // 
+  const negotiator = new Client(filter, "devcon-ticket", { tokenOrigin: tokensURL });
+  
   // devcont tickets (react state of tokens)
   let [tokens, setTokens] = useState([]);
 
@@ -54,7 +54,7 @@ function App() {
 
     // toggle room discount offer on/off
     if (!ticket || ticket === null) {
-
+      
       // clear discount
       setDiscount({ value: undefined, tokenInstance: undefined });
 
@@ -68,7 +68,7 @@ function App() {
       // a token issuers backend server to provide a number that can only be known 
       // by this service as a temporary value.
       const unpredicatbleNumberEndPoint = 'https://crypto-verify.herokuapp.com/use-devcon-ticket';
-
+      
       // authenticate discount ticket is valid
       // cryptographic authentication data towards full attestation
       const authenticationData = await negotiator.authenticate({
@@ -77,12 +77,12 @@ function App() {
       });
 
       // when the ticket is valid and validation data is present
-      if (authenticationData.useEthKey && authenticationData.proof) {
+      if(authenticationData.useEthKey && authenticationData.proof) {
 
         // store token proof details in react state for later.
         // authenticationData: { useTicket, ethKey }
         setUseDiscountProof(authenticationData);
-
+        
         // share discount price via react state with the user inside react view.
         setDiscount({ value: getApplicableDiscount(), tokenInstance: ticket });
 
@@ -94,28 +94,32 @@ function App() {
     }
   }
 
-  // This is the example at which the hotel would begin a hotel room booking transaction.
+  // This is the example point at which the hotel would send payment with booking & discount details
   const book = async (formData) => {
-    const params = { discount: useDiscountProof, bookingData: { formData } };
-    // Make Transaction
-    if (params.discount.proof) alert('Transaction Complete, we look forward to your stay with us!');
+
+    const checkoutEndPoint = "https://raw.githubusercontent.com/TokenScript/token-negotiator/main/examples/hotel-bogota/mockbackend-responses/pay.json";
+
+    const params = {
+      discount: useDiscountProof,
+      bookingData: { formData }
+    }
+
+    // data for backend to validate discount
+    console.log("useDiscountProof", params);
+
+    // final attestation step to authenticate the proof and finalise transaction.
+    fetch(checkoutEndPoint + new URLSearchParams(params)).then(data => {
+      alert('Transaction Complete, we look forward to your stay with us!');
+    });
+  
   }
 
   // negotiation happens when this method is triggered
   // before this time, the token-negotiator is not used.
   const getTokens = () => {
-    negotiator.negotiate().then((issuerTokens) => {
-      let tokens = [];
-      tokenIssuers.map(( issuer ) => {
-        tokens.push(...issuerTokens[issuer].tokens);
-      });
-      if (tokens.length > 0) {
-        setTokens(tokens);
-        setFreeShuttle(true);
-      }
-    }).catch((err) => {
-      console.log('error', err);
-    });
+    negotiator.negotiate().then(tokens => { 
+      setTokens(tokens.tokens); 
+    }).catch(e => {});
   }
 
   // react effect

@@ -103,7 +103,7 @@ export default function BookingModal({ roomType, applyDiscount, discount, price,
               <div className="ticketWrapper">
               {tokens &&
                 tokens
-                  .filter(_token => discountTicketClasses.toString().indexOf(_token.ticketClass) > -1)
+                  // .filter(_token => discountTicketClasses.toString().indexOf(_token.ticketClass) > -1)
                   .map((token, index) => (
                     <div key={index}>
                       <Card
