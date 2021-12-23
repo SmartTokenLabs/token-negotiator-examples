@@ -1,4 +1,4 @@
-import { Outlet } from './dist/outlet/index';
+import { Outlet } from './src/outlet/index';
 // import { Overlay } from '@tokenscript/token-negotiator';
 // import { Outlet } from '@tokenscript/token-negotiator';
 
