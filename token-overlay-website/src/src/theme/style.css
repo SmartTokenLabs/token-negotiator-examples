@@ -326,6 +326,31 @@
   border: 3px solid #005fcc !important;
 }
 
+.issuer-connect-banner-tn {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  padding: 12px;
+  height: 2.7rem;
+  color: white;
+  background: #005fcc;
+  border-bottom: 1px solid grey;
+}
+
+.issuer-connect-banner-tn .connect-btn-tn, .issuer-connect-banner-tn .tokens-btn-tn {
+    height: 2rem;
+    color: white;
+    border: none;
+    padding: 10px 10px 24px 10px;
+    border-radius: 23px;
+    background: #3b82d3;
+    cursor: pointer;
+}
+
+.issuer-connect-banner-tn .tokens-btn-tn {
+  display: none;
+}
+
 @keyframes a0_t {
   0% {
     transform: translate(13px, 28.5px) translate(-13px, -13.5px);

@@ -12,13 +12,26 @@ export const createOverlayMarkup = (heading="Available Tokens") => {
     <div class="overlay-content-tn">
       <div class="brand-tn"></div>
       <p class="headline-tn">${heading}</p>
-      <button data-issuer="devcon" onClick='connectToken(event)'>Devcon</button>
+      <div class="token-issuer-list-container-tn"></div>
       <div class="token-container-tn">
-        <p class="no-tokens-tn">No tokens available.</p>
       </div>
     </div>
   `;
 };
+
+//
+// export const createOverlayMarkupCookieSupported = (heading="Available Tokens") => {
+//   return `
+//     <div class="overlay-content-tn">
+//       <div class="brand-tn"></div>
+//       <p class="headline-tn">${heading}</p>
+//       <div class="token-issuer-list-container-tn"></div>
+//       <div class="token-container-tn">
+//         <p class="no-tokens-tn">No tokens available.</p>
+//       </div>
+//     </div>
+//   `;
+// };
 
 // export const createOverlayMarkupCookieSupported = (heading="Available Tokens") => {
 //   return `
@@ -31,6 +44,16 @@ export const createOverlayMarkup = (heading="Available Tokens") => {
 //     </div>
 //   `;
 // };
+
+export const issuerConnect = (issuer:any) => {
+  return `
+    <div class="issuer-connect-banner-tn" data-issuer="${issuer}">
+      <p class="issuer-connect-title">Devcon</p>
+      <button class="connect-btn-tn" data-issuer="${issuer}" onClick='connectToken(event)'>Connect</button>
+      <button class="tokens-btn-tn" data-issuer="${issuer}" onClick='viewTokens(event)'>Tokens Available</button>
+    </div>
+  `;
+};
 
 export const createToken = (config: CreateTokenInterface) => {
   const { tokenIssuerKey, title, data, index, emblem } = config;

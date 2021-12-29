@@ -10,7 +10,8 @@ declare global {
 window.negotiator = new Client({
     type: 'active',
     issuers: [
-        'devcon'
+        'devcon',
+        'devcon2'
     ],
     options: {
         overlay: {
