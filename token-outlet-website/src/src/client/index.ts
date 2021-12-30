@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { asyncHandle, requiredParams, logger } from './../utils/index';
 import { getTokens, getChallengeSigned, validateUseEthKey, connectMetamaskAndGetAddress, getTokenProof } from "../core/index";
-import { createOverlayMarkup, createFabButton, createToken } from './componentFactory';
+import { createOverlayMarkup, createFabButton, createToken, issuerConnect } from './componentFactory';
 import { tokenLookup } from './../tokenLookup';
 // import './../Attestation/authenticator';
 import "./../theme/style.css";
@@ -27,46 +27,6 @@ interface AuthenticateInterface {
     unsignedToken: any;
 }
 
-// window.addEventListener('message', function(event) { 
-    //     if(event.data.evt === 'setTokenProof') {
-    //       resolve(event.data.tokenProof);
-    //     }
-    //   }, false);
-
-    // this.refOverlaySelector.contentWindow.postMessage(
-    //     {
-    //       evt: "setCloseOverlay",
-    //     },
-    //     this.config.tokenOverlayOrigin
-    //   );
-    // }
-
-    // Outlet URL
-    let childURL = "https://nicktaras.github.io/iframe-test/index.html";
-    let cUrl = new URL(childURL);
-    let childUrlOrigin = cUrl.origin;
-
-    function attachPostMessageListener(listener) {
-        if (window.addEventListener) {
-            window.addEventListener("message", listener, false);
-        } else {
-            // IE8
-            window.attachEvent("onmessage", listener);
-        }
-    }
-
-    let listener = (event) => {
-        if (event.origin != childUrlOrigin) return;
-        console.log(JSON.stringify(event.data.evt));
-        if(event.data.evt === 'tokens') {
-            console.log(JSON.stringify(event.data));
-            // re-enable once back inside this module
-            // window.negotiator.issuerIframeRefs[event.data.issuer].close();
-        }
-    }
-
-    attachPostMessageListener(listener);
-
 export class Client {
 
     issuers: string[];
@@ -75,6 +35,7 @@ export class Client {
     options: any;
     offChainTokens: any;
     onChainTokens: any;
+    selectedTokens:any;
 
     constructor(config: NegotiationInterface) {
 
@@ -90,6 +51,8 @@ export class Client {
 
         // requiredParams(issuers, 'issuers are missing.');
 
+        this.tokenLookup = tokenLookup;
+
         this.type = type;
 
         this.options = options;
@@ -100,6 +63,7 @@ export class Client {
 
         this.onChainTokens = { tokenKeys: [] };
 
+        this.selectedTokens = {};
         /*
 
             this.onChainTokens / this.offChainTokens: {
@@ -168,11 +132,6 @@ export class Client {
 
     async negotiate() {
 
-        let [webTokens, webTokensErr] = await asyncHandle(this.setWebTokens(this.offChainTokens));
-        if (!webTokens || webTokensErr) {
-            logger('token negotiator: no web tokens found.');
-        }
-
         /* 
         
             ------------------------------
@@ -183,34 +142,37 @@ export class Client {
 
         */
 
-        // if (this.type === 'active') {
+        if (this.type === 'active') {
 
-        //     this.activeNegotiationStrategy();
+            this.activeNegotiationStrategy();
 
-        // } else {
+        } else {
 
-        //     return this.passiveNegotiationStrategy();
+            return this.passiveNegotiationStrategy();
 
-        // }
-
-        // Active Only for the time being
-        this.activeNegotiationStrategy();
+        }
 
     }
 
-    // async passiveNegotiationStrategy() {
+    async passiveNegotiationStrategy() {
 
-    //     let outputOnChain = this.onChainTokens;
+        let [webTokens, webTokensErr] = await asyncHandle(this.setWebTokens(this.offChainTokens));
 
-    //     delete outputOnChain.tokenKeys;
+        if (!webTokens || webTokensErr) {
+            logger('token negotiator: no web tokens found.');
+        }
 
-    //     let outputOffChain = this.offChainTokens;
+        let outputOnChain = this.onChainTokens;
 
-    //     delete outputOffChain.tokenKeys;
+        delete outputOnChain.tokenKeys;
 
-    //     return { ...outputOffChain, ...outputOnChain };
+        let outputOffChain = this.offChainTokens;
 
-    // }
+        delete outputOffChain.tokenKeys;
+
+        return { ...outputOffChain, ...outputOnChain };
+
+    }
 
     activeNegotiationStrategy() {
 
@@ -226,8 +188,6 @@ export class Client {
 
     embedTokenConnectClientOverlay() {
 
-        let _index = 0;
-
         let element = document.querySelector(".overlay-tn");
 
         requiredParams(element, 'No overlay element found.');
@@ -235,38 +195,14 @@ export class Client {
         if (element) {
 
             element.innerHTML += createOverlayMarkup(this.options?.overlay?.heading);
-
             element.innerHTML += createFabButton();
 
-            let refTokenContainerSelector = document.querySelector(".token-container-tn");
-
+            let refIssuerContainerSelector = document.querySelector(".token-issuer-list-container-tn");
+            refIssuerContainerSelector.innerHTML = "";
+            
             this.offChainTokens.tokenKeys.map((issuer: string) => {
 
-                const i = this.offChainTokens[issuer];
-
-                if (i.tokens.length) {
-
-                    // @ts-ignore
-                    refTokenContainerSelector.innerHTML = "";
-
-                    i.tokens.map((t: any) => {
-
-                        const { title, emblem } = tokenLookup[issuer];
-
-                        // @ts-ignore
-                        refTokenContainerSelector.innerHTML += createToken({
-                            data: t,
-                            tokenIssuerKey: issuer,
-                            index: _index,
-                            title: title,
-                            emblem: emblem
-                        });
-
-                        _index++;
-
-                    });
-
-                }
+                refIssuerContainerSelector.innerHTML += issuerConnect(issuer);
 
             });
 
@@ -275,9 +211,33 @@ export class Client {
 
         }
 
+        // TODO - send TN to the elements instead of using this pattern
         window.tokenToggleSelection = this.tokenToggleSelection;
         window.connectToken = this.connectToken;
+        window.navigateToTokensView = this.navigateToTokensView;
 
+        function attachPostMessageListener(listener) {
+            if (window.addEventListener) {
+                window.addEventListener("message", listener, false);
+            } else {
+                // IE8
+                window.attachEvent("onmessage", listener);
+            }
+        }
+
+        let listener = (event) => {
+            if(event.data.evt === 'tokens') {
+                let childURL = tokenLookup[event.data.data.issuer].tokenOrigin;
+                let cUrl = new URL(childURL);
+                let childUrlOrigin = cUrl.origin;
+                if (event.origin != childUrlOrigin) return;
+                this.offChainTokens[event.data.data.issuer].tokens = event.data.data.tokens;
+                window.negotiator.issuerIframeRefs[event.data.data.issuer].close();
+                delete window.negotiator.issuerIframeRefs[event.data.data.issuer];
+                this.issuerConnected(event.data.data.issuer);
+            }
+        }
+        attachPostMessageListener(listener);
     }
     
     embedStandardClientOverlay() {
@@ -410,12 +370,120 @@ export class Client {
 
     }
 
+    issuerConnected(issuer:string) {
+        
+        const connectBtn = document.querySelector(`[data-issuer*="${issuer}"] .connect-btn-tn`);
+        
+        const tokenBtn = document.querySelector(`[data-issuer*="${issuer}"] .tokens-btn-tn`);
+        
+        connectBtn.style.display = "none";
+        
+        connectBtn.setAttribute('aria-hidden', true);
+        
+        tokenBtn.style.display = "block";
+        
+        tokenBtn.innerHTML = `View Tokens (${this.offChainTokens[issuer].tokens.length})`;
+        
+        tokenBtn.setAttribute('aria-hidden', false);
+        
+    }
+
+    navigateToTokensView(event:any) {
+        
+        const issuer = event.target.dataset.issuer;
+
+        window.negotiator.embedTokensIntoView(issuer);
+
+        window.negotiator.showTokenView(issuer);
+
+    }
+
+    embedTokensIntoView(issuer){
+
+        if(!issuer) return;
+            
+        const refTokenContainerSelector = document.getElementsByClassName("token-list-container-tn")[0];
+        
+        refTokenContainerSelector.innerHTML = "";
+
+        const config = window.negotiator.tokenLookup[issuer];
+        
+        const location = config.onChain ? 'onChainTokens' : 'offChainTokens';
+
+        document.getElementsByClassName("headline-tn token-name")[0].innerHTML = config.title;
+
+        window.negotiator[location][issuer].tokens.map((t: any, i:any) => {
+
+            // TODO - Memory usage: load extra tokens when user scrolls to bottom of issuer
+            // if(i < 25) {
+
+                const { title, emblem } = tokenLookup[issuer];
+
+                let isSelected = false;
+
+                // TODO Define a constant value that can be checked
+                // regardless of which issuer token to speed up this check
+                window.negotiator.selectedTokens[issuer]?.tokens.map((st, si) => {
+                    if(t.toString() === st.toString()) isSelected = true;
+                });
+
+                // @ts-ignore
+                refTokenContainerSelector.innerHTML += createToken({
+                    data: t,
+                    tokenIssuerKey: issuer,
+                    index: i,
+                    title: title,
+                    emblem: emblem,
+                    toggleState: isSelected
+                });
+
+            // }
+
+        });
+    }
+
+    showTokenView(issuer:string) {
+
+        var element = document.getElementsByClassName("overlay-content-tn")[0];
+        element.classList.toggle("open");
+
+        if(issuer){
+
+            const connectBtn = document.querySelector(`[data-issuer*="${issuer}"] .connect-btn-tn`);
+
+            const tokenBtn = document.querySelector(`[data-issuer*="${issuer}"] .tokens-btn-tn`);
+
+            connectBtn.setAttribute('aria-expanded', true);
+
+            tokenBtn.setAttribute('aria-expanded', true);
+
+        } else {
+
+            const connectBtns = document.querySelectorAll(`.connect-btn-tn`);
+
+            const tokenBtns = document.querySelectorAll(`.tokens-btn-tn`);
+
+            connectBtns.forEach(function(userItem) {
+
+                userItem.setAttribute('aria-expanded', false);
+
+            });
+
+            tokenBtns.forEach(function(userItem) {
+
+                userItem.setAttribute('aria-expanded', false);
+
+            });
+
+        }
+    }
+
     connectToken(event) {
         
         const issuer = event.target.dataset.issuer;
         
         let	tabRef = window.open(
-            "https://nicktaras.github.io/iframe-test/index.html", // tokenLookup[issuer].tokenOrigin,
+            tokenLookup[issuer].tokenOrigin,
             "win1",
             "left=0,top=0,width=320,height=320"
         );
@@ -430,18 +498,15 @@ export class Client {
 
     tokenToggleSelection() {
 
-        // let selectedTokens: any = { "tokenKeys": [] };
-        let selectedTokens: any = {};
+        window.negotiator.selectedTokens = {};
 
         document.querySelectorAll('.token-tn .mobileToggle-tn').forEach((token: any, index: number) => {
 
             if (index === 0) {
 
-                selectedTokens[token.dataset.key] = {};
+                window.negotiator.selectedTokens[token.dataset.key] = {};
 
-                selectedTokens[token.dataset.key]['tokens'] = [];
-
-                // selectedTokens.tokenKeys.push(token.dataset.key);
+                window.negotiator.selectedTokens[token.dataset.key]['tokens'] = [];
 
             }
 
@@ -449,22 +514,23 @@ export class Client {
 
                 let output = JSON.parse(token.dataset.token);
 
-                selectedTokens[token.dataset.key].tokens.push(output);
+                window.negotiator.selectedTokens[token.dataset.key].tokens.push(output);
 
             }
 
         });
 
-        window.postMessage({ evt: 'negotiatedTokensEvt', selectedTokens: selectedTokens }, window.location.origin);
+        window.postMessage({ evt: 'negotiatedTokensEvt', selectedTokens: window.negotiator.selectedTokens }, window.location.origin);
 
     }
 
     async authenticate(config: AuthenticateInterface) {
 
         const { issuer, unsignedToken } = config;
+
         const { unEndPoint, onChain } = tokenLookup[issuer];
 
-        // TODO handle onchain flow differently
+        // TODO handle onchain
         if (onChain === true || !unsignedToken || !unEndPoint) return { status: false, useEthKey: null, proof: null };
 
         try {
@@ -493,12 +559,19 @@ export class Client {
     }
 
     addTokenThroughIframe(magicLink: any) {
+        
         const iframe = document.createElement('iframe');
+        
         iframe.src = magicLink;
+        
         iframe.style.width = '1px';
+        
         iframe.style.height = '1px';
+        
         iframe.style.opacity = '0';
+        
         document.body.appendChild(iframe);
+        
     }
 
 }

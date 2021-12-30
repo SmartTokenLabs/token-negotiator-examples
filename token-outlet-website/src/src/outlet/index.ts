@@ -16,10 +16,14 @@ declare global {
 export class Outlet {
   authenticator: any;
   config: any;
+  tokenName: any;
 
   constructor(config: OutletInterface) {
 
     const { tokenName } = config;
+
+    // @ts-ignore
+    this.tokenName = tokenName;
 
     requiredParams(tokenLookup[tokenName], "Please provide the token name");
     
@@ -65,12 +69,10 @@ export class Outlet {
 
       var storageTokens = this.prepareTokenOutput( tokenName );
 
-      opener.postMessage({ evt: "tokens", data: { issuer: 'devcon', tokens: storageTokens || [] }  }, parentOrigin);
+      opener.postMessage({ evt: "tokens", data: { issuer: this.tokenName, tokens: storageTokens || [] }  }, parentOrigin);
 
     }	
 
   }
 
 }
-
-
