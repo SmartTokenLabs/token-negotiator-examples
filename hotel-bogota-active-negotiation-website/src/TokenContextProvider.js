@@ -35,13 +35,15 @@ const TokenContextProvider = (props) => {
 
         */
 
-        let selectedTokens = [];
+        // let selectedTokens = [];
 
-        tokenKeys.map((token) => {
-            selectedTokens.push(...event.data.selectedTokens[token].tokens);
-        });
+        // tokenKeys.map((token) => {
+        //     selectedTokens.push(...event.data.selectedTokens[token].tokens);
+        // });
 
-        setTokens(selectedTokens);
+        // setTokens(selectedTokens);
+
+        console.log('tokens', event.data);
 
       break;
     }
@@ -58,6 +60,7 @@ const TokenContextProvider = (props) => {
 class TokenNegotiatorInstance extends React.Component {
   constructor(props) {
     super(props);
+
     window.negotiator = new Client({
       type: 'active',
       issuers: tokenKeys,

@@ -1,5 +1,5 @@
-import { Outlet } from '@tokenscript/token-negotiator';
+import { Outlet } from './src/outlet/index';
 
 new Outlet({
-  tokenName: 'devcon-ticket-heroku'
+  tokenName: 'devcon'
 });

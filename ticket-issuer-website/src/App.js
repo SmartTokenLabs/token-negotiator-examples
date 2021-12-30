@@ -55,6 +55,7 @@ function App() {
   const getTokens = () => {
     negotiator.negotiate().then((issuerTokens) => {
       let tokens = [];
+      console.log(issuerTokens);
       tokenIssuers.map(( issuer ) => {
         tokens.push(...issuerTokens[issuer].tokens);
       });
