@@ -11,7 +11,9 @@ window.negotiator = new Client({
     type: 'active',
     issuers: [
         'devcon',
-        'devcon2'
+        'devcon2',
+        'devcon3',
+        'devcon4'
     ],
     options: {
         overlay: {
