@@ -34,7 +34,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { base64ToUint8array, getCookie, requiredParams, compareObjects } from '../utils/index';
+import { base64ToUint8array, requiredParams, compareObjects } from '../utils/index';
 import { ethers } from "ethers";
 export var filterTokens = function (decodedTokens, filter) {
     if (Object.keys(filter).length === 0)
@@ -60,7 +60,7 @@ export var filterTokens = function (decodedTokens, filter) {
     }
 };
 export var readTokens = function (itemStorageKey) {
-    var storageTickets = getCookie(itemStorageKey);
+    var storageTickets = localStorage.getItem(itemStorageKey);
     var tokens = [];
     var output = { tokens: [], noTokens: true, success: true };
     try {
@@ -106,31 +106,16 @@ export var openOutletIframe = function (tokensOrigin) {
         iframe.style.opacity = '0';
         document.body.appendChild(iframe);
         iframe.onload = function () {
+            iframe.contentWindow.postMessage({
+                evt: 'getTokens'
+            }, tokensOrigin);
             resolve(true);
         };
     });
 };
-export var getTokens = function (config) { return __awaiter(void 0, void 0, void 0, function () {
-    var filter, tokensOrigin, itemStorageKey, tokenParser, unsignedTokenDataName;
-    return __generator(this, function (_a) {
-        filter = config.filter, tokensOrigin = config.tokensOrigin, itemStorageKey = config.itemStorageKey, tokenParser = config.tokenParser, unsignedTokenDataName = config.unsignedTokenDataName;
-        return [2, new Promise(function (resolve, reject) {
-                openOutletIframe(tokensOrigin).then(function () {
-                    var tokens = getCookie(itemStorageKey);
-                    var decodedTokens = decodeTokens(tokens, tokenParser, unsignedTokenDataName);
-                    var filteredTokens = filterTokens(decodedTokens, filter);
-                    resolve(filteredTokens);
-                }).catch(function (error) {
-                    reject({
-                        error: error
-                    });
-                });
-            })];
-    });
-}); };
 export var storeMagicURL = function (tokens, itemStorageKey) {
     if (tokens) {
-        document.cookie = itemStorageKey + "=" + JSON.stringify(tokens) + "; max-age=31536000; SameSite=None; Secure";
+        localStorage.setItem(itemStorageKey, JSON.stringify(tokens));
     }
 };
 export var readMagicUrl = function (tokenUrlName, tokenSecretName, tokenIdName, itemStorageKey) {
@@ -147,9 +132,11 @@ export var readMagicUrl = function (tokenUrlName, tokenSecretName, tokenIdName, 
             isNewQueryTicket = false;
         }
     });
-    if (isNewQueryTicket)
+    if (isNewQueryTicket) {
         tokens.push({ token: tokenFromQuery, secret: secretFromQuery, id: idFromQuery, magic_link: window.location.href });
-    return tokens;
+        return tokens;
+    }
+    return [];
 };
 export var ethKeyIsValid = function (ethKey) {
     return ethKey.expiry >= Date.now();
@@ -320,6 +307,21 @@ export var rawTokenCheck = function (unsignedToken, tokenIssuer) { return __awai
         if (rawTokenData && rawTokenData.magic_link)
             tokenObj.magicLink = rawTokenData.magic_link;
         return [2, new Promise(function (resolve, reject) {
+            })];
+    });
+}); };
+export var getTokens = function (config) { return __awaiter(void 0, void 0, void 0, function () {
+    var filter, tokensOrigin;
+    return __generator(this, function (_a) {
+        filter = config.filter, tokensOrigin = config.tokensOrigin;
+        return [2, new Promise(function (resolve, reject) {
+                window.addEventListener('message', function (event) {
+                    if (event.data.evt === 'tokens') {
+                        var filteredTokens = filterTokens(event.data.data.tokens, filter);
+                        resolve(filteredTokens);
+                    }
+                }, false);
+                openOutletIframe(tokensOrigin).then(function () { }).catch(function (error) { });
             })];
     });
 }); };

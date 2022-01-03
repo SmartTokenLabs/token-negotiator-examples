@@ -49,11 +49,6 @@ export var base64ToUint8array = function (base64str) {
     base64str = base64str.split('-').join('+').split('_').join('/').split('.').join('=');
     return Uint8Array.from(Buffer.from(base64str, 'base64'));
 };
-export var getCookie = function (name) {
-    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    if (match)
-        return match[2];
-};
 export var asyncHandle = function (promise) { return __awaiter(void 0, void 0, void 0, function () {
     var data, error_1;
     return __generator(this, function (_a) {

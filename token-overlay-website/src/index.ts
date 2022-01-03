@@ -1,4 +1,4 @@
-import { Client } from './src/client/index';
+import { Client } from './dist/client/index';
 
 declare global {
     interface Window {
