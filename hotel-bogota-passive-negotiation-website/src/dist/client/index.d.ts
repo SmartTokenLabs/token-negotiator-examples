@@ -48,6 +48,7 @@ export declare class Client {
         useEthKey: any;
         proof: unknown;
     }>;
+    addTokenThroughTab(magicLink: any): void;
     addTokenThroughIframe(magicLink: any): void;
 }
 export {};

@@ -1,4 +1,4 @@
-import { Outlet } from './src/outlet/index';
+import { Outlet } from './dist/outlet/index';
 
 new Outlet({
   tokenName: 'devcon'

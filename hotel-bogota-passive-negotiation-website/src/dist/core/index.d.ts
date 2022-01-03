@@ -12,7 +12,6 @@ interface GetTokenInterface {
     tokenParser: any;
     unsignedTokenDataName: any;
 }
-export declare const getTokens: (config: GetTokenInterface) => Promise<unknown>;
 export declare const storeMagicURL: (tokens: any, itemStorageKey: string) => void;
 export declare const readMagicUrl: (tokenUrlName: string, tokenSecretName: string, tokenIdName: string, itemStorageKey: string) => any;
 export declare const ethKeyIsValid: (ethKey: any) => boolean;
@@ -31,5 +30,10 @@ export declare const signNewChallenge: (unEndPoint: string) => Promise<{
 }>;
 export declare const signMessageWithBrowserWallet: (message: any) => Promise<string>;
 export declare const rawTokenCheck: (unsignedToken: any, tokenIssuer: any) => Promise<unknown>;
+interface GetTokenInterface {
+    filter: any;
+    tokensOrigin: any;
+}
+export declare const getTokens: (config: GetTokenInterface) => Promise<unknown>;
 export declare const getRawToken: (unsignedToken: any, tokenIssuer: any) => {} | null | undefined;
 export {};
