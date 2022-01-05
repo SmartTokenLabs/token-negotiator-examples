@@ -58,39 +58,13 @@ function App() {
       // clear discount
       setDiscount({ value: undefined, tokenInstance: undefined });
 
-      // clear discount proof data
-      setUseDiscountProof({ proof: undefined, useEthKey: undefined });
-
     } else {
 
-      // endpoint to get an unpredictable number (mock example)
-      // within a full implementation this end point should be used to connect to
-      // a token issuers backend server to provide a number that can only be known 
-      // by this service as a temporary value.
-      const unpredicatbleNumberEndPoint = 'https://crypto-verify.herokuapp.com/use-devcon-ticket';
-
-      // authenticate discount ticket is valid
-      // cryptographic authentication data towards full attestation
-      const authenticationData = await negotiator.authenticate({
-        unEndPoint: unpredicatbleNumberEndPoint,
-        unsignedToken: ticket
+      negotiator.authenticate({
+        issuer: 'devcon',
+        unsignedToken: tokens[0]
       });
 
-      // when the ticket is valid and validation data is present
-      if (authenticationData.useEthKey && authenticationData.proof) {
-
-        // store token proof details in react state for later.
-        // authenticationData: { useTicket, ethKey }
-        setUseDiscountProof(authenticationData);
-
-        // share discount price via react state with the user inside react view.
-        setDiscount({ value: getApplicableDiscount(), tokenInstance: ticket });
-
-      } else {
-
-        // handle scenario when the authentication process for discount is not valid.
-
-      }
     }
   }
 
@@ -106,7 +80,6 @@ function App() {
   const getTokens = () => {
     negotiator.negotiate().then((issuerTokens) => {
       let tokens = [];
-      console.log(issuerTokens);
       tokenIssuers.map(( issuer ) => {
         tokens.push(...issuerTokens[issuer].tokens);
       });

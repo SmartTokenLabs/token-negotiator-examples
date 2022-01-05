@@ -63,17 +63,11 @@ function App() {
 
     } else {
 
-      // endpoint to get an unpredictable number (mock example)
-      // within a full implementation this end point should be used to connect to
-      // a token issuers backend server to provide a number that can only be known 
-      // by this service as a temporary value.
-      const unpredicatbleNumberEndPoint = 'https://crypto-verify.herokuapp.com/use-devcon-ticket';
-
       // authenticate discount ticket is valid
       // cryptographic authentication data towards full attestation
       const authenticationData = await negotiator.authenticate({
-        unEndPoint: unpredicatbleNumberEndPoint,
-        unsignedToken: ticket
+        issuer: 'devcon',
+        unsignedToken: tokens[0]
       });
 
       // when the ticket is valid and validation data is present

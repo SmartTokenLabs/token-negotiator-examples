@@ -31,52 +31,34 @@ export default function BookingModal({room}) {
 
   const {type, price, image, frequency} = room;
 
-  const {tokens} = useContext(TokenContext);
+  const {tokens, proof} = useContext(TokenContext);
 
-  // Modal State (open boolean)
   const [open, setOpen] = useState(false);
-
-  // token proof
-  const [tokenProof, setTokenProof] = useState();
 
   const [bookingDone, setBookingDone] = useState(false);
 
   const useToken = async () => {
     try {
-      // authenticate discount ticket is valid
-      const authenticationData = await negotiator.authenticate({
-        unEndPoint: 'https://crypto-verify.herokuapp.com/use-devcon-ticket',
+      negotiator.authenticate({
+        issuer: 'devcon',
         unsignedToken: tokens[0]
       });
-
-      // when the ticket is valid and validation data is present
-      if (authenticationData.useEthKey && authenticationData.proof) {
-        setTokenProof(authenticationData);
-      } else {
-
-        // handle scenario when the authentication process for discount is not valid.
-
-      }
     } catch (e) {
       console.error(e);
-      // authenticate failed and we do nothing for now
     }
   }
 
-  // this is the example point at which the hotel would send payment with booking & discount details
   const book = async (formData) => {
     const checkoutEndPoint = "https://raw.githubusercontent.com/TokenScript/token-negotiator/main/examples/hotel-bogota/mockbackend-responses/pay.json";
     const params = {
-      tokenProof: tokenProof,
+      tokenProof: proof,
       bookingData: {formData}
     }
-    // TODO add design to this step
     fetch(checkoutEndPoint + new URLSearchParams(params)).then(_data => {
       setBookingDone(true);
     });
   }
 
-  // Form state.
   const [formInput, setFormInput] = useReducer(
       (state, newState) => ({...state, ...newState}), {
         reference: "Beeple",
@@ -85,25 +67,21 @@ export default function BookingModal({room}) {
         cardCsv: "000"
       });
 
-  // Handle form input.
   const handleInput = evt => {
     const name = evt.target.name;
     const newValue = evt.target.value;
     setFormInput({[name]: newValue});
   };
 
-  // handle form submission.
   const handleSubmit = evt => {
     evt.preventDefault();
     book({formInput, type});
   };
 
-  // Open Modal
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  // Close Modal
   const handleClose = () => {
     setOpen(false);
   };
@@ -238,7 +216,7 @@ export default function BookingModal({room}) {
               <div className="booking">
                 <DialogActions>
                   {
-                    tokens.length > 0 && !tokenProof &&
+                    tokens.length > 0 && !proof &&
                     <Button
                         color="primary"
                         className="paynow"
@@ -250,7 +228,7 @@ export default function BookingModal({room}) {
                     </Button>
                   }
                   {
-                    (tokens.length === 0 || tokenProof) &&
+                    (tokens.length === 0 || proof) &&
                     <Button
                         color="primary"
                         className="paynow"

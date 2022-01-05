@@ -2,28 +2,50 @@ import React, { createContext, useState, useEffect } from 'react';
 // import { Client } from '@tokenscript/token-negotiator';
 import { Client } from './dist/client/index';
 
-const TokenContext = createContext({ tokens: [] });
+const TokenContext = createContext({ 
+  tokens: []
+});
 
-// List of keys the Token Negotiator wishes to read from (onchain & offchain).
-const tokenKeys = ['devcon'];
+const tokenKeys = [
+  'devcon'
+];
 
 const TokenContextProvider = (props) => {
+
   const [tokens, setTokens] = useState([]);
 
+  const [proof, setProof] = useState();
+
   useEffect(() => {
+
     window.addEventListener('message', handleTokenUpdate);
 
-    // cleanup this component
     return () => {
+
       window.removeEventListener('message', handleTokenUpdate);
+
     };
+
   }, []);
 
   const handleTokenUpdate = (event) => {
 
     switch (event.data.evt) {
 
-      case 'negotiatedTokensEvt':
+      case 'token-negotiator-token-proof':
+
+        /*
+
+            String
+
+        */
+
+        setProof(event.data.proof);
+
+        console.log('proof', event.data);
+
+      break;
+      case 'token-negotiator-tokens':
 
         /*
 
@@ -38,7 +60,9 @@ const TokenContextProvider = (props) => {
         let selectedTokens = [];
 
         tokenKeys.map((token) => {
+
             selectedTokens.push(...event.data.selectedTokens[token].tokens);
+
         });
 
         setTokens(selectedTokens);
@@ -50,15 +74,23 @@ const TokenContextProvider = (props) => {
   }
 
   return (
+
     <TokenNegotiatorInstance render={({ negotiator, modalContainer }) => (
-      <TokenContext.Provider value={{ tokens, negotiator, modalContainer }}>
+
+      <TokenContext.Provider value={{ tokens, proof, negotiator, modalContainer }}>
+
         {props.children}
+
       </TokenContext.Provider>
+
     )} />
+
   )
 }
 class TokenNegotiatorInstance extends React.Component {
+  
   constructor(props) {
+    
     super(props);
 
     window.negotiator = new Client({
@@ -69,13 +101,18 @@ class TokenNegotiatorInstance extends React.Component {
           heading: "Get discount with Ticket",
           theme: "light",
           position: "bottom-right"
-        },
-        filters: {},
-      }
+        }
+      },
+      filter: {}
     });
     window.negotiator.negotiate();
   }
-  render() { return this.props.render({ negotiator: negotiator, modalContainer: null }) };
+  render() {
+    return this.props.render({ 
+      negotiator: negotiator, 
+      modalContainer: null 
+    })
+  };
 }
 
 export { TokenContext, TokenContextProvider }

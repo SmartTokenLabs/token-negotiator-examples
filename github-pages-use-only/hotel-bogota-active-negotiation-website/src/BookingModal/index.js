@@ -45,7 +45,7 @@ export default function BookingModal({room}) {
     try {
       // authenticate discount ticket is valid
       const authenticationData = await negotiator.authenticate({
-        unEndPoint: 'https://crypto-verify.herokuapp.com/use-devcon-ticket',
+        issuer: 'devcon',
         unsignedToken: tokens[0]
       });
 
