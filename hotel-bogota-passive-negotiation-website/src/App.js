@@ -44,6 +44,7 @@ function App() {
     window.negotiator.on("token-proof", (proofObj) => {
 
       setTimeout(() => {
+
         console.log('proof', proofObj);
         setTokenProofData(proofObj);
         // share discount price via react state with the user inside react view.

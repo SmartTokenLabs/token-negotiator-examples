@@ -9,7 +9,7 @@ var Outlet = (function () {
             emitCookieSupport: function () {
                 window.parent.postMessage({
                     evt: "cookie-support-check",
-                    data: { thirdPartyCookies: localStorage.getItem('cookie-support-check') }
+                    thirdPartyCookies: localStorage.getItem('cookie-support-check')
                 }, document.referrer);
             },
             emitTabIssuerTokens: function (opener, storageTokens, parentOrigin) {
@@ -34,9 +34,8 @@ var Outlet = (function () {
                 }, document.referrer);
             },
             emitTokenProofIframe: function (tokenProof) {
-                console.log('emit event to parent');
                 window.parent.postMessage({
-                    evt: 'proof',
+                    evt: 'proof-iframe',
                     proof: JSON.stringify(tokenProof),
                     issuer: _this.tokenName
                 }, document.referrer);
@@ -47,7 +46,7 @@ var Outlet = (function () {
                 if (opener && referrer) {
                     var pUrl = new URL(referrer);
                     var parentOrigin = pUrl.origin;
-                    opener.postMessage({ evt: "proof", proof: tokenProof, issuer: _this.tokenName }, parentOrigin);
+                    opener.postMessage({ evt: "proof-tab", proof: tokenProof, issuer: _this.tokenName }, parentOrigin);
                 }
             }
         };
@@ -113,13 +112,10 @@ var Outlet = (function () {
     };
     Outlet.prototype.sendTokenProof = function (token, type) {
         var _this = this;
-        console.log('send token proof iframe', token, type);
         if (!token)
             return 'error';
         var unsignedToken = JSON.parse(token);
-        console.log('send token proof iframe: unsigned token', unsignedToken);
         rawTokenCheck(unsignedToken, this.tokenIssuer).then(function (tokenObj) {
-            console.log('send token proof iframe: tokenObj', tokenObj);
             window.authenticator.getAuthenticationBlob(tokenObj, function (tokenProof) {
                 if (type === 'iframe')
                     _this.eventSender.emitTokenProofIframe(tokenProof);

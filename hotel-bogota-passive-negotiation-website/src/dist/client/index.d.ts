@@ -25,7 +25,7 @@ interface AuthenticateInterface {
 }
 export declare class Client {
     issuers: string[];
-    issuerIframeRefs: {};
+    issuerTabInstanceRefs: {};
     type: string;
     filter: {};
     options: any;
@@ -38,8 +38,8 @@ export declare class Client {
     setPassiveNegotiationWebTokens(offChainTokens: any): Promise<void>;
     setBlockChainTokens(onChainTokens: any): Promise<void>;
     negotiate(): Promise<void>;
-    activeNegotiationStrategy(iframeStorageSupport: boolean): Promise<void>;
-    passiveNegotiationStrategy(iframeStorageSupport: boolean): Promise<void>;
+    activeNegotiationStrategy(): Promise<void>;
+    passiveNegotiationStrategy(): Promise<void>;
     embedTokenConnectClientOverlayIframe(): void;
     embedTokenConnectClientOverlayTab(): void;
     embedIframeClientOverlay(): void;
