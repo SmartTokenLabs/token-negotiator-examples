@@ -15,69 +15,34 @@ const TokenContextProvider = (props) => {
   const [tokens, setTokens] = useState([]);
 
   const [proof, setProof] = useState();
+  
+  setTimeout(() => {
 
-  useEffect(() => {
+    window.negotiator.on("tokens-selected", (tokens) => { 
+    
+      let selectedTokens = [];
 
-    window.addEventListener('message', handleTokenUpdate);
+      tokenKeys.map((token) => {
+        selectedTokens.push(...tokens.selectedTokens[token].tokens);
+      });
 
-    return () => {
+      setTokens(selectedTokens);
 
-      window.removeEventListener('message', handleTokenUpdate);
+    });
 
-    };
+    window.negotiator.on("token-proof", (proof) => { 
+          
+      setProof(proof);
 
-  }, []);
+    });
 
-  const handleTokenUpdate = (event) => {
-
-    switch (event.data.evt) {
-
-      case 'token-negotiator-token-proof':
-
-        /*
-
-            String
-
-        */
-
-        setProof(event.data.proof);
-
-        console.log('proof', event.data);
-
-      break;
-      case 'token-negotiator-tokens':
-
-        /*
-
-            {
-                devcon: ["token", "token", "token"],
-                liscon: ["token", "token", "token"],
-                kitties: ["token", "token"]
-            }
-
-        */
-
-        let selectedTokens = [];
-
-        tokenKeys.map((token) => {
-
-            selectedTokens.push(...event.data.selectedTokens[token].tokens);
-
-        });
-
-        setTokens(selectedTokens);
-
-        console.log('tokens', event.data);
-
-      break;
-    }
-  }
+  }, 0);
 
   return (
 
     <TokenNegotiatorInstance render={({ negotiator, modalContainer }) => (
 
-      <TokenContext.Provider value={{ tokens, proof, negotiator, modalContainer }}>
+      <TokenContext.Provider props={negotiator} value={{ tokens, proof, negotiator, modalContainer }}>
 
         {props.children}
 

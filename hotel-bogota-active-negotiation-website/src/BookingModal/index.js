@@ -49,7 +49,7 @@ export default function BookingModal({room}) {
   }
 
   const book = async (formData) => {
-    const checkoutEndPoint = "https://raw.githubusercontent.com/TokenScript/token-negotiator/main/examples/hotel-bogota/mockbackend-responses/pay.json";
+    const checkoutEndPoint = "https://raw.githubusercontent.com/TokenScript/token-negotiator-examples/main/mock-backend-payment-process-request.json?";
     const params = {
       tokenProof: proof,
       bookingData: {formData}

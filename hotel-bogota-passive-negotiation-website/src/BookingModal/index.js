@@ -58,9 +58,6 @@ export default function BookingModal({ roomType, applyDiscount, discount, price,
   const discountOfferValue = (discountPerc / 100) * price;
   const viewPrice = price - discountOfferValue;
 
-  // example of application of tickets that can be used to apply a discount
-  const discountTicketClasses = ["0"];
-
   return (
     <div>
       <Button
@@ -103,7 +100,6 @@ export default function BookingModal({ roomType, applyDiscount, discount, price,
               <div className="ticketWrapper">
               {tokens &&
                 tokens
-                  .filter(_token => discountTicketClasses.toString().indexOf(_token.ticketClass) > -1)
                   .map((token, index) => (
                     <div key={index}>
                       <Card

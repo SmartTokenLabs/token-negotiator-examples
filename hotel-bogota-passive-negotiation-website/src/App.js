@@ -18,14 +18,17 @@ const tokenIssuers = ['devcon'];
 
 function App() {
 
-  let negotiator = new Client({
+  window.negotiator = new Client({
     type: 'passive',
     issuers: tokenIssuers,
     options: {}
   });
 
+
   // devcont tickets (react state of tokens)
   let [tokens, setTokens] = useState([]);
+
+  let [tokenProofData, setTokenProofData] = useState({ issuer: null, proof: null });
 
   // react state of token specical offer
   let [freeShuttle, setFreeShuttle] = useState(false);
@@ -36,8 +39,20 @@ function App() {
   // selected token instance to apply discount, with the discount value on hotel booking.
   let [discount, setDiscount] = useState({ value: undefined, tokenInstance: null });
 
-  // token proof
-  let [useDiscountProof, setUseDiscountProof] = useState({ useTicket: undefined, ethKey: undefined });
+  setTimeout(() => {
+
+    window.negotiator.on("token-proof", (proofObj) => {
+
+      setTimeout(() => {
+        console.log('proof', proofObj);
+        setTokenProofData(proofObj);
+        // share discount price via react state with the user inside react view.
+        setDiscount({ value: getApplicableDiscount(), tokenInstance: tokens[0] });
+      }, 0);
+
+    });
+
+  }, 0);
 
   // async example of initial hotel data loaded from source
   const getRoomTypesData = () => {
@@ -57,39 +72,39 @@ function App() {
 
       // clear discount
       setDiscount({ value: undefined, tokenInstance: undefined });
+      setTokenProofData({ issuer: null, proof: null });
 
     } else {
 
-      negotiator.authenticate({
+      window.negotiator.authenticate({
         issuer: 'devcon',
         unsignedToken: tokens[0]
       });
 
     }
+
   }
 
   // This is the example at which the hotel would begin a hotel room booking transaction.
   const book = async (formData) => {
-    const params = { discount: useDiscountProof, bookingData: { formData } };
-    // Make Transaction
-    if (params.discount.proof) alert('Transaction Complete, we look forward to your stay with us!');
+    const checkoutEndPoint = "https://raw.githubusercontent.com/TokenScript/token-negotiator-examples/main/mock-backend-payment-process-request.json?";
+    const params = {
+      tokenProof: tokenProofData.proof,
+      bookingData: { formData }
+    }
+    fetch(checkoutEndPoint + new URLSearchParams(params)).then(_data => {
+      if(tokenProofData.proof) {
+        alert('Transaction Complete with token discount, we look forward to your stay with us!');
+      } else {
+        alert('Transaction Complete with no discount, we look forward to your stay with us!');
+      }
+    });
   }
 
   // negotiation happens when this method is triggered
   // before this time, the token-negotiator is not used.
   const getTokens = () => {
-    negotiator.negotiate().then((issuerTokens) => {
-      let tokens = [];
-      tokenIssuers.map(( issuer ) => {
-        tokens.push(...issuerTokens[issuer].tokens);
-      });
-      if (tokens.length > 0) {
-        setTokens(tokens);
-        setFreeShuttle(true);
-      }
-    }).catch((err) => {
-      console.log('error', err);
-    });
+    window.negotiator.negotiate();
   }
 
   // react effect
@@ -99,6 +114,17 @@ function App() {
     // async event to acquire tokens
     getTokens();
   }, []);
+
+  window.negotiator.on('tokens', (issuerTokens) => {
+    let tokens = [];
+    tokenIssuers.map((issuer) => {
+      tokens.push(...issuerTokens[issuer].tokens);
+    });
+    if (tokens.length > 0) {
+      setTokens(tokens);
+      setFreeShuttle(true);
+    }
+  });
 
   return (
     <div>

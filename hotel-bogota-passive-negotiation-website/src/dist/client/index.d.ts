@@ -1,5 +1,11 @@
 import "./../theme/style.css";
 import './../vendor/keyShape';
+interface GetTokenInterface {
+    issuer: string;
+    filter: any;
+    tokensOrigin: any;
+    negotiationType: string;
+}
 interface NegotiationInterface {
     type: string;
     issuers: string[];
@@ -27,13 +33,16 @@ export declare class Client {
     onChainTokens: any;
     selectedTokens: any;
     constructor(config: NegotiationInterface);
-    setWebTokens(offChainTokens: any): Promise<void>;
+    openIframe(url: any): Promise<unknown>;
+    getTokensIframe(config: GetTokenInterface): Promise<unknown>;
+    setPassiveNegotiationWebTokens(offChainTokens: any): Promise<void>;
     setBlockChainTokens(onChainTokens: any): Promise<void>;
-    negotiate(): Promise<any>;
-    passiveNegotiationStrategy(): Promise<any>;
-    activeNegotiationStrategy(): void;
-    embedTokenConnectClientOverlay(): void;
-    embedStandardClientOverlay(): void;
+    negotiate(): Promise<void>;
+    activeNegotiationStrategy(iframeStorageSupport: boolean): Promise<void>;
+    passiveNegotiationStrategy(iframeStorageSupport: boolean): Promise<void>;
+    embedTokenConnectClientOverlayIframe(): void;
+    embedTokenConnectClientOverlayTab(): void;
+    embedIframeClientOverlay(): void;
     addTheme(): void;
     assignFabButtonAnimation(): void;
     openOverlay(openOverlay: boolean): void;
@@ -42,17 +51,26 @@ export declare class Client {
     navigateToTokensView(event: any): void;
     embedTokensIntoView(issuer: any): void;
     showTokenView(issuer: string): void;
-    connectToken(event: any): void;
+    connectTokenIssuerWithIframe(event: any): void;
+    connectTokenIssuerWithTab(event: any): void;
     tokenToggleSelection(): void;
-    authenticate(config: AuthenticateInterface): Promise<{
+    authenticate(config: AuthenticateInterface): Promise<void>;
+    checkPublicAddressMatch(issuer: string, unsignedToken: any): Promise<true | {
         status: boolean;
         useEthKey: null;
         proof: null;
     } | undefined>;
-    getTokenProof(unsignedToken: any, issuer: any): Promise<void>;
+    getTokenProofIframe(issuer: any, unsignedToken: any): Promise<unknown>;
+    getTokenProofTab(issuer: any, unsignedToken: any): Promise<void>;
+    eventSender: {
+        emitAllTokensToClient: (tokens: any) => void;
+        emitSelectedTokensToClient: () => void;
+        emitProofToClient: (proof: any, issuer: any) => void;
+    };
     eventReciever: (event: any) => void;
     addTokenThroughTab(magicLink: any): void;
     addTokenThroughIframe(magicLink: any): void;
-    attachPostMessageListener(listener: any): void;
+    thirdPartyCookieSupportCheck(tokensOrigin: any): Promise<unknown>;
+    on(type: string, callback: any, data: any): any;
 }
 export {};

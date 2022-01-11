@@ -169,13 +169,13 @@ var Client = (function () {
             }
             var listener = function (event) {
                 if (event.data.evt === 'tokens') {
-                    var issuer = event.data.data.issuer;
+                    var issuer = event.data.issuer;
                     var childURL = tokenLookup[issuer].tokenOrigin;
                     var cUrl = new URL(childURL);
                     var childUrlOrigin = cUrl.origin;
                     if (event.origin != childUrlOrigin)
                         return;
-                    _this.offChainTokens[issuer].tokens = event.data.data.tokens;
+                    _this.offChainTokens[issuer].tokens = event.data.tokens;
                     if (window.negotiator.issuerIframeRefs[issuer]) {
                         window.negotiator.issuerIframeRefs[issuer].close();
                         delete window.negotiator.issuerIframeRefs[issuer];

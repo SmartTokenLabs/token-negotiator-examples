@@ -45,38 +45,58 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { asyncHandle, requiredParams } from './../utils/index';
-import { getTokens, getChallengeSigned, validateUseEthKey, connectMetamaskAndGetAddress } from "../core/index";
-import { createOverlayMarkup, createFabButton, createToken, issuerConnectTab } from './componentFactory';
+import { asyncHandle, requiredParams, attachPostMessageListener } from './../utils/index';
+import { getChallengeSigned, validateUseEthKey, connectMetamaskAndGetAddress } from "../core/index";
+import { createOverlayMarkup, createFabButton, createToken, issuerConnectTab, issuerConnectIframe } from './componentFactory';
 import { tokenLookup } from './../tokenLookup';
 import "./../theme/style.css";
 import './../vendor/keyShape';
 var Client = (function () {
     function Client(config) {
         var _this = this;
+        this.eventSender = {
+            emitAllTokensToClient: function (tokens) {
+                _this.on("tokens", null, tokens);
+            },
+            emitSelectedTokensToClient: function () {
+                _this.on("tokens-selected", null, { selectedTokens: window.negotiator.selectedTokens });
+            },
+            emitProofToClient: function (proof, issuer) {
+                _this.on("token-proof", null, { proof: proof, issuer: issuer });
+            }
+        };
         this.eventReciever = function (event) {
             switch (event.data.evt) {
-                case 'tokens':
-                    var issuer = event.data.data.issuer;
+                case 'set-tab-issuer-tokens':
+                    var issuer = event.data.issuer;
                     var childURL = tokenLookup[issuer].tokenOrigin;
                     var cUrl = new URL(childURL);
                     var childUrlOrigin = cUrl.origin;
                     if (event.origin != childUrlOrigin)
                         return;
-                    _this.offChainTokens[issuer].tokens = event.data.data.tokens;
+                    _this.offChainTokens[issuer].tokens = event.data.tokens;
                     if (window.negotiator.issuerIframeRefs[issuer]) {
                         window.negotiator.issuerIframeRefs[issuer].close();
                         delete window.negotiator.issuerIframeRefs[issuer];
                         _this.issuerConnected(issuer);
                     }
                     break;
+                case 'set-iframe-issuer-tokens-active':
+                    var issuer = event.data.issuer;
+                    _this.offChainTokens[issuer].tokens = event.data.tokens;
+                    _this.issuerConnected(issuer);
+                    break;
                 case 'proof':
-                    window.postMessage({ evt: 'token-negotiator-token-proof', proof: event.data.data.proof, issuer: event.data.data.issuer }, window.location.origin);
-                    window.negotiator.issuerIframeRefs[event.data.data.issuer].close();
+                    if (window.negotiator.issuerIframeRefs[event.data.issuer]) {
+                        window.negotiator.issuerIframeRefs[event.data.issuer].close();
+                    }
+                    _this.eventSender.emitProofToClient(event.data.proof, event.data.issuer);
                     break;
             }
         };
         var type = config.type, issuers = config.issuers, options = config.options, filter = config.filter;
+        requiredParams(type, 'type is required.');
+        requiredParams(issuers, 'issuers are missing.');
         this.tokenLookup = tokenLookup;
         this.type = type;
         this.options = options;
@@ -85,6 +105,7 @@ var Client = (function () {
         this.offChainTokens = { tokenKeys: [] };
         this.onChainTokens = { tokenKeys: [] };
         this.selectedTokens = {};
+        this.clientCallBackEvents = {};
         issuers.map(function (issuer) {
             if (tokenLookup[issuer].onChain === true) {
                 _this.onChainTokens.tokenKeys.push(issuer);
@@ -95,22 +116,67 @@ var Client = (function () {
                 _this.offChainTokens[issuer] = { tokens: [] };
             }
         });
-        this.attachPostMessageListener(this.eventReciever);
+        attachPostMessageListener(this.eventReciever);
     }
-    Client.prototype.setWebTokens = function (offChainTokens) {
+    Client.prototype.openIframe = function (url) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2, new Promise(function (resolve, reject) {
+                        var iframe = document.createElement('iframe');
+                        iframe.src = url;
+                        iframe.style.width = '1px';
+                        iframe.style.height = '1px';
+                        iframe.style.opacity = '0';
+                        document.body.appendChild(iframe);
+                        iframe.onload = function () {
+                            resolve(iframe);
+                        };
+                    })];
+            });
+        });
+    };
+    Client.prototype.getTokensIframe = function (config) {
+        return __awaiter(this, void 0, void 0, function () {
+            var issuer, filter, tokensOrigin, negotiationType;
+            var _this = this;
+            return __generator(this, function (_a) {
+                issuer = config.issuer, filter = config.filter, tokensOrigin = config.tokensOrigin, negotiationType = config.negotiationType;
+                return [2, new Promise(function (resolve, reject) {
+                        var listener = function (event) {
+                            if (event.data.evt === 'set-iframe-issuer-tokens-passive') {
+                                resolve(event.data.tokens);
+                            }
+                        };
+                        attachPostMessageListener(listener);
+                        _this.openIframe(tokensOrigin + "?action=get-iframe-issuer-tokens&type=" + negotiationType + "&filter=" + JSON.stringify(filter)).then(function (iframeRef) {
+                            if (iframeRef) {
+                                iframeRef.contentWindow.postMessage({
+                                    evt: 'getTokens'
+                                }, tokensOrigin);
+                                if (!window.negotiator.issuerIframeRefs) {
+                                    window.negotiator.issuerIframeRefs = {};
+                                }
+                                window.negotiator.issuerIframeRefs[issuer] = iframeRef;
+                            }
+                        }).catch(function (error) { });
+                    })];
+            });
+        });
+    };
+    Client.prototype.setPassiveNegotiationWebTokens = function (offChainTokens) {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4, Promise.all(offChainTokens.tokenKeys.map(function (issuer) { return __awaiter(_this, void 0, void 0, function () {
-                            var _a, tokenOrigin, itemStorageKey, tokenParser, unsignedTokenDataName, tokens;
-                            return __generator(this, function (_b) {
-                                switch (_b.label) {
+                            var tokenOrigin, tokens;
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
                                     case 0:
-                                        _a = tokenLookup[issuer], tokenOrigin = _a.tokenOrigin, itemStorageKey = _a.itemStorageKey, tokenParser = _a.tokenParser, unsignedTokenDataName = _a.unsignedTokenDataName;
-                                        return [4, getTokens({ filter: {}, tokensOrigin: tokenOrigin, itemStorageKey: itemStorageKey, tokenParser: tokenParser, unsignedTokenDataName: unsignedTokenDataName })];
+                                        tokenOrigin = tokenLookup[issuer].tokenOrigin;
+                                        return [4, this.getTokensIframe({ issuer: issuer, filter: this.filter, tokensOrigin: tokenOrigin, negotiationType: 'passive' })];
                                     case 1:
-                                        tokens = _b.sent();
+                                        tokens = _a.sent();
                                         this.offChainTokens[issuer].tokens = tokens;
                                         return [2];
                                 }
@@ -132,38 +198,56 @@ var Client = (function () {
     };
     Client.prototype.negotiate = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _a = window.negotiator;
+                        return [4, this.thirdPartyCookieSupportCheck(tokenLookup[this.offChainTokens.tokenKeys[0]].tokenOrigin)];
+                    case 1:
+                        _a.iframeStorageSupport = _b.sent();
+                        if (!(this.type === 'active')) return [3, 2];
+                        this.activeNegotiationStrategy(this.iframeStorageSupport);
+                        return [3, 4];
+                    case 2: return [4, this.passiveNegotiationStrategy(this.iframeStorageSupport)];
+                    case 3: return [2, _b.sent()];
+                    case 4: return [2];
+                }
+            });
+        });
+    };
+    Client.prototype.activeNegotiationStrategy = function (iframeStorageSupport) {
+        return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                if (this.type === 'active') {
-                    this.activeNegotiationStrategy();
+                if (!iframeStorageSupport) {
+                    this.embedTokenConnectClientOverlayTab();
                 }
                 else {
-                    return [2, this.passiveNegotiationStrategy()];
+                    this.embedTokenConnectClientOverlayIframe();
                 }
                 return [2];
             });
         });
     };
-    Client.prototype.passiveNegotiationStrategy = function () {
+    Client.prototype.passiveNegotiationStrategy = function (iframeStorageSupport) {
         return __awaiter(this, void 0, void 0, function () {
             var outputOnChain, outputOffChain;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, asyncHandle(this.setWebTokens(this.offChainTokens))];
+                    case 0: return [4, asyncHandle(this.setPassiveNegotiationWebTokens(this.offChainTokens))];
                     case 1:
                         _a.sent();
                         outputOnChain = this.onChainTokens;
                         delete outputOnChain.tokenKeys;
                         outputOffChain = this.offChainTokens;
                         delete outputOffChain.tokenKeys;
-                        return [2, __assign(__assign({}, outputOffChain), outputOnChain)];
+                        window.negotiator.eventSender.emitAllTokensToClient(__assign(__assign({}, outputOffChain), outputOnChain));
+                        return [2];
                 }
             });
         });
     };
-    Client.prototype.activeNegotiationStrategy = function () {
-        this.embedTokenConnectClientOverlay();
-    };
-    Client.prototype.embedTokenConnectClientOverlay = function () {
+    Client.prototype.embedTokenConnectClientOverlayIframe = function () {
         var _this = this;
         setTimeout(function () {
             var _a, _b;
@@ -175,17 +259,39 @@ var Client = (function () {
                 var refIssuerContainerSelector_1 = document.querySelector(".token-issuer-list-container-tn");
                 refIssuerContainerSelector_1.innerHTML = "";
                 _this.offChainTokens.tokenKeys.map(function (issuer) {
-                    refIssuerContainerSelector_1.innerHTML += issuerConnectTab(issuer);
+                    refIssuerContainerSelector_1.innerHTML += issuerConnectIframe(issuer);
                 });
                 _this.assignFabButtonAnimation();
                 _this.addTheme();
             }
             window.tokenToggleSelection = _this.tokenToggleSelection;
-            window.connectToken = _this.connectToken;
+            window.connectTokenIssuerWithIframe = _this.connectTokenIssuerWithIframe;
             window.navigateToTokensView = _this.navigateToTokensView;
         }, 0);
     };
-    Client.prototype.embedStandardClientOverlay = function () {
+    Client.prototype.embedTokenConnectClientOverlayTab = function () {
+        var _this = this;
+        setTimeout(function () {
+            var _a, _b;
+            var entryPointElement = document.querySelector(".overlay-tn");
+            requiredParams(entryPointElement, 'No entry point element with the class name of .overlay-tn found.');
+            if (entryPointElement) {
+                entryPointElement.innerHTML += createOverlayMarkup((_b = (_a = _this.options) === null || _a === void 0 ? void 0 : _a.overlay) === null || _b === void 0 ? void 0 : _b.heading);
+                entryPointElement.innerHTML += createFabButton();
+                var refIssuerContainerSelector_2 = document.querySelector(".token-issuer-list-container-tn");
+                refIssuerContainerSelector_2.innerHTML = "";
+                _this.offChainTokens.tokenKeys.map(function (issuer) {
+                    refIssuerContainerSelector_2.innerHTML += issuerConnectTab(issuer);
+                });
+                _this.assignFabButtonAnimation();
+                _this.addTheme();
+            }
+            window.tokenToggleSelection = _this.tokenToggleSelection;
+            window.connectTokenIssuerWithTab = _this.connectTokenIssuerWithTab;
+            window.navigateToTokensView = _this.navigateToTokensView;
+        }, 0);
+    };
+    Client.prototype.embedIframeClientOverlay = function () {
         var _this = this;
         var _a, _b;
         var _index = 0;
@@ -321,10 +427,16 @@ var Client = (function () {
             });
         }
     };
-    Client.prototype.connectToken = function (event) {
+    Client.prototype.connectTokenIssuerWithIframe = function (event) {
+        var issuer = event.currentTarget.dataset.issuer;
+        var filter = window.negotiator.filter ? window.negotiator.filter : {};
+        var tokensOrigin = window.negotiator.tokenLookup[issuer].tokenOrigin;
+        window.negotiator.getTokensIframe({ issuer: issuer, filter: filter, tokensOrigin: tokensOrigin, negotiationType: 'active' });
+    };
+    Client.prototype.connectTokenIssuerWithTab = function (event) {
         var issuer = event.target.dataset.issuer;
         var filter = window.negotiator.filter ? JSON.stringify(window.negotiator.filter) : '{}';
-        var tabRef = window.open(tokenLookup[issuer].tokenOrigin + "?action=get-tokens&filter=" + filter, "win1", "left=0,top=0,width=320,height=320");
+        var tabRef = window.open(tokenLookup[issuer].tokenOrigin + "?action=get-tab-issuer-tokens&filter=" + filter, "win1", "left=0,top=0,width=320,height=320");
         if (!window.negotiator.issuerIframeRefs) {
             window.negotiator.issuerIframeRefs = {};
         }
@@ -342,40 +454,91 @@ var Client = (function () {
                 window.negotiator.selectedTokens[token.dataset.key].tokens.push(output);
             }
         });
-        window.postMessage({ evt: 'token-negotiator-tokens', selectedTokens: window.negotiator.selectedTokens }, window.location.origin);
+        window.negotiator.eventSender.emitSelectedTokensToClient();
     };
     Client.prototype.authenticate = function (config) {
         return __awaiter(this, void 0, void 0, function () {
-            var issuer, unsignedToken, _a, unEndPoint, onChain, useEthKey, attestedAddress, walletAddress;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            var issuer, unsignedToken, addressMatch;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
                         issuer = config.issuer, unsignedToken = config.unsignedToken;
-                        _a = tokenLookup[issuer], unEndPoint = _a.unEndPoint, onChain = _a.onChain;
-                        if (onChain === true || !unsignedToken || !unEndPoint)
-                            return [2, { status: false, useEthKey: null, proof: null }];
-                        return [4, getChallengeSigned(tokenLookup[issuer])];
+                        requiredParams((issuer && unsignedToken), { status: false, useEthKey: null, proof: null });
+                        return [4, this.checkPublicAddressMatch(issuer, unsignedToken)];
                     case 1:
-                        useEthKey = _b.sent();
-                        return [4, validateUseEthKey(unEndPoint, useEthKey)];
+                        addressMatch = _a.sent();
+                        if (!addressMatch) {
+                            return [2];
+                        }
+                        if (!this.iframeStorageSupport) return [3, 3];
+                        return [4, this.getTokenProofIframe(issuer, unsignedToken)];
                     case 2:
-                        attestedAddress = _b.sent();
-                        return [4, connectMetamaskAndGetAddress()];
-                    case 3:
-                        walletAddress = _b.sent();
-                        if (walletAddress.toLowerCase() !== attestedAddress.toLowerCase())
-                            throw new Error('useEthKey validation failed.');
-                        this.getTokenProof(unsignedToken, issuer);
-                        return [2];
+                        _a.sent();
+                        return [3, 5];
+                    case 3: return [4, this.getTokenProofTab(issuer, unsignedToken)];
+                    case 4:
+                        _a.sent();
+                        _a.label = 5;
+                    case 5: return [2];
                 }
             });
         });
     };
-    Client.prototype.getTokenProof = function (unsignedToken, issuer) {
+    Client.prototype.checkPublicAddressMatch = function (issuer, unsignedToken) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, unEndPoint, onChain, useEthKey, attestedAddress, walletAddress, e_1;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _a = tokenLookup[issuer], unEndPoint = _a.unEndPoint, onChain = _a.onChain;
+                        if (onChain === true || !unsignedToken || !unEndPoint)
+                            return [2, { status: false, useEthKey: null, proof: null }];
+                        _b.label = 1;
+                    case 1:
+                        _b.trys.push([1, 5, , 6]);
+                        return [4, getChallengeSigned(tokenLookup[issuer])];
+                    case 2:
+                        useEthKey = _b.sent();
+                        return [4, validateUseEthKey(unEndPoint, useEthKey)];
+                    case 3:
+                        attestedAddress = _b.sent();
+                        return [4, connectMetamaskAndGetAddress()];
+                    case 4:
+                        walletAddress = _b.sent();
+                        if (walletAddress.toLowerCase() !== attestedAddress.toLowerCase())
+                            throw new Error('useEthKey validation failed.');
+                        return [2, true];
+                    case 5:
+                        e_1 = _b.sent();
+                        requiredParams(null, "Could not authenticate token");
+                        return [3, 6];
+                    case 6: return [2];
+                }
+            });
+        });
+    };
+    Client.prototype.getTokenProofIframe = function (issuer, unsignedToken) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2, new Promise(function (resolve, reject) {
+                        var iframe = document.createElement('iframe');
+                        iframe.src = tokenLookup[issuer].tokenOrigin + "?action=get-token-proof&token=" + JSON.stringify(unsignedToken) + "&issuer=" + issuer + "&type=iframe";
+                        iframe.style.width = '1px';
+                        iframe.style.height = '1px';
+                        iframe.style.opacity = '0';
+                        document.body.appendChild(iframe);
+                        iframe.onload = function () {
+                            resolve(true);
+                        };
+                    })];
+            });
+        });
+    };
+    Client.prototype.getTokenProofTab = function (issuer, unsignedToken) {
         return __awaiter(this, void 0, void 0, function () {
             var tabRef;
             return __generator(this, function (_a) {
-                tabRef = window.open(tokenLookup[issuer].tokenOrigin + "?action=get-token-proof&token=" + JSON.stringify(unsignedToken) + "&issuer=" + issuer, "win1", "left=0,top=0,width=" + window.innerWidth + ",height=" + window.innerHeight);
+                tabRef = window.open(tokenLookup[issuer].tokenOrigin + "?action=get-token-proof&token=" + JSON.stringify(unsignedToken) + "&issuer=" + issuer + "&type=tab", "win1", "left=0,top=0,width=" + window.innerWidth + ",height=" + window.innerHeight);
                 if (!window.negotiator.issuerIframeRefs) {
                     window.negotiator.issuerIframeRefs = {};
                 }
@@ -391,19 +554,41 @@ var Client = (function () {
         }, 2500);
     };
     Client.prototype.addTokenThroughIframe = function (magicLink) {
-        var iframe = document.createElement('iframe');
-        iframe.src = magicLink;
-        iframe.style.width = '1px';
-        iframe.style.height = '1px';
-        iframe.style.opacity = '0';
-        document.body.appendChild(iframe);
+        this.openIframe(magicLink);
     };
-    Client.prototype.attachPostMessageListener = function (listener) {
-        if (window.addEventListener) {
-            window.addEventListener("message", listener, false);
+    Client.prototype.thirdPartyCookieSupportCheck = function (tokensOrigin) {
+        return __awaiter(this, void 0, void 0, function () {
+            var iframe;
+            return __generator(this, function (_a) {
+                iframe = document.createElement('iframe');
+                iframe.src = tokensOrigin + '?action=cookie-support-check';
+                iframe.style.width = '1px';
+                iframe.style.height = '1px';
+                iframe.style.opacity = '0';
+                document.body.appendChild(iframe);
+                return [2, new Promise(function (resolve) {
+                        var listener = function (event) {
+                            if (event.data.evt === 'cookie-support-check') {
+                                resolve(event.data.thirdPartyCookies ? true : false);
+                            }
+                            setTimeout(function () {
+                                resolve(null);
+                            }, 15000);
+                        };
+                        attachPostMessageListener(listener);
+                    })];
+            });
+        });
+    };
+    Client.prototype.on = function (type, callback, data) {
+        requiredParams(type, "Event type is not defined");
+        if (callback) {
+            this.clientCallBackEvents[type] = callback;
         }
         else {
-            window.attachEvent("onmessage", listener);
+            if (this.clientCallBackEvents[type]) {
+                return this.clientCallBackEvents[type].call(type, data);
+            }
         }
     };
     return Client;

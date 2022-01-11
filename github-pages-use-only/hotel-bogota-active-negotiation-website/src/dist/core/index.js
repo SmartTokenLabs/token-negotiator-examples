@@ -317,7 +317,7 @@ export var getTokens = function (config) { return __awaiter(void 0, void 0, void
         return [2, new Promise(function (resolve, reject) {
                 window.addEventListener('message', function (event) {
                     if (event.data.evt === 'tokens') {
-                        var filteredTokens = filterTokens(event.data.data.tokens, filter);
+                        var filteredTokens = filterTokens(event.data.tokens, filter);
                         resolve(filteredTokens);
                     }
                 }, false);

@@ -97,22 +97,6 @@ export var decodeTokens = function (rawTokens, tokenParser, unsignedTokenDataNam
         return [];
     }
 };
-export var openOutletIframe = function (tokensOrigin) {
-    return new Promise(function (resolve, reject) {
-        var iframe = document.createElement('iframe');
-        iframe.src = tokensOrigin;
-        iframe.style.width = '1px';
-        iframe.style.height = '1px';
-        iframe.style.opacity = '0';
-        document.body.appendChild(iframe);
-        iframe.onload = function () {
-            iframe.contentWindow.postMessage({
-                evt: 'getTokens'
-            }, tokensOrigin);
-            resolve(true);
-        };
-    });
-};
 export var storeMagicURL = function (tokens, itemStorageKey) {
     if (tokens) {
         localStorage.setItem(itemStorageKey, JSON.stringify(tokens));
@@ -289,6 +273,7 @@ export var signMessageWithBrowserWallet = function (message) { return __awaiter(
 export var rawTokenCheck = function (unsignedToken, tokenIssuer) { return __awaiter(void 0, void 0, void 0, function () {
     var rawTokenData, base64ticket, ticketSecret, tokenObj;
     return __generator(this, function (_a) {
+        requiredParams(window.ethereum, 'Please install metamask to continue.');
         rawTokenData = getRawToken(unsignedToken, tokenIssuer);
         if (!rawTokenData)
             return [2, null];
@@ -303,23 +288,7 @@ export var rawTokenCheck = function (unsignedToken, tokenIssuer) { return __awai
             tokenObj.email = rawTokenData.id;
         if (rawTokenData && rawTokenData.magic_link)
             tokenObj.magicLink = rawTokenData.magic_link;
-        console.log('good to go....', tokenObj);
         return [2, tokenObj];
-    });
-}); };
-export var getTokens = function (config) { return __awaiter(void 0, void 0, void 0, function () {
-    var filter, tokensOrigin;
-    return __generator(this, function (_a) {
-        filter = config.filter, tokensOrigin = config.tokensOrigin;
-        return [2, new Promise(function (resolve, reject) {
-                window.addEventListener('message', function (event) {
-                    if (event.data.evt === 'tokens') {
-                        var filteredTokens = filterTokens(event.data.data.tokens, filter);
-                        resolve(filteredTokens);
-                    }
-                }, false);
-                openOutletIframe(tokensOrigin).then(function () { }).catch(function (error) { });
-            })];
     });
 }); };
 export var getRawToken = function (unsignedToken, tokenIssuer) {
