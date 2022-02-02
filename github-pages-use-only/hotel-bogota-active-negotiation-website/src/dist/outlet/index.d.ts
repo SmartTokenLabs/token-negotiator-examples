@@ -10,13 +10,22 @@ export declare class Outlet {
     authenticator: any;
     config: any;
     tokenName: any;
+    tokenIssuer: any;
     constructor(config: OutletInterface);
-    prepareTokenOutput(tokenName: string): any;
-    sendTokens(tokenName: string): void;
-    eventReciever: (data: any) => void;
+    getDataFromQuery(itemKey: any): string | undefined;
+    getFilter(): any;
+    pageOnLoadEventHandler(): void;
+    prepareTokenOutput(tokenName: string, filter: any): any;
+    sendTokenProof(token: any, type: any): "error" | undefined;
+    getIframeIssuerTokens(tokenName: string, filter: any, negotiationType: string): void;
+    getTabIssuerTokens(tokenName: string, filter: any): void;
     eventSender: {
-        emitTokens: (tokens: any) => void;
-        emitTokenProof: (tokenProof: any) => void;
+        emitCookieSupport: () => void;
+        emitTabIssuerTokens: (opener: any, storageTokens: any, parentOrigin: any) => void;
+        emitIframeIssuerTokensPassive: (tokens: any) => void;
+        emitIframeIssuerTokensActive: (tokens: any) => void;
+        emitTokenProofIframe: (tokenProof: any) => void;
+        emitTokenProofTab: (tokenProof: any) => void;
     };
 }
 export {};
