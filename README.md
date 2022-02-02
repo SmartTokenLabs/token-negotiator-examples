@@ -14,9 +14,8 @@ See the README's inside each example for configuration and deployment.
 
 ## Running the examples via localhost
 
-- cd into each directory
+- cd into the root of this directory
 - run `npm run install` to install all dependancies
-- run `npm run build` to build all examples
 - run `npm run start` which will serve all examples with a single command
 - Or alternatively, serve each example seperately (see readme inside each directory for more information)
 
