@@ -3,7 +3,7 @@ A repository to host and manage token negotiator example dapps and web apps
 
 TokenScript is a framework which improves functionality, security and usability of blockchain token. It creates a layer between a blockchain and user devices, adding information, rules and functionalites both onchain and offchain. 
 
-For more information please visit: [https://tokenscript.org/](tokenscript.org).
+For more information please visit: [https://tokenscript.org/](https://tokenscript.org/).
 
 ## Examples
 
