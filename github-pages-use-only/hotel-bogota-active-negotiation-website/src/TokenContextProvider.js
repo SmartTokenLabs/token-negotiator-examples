@@ -1,67 +1,69 @@
 import React, { createContext, useState, useEffect } from 'react';
-// import { Client } from '@tokenscript/token-negotiator';
-import { Client } from './dist/client/index';
+import { Client } from '@tokenscript/token-negotiator';
 
-const TokenContext = createContext({ tokens: [] });
+// import { Client } from './dist'; // for local dev of lib only
 
-// List of keys the Token Negotiator wishes to read from (onchain & offchain).
-const tokenKeys = ['devcon'];
+const TokenContext = createContext({ 
+  tokens: []
+});
+
+const tokenKeys = [
+  'devcon-remote'
+];
+
+let negotiator;
 
 const TokenContextProvider = (props) => {
+
   const [tokens, setTokens] = useState([]);
 
+  const [proof, setProof] = useState();
+  
   useEffect(() => {
-    window.addEventListener('message', handleTokenUpdate);
+    
+    negotiator.on("tokens-selected", (tokens) => { 
+    
+      let selectedTokens = [];
 
-    // cleanup this component
-    return () => {
-      window.removeEventListener('message', handleTokenUpdate);
-    };
+      tokenKeys.map((token) => {
+
+        selectedTokens.push(...tokens.selectedTokens[token].tokens);
+        
+      });
+
+      setTokens(selectedTokens);
+
+    });
+
+    negotiator.on("token-proof", (proof) => { 
+          
+      setProof(proof);
+
+    });
+    
   }, []);
 
-  const handleTokenUpdate = (event) => {
-
-    switch (event.data.evt) {
-
-      case 'negotiatedTokensEvt':
-
-        /*
-
-            {
-                devcon: ["token", "token", "token"],
-                liscon: ["token", "token", "token"],
-                kitties: ["token", "token"]
-            }
-
-        */
-
-        let selectedTokens = [];
-
-        tokenKeys.map((token) => {
-            selectedTokens.push(...event.data.selectedTokens[token].tokens);
-        });
-
-        setTokens(selectedTokens);
-
-        console.log('tokens', event.data);
-
-      break;
-    }
-  }
-
   return (
-    <TokenNegotiatorInstance render={({ negotiator, modalContainer }) => (
-      <TokenContext.Provider value={{ tokens, negotiator, modalContainer }}>
+
+    <TokenNegotiatorInstance render={({ negotiator }) => (
+
+      <TokenContext.Provider props={negotiator} value={{ tokens, proof, negotiator }}>
+
         {props.children}
+
       </TokenContext.Provider>
+
     )} />
+
   )
 }
 class TokenNegotiatorInstance extends React.Component {
+  
   constructor(props) {
+    
     super(props);
 
-    window.negotiator = new Client({
+    negotiator = new Client({
       type: 'active',
       issuers: tokenKeys,
       options: {
@@ -69,13 +71,17 @@ class TokenNegotiatorInstance extends React.Component {
           heading: "Get discount with Ticket",
           theme: "light",
           position: "bottom-right"
-        },
-        filters: {},
-      }
+        }
+      },
+      filter: {}
     });
-    window.negotiator.negotiate();
+
+    negotiator.negotiate();
+    
   }
-  render() { return this.props.render({ negotiator: negotiator, modalContainer: null }) };
+  render() {
+    return this.props.render({ negotiator: negotiator })
+  };
 }
 
 export { TokenContext, TokenContextProvider }

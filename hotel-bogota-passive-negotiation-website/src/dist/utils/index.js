@@ -34,6 +34,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
 import { Buffer } from "buffer";
 export var logger = function (item) {
     console.log(item);
@@ -43,16 +54,26 @@ export var requiredParams = function (item, msg) {
         throw new Error(msg);
 };
 export var compareObjects = function (o1, o2) {
+    var e_1, _a;
     var keys1 = Object.keys(o1);
     var keys2 = Object.keys(o2);
     if (keys1.length !== keys2.length) {
         return false;
     }
-    for (var _i = 0, keys1_1 = keys1; _i < keys1_1.length; _i++) {
-        var key = keys1_1[_i];
-        if (o1[key] !== o2[key]) {
-            return false;
+    try {
+        for (var keys1_1 = __values(keys1), keys1_1_1 = keys1_1.next(); !keys1_1_1.done; keys1_1_1 = keys1_1.next()) {
+            var key = keys1_1_1.value;
+            if (o1[key] !== o2[key]) {
+                return false;
+            }
         }
+    }
+    catch (e_1_1) { e_1 = { error: e_1_1 }; }
+    finally {
+        try {
+            if (keys1_1_1 && !keys1_1_1.done && (_a = keys1_1.return)) _a.call(keys1_1);
+        }
+        finally { if (e_1) throw e_1.error; }
     }
     return true;
 };

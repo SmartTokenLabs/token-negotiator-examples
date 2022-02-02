@@ -1,9 +1,9 @@
 import { TokenContextProvider } from './TokenContextProvider';
-import BookingPage from './BookingPage';
+import BookingPage from './pages/BookingPage';
 
 const App = () => {
   return (
-    <TokenContextProvider tokenName={'devcon-ticket'}>
+    <TokenContextProvider>
       <>
         <BookingPage/>
         <div className="overlay-tn"></div>

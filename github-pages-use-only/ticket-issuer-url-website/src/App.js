@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Client } from './dist/client/index';
-import Card from './Card';
+import { Client } from '@tokenscript/token-negotiator';
+// import { Client } from './dist/client/index'; // dev use only
+import Token from './components/Token';
 import './App.css';
 
 const mockTicketData = [
@@ -26,47 +27,56 @@ const mockTicketData = [
   },
 ];
 
-const tokenIssuers = ['devcon'];
+const tokenIssuers = ['devcon-remote'];
 
 function App() {
 
-  // // local react state for tokens
   let [tokens, setTokens] = useState([]);
-  
+
   let negotiator = new Client({
     type: 'passive',
     issuers: tokenIssuers,
     options: {}
   });
 
-  useEffect(() => { getTokens(); }, []);
+  negotiator.on('tokens', (issuerTokens) => {
 
-  const getTokens = () => {
-    negotiator.negotiate().then((issuerTokens) => {
-      let tokens = [];
-      tokenIssuers.map(( issuer ) => {
-        tokens.push(...issuerTokens[issuer].tokens);
-      });
-      if (tokens.length > 0) {
-        setTokens(tokens);
-      }
-    }).catch((err) => {
-      console.log('error', err);
+    let tokens = [];
+    
+    tokenIssuers.map((issuer) => {
+
+      tokens.push(...issuerTokens[issuer].tokens);
+
     });
-  }
+
+    setTokens(tokens);
+    
+  });
+  
+  useEffect(() => {
+
+    negotiator.negotiate();
+
+  }, []);
 
   const openTicketInIframe = async ({event, ticket, secret, id}) => {
     
     event.preventDefault();
 
-    // const magicLink = `http://localhost:3002?ticket=${ticket}&secret=${secret}&id=${id}`;
-    const magicLink = `https://tokenscript.github.io/token-negotiator-examples/github-pages-use-only/token-outlet-website/build/index.html?ticket=${ticket}&secret=${secret}&id=${id}`;
-
-    negotiator.addTokenThroughTab(magicLink); 
-
-    const devconData = await negotiator.negotiate();
+    // localhost:3002
+    // const magicLink = `http://localhost:3002/?ticket=${ticket}&secret=${secret}&id=${id}&action=set-magic-url`;
     
-    if(devconData.success) setTokens(devconData.tokens);
+    // Github examples
+    const magicLink = `https://tokenscript.github.io/token-negotiator-examples/github-pages-use-only/token-outlet-website/build/index.html/?ticket=${ticket}&secret=${secret}&id=${id}&action=set-magic-url`;
+
+    negotiator.addTokenThroughTab(magicLink);
+
+    setTimeout(() => {
+
+      window.negotiator.negotiate();
+
+    }, 3000);
+
   }
 
   return (
@@ -88,7 +98,7 @@ function App() {
         <div className="tokensWrapper">
           {
             tokens && tokens.length > 0 && tokens.map((tokenInstance, index) => {
-              return <Card key={index} tokenInstance={tokenInstance} />
+              return <Token key={index} tokenInstance={tokenInstance} />
             })
           }
           {

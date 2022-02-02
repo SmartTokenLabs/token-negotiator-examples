@@ -32,17 +32,19 @@ export declare class Client {
     offChainTokens: any;
     onChainTokens: any;
     selectedTokens: any;
+    iframeStorageSupport: any;
+    web3WalletProvider: any;
     constructor(config: NegotiationInterface);
     openIframe(url: any): Promise<unknown>;
+    negotiatorConnectToWallet(walletType: string): Promise<void>;
     getTokensIframe(config: GetTokenInterface): Promise<unknown>;
     setPassiveNegotiationWebTokens(offChainTokens: any): Promise<void>;
     setBlockChainTokens(onChainTokens: any): Promise<void>;
     negotiate(): Promise<void>;
     activeNegotiationStrategy(): Promise<void>;
-    passiveNegotiationStrategy(): Promise<void>;
+    passiveNegotiationStrategy(iframeStorageSupport: boolean): Promise<void>;
+    updateOverlayViewState(state: string): void;
     embedTokenConnectClientOverlayIframe(): void;
-    embedTokenConnectClientOverlayTab(): void;
-    embedIframeClientOverlay(): void;
     addTheme(): void;
     assignFabButtonAnimation(): void;
     openOverlay(openOverlay: boolean): void;
@@ -71,6 +73,6 @@ export declare class Client {
     addTokenThroughTab(magicLink: any): void;
     addTokenThroughIframe(magicLink: any): void;
     thirdPartyCookieSupportCheck(tokensOrigin: any): Promise<unknown>;
-    on(type: string, callback: any, data: any): any;
+    on(type: string, callback?: any, data?: any): any;
 }
 export {};

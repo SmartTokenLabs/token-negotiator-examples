@@ -9,17 +9,17 @@ export declare const readMagicUrl: (tokenUrlName: string, tokenSecretName: strin
 export declare const ethKeyIsValid: (ethKey: any) => boolean;
 export declare const validateUseEthKey: (endPoint: string, data: any) => Promise<any>;
 export declare const getUnpredictableNumber: (endPoint: string) => Promise<any>;
-export declare const getChallengeSigned: (tokenIssuer: any) => Promise<any>;
+export declare const getChallengeSigned: (tokenIssuer: any, web3WalletProvider: any) => Promise<any>;
 export declare const connectMetamaskAndGetAddress: () => Promise<any>;
-export declare const signNewChallenge: (unEndPoint: string) => Promise<{
+export declare const signNewChallenge: (unEndPoint: string, web3WalletProvider: any) => Promise<{
     address: string;
     expiry: any;
     domain: any;
     randomness: any;
-    signature: string;
+    signature: any;
     UN: any;
 }>;
-export declare const signMessageWithBrowserWallet: (message: any) => Promise<string>;
+export declare const signMessageWithBrowserWallet: (message: any, web3WalletProvider: any) => Promise<any>;
 export declare const rawTokenCheck: (unsignedToken: any, tokenIssuer: any) => Promise<{
     ticketBlob: any;
     ticketSecret: any;

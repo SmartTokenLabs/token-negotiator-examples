@@ -179,7 +179,7 @@ export var getUnpredictableNumber = function (endPoint) { return __awaiter(void 
         }
     });
 }); };
-export var getChallengeSigned = function (tokenIssuer) { return __awaiter(void 0, void 0, void 0, function () {
+export var getChallengeSigned = function (tokenIssuer, web3WalletProvider) { return __awaiter(void 0, void 0, void 0, function () {
     var storageEthKeys, ethKeys, address, useEthKey, e_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -188,31 +188,36 @@ export var getChallengeSigned = function (tokenIssuer) { return __awaiter(void 0
                 ethKeys = (storageEthKeys && storageEthKeys.length) ? JSON.parse(storageEthKeys) : {};
                 _a.label = 1;
             case 1:
-                _a.trys.push([1, 6, , 7]);
-                return [4, connectMetamaskAndGetAddress()];
+                _a.trys.push([1, 7, , 8]);
+                address = web3WalletProvider.getConnectedWalletData()[0].address;
+                if (!!address) return [3, 3];
+                return [4, web3WalletProvider.connect("MetaMask")];
             case 2:
-                address = _a.sent();
+                _a.sent();
+                address = web3WalletProvider.getConnectedWalletData()[0].address;
+                _a.label = 3;
+            case 3:
                 address = address.toLowerCase();
                 useEthKey = void 0;
                 if (ethKeys && ethKeys[address] && !ethKeyIsValid(ethKeys[address])) {
                     delete ethKeys[address];
                 }
-                if (!(ethKeys && ethKeys[address])) return [3, 3];
+                if (!(ethKeys && ethKeys[address])) return [3, 4];
                 useEthKey = ethKeys[address];
-                return [3, 5];
-            case 3: return [4, signNewChallenge(tokenIssuer.unEndPoint)];
-            case 4:
+                return [3, 6];
+            case 4: return [4, signNewChallenge(tokenIssuer.unEndPoint, web3WalletProvider)];
+            case 5:
                 useEthKey = _a.sent();
                 if (useEthKey) {
                     ethKeys[useEthKey.address.toLowerCase()] = useEthKey;
                     localStorage.setItem(tokenIssuer.ethKeyitemStorageKey, JSON.stringify(ethKeys));
                 }
-                _a.label = 5;
-            case 5: return [2, useEthKey];
-            case 6:
+                _a.label = 6;
+            case 6: return [2, useEthKey];
+            case 7:
                 e_3 = _a.sent();
                 throw new Error(e_3);
-            case 7: return [2];
+            case 8: return [2];
         }
     });
 }); };
@@ -231,15 +236,17 @@ export var connectMetamaskAndGetAddress = function () { return __awaiter(void 0,
         }
     });
 }); };
-export var signNewChallenge = function (unEndPoint) { return __awaiter(void 0, void 0, void 0, function () {
+export var signNewChallenge = function (unEndPoint, web3WalletProvider) { return __awaiter(void 0, void 0, void 0, function () {
     var res, UN, randomness, domain, expiry, messageToSign, signature, msgHash, msgHashBytes, recoveredAddress;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4, getUnpredictableNumber(unEndPoint)];
+            case 0:
+                console.log('sign new challenge');
+                return [4, getUnpredictableNumber(unEndPoint)];
             case 1:
                 res = _a.sent();
                 UN = res.number, randomness = res.randomness, domain = res.domain, expiry = res.expiration, messageToSign = res.messageToSign;
-                return [4, signMessageWithBrowserWallet(messageToSign)];
+                return [4, signMessageWithBrowserWallet(messageToSign, web3WalletProvider)];
             case 2:
                 signature = _a.sent();
                 msgHash = ethers.utils.hashMessage(messageToSign);
@@ -256,17 +263,11 @@ export var signNewChallenge = function (unEndPoint) { return __awaiter(void 0, v
         }
     });
 }); };
-export var signMessageWithBrowserWallet = function (message) { return __awaiter(void 0, void 0, void 0, function () {
-    var provider, signer;
+export var signMessageWithBrowserWallet = function (message, web3WalletProvider) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4, connectMetamaskAndGetAddress()];
-            case 1:
-                _a.sent();
-                provider = new ethers.providers.Web3Provider(window.ethereum);
-                signer = provider.getSigner();
-                return [4, signer.signMessage(message)];
-            case 2: return [2, _a.sent()];
+            case 0: return [4, web3WalletProvider.signWith(message, web3WalletProvider.getConnectedWalletData()[0])];
+            case 1: return [2, _a.sent()];
         }
     });
 }); };

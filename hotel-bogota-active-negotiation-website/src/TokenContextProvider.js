@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
-// import { Client } from '@tokenscript/token-negotiator';
-import { Client } from './dist/client/index';
+import { Client } from '@tokenscript/token-negotiator';
+
+// import { Client } from './dist'; // for local dev of lib only
 
 const TokenContext = createContext({ 
   tokens: []
@@ -10,39 +11,43 @@ const tokenKeys = [
   'devcon'
 ];
 
+let negotiator;
+
 const TokenContextProvider = (props) => {
 
   const [tokens, setTokens] = useState([]);
 
   const [proof, setProof] = useState();
   
-  setTimeout(() => {
-
-    window.negotiator.on("tokens-selected", (tokens) => { 
+  useEffect(() => {
+    
+    negotiator.on("tokens-selected", (tokens) => { 
     
       let selectedTokens = [];
 
       tokenKeys.map((token) => {
+
         selectedTokens.push(...tokens.selectedTokens[token].tokens);
+        
       });
 
       setTokens(selectedTokens);
 
     });
 
-    window.negotiator.on("token-proof", (proof) => { 
+    negotiator.on("token-proof", (proof) => { 
           
       setProof(proof);
 
     });
-
-  }, 0);
+    
+  }, []);
 
   return (
 
-    <TokenNegotiatorInstance render={({ negotiator, modalContainer }) => (
+    <TokenNegotiatorInstance render={({ negotiator }) => (
 
-      <TokenContext.Provider props={negotiator} value={{ tokens, proof, negotiator, modalContainer }}>
+      <TokenContext.Provider props={negotiator} value={{ tokens, proof, negotiator }}>
 
         {props.children}
 
@@ -58,7 +63,7 @@ class TokenNegotiatorInstance extends React.Component {
     
     super(props);
 
-    window.negotiator = new Client({
+    negotiator = new Client({
       type: 'active',
       issuers: tokenKeys,
       options: {
@@ -70,13 +75,12 @@ class TokenNegotiatorInstance extends React.Component {
       },
       filter: {}
     });
-    window.negotiator.negotiate();
+
+    negotiator.negotiate();
+    
   }
   render() {
-    return this.props.render({ 
-      negotiator: negotiator, 
-      modalContainer: null 
-    })
+    return this.props.render({ negotiator: negotiator })
   };
 }
 

@@ -6,9 +6,11 @@ interface CreateTokenInterface {
     data: any;
     toggleState: boolean;
 }
-export declare const createOverlayMarkup: (heading?: string) => string;
-export declare const issuerConnectTab: (issuer: any) => string;
-export declare const issuerConnectIframe: (issuer: any) => string;
-export declare const createToken: (config: CreateTokenInterface) => string;
-export declare const createFabButton: () => string;
+export declare const createOpeningViewMarkup: (openingHeading?: string) => string;
+export declare const createWalletSelectionViewMarkup: () => string;
+export declare const createIssuerViewMarkup: (heading?: string) => string;
+export declare const issuerConnectTabMarkup: (title: string, issuer: string) => string;
+export declare const issuerConnectIframeMarkup: (title: string, issuer: string) => string;
+export declare const createTokenMarkup: (config: CreateTokenInterface) => string;
+export declare const createFabButtonMarkup: () => string;
 export {};
