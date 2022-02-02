@@ -3,7 +3,7 @@ A repository to host and manage token negotiator example dapps and web apps
 
 TokenScript is a framework which improves functionality, security and usability of blockchain token. It creates a layer between a blockchain and user devices, adding information, rules and functionalites both onchain and offchain. 
 
-For more information please visit: [https://tokenscript.org/](tokenscript.org).
+For more information please visit: [https://tokenscript.org/](https://tokenscript.org/).
 
 ## Examples
 
@@ -15,7 +15,7 @@ See the README's inside each example for configuration and deployment.
 ## Running the examples via localhost
 
 - cd into the root of this directory
-- run `npm run install` to install all dependancies
+- run `npm run install` to install all dependancies for the examples
 - run `npm run start` which will serve all examples with a single command
 - Or alternatively, serve each example seperately (see readme inside each directory for more information)
 
@@ -27,7 +27,7 @@ https://github.com/TokenScript/token-negotiator
 
 https://github.com/TokenScript/token-negotiator-examples/wiki/quick-start
 
-## Quick Start with Liscon Tickets
+## Quick Start with Liscon Tickets (for liscon hackathon ticket holders)
 
 This uses a custom example of the Token Negotiator (some of the API is not included inside the NPM package at this time).
 
