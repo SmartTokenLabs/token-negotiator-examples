@@ -27,7 +27,7 @@ https://github.com/TokenScript/token-negotiator
 
 https://github.com/TokenScript/token-negotiator-examples/wiki/quick-start
 
-## Quick Start with Liscon Tickets
+## Quick Start with Liscon Tickets (for liscon hackathon ticket holders)
 
 This uses a custom example of the Token Negotiator (some of the API is not included inside the NPM package at this time).
 
