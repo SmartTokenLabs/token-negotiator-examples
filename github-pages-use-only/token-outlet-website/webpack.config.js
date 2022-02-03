@@ -11,7 +11,7 @@ module.exports = {
       title: 'token outlet website',
       template: path.resolve(__dirname, './src/index.html'),
       filename: 'index.html',
-    })  
+    }),
   ],
   mode: 'development',
   entry: './src/index.ts',
