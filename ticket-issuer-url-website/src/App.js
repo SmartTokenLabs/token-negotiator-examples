@@ -73,7 +73,7 @@ function App() {
 
     setTimeout(() => {
 
-      window.negotiator.negotiate();
+      negotiator.negotiate();
 
     }, 3000);
 
