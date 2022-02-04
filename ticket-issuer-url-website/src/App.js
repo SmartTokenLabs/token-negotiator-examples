@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Client } from '@tokenscript/token-negotiator';
-// import { Client } from './dist/client/index'; // dev use only
 import Token from './components/Token';
 import './App.css';
 
@@ -64,12 +63,14 @@ function App() {
     event.preventDefault();
 
     // localhost:3002
-    const magicLink = `http://localhost:3002/?ticket=${ticket}&secret=${secret}&id=${id}&action=set-magic-url`;
+    const magicLink = `http://localhost:3002/?ticket=${ticket}&secret=${secret}&id=${id}`;
     
     // Github example
-    // const magicLink = `https://tokenscript.github.io/token-negotiator-examples/github-pages-use-only/token-outlet-website/build/index.html/?ticket=${ticket}&secret=${secret}&id=${id}&action=set-magic-url`;
+    // const magicLink = `https://tokenscript.github.io/token-negotiator-examples/github-pages-use-only/token-outlet-website/build/index.html/?ticket=${ticket}&secret=${secret}&id=${id}`;
 
     negotiator.addTokenThroughTab(magicLink);
+
+    // negotiator.addTokenThroughIframe(magicLink);
 
     setTimeout(() => {
 
@@ -104,25 +105,27 @@ function App() {
           {
             !tokens.length && <div>
               <b>- no ticket found -</b>
-              <p>Generate ticket:</p>
-              <div className="ticketWrapper">
-                {
-                  mockTicketData.map((mockTicket, index) => {
-                    return (
-                      <button key={index} className="makeTicket" onClick={event => openTicketInIframe({ 
-                        event,
-                        ticket: mockTicket.ticket,
-                        secret: mockTicket.secret,
-                        id: mockTicket.id
-                      })}>Create Ticket</button> 
-                    )
-                  })
-                }
-              </div>
             </div>
           }
         </div>
       </div>
+      <p className="flexCenter">Generate ticket:</p>
+      <div className="flexCenter">
+            <div className="ticketWrapper">
+              {
+                mockTicketData.map((mockTicket, index) => {
+                  return (
+                    <button key={index} className="makeTicket" onClick={event => openTicketInIframe({ 
+                      event,
+                      ticket: mockTicket.ticket,
+                      secret: mockTicket.secret,
+                      id: mockTicket.id
+                    })}>Create Ticket</button> 
+                  )
+                })
+              }
+            </div>
+        </div>
     </main>
   );
 }
