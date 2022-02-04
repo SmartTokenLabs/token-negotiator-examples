@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Client } from '@tokenscript/token-negotiator';
-// import { Client } from './dist/client/index'; // dev use only
 import Token from './components/Token';
 import './App.css';
 
@@ -104,25 +103,27 @@ function App() {
           {
             !tokens.length && <div>
               <b>- no ticket found -</b>
-              <p>Generate ticket:</p>
-              <div className="ticketWrapper">
-                {
-                  mockTicketData.map((mockTicket, index) => {
-                    return (
-                      <button key={index} className="makeTicket" onClick={event => openTicketInIframe({ 
-                        event,
-                        ticket: mockTicket.ticket,
-                        secret: mockTicket.secret,
-                        id: mockTicket.id
-                      })}>Create Ticket</button> 
-                    )
-                  })
-                }
-              </div>
             </div>
           }
         </div>
       </div>
+      <p className="flexCenter">Generate ticket:</p>
+      <div className="flexCenter">
+            <div className="ticketWrapper">
+              {
+                mockTicketData.map((mockTicket, index) => {
+                  return (
+                    <button key={index} className="makeTicket" onClick={event => openTicketInIframe({ 
+                      event,
+                      ticket: mockTicket.ticket,
+                      secret: mockTicket.secret,
+                      id: mockTicket.id
+                    })}>Create Ticket</button> 
+                  )
+                })
+              }
+            </div>
+        </div>
     </main>
   );
 }

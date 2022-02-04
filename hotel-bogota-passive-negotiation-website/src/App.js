@@ -5,7 +5,6 @@ import TokenNotificationCard from './TokenNotificationCard';
 import Typography from '@material-ui/core/Typography';
 import BookingDate from './BookingDate';
 import { Client } from '@tokenscript/token-negotiator';
-// import { Client } from './dist/client/index'; // dev use only
 import './App.css';
 
 // mock data e.g. server side hotel room price database
