@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Client } from '@tokenscript/token-negotiator';
+// import { Client } from './dist';
 import Token from './components/Token';
 import './App.css';
 
