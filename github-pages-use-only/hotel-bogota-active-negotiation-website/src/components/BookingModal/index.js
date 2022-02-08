@@ -37,7 +37,7 @@ export default function BookingModal({room}) {
   const useToken = async () => {
     try {
       negotiator.authenticate({
-        issuer: 'devcon',
+        issuer: 'devcon-remote',
         unsignedToken: tokens[0]
       });
     } catch (e) {
