@@ -89,7 +89,7 @@ function App() {
 
       // authenticate ownership of token
       window.negotiator.authenticate({
-        issuer: 'devcon',
+        issuer: 'devcon-remote',
         unsignedToken: ticket
       });
     
