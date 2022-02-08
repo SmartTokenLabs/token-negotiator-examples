@@ -15,7 +15,6 @@ const mockRoomDiscountData = 10;
 
 const tokenIssuers = ['devcon'];
 
-// FIXME - integrate into React Application lifeCycle.
 window.negotiator = new Client({
   type: 'passive',
   issuers: tokenIssuers,
@@ -37,6 +36,8 @@ function App() {
 
   // selected token instance to apply discount, with the discount value on hotel booking.
   let [discount, setDiscount] = useState({ value: undefined, tokenInstance: null });
+  
+  let [selectedPendingTokenInstance, setSelectedPendingTokenInstance] = useState();
 
   window.negotiator.on('tokens', (issuerTokens) => {
     let tokens = [];
@@ -53,9 +54,9 @@ function App() {
 
     setTimeout(() => {
 
+      setSelectedPendingTokenInstance(null);
       setTokenProofData(tokenProof);
-
-      setDiscount({ value: getApplicableDiscount(), tokenInstance: tokens[0] });
+      setDiscount({ value: getApplicableDiscount(), tokenInstance: selectedPendingTokenInstance });
 
     }, 0);
 
@@ -83,9 +84,13 @@ function App() {
 
     } else {
 
+      // ticket selected, but owner is not yet authenticated.
+      setSelectedPendingTokenInstance(ticket);
+
+      // authenticate ownership of token
       window.negotiator.authenticate({
         issuer: 'devcon',
-        unsignedToken: tokens[0]
+        unsignedToken: ticket
       });
     
     }
@@ -100,7 +105,7 @@ function App() {
       bookingData: { formData }
     }
     fetch(checkoutEndPoint + new URLSearchParams(params)).then(_data => {
-      if(tokenProofData) {
+      if(tokenProofData && tokenProofData.proof) {
         alert('Transaction Complete with token discount, we look forward to your stay with us!');
       } else {
         alert('Transaction Complete with no discount, we look forward to your stay with us!');
@@ -131,6 +136,7 @@ function App() {
             discount={discount}
             tokens={tokens}
             book={book}
+            selectedPendingTokenInstance={selectedPendingTokenInstance}
           />
         })}
       </div>

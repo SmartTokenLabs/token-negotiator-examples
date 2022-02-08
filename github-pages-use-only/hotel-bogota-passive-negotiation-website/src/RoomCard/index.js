@@ -21,7 +21,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function RoomCard({ room, applyDiscount, discount, tokens, book }) {
+export default function RoomCard({ room, applyDiscount, discount, tokens, book, selectedPendingTokenInstance }) {
   const classes = useStyles();
   const { type, price, image, frequency } = room;
   return (
@@ -56,7 +56,9 @@ export default function RoomCard({ room, applyDiscount, discount, tokens, book }
           tokens={tokens}
           roomType={type}
           discount={discount}
-          price={price} />
+          price={price} 
+          selectedPendingTokenInstance={selectedPendingTokenInstance}
+          />
       </CardActions>
     </Card>
   );
