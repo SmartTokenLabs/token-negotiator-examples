@@ -66,8 +66,8 @@ function App() {
     // const magicLink = `http://localhost:3002/?ticket=${ticket}&secret=${secret}&id=${id}`;
     
     // Github example
-    const magicLink = `https://tokenscript.github.io/token-negotiator-examples/github-pages-use-only/token-outlet-website/build/index.html/?ticket=${ticket}&secret=${secret}&id=${id}`;
-
+    const magicLink = `https://tokenscript.github.io/token-negotiator-examples/github-pages-use-only/token-outlet-website/build/index.html?ticket=${ticket}&secret=${secret}&id=${id}`;
+                       
     negotiator.addTokenThroughTab(magicLink);
 
     // negotiator.addTokenThroughIframe(magicLink);
