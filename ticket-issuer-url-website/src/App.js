@@ -26,7 +26,7 @@ const mockTicketData = [
   },
 ];
 
-const tokenIssuers = ['devcon'];
+const tokenIssuers = ['devcon-remote'];
 
 function App() {
 
