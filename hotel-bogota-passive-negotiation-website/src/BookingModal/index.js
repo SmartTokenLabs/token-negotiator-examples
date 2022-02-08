@@ -6,13 +6,13 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Card from './../Card';
+import TokenCard from './../TokenCard';
 import './BookingModal.css';
 
 // BOOKING MODAL COMPONENT
 // Booking form. Displays selected room data and option to select from tokens if found.
 
-export default function BookingModal({ roomType, applyDiscount, discount, price, tokens, book }) {
+export default function BookingModal({ roomType, applyDiscount, discount, price, tokens, book, selectedPendingTokenInstance }) {
 
   // Modal State (open boolean)
   const [open, setOpen] = React.useState(false);
@@ -102,10 +102,11 @@ export default function BookingModal({ roomType, applyDiscount, discount, price,
                 tokens
                   .map((token, index) => (
                     <div key={index}>
-                      <Card
+                      <TokenCard
                         applyDiscount={applyDiscount}
                         tokenInstance={token}
                         discount={discount}
+                        selectedPendingTokenInstance={selectedPendingTokenInstance}
                       />
                     </div>
                   ))
