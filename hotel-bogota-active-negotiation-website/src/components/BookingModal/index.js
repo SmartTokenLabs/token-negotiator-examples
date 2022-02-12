@@ -33,6 +33,8 @@ export default function BookingModal({room}) {
   const [open, setOpen] = useState(false);
 
   const [bookingDone, setBookingDone] = useState(false);
+  
+  const [loadingTokenProof, setLoadingTokenProof] = useState(false);
 
   const useToken = async () => {
     try {
@@ -40,6 +42,9 @@ export default function BookingModal({room}) {
         issuer: 'devcon',
         unsignedToken: tokens[0]
       });
+
+      setLoadingTokenProof(true);
+
     } catch (e) {
       console.error(e);
     }
@@ -230,7 +235,7 @@ export default function BookingModal({room}) {
               <div className="booking">
                 <DialogActions>
                   {
-                    tokens.length > 0 && !proof &&
+                    tokens.length > 0 && !proof && !loadingTokenProof &&
                     <Button
                         color="primary"
                         className="paynow"
@@ -239,6 +244,18 @@ export default function BookingModal({room}) {
                         color="primary"
                     >
                       Use Token
+                    </Button>
+                  }
+                  {
+                    tokens.length > 0 && !proof && loadingTokenProof === true &&
+                    <Button
+                        color="primary"
+                        className="paynow"
+                        variant="contained"
+                        onClick={useToken}
+                        color="primary"
+                    >
+                      <div className="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
                     </Button>
                   }
                   {
