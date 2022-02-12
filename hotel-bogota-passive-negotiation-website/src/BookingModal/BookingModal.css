@@ -2,6 +2,7 @@
   max-width: 340px;
   min-width: 320px;
   width: 100%;
+  overflow-x: hidden;
 }
 .title {
   font-size: 1.2rem;

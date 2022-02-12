@@ -29,11 +29,15 @@ const TokenContextProvider = (props) => {
         
       });
 
+      console.log('selected tokens', selectedTokens);
+
       setTokens(selectedTokens);
 
     });
 
     negotiator.on("token-proof", (proof) => { 
+
+      console.log('token proof', proof);
           
       setProof(proof);
 
