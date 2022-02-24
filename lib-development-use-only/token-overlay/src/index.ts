@@ -1,4 +1,8 @@
-import { Client } from './dist';
+
+// @ts-nocheck
+
+// import { Client } from './dist';
+import { Client } from './src/client/index';
 
 declare global {
     interface Window {
@@ -11,7 +15,8 @@ window.negotiator = new Client({
     type: 'active',
     issuers: [
         'devcon',
-        'devcon2'
+        { contract: '0x381748c76f2b8871afbbe4578781cd24df34ae0d', chain: 'rinkeby', slug: 'opensea-creature-sale' },
+        { contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', slug: 'rinkeby-punk' }
     ],
     options: {
         overlay: {

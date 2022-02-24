@@ -1,10 +1,10 @@
 // @ts-nocheck
-import { asyncHandle, requiredParams, attachPostMessageListener, logger, splitOnChainKey } from './../utils/index';
+import { asyncHandle, requiredParams, attachPostMessageListener, logger } from './../utils/index';
 import { getChallengeSigned, validateUseEthKey, connectMetamaskAndGetAddress } from "../core/index";
-import { createWalletSelectionViewMarkup, createOpeningViewMarkup, createIssuerViewMarkup, createFabButtonMarkup, createTokenMarkup, issuerConnectTabMarkup, issuerConnectIframeMarkup, issuerConnectOnChainMarkup } from './componentFactory';
+import { createWalletSelectionViewMarkup, createOpeningViewMarkup, createIssuerViewMarkup, createFabButtonMarkup, createTokenMarkup, issuerConnectTabMarkup, issuerConnectIframeMarkup } from './componentFactory';
 import { tokenLookup } from './../tokenLookup';
-import OnChainTokenModule from './../onChainTokenModule'
 import Web3WalletProvider from './../utils/Web3WalletProvider';
+import onChainTokenModule from './../onChainTokenModule/index';
 import "./../theme/style.css";
 import './../vendor/keyShape';
 
@@ -76,8 +76,6 @@ export class Client {
 
         this.iframeStorageSupport = false;
 
-        // apply data for view when active mode
-
         if(this.type === "active") {
          
             this.openingHeading = this.options?.overlay?.openingHeading
@@ -89,7 +87,7 @@ export class Client {
         /*
 
             this.onChainTokens / this.offChainTokens: {
-                tokenKeys: ['devcon', '0x...'],
+                tokenKeys: ['devcon'],
                 devcon: { 
                     tokens: [] 
                 }
@@ -101,15 +99,25 @@ export class Client {
 
             if(tokenLookup[issuer]){
 
-                // For TokenScript Enabled Tokens
+                // TODO Update the stragegy.
+                
+                if(!tokenLookup[issuer] && issuer.indexOf('0x') > -1) {
+                
+                    this.onChainTokens.tokenKeys.push(issuer);
 
-                if (tokenLookup[issuer].onChain === true) {
+                    this.onChainTokens[issuer] = { tokens: [] };
+
+                }
+
+                if (tokenLookup[issuer]?.onChain === true) {
 
                     this.onChainTokens.tokenKeys.push(issuer);
 
                     this.onChainTokens[issuer] = { tokens: [] };
 
-                } else {
+                }
+                
+                if (tokenLookup[issuer]?.onChain === false) {
 
                     this.offChainTokens.tokenKeys.push(issuer);
 
@@ -117,28 +125,9 @@ export class Client {
 
                 }
 
-            } 
+            } else {
 
-            // For direct on chain tokens
-
-            if((issuer.contract) && (issuer.chain)) {
-
-                // create key with address and chain for easy reference
-                let issuerKey = `${issuer.contract}.${issuer.chain}`;
-
-                if(issuer.slug) issuerKey += `.${issuer.slug}`;
-
-                // Populate the token lookup store with initial data.
-                this.updateTokenLookupStore(issuerKey, issuer);
-
-                // stop duplicate entries
-                if(this.onChainTokens[issuerKey]) return;
-
-                // add onchain token (non-tokenscipt)
-                this.onChainTokens.tokenKeys.push(issuerKey);
-
-                // add empty tokens list (non-tokenscript)
-                this.onChainTokens[issuerKey] = { tokens: [] };
+                console.log('issuer could not be found: ', issuer);
 
             }
 
@@ -151,7 +140,6 @@ export class Client {
         window.overlayClickHandler = this.overlayClickHandler.bind(this);
         window.tokenToggleSelection = this.tokenToggleSelection.bind(this);
         window.connectTokenIssuerWithTab = this.connectTokenIssuerWithTab.bind(this);
-        window.connectOnChainTokenIssuer = this.connectOnChainTokenIssuer.bind(this);
         window.navigateToTokensView = this.navigateToTokensView.bind(this);
         window.embedTokensIntoView = this.embedTokensIntoView.bind(this);
         window.showTokenView = this.showTokenView.bind(this);
@@ -165,21 +153,6 @@ export class Client {
 
         // currently custom to Token Negotiator
         this.web3WalletProvider = new Web3WalletProvider();
-
-        // on chain token manager module
-        this.onChainTokenModule = new OnChainTokenModule();
-    }
-
-    // To enrich the token lookup store with data.
-    // for on chain tokens that are not using token script this is 
-    // required, for off chain this is most likely not required because the configurations
-    // are already pre-defined e.g. title, issuer emblem image etc.
-    updateTokenLookupStore(tokenKey, data) {
-
-        if(!this.tokenLookup[tokenKey]) this.tokenLookup[tokenKey] = {};
-
-        this.tokenLookup[tokenKey] = { ...this.tokenLookup[tokenKey], ...data };
-
     }
 
     async openIframe(url: any) {
@@ -292,26 +265,6 @@ export class Client {
             return;
 
         }));
-
-    }
-
-    // add collection data
-    async enrichTokenLookupDataOnChainTokens(onChainTokens: any) {
-
-        await Promise.all(onChainTokens.tokenKeys.map(async (issuerKey: string): Promise<any> => {
-
-            let lookupData = await this.onChainTokenModule.getInitialContractAddressMetaData(issuerKey);
-
-            if (lookupData) {
-
-                lookupData.onChain = true;
-
-                // enrich the tokenLookup store with contract meta data
-                this.updateTokenLookupStore(issuerKey, lookupData);
-            }
-
-        }));
-    
     }
 
     async setBlockChainTokens(onChainTokens: any) {
@@ -331,27 +284,7 @@ export class Client {
 
         */
 
-        // await Promise.all(onChainTokens.tokenKeys.map(async (issuer: string): Promise<any> => {
-
-        //     // const { tokenOrigin } = tokenLookup[issuer];
-        //     // const tokens = await this.onChainTokenModule.connectOnChainToken();
-
-        //     // const tokens = await this.getTokensIframe({ issuer: issuer, filter: this.filter, tokensOrigin: tokenOrigin, negotiationType: 'passive' });
-
-        //     const tokens = await this.onChainTokenModule.connectOnChainToken();
-
-        //     this.onChainTokens[issuer].tokens = tokens;
-
-        //     return;
-
-        // }));
-
-        // // this will be a map 
-        // // const tokens = await this.onChainTokenModule.connectOnChainToken();
-
-        // console.log('tokens', tokens);
-
-        return;
+        return onChainTokenModule.connectOnChainToken();
 
     }
 
@@ -370,22 +303,21 @@ export class Client {
         // if storage support - embed iframe for active and passive negotiation flows.
         // else open with window each time.
 
-        // Enrich the look up data with the accepted on chain tokens
-        await this.enrichTokenLookupDataOnChainTokens(this.onChainTokens);
-
         if (this.type === 'active') {
 
             this.activeNegotiationStrategy();
 
         } else {
 
-            this.iframeStorageSupport = await this.thirdPartyCookieSupportCheck();
+            this.iframeStorageSupport = await this.thirdPartyCookieSupportCheck(tokenLookup[this.offChainTokens.tokenKeys[0]].tokenOrigin);
 
             // const { default: Web3WalletProvider } = await import('./../utils/Web3WalletProvider');
             
             // this.web3WalletProvider = new Web3WalletProvider();
 
             if(window.ethereum) await this.web3WalletProvider.connectWith('MetaMask');
+
+            await this.setBlockchainTokens(this.onChainTokens);
 
             this.passiveNegotiationStrategy(this.iframeStorageSupport);
 
@@ -417,7 +349,7 @@ export class Client {
 
         }, 0);
 
-        this.iframeStorageSupport = await this.thirdPartyCookieSupportCheck();
+        this.iframeStorageSupport = await this.thirdPartyCookieSupportCheck(tokenLookup[this.offChainTokens.tokenKeys[0]].tokenOrigin);
 
     }
 
@@ -477,21 +409,13 @@ export class Client {
 
                 if (this.iframeStorageSupport === true) {
 
-                    refIssuerContainerSelector.innerHTML += issuerConnectIframeMarkup(this.tokenLookup[issuer].title, this.tokenLookup[issuer].emblem, issuer);
+                    refIssuerContainerSelector.innerHTML += issuerConnectIframeMarkup(this.tokenLookup[issuer].title, issuer);
                 
                 } else {
 
-                    refIssuerContainerSelector.innerHTML += issuerConnectTabMarkup(this.tokenLookup[issuer].title, this.tokenLookup[issuer].emblem, issuer);
+                    refIssuerContainerSelector.innerHTML += issuerConnectTabMarkup(this.tokenLookup[issuer].title, issuer);
 
                 }
-
-            });
-            
-            this.onChainTokens.tokenKeys.map((issuer: string) => {
-
-                console.log(issuer, this.tokenLookup);
-
-                refIssuerContainerSelector.innerHTML += issuerConnectOnChainMarkup(this.tokenLookup[issuer].title, this.tokenLookup[issuer].emblem, issuer);
 
             });
 
@@ -654,7 +578,7 @@ export class Client {
 
     }
 
-    issuerConnected(issuer: string, onChain:boolean) {
+    issuerConnected(issuer: string) {
 
         const connectBtn = document.querySelector(`[data-issuer*="${issuer}"] .connect-btn-tn`);
 
@@ -666,18 +590,10 @@ export class Client {
 
         tokenBtn.style.display = "block";
 
-        if(onChain) {
-
-            tokenBtn.innerHTML = `${this.onChainTokens[issuer].tokens.length} token/s available`;
-            tokenBtn.setAttribute('aria-label', `Navigate to select from ${this.onChainTokens[issuer].tokens.length} of your ${issuer} tokens`);
-
-        } else {
-
-            tokenBtn.innerHTML = `${this.offChainTokens[issuer].tokens.length} token/s available`;
-            tokenBtn.setAttribute('aria-label', `Navigate to select from ${this.offChainTokens[issuer].tokens.length} of your ${issuer} tokens`);
-
-        }
+        tokenBtn.innerHTML = `${this.offChainTokens[issuer].tokens.length} token/s available`;
         
+        tokenBtn.setAttribute('aria-label', `Navigate to select from ${this.offChainTokens[issuer].tokens.length} of your ${issuer} tokens`);
+
         tokenBtn.setAttribute('tabIndex', 1);
 
     }
@@ -752,7 +668,6 @@ export class Client {
     showTokenView(issuer: string) {
 
         var element = document.getElementsByClassName("overlay-content-tn")[0];
-        
         element.classList.toggle("open");
 
         if (issuer) {
@@ -822,27 +737,6 @@ export class Client {
 
     }
 
-    async connectOnChainTokenIssuer (event) {
-
-        const issuerKey = event.target.dataset.issuer;
-
-        const tokens = await this.onChainTokenModule.connectOnChainToken(
-            issuerKey,
-            '0x647935C1bfA643D27AFe0F32A5357975b56B771d'
-        );
-        
-        const output = {
-            data: {
-                evt: 'set-on-chain-issuer-tokens-active',
-                tokens: tokens,
-                issuer: issuerKey
-            }
-        }
-
-        this.eventReciever(output);
-
-    }
-
     connectTokenIssuerWithTab(event) {
 
         const issuer = event.target.dataset.issuer;
@@ -867,7 +761,7 @@ export class Client {
 
     tokenToggleSelection() {
 
-        // this.selectedTokens = {};
+        this.selectedTokens = {};
         
         document.querySelectorAll('.token-tn .mobileToggle-tn').forEach((token: any, index: number) => {
 
@@ -889,8 +783,6 @@ export class Client {
 
         });
 
-        console.log(this.selectedTokens);
-
         this.eventSender.emitSelectedTokensToClient();
 
     }
@@ -910,7 +802,7 @@ export class Client {
             return;
         }
 
-        const iframeStorageSupport = await this.thirdPartyCookieSupportCheck();
+        const iframeStorageSupport = await this.thirdPartyCookieSupportCheck(tokenLookup[this.offChainTokens.tokenKeys[0]].tokenOrigin);
 
         if(iframeStorageSupport === true) await this.getTokenProofIframe(issuer, unsignedToken);
         else this.getTokenProofTab(issuer, unsignedToken);
@@ -1031,7 +923,7 @@ export class Client {
 
                     delete this.issuerTabInstanceRefs[issuer];
 
-                    this.issuerConnected(issuer, false);
+                    this.issuerConnected(issuer);
 
                 }
 
@@ -1057,17 +949,7 @@ export class Client {
 
                 this.offChainTokens[issuer].tokens = event.data.tokens;
 
-                this.issuerConnected(issuer, false);
-
-                break;
-            
-            case 'set-on-chain-issuer-tokens-active':
-
-                const issuer = event.data.issuer;
-
-                this.onChainTokens[issuer].tokens = event.data.tokens;
-
-                this.issuerConnected(issuer, true);
+                this.issuerConnected(issuer);
 
                 break;
 
@@ -1110,50 +992,41 @@ export class Client {
 
     }
 
-    async thirdPartyCookieSupportCheck() {
+    async thirdPartyCookieSupportCheck(tokensOrigin: any) {
 
-        // TODO SML's host a webpage with cache that we use to test cookies
-        // This so we don't need to check if the TN is using On/Off chain tokens etc.
+        const iframe = document.createElement('iframe');
 
-        if(this.offChainTokens.tokenKeys.length) {
+        iframe.src = tokensOrigin + '?action=cookie-support-check';
 
-            const iframe = document.createElement('iframe');
+        iframe.style.width = '1px';
 
-            const tokensOrigin = tokenLookup[this.offChainTokens.tokenKeys[0]]?.tokenOrigin;
+        iframe.style.height = '1px';
+ 
+        iframe.style.opacity = '0';
 
-            iframe.src = tokensOrigin + '?action=cookie-support-check';
+        document.body.appendChild(iframe);
 
-            iframe.style.width = '1px';
+        return new Promise((resolve) => {
 
-            iframe.style.height = '1px';
-    
-            iframe.style.opacity = '0';
+            let listener = (event) => {
 
-            document.body.appendChild(iframe);
+                if (event.data.evt === 'cookie-support-check') {
 
-            return new Promise((resolve) => {
+                    resolve(event.data.thirdPartyCookies ? true : false);
 
-                let listener = (event) => {
+                }
 
-                    if (event.data.evt === 'cookie-support-check') {
+                setTimeout(() => {
 
-                        resolve(event.data.thirdPartyCookies ? true : false);
+                    resolve(false);
 
-                    }
+                }, 10000);
 
-                    setTimeout(() => {
+            };
 
-                        resolve(false);
+            attachPostMessageListener(listener);
 
-                    }, 10000);
-
-                };
-
-                attachPostMessageListener(listener);
-
-            });
-
-        }
+        })
 
     }
 
