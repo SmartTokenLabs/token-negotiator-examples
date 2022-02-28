@@ -126,7 +126,7 @@ export class Client {
                 // create key with address and chain for easy reference
                 let issuerKey = `${issuer.contract}.${issuer.chain}`;
 
-                if(issuer.slug) issuerKey += `.${issuer.slug}`;
+                if(issuer.openSeaSlug) issuerKey += `.${issuer.openSeaSlug}`;
 
                 // Populate the token lookup store with initial data.
                 this.updateTokenLookupStore(issuerKey, issuer);
@@ -713,7 +713,7 @@ export class Client {
 
         const config = this.tokenLookup[issuer];
 
-        const location = config.onChain ? 'onChainTokens' : 'offChainTokens';
+        const location = config.onChain === false ? 'offChainTokens' : 'onChainTokens';
 
         document.getElementsByClassName("headline-tn token-name")[0].innerHTML = config.title;
 
@@ -739,8 +739,8 @@ export class Client {
                 data: t,
                 tokenIssuerKey: issuer,
                 index: i,
-                title: title,
-                emblem: emblem,
+                title: t.title ? t.title : title,
+                emblem: t.image ? t.image : emblem,
                 toggleState: isSelected
             });
 

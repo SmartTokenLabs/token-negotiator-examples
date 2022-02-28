@@ -15,8 +15,8 @@ window.negotiator = new Client({
     type: 'active',
     issuers: [
         'devcon',
-        { contract: '0x381748c76f2b8871afbbe4578781cd24df34ae0d', chain: 'rinkeby', slug: 'opensea-creature-sale' },
-        { contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', slug: 'rinkeby-punk' }
+        { contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'rinkeby-punk' },
+        { contract: '0x0d0167a823c6619d430b1a96ad85b888bcf97c37', chain: 'eth' }
     ],
     options: {
         overlay: {

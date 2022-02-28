@@ -72,6 +72,6 @@ export const splitOnChainKey = (onChainKey: string) => {
   return { 
     address: splitData[0],
     chain: splitData[1],
-    slug: splitData[2]
+    openSeaSlug: splitData[2]
   } 
 }
