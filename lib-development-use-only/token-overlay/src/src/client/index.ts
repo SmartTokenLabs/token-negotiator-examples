@@ -1,8 +1,9 @@
 // @ts-nocheck
 import { asyncHandle, requiredParams, attachPostMessageListener, logger, splitOnChainKey } from './../utils/index';
 import { getChallengeSigned, validateUseEthKey, connectMetamaskAndGetAddress } from "../core/index";
-import { createWalletSelectionViewMarkup, createOpeningViewMarkup, createIssuerViewMarkup, createFabButtonMarkup, createTokenMarkup, issuerConnectTabMarkup, issuerConnectIframeMarkup, issuerConnectOnChainMarkup } from './componentFactory';
+import { createWalletSelectionViewMarkup, createOpeningViewMarkup, createIssuerViewMarkup, createFabButtonMarkup, createTokenMarkup, issuerConnectMarkup } from './componentFactory';
 import { tokenLookup } from './../tokenLookup';
+import { Messaging } from "./messaging";
 import OnChainTokenModule from './../onChainTokenModule'
 import Web3WalletProvider from './../utils/Web3WalletProvider';
 import "./../theme/style.css";
@@ -38,15 +39,16 @@ interface AuthenticateInterface {
 export class Client {
 
     issuers: string[];
-    issuerTabInstanceRefs: {};
+    issuerTabInstanceRefs: {}; // TODO: remove once fully migrated to messaging object
     type: string;
     filter: {};
     options: any;
     offChainTokens: any;
     onChainTokens: any;
     selectedTokens: any;
-    iframeStorageSupport: any;
+    iframeStorageSupport: any; // TODO: remove once fully migrated to messaging object
     web3WalletProvider:any;
+    messaging:Messaging;
 
     constructor(config: NegotiationInterface) {
 
@@ -74,6 +76,7 @@ export class Client {
 
         this.clientCallBackEvents = {};
 
+        // TODO: remove once fully migrated to messaging object
         this.iframeStorageSupport = false;
 
         // apply data for view when active mode
@@ -150,12 +153,10 @@ export class Client {
         // bind functions used externally. TODO use lib references, rather than hoisting to window scope.
         window.overlayClickHandler = this.overlayClickHandler.bind(this);
         window.tokenToggleSelection = this.tokenToggleSelection.bind(this);
-        window.connectTokenIssuerWithTab = this.connectTokenIssuerWithTab.bind(this);
-        window.connectOnChainTokenIssuer = this.connectOnChainTokenIssuer.bind(this);
+        window.connectTokenIssuer = this.connectTokenIssuer.bind(this);
         window.navigateToTokensView = this.navigateToTokensView.bind(this);
         window.embedTokensIntoView = this.embedTokensIntoView.bind(this);
         window.showTokenView = this.showTokenView.bind(this);
-        window.connectTokenIssuerWithIframe = this.connectTokenIssuerWithIframe.bind(this);
         window.negotiatorConnectToWallet = this.negotiatorConnectToWallet.bind(this);
         window.negotiatorUpdateOverlayViewState = this.updateOverlayViewState.bind(this);
 
@@ -168,6 +169,8 @@ export class Client {
 
         // on chain token manager module
         this.onChainTokenModule = new OnChainTokenModule();
+
+        this.messaging = new Messaging();
     }
 
     // To enrich the token lookup store with data.
@@ -234,60 +237,21 @@ export class Client {
 
     }
 
-    async getTokensIframe(config: GetTokenInterface) {
-
-        const {
-            issuer,
-            filter,
-            tokensOrigin,
-            negotiationType
-        } = config;
-
-        return new Promise((resolve, reject) => {
-
-            let listener = (event: any) => {
-
-                if (event.data.evt === 'set-iframe-issuer-tokens-passive') {
-
-                    resolve(event.data.tokens);
-
-                }
-
-            }
-
-            attachPostMessageListener(listener);
-
-            this.openIframe(`${tokensOrigin}?action=get-iframe-issuer-tokens&type=${negotiationType}&filter=${JSON.stringify(filter)}`).then((iframeRef) => {
-
-                if (iframeRef) {
-
-                    iframeRef.contentWindow.postMessage({
-                        evt: 'getTokens'
-                    }, tokensOrigin);
-                    
-                    if (!this.issuerTabInstanceRefs) {
-                        this.issuerTabInstanceRefs = {};
-                    }
-            
-                    this.issuerTabInstanceRefs[issuer] = iframeRef;
-                    
-                }
-
-            });
-
-        });
-
-    }
-
     async setPassiveNegotiationWebTokens(offChainTokens: any) {
 
         await Promise.all(offChainTokens.tokenKeys.map(async (issuer: string): Promise<any> => {
 
             const { tokenOrigin } = tokenLookup[issuer];
 
-            const tokens = await this.getTokensIframe({ issuer: issuer, filter: this.filter, tokensOrigin: tokenOrigin, negotiationType: 'passive' });
+            let data = await this.messaging.sendMessage({
+                issuer: issuer,
+                action: "get-iframe-issuer-tokens",
+                filter: this.filter,
+                origin: tokenOrigin,
+                negotiationType: 'passive'
+            });
 
-            this.offChainTokens[issuer].tokens = tokens;
+            this.offChainTokens[issuer].tokens = data.tokens;
 
             return;
 
@@ -379,15 +343,13 @@ export class Client {
 
         } else {
 
-            this.iframeStorageSupport = await this.thirdPartyCookieSupportCheck();
-
             // const { default: Web3WalletProvider } = await import('./../utils/Web3WalletProvider');
             
             // this.web3WalletProvider = new Web3WalletProvider();
 
             if(window.ethereum) await this.web3WalletProvider.connectWith('MetaMask');
 
-            this.passiveNegotiationStrategy(this.iframeStorageSupport);
+            this.passiveNegotiationStrategy();
 
         }
 
@@ -417,16 +379,22 @@ export class Client {
 
         }, 0);
 
-        this.iframeStorageSupport = await this.thirdPartyCookieSupportCheck();
-
     }
 
-    async passiveNegotiationStrategy(iframeStorageSupport: boolean) {
+    async passiveNegotiationStrategy() {
 
         // Feature not supported when an end users third party cookies are disabled
         // because the use of a tab requires a user gesture.
-        
-        if (iframeStorageSupport === true) {
+        // TODO: this check should be skipped if there is no offchain tokens
+        //       if there are offchain tokens, but there are also onchain tokens, show loaded tokens along with an error/warning message?
+
+        let canUsePassive = false;
+
+        if (this.offChainTokens.tokenKeys.length){
+            canUsePassive = await this.messaging.getCookieSupport(this.tokenLookup[this.offChainTokens.tokenKeys[0]]?.tokenOrigin);
+        }
+
+        if (canUsePassive === true) {
 
             await asyncHandle(this.setPassiveNegotiationWebTokens(this.offChainTokens));
 
@@ -475,15 +443,7 @@ export class Client {
 
             this.offChainTokens.tokenKeys.map((issuer: string) => {
 
-                if (this.iframeStorageSupport === true) {
-
-                    refIssuerContainerSelector.innerHTML += issuerConnectIframeMarkup(this.tokenLookup[issuer].title, this.tokenLookup[issuer].emblem, issuer);
-                
-                } else {
-
-                    refIssuerContainerSelector.innerHTML += issuerConnectTabMarkup(this.tokenLookup[issuer].title, this.tokenLookup[issuer].emblem, issuer);
-
-                }
+                refIssuerContainerSelector.innerHTML += issuerConnectMarkup(this.tokenLookup[issuer].title, this.tokenLookup[issuer].emblem, issuer);
 
             });
             
@@ -491,7 +451,7 @@ export class Client {
 
                 console.log(issuer, this.tokenLookup);
 
-                refIssuerContainerSelector.innerHTML += issuerConnectOnChainMarkup(this.tokenLookup[issuer].title, this.tokenLookup[issuer].emblem, issuer);
+                refIssuerContainerSelector.innerHTML += issuerConnectMarkup(this.tokenLookup[issuer].title, this.tokenLookup[issuer].emblem, issuer);
 
             });
 
@@ -802,24 +762,38 @@ export class Client {
         }
     }
 
-    connectTokenIssuerWithIframe(event) {
+    connectTokenIssuer(event){
 
-        const issuer = event.currentTarget.dataset.issuer;
-
+        const data = event.currentTarget.dataset ?? event.target.dataset;
+        const issuer = data.issuer;
         const filter = this.filter ? this.filter : {};
-
         const tokensOrigin = this.tokenLookup[issuer].tokenOrigin;
-        
-        this.getTokensIframe({ issuer: issuer, filter: filter, tokensOrigin: tokensOrigin, negotiationType: 'active' });
 
-        setTimeout(() => {
+        if (this.tokenLookup[issuer].onChain){
+            return this.connectOnChainTokenIssuer(event);
+        }
 
-            event.target.innerHTML = this.repeatAction ? this.repeatAction : 'retry';
+        let data = await this.messaging.sendMessage({
+            issuer: issuer,
+            action: "get-iframe-issuer-tokens",
+            origin: tokensOrigin,
+            filter: filter,
+            negotiationType: 'active' // TODO: Is this required?
+        });
 
-            event.target.classList.add("retry");
+        console.log("Event received back from messaging.ts!!!");
+        console.log(data);
 
-        }, 2500);
+        // TODO: error handling
+        //event.target.innerHTML = this.repeatAction ? this.repeatAction : 'retry';
+        //event.target.classList.add("retry");
 
+        // TODO: move logic out of event receiver
+        const output = {
+            data: data
+        };
+
+        this.eventReciever(output);
     }
 
     async connectOnChainTokenIssuer (event) {
@@ -840,28 +814,6 @@ export class Client {
         }
 
         this.eventReciever(output);
-
-    }
-
-    connectTokenIssuerWithTab(event) {
-
-        const issuer = event.target.dataset.issuer;
-
-        const filter = this.filter ? JSON.stringify(this.filter) : '{}';
-
-        let tabRef = window.open(
-            `${tokenLookup[issuer].tokenOrigin}?action=get-tab-issuer-tokens&filter=${filter}`,
-            "win1",
-            "left=0,top=0,width=320,height=320"
-        );
-
-        if (!this.issuerTabInstanceRefs) {
-
-            this.issuerTabInstanceRefs = {};
-
-        }
-        
-        this.issuerTabInstanceRefs[issuer] = tabRef;
 
     }
 
@@ -910,7 +862,8 @@ export class Client {
             return;
         }
 
-        const iframeStorageSupport = await this.thirdPartyCookieSupportCheck();
+        // TODO: Remove once messaging object is fully implemented
+        const iframeStorageSupport = this.tokenLookup.tokenKeys.length > 0 ? await this.messaging.getCookieSupport(this.tokenLookup[this.offChainTokens.tokenKeys[0]]?.tokenOrigin) : false;
 
         if(iframeStorageSupport === true) await this.getTokenProofIframe(issuer, unsignedToken);
         else this.getTokenProofTab(issuer, unsignedToken);
@@ -943,6 +896,7 @@ export class Client {
 
     }
 
+    // TODO: replace with messaging object calls
     async getTokenProofIframe (issuer: any, unsignedToken: any) {
         
         return new Promise((resolve, reject) => {
@@ -969,6 +923,7 @@ export class Client {
 
     }
 
+    // TODO: replace with messaging object calls
     async getTokenProofTab(issuer: any, unsignedToken: any) {
 
         let tabRef = window.open(
@@ -1092,6 +1047,7 @@ export class Client {
         }
     }
 
+    // TODO: Let's create separation of responsibility and put the two below functions in a separate "Issuer" object?
     addTokenThroughTab(magicLink: any) {
 
         var tab = window.open(
@@ -1107,53 +1063,6 @@ export class Client {
     addTokenThroughIframe(magicLink: any) {
 
         this.openIframe(magicLink);
-
-    }
-
-    async thirdPartyCookieSupportCheck() {
-
-        // TODO SML's host a webpage with cache that we use to test cookies
-        // This so we don't need to check if the TN is using On/Off chain tokens etc.
-
-        if(this.offChainTokens.tokenKeys.length) {
-
-            const iframe = document.createElement('iframe');
-
-            const tokensOrigin = tokenLookup[this.offChainTokens.tokenKeys[0]]?.tokenOrigin;
-
-            iframe.src = tokensOrigin + '?action=cookie-support-check';
-
-            iframe.style.width = '1px';
-
-            iframe.style.height = '1px';
-    
-            iframe.style.opacity = '0';
-
-            document.body.appendChild(iframe);
-
-            return new Promise((resolve) => {
-
-                let listener = (event) => {
-
-                    if (event.data.evt === 'cookie-support-check') {
-
-                        resolve(event.data.thirdPartyCookies ? true : false);
-
-                    }
-
-                    setTimeout(() => {
-
-                        resolve(false);
-
-                    }, 10000);
-
-                };
-
-                attachPostMessageListener(listener);
-
-            });
-
-        }
 
     }
 
