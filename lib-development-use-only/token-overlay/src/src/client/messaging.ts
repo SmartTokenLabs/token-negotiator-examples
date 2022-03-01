@@ -22,6 +22,9 @@ export class Messaging {
         if (this.iframeStorageSupport === null)
             this.iframeStorageSupport = await this.thirdPartyCookieSupportCheck(request.origin);
 
+        // Uncomment to test popup mode
+        //this.iframeStorageSupport = false;
+
         console.log("Send request: ");
         console.log(request);
 
@@ -70,11 +73,14 @@ export class Messaging {
 
             let id = Messaging.getUniqueEventId();
 
+            var tabRef:any = null;
+
             this.setResponseListener(id, resolve, reject, ()=>{
-                tabRef.close()
+                if (tabRef)
+                    tabRef.close();
             });
 
-            let tabRef = window.open(
+            tabRef = window.open(
                 `${request.origin}?action=get-tab-issuer-tokens&filter=${request.filter}&evtid=${id}`,
                 "win1",
                 "left=0,top=0,width=320,height=320"
@@ -87,27 +93,36 @@ export class Messaging {
     private setResponseListener(id:any, resolve:any, reject:any, cleanUp:any){
 
         let received = false;
+        let timer:any = null;
 
         let listener = (event: any) => {
 
             console.log("event response received");
             console.log(event.data);
 
-            if (event.data.evtid === id) {
+            if (event.data.evtid == id) {
                 received = true;
                 resolve(event.data);
+                if (timer)
+                    clearTimeout(timer);
+                afterResolveOrError();
                 return;
             }
 
             console.log("Does not match ID " + id);
         }
 
+        let afterResolveOrError = () => {
+            removePostMessageListener(listener);
+            cleanUp();
+        };
+
         attachPostMessageListener(listener);
 
-        setTimeout(()=>{
+        timer = setTimeout(()=>{
             if (!received)
                 reject("Failed to receive response from window/iframe");
-            removePostMessageListener(listener);
+            afterResolveOrError();
         }, 5000);
     }
 

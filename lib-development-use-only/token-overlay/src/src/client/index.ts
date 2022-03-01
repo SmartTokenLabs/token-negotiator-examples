@@ -243,17 +243,17 @@ export class Client {
 
             const { tokenOrigin } = tokenLookup[issuer];
 
-            let data = await this.messaging.sendMessage({
+            this.messaging.sendMessage({
                 issuer: issuer,
                 action: "get-iframe-issuer-tokens",
                 filter: this.filter,
                 origin: tokenOrigin,
                 negotiationType: 'passive'
+            }).then((data)=>{
+                this.offChainTokens[issuer].tokens = data.tokens;
             }).catch((err)=>{
-
+                console.log(err);
             });
-
-            this.offChainTokens[issuer].tokens = data.tokens;
 
             return;
 
@@ -783,9 +783,6 @@ export class Client {
             negotiationType: 'active' // TODO: Is this required?
         }).then((data)=>{
 
-            console.log("Event received back from messaging.ts!!!");
-            console.log(data);
-
             // TODO: move logic out of event receiver
             const output = {
                 data: data
@@ -940,13 +937,13 @@ export class Client {
 
         // issue with passive.
 
-        if (!this.issuerTabInstanceRefs) {
+        /*if (!this.issuerTabInstanceRefs) {
             
             this.issuerTabInstanceRefs = {};
 
         }
         
-        this.issuerTabInstanceRefs[issuer] = tabRef;
+        this.issuerTabInstanceRefs[issuer] = tabRef;*/
 
     }
 
@@ -986,15 +983,15 @@ export class Client {
 
                 this.offChainTokens[issuer].tokens = event.data.tokens;
 
-                if (this.issuerTabInstanceRefs[issuer]) {
+                /*if (this.issuerTabInstanceRefs[issuer]) {
 
                     this.issuerTabInstanceRefs[issuer].close();
 
-                    delete this.issuerTabInstanceRefs[issuer];
+                    delete this.issuerTabInstanceRefs[issuer];*/
 
                     this.issuerConnected(issuer, false);
 
-                }
+                //}
 
                 break;
             
@@ -1034,13 +1031,13 @@ export class Client {
 
             case 'proof-tab':
 
-                if (this.issuerTabInstanceRefs && this.issuerTabInstanceRefs[event.data.issuer] && this.iframeStorageSupport === false) {
+                /*if (this.issuerTabInstanceRefs && this.issuerTabInstanceRefs[event.data.issuer] && this.iframeStorageSupport === false) {
 
                     this.issuerTabInstanceRefs[event.data.issuer].close();
 
                     delete this.issuerTabInstanceRefs[event.data.issuer];
 
-                }
+                }*/
 
                 // no break intended.
 

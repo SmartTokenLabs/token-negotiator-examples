@@ -56,21 +56,9 @@ export class Outlet {
 
       case 'get-iframe-issuer-tokens':
 
-        const negotiationType = this.getDataFromQuery('type');
+          var storageTokens1 = this.prepareTokenOutput(this.tokenName, this.getFilter());
 
-        if (negotiationType) {
-
-          let storageTokens = this.prepareTokenOutput(this.tokenName, this.getFilter());
-
-          // TODO: consolidate functions
-          if (negotiationType === 'passive') this.eventSender.emitIframeIssuerTokensPassive(evtid, storageTokens);
-          else this.eventSender.emitIframeIssuerTokensActive(evtid, storageTokens);
-
-        } else {
-
-          requiredParams(negotiationType, "negotiation type required to handle this event");
-
-        }
+          this.eventSender.emitIframeIssuerTokensActive(evtid, storageTokens1);
 
         break;
 
@@ -226,13 +214,22 @@ export class Outlet {
     },
     emitTabIssuerTokensActive: (evtid: any, opener: any, storageTokens: any, parentOrigin: any) => {
 
-      opener.postMessage({
-            evtid: evtid,
-            evt: "set-tab-issuer-tokens-active",
-            issuer: this.tokenName,
-            tokens: storageTokens
-          },
-          parentOrigin);
+      let target, origin;
+
+      if (window.parent) {
+        target = window.parent;
+        origin = document.referrer;
+      } else {
+        let pUrl = new URL(document.referrer);
+        origin = pUrl.origin;
+      }
+
+      target.postMessage({
+        evtid: evtid,
+        evt: "set-iframe-issuer-tokens-active",
+        issuer: this.tokenName,
+        tokens: storageTokens
+      }, origin);
 
       // let referrer = document.referrer;
 
@@ -249,22 +246,42 @@ export class Outlet {
     },
     emitIframeIssuerTokensPassive: (evtid: any, tokens: any) => {
 
-      window.parent.postMessage({
-        evtid: evtid,
-        evt: "set-iframe-issuer-tokens-passive",
-        issuer: this.tokenName,
-        tokens: tokens
-      }, document.referrer);
+      let target, origin;
 
-    },
-    emitIframeIssuerTokensActive: (evtid: any, tokens: any) => {
+      if (window.parent) {
+        target = window.parent;
+        origin = document.referrer;
+      } else {
+        let pUrl = new URL(document.referrer);
+        origin = pUrl.origin;
+      }
 
-      window.parent.postMessage({
+      target.postMessage({
         evtid: evtid,
         evt: "set-iframe-issuer-tokens-active",
         issuer: this.tokenName,
         tokens: tokens
-      }, document.referrer);
+      }, origin);
+
+    },
+    emitIframeIssuerTokensActive: (evtid: any, tokens: any) => {
+
+      let target, origin;
+
+      if (window.parent) {
+        target = window.parent;
+        origin = document.referrer;
+      } else {
+        let pUrl = new URL(document.referrer);
+        origin = pUrl.origin;
+      }
+
+      target.postMessage({
+        evtid: evtid,
+        evt: "set-iframe-issuer-tokens-active",
+        issuer: this.tokenName,
+        tokens: tokens
+      }, origin);
 
     },
     emitTokenProofIframe: (tokenProof: any) => {

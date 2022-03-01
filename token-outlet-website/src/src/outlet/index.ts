@@ -41,7 +41,12 @@ export class Outlet {
 
   getFilter(){
     const filter = this.getDataFromQuery('filter');
-    return filter ? JSON.parse(filter) : {};
+
+    try {
+      return JSON.parse(filter);
+    } catch (e){
+      return {};
+    }
   }
   
   pageOnLoadEventHandler () {
@@ -56,21 +61,9 @@ export class Outlet {
 
       case 'get-iframe-issuer-tokens':
 
-        const negotiationType = this.getDataFromQuery('type');
+        var storageTokens1 = this.prepareTokenOutput(this.tokenName, this.getFilter());
 
-        if (negotiationType) {
-
-          let storageTokens = this.prepareTokenOutput(this.tokenName, this.getFilter());
-
-          // TODO: consolidate functions
-          if (negotiationType === 'passive') this.eventSender.emitIframeIssuerTokensPassive(evtid, storageTokens);
-          else this.eventSender.emitIframeIssuerTokensActive(evtid, storageTokens);
-
-        } else {
-
-          requiredParams(negotiationType, "negotiation type required to handle this event");
-
-        }
+        this.eventSender.emitIframeIssuerTokensActive(evtid, storageTokens1);
 
       break;
 
@@ -259,12 +252,24 @@ export class Outlet {
     },
     emitIframeIssuerTokensActive: (evtid: any, tokens: any) => {
 
-      window.parent.postMessage({
+      let target, origin;
+
+      if (!window.opener) {
+        target = window.parent;
+        origin = document.referrer;
+        console.log("It's a iframe: " + origin);
+      } else {
+        let pUrl = new URL(document.referrer);
+        origin = pUrl.origin;
+        console.log("It's a tab: " + origin);
+      }
+
+      target.postMessage({
         evtid: evtid,
         evt: "set-iframe-issuer-tokens-active",
-        issuer: this.tokenName, 
-        tokens: tokens 
-      }, document.referrer);
+        issuer: this.tokenName,
+        tokens: tokens
+      }, origin);
 
     },
     emitTokenProofIframe: (tokenProof: any) => {
