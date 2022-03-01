@@ -22,6 +22,9 @@ export class Messaging {
         if (this.iframeStorageSupport === null)
             this.iframeStorageSupport = await this.thirdPartyCookieSupportCheck(request.origin);
 
+        console.log("Send request: ");
+        console.log(request);
+
         if (this.iframeStorageSupport){
             return this.sendIframe(request);
         } else {
@@ -29,20 +32,22 @@ export class Messaging {
         }
     }
 
-    private async sendIframe(request:MessageRequestInterface){
+    private sendIframe(request:MessageRequestInterface){
 
         return new Promise((resolve, reject) => {
 
             let id = Messaging.getUniqueEventId();
             let url = `${request.origin}?action=${request.action}&filter=${JSON.stringify(request.filter)}&evtid=${id}`;
 
-            this.openIframe(url).then((iframeRef:any) => {
+            let iframe = this.createIframe(url);
+
+            //this.openIframe(url).then((iframeRef:any) => {
 
                 // TODO: iframe error handling here
-                if (iframeRef) {
+                //if (iframeRef) {
 
                     this.setResponseListener(id, resolve, reject, ()=>{
-                        iframeRef.parentNode.remove(iframeRef);
+                        iframe.parentNode.removeChild(iframe);
                     });
 
                     // TODO: Is this required? won't the URL trigger it?
@@ -50,28 +55,30 @@ export class Messaging {
                         evt: 'getTokens'
                     }, request.origin);*/
 
-                }
+                //}
 
-            });
+            //});
+
+            iframe.src = url;
 
         });
     }
 
-    private async sendPopup(request:MessageRequestInterface){
+    private sendPopup(request:MessageRequestInterface){
 
         return new Promise((resolve, reject) => {
 
             let id = Messaging.getUniqueEventId();
+
+            this.setResponseListener(id, resolve, reject, ()=>{
+                tabRef.close()
+            });
 
             let tabRef = window.open(
                 `${request.origin}?action=get-tab-issuer-tokens&filter=${request.filter}&evtid=${id}`,
                 "win1",
                 "left=0,top=0,width=320,height=320"
             );
-
-            this.setResponseListener(id, resolve, reject, ()=>{
-                tabRef.close()
-            });
 
         });
 
@@ -82,10 +89,17 @@ export class Messaging {
         let received = false;
 
         let listener = (event: any) => {
+
+            console.log("event response received");
+            console.log(event.data);
+
             if (event.data.evtid === id) {
                 received = true;
                 resolve(event.data);
+                return;
             }
+
+            console.log("Does not match ID " + id);
         }
 
         attachPostMessageListener(listener);
@@ -104,7 +118,7 @@ export class Messaging {
         return this.iframeStorageSupport;
     }
 
-    private async thirdPartyCookieSupportCheck(origin:string):Promise<boolean> {
+    private thirdPartyCookieSupportCheck(origin:string):Promise<boolean> {
 
         // TODO SML's host a webpage with cache that we use to test cookies
         // This so we don't need to check if the TN is using On/Off chain tokens etc.
@@ -115,7 +129,10 @@ export class Messaging {
             let id = Messaging.getUniqueEventId();
             let url = origin + '?action=cookie-support-check&evtid=' + id;
 
-            this.openIframe(url).then((iframeRef:any) => {
+            let iframe = this.createIframe(url);
+
+
+            //this.openIframe(url).then((iframeRef:any) => {
 
                 this.setResponseListener(
                     id,
@@ -124,18 +141,22 @@ export class Messaging {
                     },
                     reject,
                     () => {
-                        iframeRef.parentNode.remove(iframeRef);
+                        iframe.parentNode.removeChild(iframe);
                     }
                 );
-            });
+
+                console.log("listener set");
+            //});
+
+            iframe.src = url;
 
         });
 
     }
 
-    private async openIframe(url: any) {
+    private createIframe(url: any) {
 
-        return new Promise((resolve, reject) => {
+        //return new Promise((resolve, reject) => {
 
             const iframe = document.createElement('iframe');
 
@@ -149,10 +170,13 @@ export class Messaging {
 
             document.body.appendChild(iframe);
 
-            iframe.onload = () => {
+            /*iframe.onload = () => {
+                console.log("Frame loaded");
                 resolve(iframe);
-            };
-        });
+            };*/
+
+            return iframe;
+        //});
     }
 
     private static getUniqueEventId(){

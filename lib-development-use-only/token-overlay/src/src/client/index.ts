@@ -249,6 +249,8 @@ export class Client {
                 filter: this.filter,
                 origin: tokenOrigin,
                 negotiationType: 'passive'
+            }).catch((err)=>{
+
             });
 
             this.offChainTokens[issuer].tokens = data.tokens;
@@ -773,27 +775,31 @@ export class Client {
             return this.connectOnChainTokenIssuer(event);
         }
 
-        let data = await this.messaging.sendMessage({
+        this.messaging.sendMessage({
             issuer: issuer,
             action: "get-iframe-issuer-tokens",
             origin: tokensOrigin,
             filter: filter,
             negotiationType: 'active' // TODO: Is this required?
+        }).then((data)=>{
+
+            console.log("Event received back from messaging.ts!!!");
+            console.log(data);
+
+            // TODO: move logic out of event receiver
+            const output = {
+                data: data
+            };
+
+            this.eventReciever(output);
+
+        }).catch((err)=>{
+            // TODO: error handling
+            console.log(err);
+            //event.target.innerHTML = this.repeatAction ? this.repeatAction : 'retry';
+            //event.target.classList.add("retry");
         });
 
-        console.log("Event received back from messaging.ts!!!");
-        console.log(data);
-
-        // TODO: error handling
-        //event.target.innerHTML = this.repeatAction ? this.repeatAction : 'retry';
-        //event.target.classList.add("retry");
-
-        // TODO: move logic out of event receiver
-        const output = {
-            data: data
-        };
-
-        this.eventReciever(output);
     }
 
     async connectOnChainTokenIssuer (event) {

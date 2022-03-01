@@ -46,8 +46,10 @@ export class Outlet {
   
   pageOnLoadEventHandler () {
 
+    const evtid = this.getDataFromQuery('evtid');
     const action = this.getDataFromQuery('action');
 
+    console.log("Returning response for event ID " + evtid);
     // Outlet Page OnLoad Event Handler
 
     switch (action) {
@@ -57,8 +59,12 @@ export class Outlet {
         const negotiationType = this.getDataFromQuery('type');
 
         if (negotiationType) {
-          
-          this.getIframeIssuerTokens(this.tokenName, this.getFilter(), negotiationType);
+
+          let storageTokens = this.prepareTokenOutput(this.tokenName, this.getFilter());
+
+          // TODO: consolidate functions
+          if (negotiationType === 'passive') this.eventSender.emitIframeIssuerTokensPassive(evtid, storageTokens);
+          else this.eventSender.emitIframeIssuerTokensActive(evtid, storageTokens);
 
         } else {
 
@@ -75,7 +81,7 @@ export class Outlet {
 
         if(window.opener && storageTokens && parentOrigin) {
             
-          this.eventSender.emitTabIssuerTokensActive(window.opener, storageTokens, parentOrigin);
+          this.eventSender.emitTabIssuerTokensActive(evtid, window.opener, storageTokens, parentOrigin);
         
         }
       
@@ -95,7 +101,7 @@ export class Outlet {
       
       case 'cookie-support-check':
 
-        this.eventSender.emitCookieSupport();
+        this.eventSender.emitCookieSupport(evtid);
       
       break;
 
@@ -116,7 +122,7 @@ export class Outlet {
 
         if(window.opener && storageTokens && parentOrigin) {
 
-          this.eventSender.emitTabIssuerTokensPassive(window.opener, storageTokens, parentOrigin);
+          this.eventSender.emitTabIssuerTokensPassive(evtid, window.opener, storageTokens, parentOrigin);
 
         }
         
@@ -159,15 +165,6 @@ export class Outlet {
     });     
 
   }
-
-  getIframeIssuerTokens ( tokenName:string, filter:any, negotiationType:string ) {
-
-    var storageTokens = this.prepareTokenOutput( tokenName, filter);
-
-    if (negotiationType === 'passive') this.eventSender.emitIframeIssuerTokensPassive(storageTokens);
-    else this.eventSender.emitIframeIssuerTokensActive(storageTokens);
-
-  }
  
   getTabIssuerTokens ( tokenName:string, filter:any ) {
 
@@ -195,17 +192,19 @@ export class Outlet {
 
   eventSender = {
 
-    emitCookieSupport: () => {
+    emitCookieSupport: (evtid: any) => {
       
-      window.parent.postMessage({ 
+      window.parent.postMessage({
+        evtid: evtid,
         evt: "cookie-support-check",
         thirdPartyCookies: localStorage.getItem('cookie-support-check')
       }, document.referrer);
 
     },
-    emitTabIssuerTokensPassive: (opener: any, storageTokens: any, parentOrigin: any) => {
+    emitTabIssuerTokensPassive: (evtid: any, opener: any, storageTokens: any, parentOrigin: any) => {
 
-      opener.postMessage({ 
+      opener.postMessage({
+        evtid: evtid,
         evt: "set-tab-issuer-tokens-passive",
         issuer: this.tokenName, 
         tokens: storageTokens
@@ -225,9 +224,10 @@ export class Outlet {
       // }
 
     },
-    emitTabIssuerTokensActive: (opener: any, storageTokens: any, parentOrigin: any) => {
+    emitTabIssuerTokensActive: (evtid: any, opener: any, storageTokens: any, parentOrigin: any) => {
 
-      opener.postMessage({ 
+      opener.postMessage({
+        evtid: evtid,
         evt: "set-tab-issuer-tokens-active",
         issuer: this.tokenName, 
         tokens: storageTokens
@@ -247,18 +247,20 @@ export class Outlet {
       // }
 
     },
-    emitIframeIssuerTokensPassive: (tokens: any) => {
+    emitIframeIssuerTokensPassive: (evtid: any, tokens: any) => {
 
       window.parent.postMessage({
+        evtid: evtid,
         evt: "set-iframe-issuer-tokens-passive",
         issuer: this.tokenName, 
         tokens: tokens 
       }, document.referrer);
 
     },
-    emitIframeIssuerTokensActive: (tokens: any) => {
+    emitIframeIssuerTokensActive: (evtid: any, tokens: any) => {
 
       window.parent.postMessage({
+        evtid: evtid,
         evt: "set-iframe-issuer-tokens-active",
         issuer: this.tokenName, 
         tokens: tokens 

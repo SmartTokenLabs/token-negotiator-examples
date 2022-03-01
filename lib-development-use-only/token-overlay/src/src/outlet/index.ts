@@ -9,7 +9,7 @@ interface OutletInterface {
 
 declare global {
   interface Window {
-      Authenticator: any;
+    Authenticator: any;
   }
 }
 
@@ -28,9 +28,9 @@ export class Outlet {
     this.tokenIssuer = tokenLookup[tokenName];
 
     requiredParams(tokenLookup[tokenName], "Please provide the token name when installing token outlet");
-    
+
     this.pageOnLoadEventHandler();
-    
+
   };
 
   getDataFromQuery ( itemKey:any ) {
@@ -43,11 +43,13 @@ export class Outlet {
     const filter = this.getDataFromQuery('filter');
     return filter ? JSON.parse(filter) : {};
   }
-  
+
   pageOnLoadEventHandler () {
 
+    const evtid = this.getDataFromQuery('evtid');
     const action = this.getDataFromQuery('action');
 
+    console.log("Returning response for event ID " + evtid);
     // Outlet Page OnLoad Event Handler
 
     switch (action) {
@@ -57,8 +59,12 @@ export class Outlet {
         const negotiationType = this.getDataFromQuery('type');
 
         if (negotiationType) {
-          
-          this.getIframeIssuerTokens(this.tokenName, this.getFilter(), negotiationType);
+
+          let storageTokens = this.prepareTokenOutput(this.tokenName, this.getFilter());
+
+          // TODO: consolidate functions
+          if (negotiationType === 'passive') this.eventSender.emitIframeIssuerTokensPassive(evtid, storageTokens);
+          else this.eventSender.emitIframeIssuerTokensActive(evtid, storageTokens);
 
         } else {
 
@@ -66,7 +72,7 @@ export class Outlet {
 
         }
 
-      break;
+        break;
 
       case 'get-tab-issuer-tokens':
 
@@ -74,12 +80,12 @@ export class Outlet {
         const { storageTokens, parentOrigin } = this.getTabIssuerTokens(this.tokenName, this.getFilter());
 
         if(window.opener && storageTokens && parentOrigin) {
-            
-          this.eventSender.emitTabIssuerTokensActive(window.opener, storageTokens, parentOrigin);
-        
+
+          this.eventSender.emitTabIssuerTokensActive(evtid, window.opener, storageTokens, parentOrigin);
+
         }
-      
-      break;
+
+        break;
 
       case 'get-token-proof':
 
@@ -88,16 +94,16 @@ export class Outlet {
         requiredParams(token, "unsigned token is missing");
 
         const isTabOrIframe = this.getDataFromQuery('type');
-  
+
         this.sendTokenProof(token, isTabOrIframe);
 
-      break;
-      
+        break;
+
       case 'cookie-support-check':
 
-        this.eventSender.emitCookieSupport();
-      
-      break;
+        this.eventSender.emitCookieSupport(evtid);
+
+        break;
 
       default:
 
@@ -107,7 +113,7 @@ export class Outlet {
 
         const { tokenUrlName, tokenSecretName, tokenIdName, itemStorageKey } = this.tokenIssuer;
 
-        const tokens = readMagicUrl(tokenUrlName, tokenSecretName, tokenIdName, itemStorageKey);    
+        const tokens = readMagicUrl(tokenUrlName, tokenSecretName, tokenIdName, itemStorageKey);
 
         if(tokens && tokens.length) storeMagicURL(tokens, itemStorageKey);
 
@@ -116,11 +122,11 @@ export class Outlet {
 
         if(window.opener && storageTokens && parentOrigin) {
 
-          this.eventSender.emitTabIssuerTokensPassive(window.opener, storageTokens, parentOrigin);
+          this.eventSender.emitTabIssuerTokensPassive(evtid, window.opener, storageTokens, parentOrigin);
 
         }
-        
-      break;
+
+        break;
 
     }
 
@@ -137,7 +143,7 @@ export class Outlet {
     const filteredTokens = filterTokens(decodedTokens, filter);
 
     return filteredTokens;
-    
+
   }
 
   sendTokenProof ( token: any, type:any) {
@@ -150,31 +156,22 @@ export class Outlet {
 
       //@ts-ignore
       window.authenticator.getAuthenticationBlob(tokenObj, (tokenProof) => {
-      
+
         if(type === 'iframe') this.eventSender.emitTokenProofIframe(tokenProof);
-        else this.eventSender.emitTokenProofTab(tokenProof); 
-        
+        else this.eventSender.emitTokenProofTab(tokenProof);
+
       });
-          
-    });     
+
+    });
 
   }
 
-  getIframeIssuerTokens ( tokenName:string, filter:any, negotiationType:string ) {
-
-    var storageTokens = this.prepareTokenOutput( tokenName, filter);
-
-    if (negotiationType === 'passive') this.eventSender.emitIframeIssuerTokensPassive(storageTokens);
-    else this.eventSender.emitIframeIssuerTokensActive(storageTokens);
-
-  }
- 
   getTabIssuerTokens ( tokenName:string, filter:any ) {
 
     let opener = window.opener;
-		
+
     let referrer = document.referrer;
-    
+
     if (opener && referrer) {
 
       let pUrl = new URL(referrer);
@@ -195,97 +192,102 @@ export class Outlet {
 
   eventSender = {
 
-    emitCookieSupport: () => {
-      
-      window.parent.postMessage({ 
+    emitCookieSupport: (evtid: any) => {
+
+      window.parent.postMessage({
+        evtid: evtid,
         evt: "cookie-support-check",
         thirdPartyCookies: localStorage.getItem('cookie-support-check')
       }, document.referrer);
 
     },
-    emitTabIssuerTokensPassive: (opener: any, storageTokens: any, parentOrigin: any) => {
+    emitTabIssuerTokensPassive: (evtid: any, opener: any, storageTokens: any, parentOrigin: any) => {
 
-      opener.postMessage({ 
-        evt: "set-tab-issuer-tokens-passive",
-        issuer: this.tokenName, 
-        tokens: storageTokens
-      },
-      parentOrigin);
+      opener.postMessage({
+            evtid: evtid,
+            evt: "set-tab-issuer-tokens-passive",
+            issuer: this.tokenName,
+            tokens: storageTokens
+          },
+          parentOrigin);
 
       // let referrer = document.referrer;
-      
+
       // if (opener && referrer) {
 
       //   let pUrl = new URL(referrer);
 
       //   let parentOrigin = pUrl.origin;
-      
+
       //   opener.postMessage({ evt: "set-tab-issuer-tokens-passive", tokens: storageTokens, issuer: this.tokenName }, parentOrigin);
 
       // }
 
     },
-    emitTabIssuerTokensActive: (opener: any, storageTokens: any, parentOrigin: any) => {
+    emitTabIssuerTokensActive: (evtid: any, opener: any, storageTokens: any, parentOrigin: any) => {
 
-      opener.postMessage({ 
-        evt: "set-tab-issuer-tokens-active",
-        issuer: this.tokenName, 
-        tokens: storageTokens
-      },
-      parentOrigin);
+      opener.postMessage({
+            evtid: evtid,
+            evt: "set-tab-issuer-tokens-active",
+            issuer: this.tokenName,
+            tokens: storageTokens
+          },
+          parentOrigin);
 
       // let referrer = document.referrer;
-      
+
       // if (opener && referrer) {
 
       //   let pUrl = new URL(referrer);
 
       //   let parentOrigin = pUrl.origin;
-      
+
       //   opener.postMessage({ evt: "set-tab-issuer-tokens-active", tokens: storageTokens, issuer: this.tokenName }, parentOrigin);
 
       // }
 
     },
-    emitIframeIssuerTokensPassive: (tokens: any) => {
+    emitIframeIssuerTokensPassive: (evtid: any, tokens: any) => {
 
       window.parent.postMessage({
+        evtid: evtid,
         evt: "set-iframe-issuer-tokens-passive",
-        issuer: this.tokenName, 
-        tokens: tokens 
+        issuer: this.tokenName,
+        tokens: tokens
       }, document.referrer);
 
     },
-    emitIframeIssuerTokensActive: (tokens: any) => {
+    emitIframeIssuerTokensActive: (evtid: any, tokens: any) => {
 
       window.parent.postMessage({
+        evtid: evtid,
         evt: "set-iframe-issuer-tokens-active",
-        issuer: this.tokenName, 
-        tokens: tokens 
+        issuer: this.tokenName,
+        tokens: tokens
       }, document.referrer);
 
     },
     emitTokenProofIframe: (tokenProof: any) => {
-      
+
       window.parent.postMessage({
         evt: 'proof-iframe',
         proof: JSON.stringify(tokenProof),
         issuer: this.tokenName
       }, document.referrer);
 
-    },  
+    },
     emitTokenProofTab: (tokenProof: any) => {
-      
+
       let opener = window.opener;
 
       let referrer = document.referrer;
-      
+
       if (opener && referrer) {
 
         let pUrl = new URL(referrer);
 
         let parentOrigin = pUrl.origin;
-      
+
         opener.postMessage({ evt: "proof-tab", proof: tokenProof, issuer: this.tokenName }, parentOrigin);
 
       }
