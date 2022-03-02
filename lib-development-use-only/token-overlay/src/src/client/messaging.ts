@@ -49,7 +49,7 @@ export class Messaging {
             let id = Messaging.getUniqueEventId();
             let url = this.constructUrl(id, request);
 
-            let iframe = this.createIframe(url);
+            let iframe = this.createIframe();
 
             //this.openIframe(url).then((iframeRef:any) => {
 
@@ -152,7 +152,7 @@ export class Messaging {
             let id = Messaging.getUniqueEventId();
             let url = origin + '?action=' + MessageAction.COOKIE_CHECK +'&evtid=' + id;
 
-            let iframe = this.createIframe(url);
+            let iframe = this.createIframe();
 
 
             //this.openIframe(url).then((iframeRef:any) => {
@@ -191,7 +191,7 @@ export class Messaging {
         return url;
     }
 
-    private openTab(url: string){
+    public openTab(url: string){
         return window.open(
             url,
             "win1",
@@ -199,7 +199,7 @@ export class Messaging {
         );
     }
 
-    private createIframe(url: string) {
+    public createIframe(url?: string) {
 
         //return new Promise((resolve, reject) => {
 
@@ -215,10 +215,14 @@ export class Messaging {
 
             document.body.appendChild(iframe);
 
+            // TODO: Do we need a callback to close tab in Client::addTokenThroughIframe
             /*iframe.onload = () => {
                 console.log("Frame loaded");
                 resolve(iframe);
             };*/
+
+            if (url)
+                iframe.src;
 
             return iframe;
         //});
