@@ -2,10 +2,17 @@ import {attachPostMessageListener, removePostMessageListener} from "../utils";
 
 interface MessageRequestInterface {
     issuer:string,
-    action:string,
+    action:MessageAction,
     origin:string,
+    timeout?:number,
     filter?:string[],
-    noResponseRequired?:boolean // TODO: do some requests not require response payload or acknowledgement?
+    token?:string
+}
+
+export enum MessageAction {
+    COOKIE_CHECK = "cookie-check",
+    GET_ISSUER_TOKENS = "get-issuer-tokens",
+    GET_PROOF = "get-proof"
 }
 
 export class Messaging {
@@ -40,7 +47,7 @@ export class Messaging {
         return new Promise((resolve, reject) => {
 
             let id = Messaging.getUniqueEventId();
-            let url = `${request.origin}?action=${request.action}&filter=${JSON.stringify(request.filter)}&evtid=${id}`;
+            let url = this.constructUrl(id, request);
 
             let iframe = this.createIframe(url);
 
@@ -49,7 +56,7 @@ export class Messaging {
                 // TODO: iframe error handling here
                 //if (iframeRef) {
 
-                    this.setResponseListener(id, resolve, reject, ()=>{
+                    this.setResponseListener(id, request.timeout, resolve, reject, ()=>{
                         iframe.parentNode.removeChild(iframe);
                     });
 
@@ -75,22 +82,18 @@ export class Messaging {
 
             var tabRef:any = null;
 
-            this.setResponseListener(id, resolve, reject, ()=>{
+            this.setResponseListener(id, request.timeout, resolve, reject, ()=>{
                 if (tabRef)
                     tabRef.close();
             });
 
-            tabRef = window.open(
-                `${request.origin}?action=get-tab-issuer-tokens&filter=${request.filter}&evtid=${id}`,
-                "win1",
-                "left=0,top=0,width=320,height=320"
-            );
+            tabRef = this.openTab(this.constructUrl(id, request));
 
         });
 
     }
 
-    private setResponseListener(id:any, resolve:any, reject:any, cleanUp:any){
+    private setResponseListener(id:any, timeout:number, resolve:any, reject:any, cleanUp:any){
 
         let received = false;
         let timer:any = null;
@@ -119,11 +122,15 @@ export class Messaging {
 
         attachPostMessageListener(listener);
 
-        timer = setTimeout(()=>{
-            if (!received)
-                reject("Failed to receive response from window/iframe");
-            afterResolveOrError();
-        }, 5000);
+        if (timeout == undefined)
+            timeout = 5000;
+
+        if (timeout > 0)
+            timer = setTimeout(()=>{
+                if (!received)
+                    reject("Failed to receive response from window/iframe");
+                afterResolveOrError();
+            }, timeout);
     }
 
     async getCookieSupport(testOrigin:string){
@@ -142,7 +149,7 @@ export class Messaging {
         return new Promise((resolve, reject) => {
 
             let id = Messaging.getUniqueEventId();
-            let url = origin + '?action=cookie-support-check&evtid=' + id;
+            let url = origin + '?action=' + MessageAction.COOKIE_CHECK +'&evtid=' + id;
 
             let iframe = this.createIframe(url);
 
@@ -151,6 +158,7 @@ export class Messaging {
 
                 this.setResponseListener(
                     id,
+                    5000,
                     (responseData:any)=>{
                         resolve(!!responseData.thirdPartyCookies);
                     },
@@ -169,7 +177,27 @@ export class Messaging {
 
     }
 
-    private createIframe(url: any) {
+    private constructUrl(id:any, request:MessageRequestInterface){
+        let url = `${request.origin}?evtid=${id}&action=${request.action}`;
+
+        if (request.filter)
+            url += `&filter=${JSON.stringify(request.filter)}`;
+
+        if (request.token)
+            url += `&token=${JSON.stringify(request.token)}`;
+
+        return url;
+    }
+
+    private openTab(url: string){
+        return window.open(
+            url,
+            "win1",
+            "left=0,top=0,width=320,height=320"
+        );
+    }
+
+    private createIframe(url: string) {
 
         //return new Promise((resolve, reject) => {
 

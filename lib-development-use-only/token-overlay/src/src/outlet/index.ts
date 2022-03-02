@@ -2,6 +2,7 @@ import { readMagicUrl, storeMagicURL, rawTokenCheck } from '../core';
 import { requiredParams } from '../utils/index';
 import { tokenLookup } from './../tokenLookup';
 import { decodeTokens, filterTokens } from './../core/index';
+import { MessageAction } from '../client/messaging';
 
 interface OutletInterface {
   tokenName: string;
@@ -49,20 +50,20 @@ export class Outlet {
     const evtid = this.getDataFromQuery('evtid');
     const action = this.getDataFromQuery('action');
 
-    console.log("Returning response for event ID " + evtid);
+    console.log("Outlet response for event ID " + evtid + " action " + action);
     // Outlet Page OnLoad Event Handler
 
     switch (action) {
 
-      case 'get-iframe-issuer-tokens':
+      case MessageAction.GET_ISSUER_TOKENS:
 
-          var storageTokens1 = this.prepareTokenOutput(this.tokenName, this.getFilter());
+          let issuerTokens = this.prepareTokenOutput(this.tokenName, this.getFilter());
 
-          this.eventSender.emitIframeIssuerTokensActive(evtid, storageTokens1);
+          this.eventSender.emitIframeIssuerTokensActive(evtid, issuerTokens);
 
         break;
 
-      case 'get-tab-issuer-tokens':
+      /*case 'get-tab-issuer-tokens':
 
         // @ts-ignore
         const { storageTokens, parentOrigin } = this.getTabIssuerTokens(this.tokenName, this.getFilter());
@@ -73,9 +74,9 @@ export class Outlet {
 
         }
 
-        break;
+        break;*/
 
-      case 'get-token-proof':
+      case MessageAction.GET_PROOF:
 
         const token = this.getDataFromQuery('token');
 
@@ -87,7 +88,7 @@ export class Outlet {
 
         break;
 
-      case 'cookie-support-check':
+      case MessageAction.COOKIE_CHECK:
 
         this.eventSender.emitCookieSupport(evtid);
 

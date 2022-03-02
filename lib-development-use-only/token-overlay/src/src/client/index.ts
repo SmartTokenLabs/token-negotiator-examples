@@ -3,7 +3,7 @@ import { asyncHandle, requiredParams, attachPostMessageListener, logger, splitOn
 import { getChallengeSigned, validateUseEthKey, connectMetamaskAndGetAddress } from "../core/index";
 import { createWalletSelectionViewMarkup, createOpeningViewMarkup, createIssuerViewMarkup, createFabButtonMarkup, createTokenMarkup, issuerConnectMarkup } from './componentFactory';
 import { tokenLookup } from './../tokenLookup';
-import { Messaging } from "./messaging";
+import { Messaging, MessageAction } from "./messaging";
 import OnChainTokenModule from './../onChainTokenModule'
 import Web3WalletProvider from './../utils/Web3WalletProvider';
 import "./../theme/style.css";
@@ -777,10 +777,10 @@ export class Client {
 
         this.messaging.sendMessage({
             issuer: issuer,
-            action: "get-iframe-issuer-tokens",
+            action: MessageAction.GET_ISSUER_TOKENS,
             origin: tokensOrigin,
             filter: filter,
-            negotiationType: 'active' // TODO: Is this required?
+            negotiationType: 'active' // TODO: Remove
         }).then((data)=>{
 
             // TODO: move logic out of event receiver
@@ -866,10 +866,32 @@ export class Client {
         }
 
         // TODO: Remove once messaging object is fully implemented
-        const iframeStorageSupport = this.tokenLookup.tokenKeys.length > 0 ? await this.messaging.getCookieSupport(this.tokenLookup[this.offChainTokens.tokenKeys[0]]?.tokenOrigin) : false;
+        //const iframeStorageSupport = this.tokenLookup.tokenKeys.length > 0 ? await this.messaging.getCookieSupport(this.tokenLookup[this.offChainTokens.tokenKeys[0]]?.tokenOrigin) : false;
 
-        if(iframeStorageSupport === true) await this.getTokenProofIframe(issuer, unsignedToken);
-        else this.getTokenProofTab(issuer, unsignedToken);
+        //if(iframeStorageSupport === true) await this.getTokenProofIframe(issuer, unsignedToken);
+        //else this.getTokenProofTab(issuer, unsignedToken);
+
+        this.messaging.sendMessage({
+            issuer: issuer,
+            action: MessageAction.GET_PROOF,
+            origin: tokensOrigin,
+            token: unsignedToken,
+            timeout: 0 // Don't time out on this event as it needs active input from the user
+        }).then((data)=>{
+
+            // TODO: move logic out of event receiver
+            const output = {
+                data: data
+            };
+
+            this.eventReciever(output);
+
+        }).catch((err)=>{
+            // TODO: error handling
+            console.log(err);
+            //event.target.innerHTML = this.repeatAction ? this.repeatAction : 'retry';
+            //event.target.classList.add("retry");
+        });
 
     }
 
@@ -899,54 +921,6 @@ export class Client {
 
     }
 
-    // TODO: replace with messaging object calls
-    async getTokenProofIframe (issuer: any, unsignedToken: any) {
-        
-        return new Promise((resolve, reject) => {
-
-            const iframe = document.createElement('iframe');
-            
-            iframe.src = `${tokenLookup[issuer].tokenOrigin}?action=get-token-proof&token=${JSON.stringify(unsignedToken)}&issuer=${issuer}&type=iframe`;
-            
-            iframe.style.width = '1px';
-            
-            iframe.style.height = '1px';
-            
-            iframe.style.opacity = '0';
-            
-            document.body.appendChild(iframe);
-
-            iframe.onload = () => {
-
-                resolve(true);
-
-            };
-
-        });
-
-    }
-
-    // TODO: replace with messaging object calls
-    async getTokenProofTab(issuer: any, unsignedToken: any) {
-
-        let tabRef = window.open(
-            `${tokenLookup[issuer].tokenOrigin}?action=get-token-proof&token=${JSON.stringify(unsignedToken)}&issuer=${issuer}&type=tab`,
-            "win1",
-            `left=0,top=0,width=${window.innerWidth},height=${window.innerHeight}`
-        );
-
-        // issue with passive.
-
-        /*if (!this.issuerTabInstanceRefs) {
-            
-            this.issuerTabInstanceRefs = {};
-
-        }
-        
-        this.issuerTabInstanceRefs[issuer] = tabRef;*/
-
-    }
-
     eventSender = {
         emitAllTokensToClient: (tokens:any) => {
 
@@ -954,7 +928,7 @@ export class Client {
 
         },
         emitSelectedTokensToClient: () => {
-            
+
             this.on("tokens-selected", null, { selectedTokens: this.selectedTokens });
 
         },
@@ -971,6 +945,7 @@ export class Client {
 
             case 'set-tab-issuer-tokens-active':
 
+                // TODO: Move origin validation to messaging
                 const issuer = event.data.issuer;
 
                 let childURL = tokenLookup[issuer].tokenOrigin;
