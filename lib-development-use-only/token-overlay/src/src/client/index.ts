@@ -1,9 +1,16 @@
 // @ts-nocheck
-import { asyncHandle, requiredParams, attachPostMessageListener, logger, splitOnChainKey } from './../utils/index';
-import { getChallengeSigned, validateUseEthKey, connectMetamaskAndGetAddress } from "../core/index";
-import { createWalletSelectionViewMarkup, createOpeningViewMarkup, createIssuerViewMarkup, createFabButtonMarkup, createTokenMarkup, issuerConnectMarkup } from './componentFactory';
-import { tokenLookup } from './../tokenLookup';
-import { Messaging, MessageAction } from "./messaging";
+import {asyncHandle, attachPostMessageListener, logger, requiredParams} from './../utils/index';
+import {connectMetamaskAndGetAddress, getChallengeSigned, validateUseEthKey} from "../core/index";
+import {
+    createFabButtonMarkup,
+    createIssuerViewMarkup,
+    createOpeningViewMarkup,
+    createTokenMarkup,
+    createWalletSelectionViewMarkup,
+    issuerConnectMarkup
+} from './componentFactory';
+import {tokenLookup} from './../tokenLookup';
+import {MessageAction, Messaging} from "./messaging";
 import OnChainTokenModule from './../onChainTokenModule'
 import Web3WalletProvider from './../utils/Web3WalletProvider';
 import "./../theme/style.css";
@@ -1033,7 +1040,7 @@ export class Client {
 
         let tab = this.messaging.openTab(magicLink);
 
-        setTimeout(() => { tab?.close(); }, 2500);
+        //setTimeout(() => { tab?.close(); }, 2500);
 
     }
 
