@@ -49,6 +49,11 @@ export class Popup {
 
         let entryPointContentElement = document.querySelector(".overlay-content-tn");
 
+        if (!entryPointContentElement){
+            console.log("Element .overlay-content-tn not found");
+            return;
+        }
+
         if(state === "INTRO") {
 
             entryPointContentElement.innerHTML = createOpeningViewMarkup(this.options.openingHeading);
@@ -67,18 +72,25 @@ export class Popup {
 
             let refIssuerContainerSelector = document.querySelector(".token-issuer-list-container-tn");
 
+            if (!refIssuerContainerSelector){
+                console.log("Element .token-issuer-list-container-tn not found");
+                return;
+            }
+
             refIssuerContainerSelector.innerHTML = "";
 
             let data = this.client.getTokenData();
 
             data.offChainTokens.tokenKeys.map((issuer: string) => {
 
+                // @ts-ignore
                 refIssuerContainerSelector.innerHTML += issuerConnectMarkup(data.tokenLookup[issuer].title, data.tokenLookup[issuer].emblem, issuer);
 
             });
 
             data.onChainTokens.tokenKeys.map((issuer: string) => {
 
+                // @ts-ignore
                 refIssuerContainerSelector.innerHTML += issuerConnectMarkup(data.tokenLookup[issuer].title, data.tokenLookup[issuer].emblem, issuer);
 
             });

@@ -205,8 +205,6 @@ export class Messaging {
 
             const iframe = document.createElement('iframe');
 
-            iframe.src = url;
-
             iframe.style.width = '1px';
 
             iframe.style.height = '1px';
@@ -222,7 +220,7 @@ export class Messaging {
             };*/
 
             if (url)
-                iframe.src;
+                iframe.src = url;
 
             return iframe;
         //});
