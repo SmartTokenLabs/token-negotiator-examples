@@ -1,5 +1,5 @@
-[
-  {
+{
+  "devcon-issuer":{
     "name": "Devon Ticket Issuer (with email)",
     "description": "Donec efficitur fermentum nisi, sodales feugiat orci malesuada sit amet. Nam quis odio justo. Morbi egestas fermentum mi, ac commodo ipsum sagittis ut. Cras quis urna volutpat metus egestas volutpat.",
     "technology": "React, Ajax, XML, TypeScript, HTML",
@@ -10,7 +10,7 @@
     "githubUrl": "",
     "isPrototype": false
   },
-  {
+  "liscon":{
     "name": "Liscon (Passive Negotiation)",
     "description": "Donec efficitur fermentum nisi, sodales feugiat orci malesuada sit amet. Nam quis odio justo. Morbi egestas fermentum mi, ac commodo ipsum sagittis ut. Cras quis urna volutpat metus egestas volutpat.",
     "technology": "React, Ajax, XML, TypeScript, HTML",
@@ -21,7 +21,7 @@
     "githubUrl": "",
     "isPrototype": false
   },
-  {
+  "hotel-bogota-passive":{
     "name": "Hotel Bogota (Passive Negotiation)",
     "description": "Donec efficitur fermentum nisi, sodales feugiat orci malesuada sit amet. Nam quis odio justo. Morbi egestas fermentum mi, ac commodo ipsum sagittis ut. Cras quis urna volutpat metus egestas volutpat.",
     "technology": "React, Ajax, XML, TypeScript, HTML",
@@ -32,7 +32,7 @@
     "githubUrl": "",
     "isPrototype": false
   },
-  {
+  "hotel-bogota-active":{
     "name": "Hotel Bogota (Active Negotiation)",
     "description": "Donec efficitur fermentum nisi, sodales feugiat orci malesuada sit amet. Nam quis odio justo. Morbi egestas fermentum mi, ac commodo ipsum sagittis ut. Cras quis urna volutpat metus egestas volutpat.",
     "technology": "React, Ajax, XML, TypeScript, HTML",
@@ -43,7 +43,7 @@
     "githubUrl": "",
     "isPrototype": false
   },
-  {
+  "devcon-2022":{
     "name": "Devcon 2022 Bogota Colombia",
     "description": "Donec efficitur fermentum nisi, sodales feugiat orci malesuada sit amet. Nam quis odio justo. Morbi egestas fermentum mi, ac commodo ipsum sagittis ut. Cras quis urna volutpat metus egestas volutpat.",
     "technology": "React, Ajax, XML, TypeScript, HTML",
@@ -54,7 +54,7 @@
     "githubUrl": "",
     "isPrototype": false
   },
-  {
+  "emirates-zedrun":{
     "name": "Emirates & ZedRun",
     "description": "Donec efficitur fermentum nisi, sodales feugiat orci malesuada sit amet. Nam quis odio justo. Morbi egestas fermentum mi, ac commodo ipsum sagittis ut. Cras quis urna volutpat metus egestas volutpat.",
     "technology": "Prototype only",
@@ -65,8 +65,7 @@
     "githubUrl": "",
     "isPrototype": false
   },
-
-  {
+  "route-one-asos":{
     "name": "Route One & Asos",
     "description": "Donec efficitur fermentum nisi, sodales feugiat orci malesuada sit amet. Nam quis odio justo. Morbi egestas fermentum mi, ac commodo ipsum sagittis ut. Cras quis urna volutpat metus egestas volutpat.",
     "technology": "Prototype only",
@@ -77,7 +76,7 @@
     "githubUrl": "",
     "isPrototype": false
   },
-  {
+  "singtel-axie-infinity":{
     "name": "Singtel & Axie Infinity",
     "description": "Donec efficitur fermentum nisi, sodales feugiat orci malesuada sit amet. Nam quis odio justo. Morbi egestas fermentum mi, ac commodo ipsum sagittis ut. Cras quis urna volutpat metus egestas volutpat.",
     "technology": "Prototype only",
@@ -88,4 +87,4 @@
     "githubUrl": "",
     "isPrototype": false
   }
-]
+}

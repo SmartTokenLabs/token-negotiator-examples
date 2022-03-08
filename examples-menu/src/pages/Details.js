@@ -7,29 +7,24 @@ function Details() {
 
     const params = useParams();
 
-    if (!params.id){
+    if (!params.id || !examples[params.id]){
         document.location.href = "/";
         return null;
     }
 
-    let id = parseInt(params.id);
+    let example = examples[params.id];
 
-    if (isNaN(id) && !isFinite(id) || !examples[id]){
-        document.location.href = "/";
-        return null;
-    }
-
-    let example = examples[id];
-
-    let nextId = id+1 < examples.length ? id+1 : 0;
-    let lastId = id-1 < 0 ? examples.length - 1 : id-1;
+    let keys = Object.keys(examples);
+    let curIndex = keys.indexOf(params.id);
+    let nextId = curIndex+1 < keys.length ? curIndex+1 : 0;
+    let lastId = curIndex-1 < 0 ? keys.length - 1 : curIndex-1;
 
     return (
         <div>
-        <Link to={"/details/" + lastId} className="backButton">
+        <Link to={"/details/" + keys[lastId]} className="backButton">
             <img src="/images/icons-arrow-left.svg" alt="Previous" />
         </Link>
-        <Link to={"/details/" + nextId} className="nextButton">
+        <Link to={"/details/" + keys[nextId]} className="nextButton">
             <img src="/images/icons-arrow-left.svg" alt="Next" />
         </Link>
         <div className="pageWrapper contentContainer">

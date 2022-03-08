@@ -7,7 +7,7 @@ class ExampleTile extends React.Component {
     render() {
 
         return <div className="listTile">
-            <Link to={"/details/" + this.props.index}>
+            <Link to={"/details/" + this.props.urlKey}>
                 <div>
                     <img src={this.props.example.thumbUrl} alt="Example thumbnail"/>
                 </div>

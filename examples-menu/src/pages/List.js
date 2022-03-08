@@ -5,9 +5,7 @@ let examples = require('../examples.json');
 
 function List() {
 
-    const listItems = examples.map((d, idx) => <ExampleTile key={idx} index={idx} example={d} />);
-
-    console.log(listItems);
+    const listItems = Object.keys(examples).map((d, idx) => <ExampleTile key={d} urlKey={d} example={examples[d]} />);
 
     return (
         <div className="pageWrapper contentContainer">
