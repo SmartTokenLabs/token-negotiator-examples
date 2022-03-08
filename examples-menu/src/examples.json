@@ -7,7 +7,7 @@
     "thumbUrl": "/images/examples/devcon-thumbnail.png",
     "imageUrl": "/images/examples/devcon.png",
     "demoUrl": "",
-    "githubUrl": "",
+    "githubUrl": "https://github.com/TokenScript/token-negotiator-examples/tree/main/ticket-issuer-url-website",
     "isPrototype": false
   },
   "liscon":{
@@ -18,7 +18,7 @@
     "thumbUrl": "/images/examples/liscon-thumbnail.png",
     "imageUrl": "/images/examples/liscon.png",
     "demoUrl": "",
-    "githubUrl": "",
+    "githubUrl": "https://github.com/TokenScript/token-negotiator-examples/tree/main/liscon-website",
     "isPrototype": false
   },
   "hotel-bogota-passive":{
@@ -29,7 +29,7 @@
     "thumbUrl": "/images/examples/hotel-bogota-thumbnail.png",
     "imageUrl": "/images/examples/hotel-bogota.png",
     "demoUrl": "",
-    "githubUrl": "",
+    "githubUrl": "https://github.com/TokenScript/token-negotiator-examples/tree/main/hotel-bogota-passive-negotiation-website",
     "isPrototype": false
   },
   "hotel-bogota-active":{
@@ -40,7 +40,7 @@
     "thumbUrl": "/images/examples/hotel-bogota-thumbnail.png",
     "imageUrl": "/images/examples/hotel-bogota.png",
     "demoUrl": "",
-    "githubUrl": "",
+    "githubUrl": "https://github.com/TokenScript/token-negotiator-examples/tree/main/hotel-bogota-active-negotiation-website",
     "isPrototype": false
   },
   "devcon-2022":{
@@ -51,7 +51,7 @@
     "thumbUrl": "/images/examples/devcon-thumbnail.png",
     "imageUrl": "/images/examples/devcon.png",
     "demoUrl": "",
-    "githubUrl": "",
+    "githubUrl": "https://github.com/TokenScript/token-negotiator-examples/tree/main/ticket-issuer-url-website",
     "isPrototype": false
   },
   "emirates-zedrun":{
@@ -63,7 +63,7 @@
     "imageUrl": "/images/examples/emirates.png",
     "demoUrl": "",
     "githubUrl": "",
-    "isPrototype": false
+    "isPrototype": true
   },
   "route-one-asos":{
     "name": "Route One & Asos",
@@ -74,7 +74,7 @@
     "imageUrl": "/images/examples/asos.png",
     "demoUrl": "",
     "githubUrl": "",
-    "isPrototype": false
+    "isPrototype": true
   },
   "singtel-axie-infinity":{
     "name": "Singtel & Axie Infinity",
@@ -85,6 +85,6 @@
     "imageUrl": "/images/examples/singtel.png",
     "demoUrl": "",
     "githubUrl": "",
-    "isPrototype": false
+    "isPrototype": true
   }
 }

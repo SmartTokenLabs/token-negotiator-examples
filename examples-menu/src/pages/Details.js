@@ -19,6 +19,25 @@ function Details() {
     let nextId = curIndex+1 < keys.length ? curIndex+1 : 0;
     let lastId = curIndex-1 < 0 ? keys.length - 1 : curIndex-1;
 
+    let buttons;
+
+    if (example.isPrototype){
+        buttons = <div className="detailsActions">
+            <a href={example.demoUrl ? example.demoUrl : "#"}>
+                <button className="button primary">View Prototype</button>
+            </a>
+        </div>;
+    } else {
+        buttons = <div className="detailsActions">
+            <a href={example.demoUrl ? example.demoUrl : "#"}>
+                <button className="button primary">View Demo</button>
+            </a>
+            <a href={example.githubUrl ? example.githubUrl : "#"}>
+                <button className="button">View on Github</button>
+            </a>
+        </div>;
+    }
+
     return (
         <div>
         <Link to={"/details/" + keys[lastId]} className="backButton">
@@ -49,14 +68,7 @@ function Details() {
                         <label>Description</label>
                         <p>{example.description}</p>
                     </div>
-                    <div className="detailsActions">
-                        <a href="#">
-                            <button className="button primary">View Demo</button>
-                        </a>
-                        <a href="#">
-                            <button className="button">View on Github</button>
-                        </a>
-                    </div>
+                    {buttons}
                 </div>
             </div>
         </div>
