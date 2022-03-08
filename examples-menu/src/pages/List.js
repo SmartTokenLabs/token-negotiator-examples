@@ -12,7 +12,7 @@ function List() {
     return (
         <div className="pageWrapper contentContainer">
             <h1 className="listHeading">Token Negotiator Examples</h1>
-            <div>
+            <div className="listContainer">
                 {listItems}
             </div>
         </div>

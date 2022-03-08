@@ -5,9 +5,20 @@ let examples = require('../examples.json');
 
 function Details() {
 
-    let params = useParams();
+    const params = useParams();
+
+    if (!params.id){
+        document.location.href = "/";
+        return null;
+    }
 
     let id = parseInt(params.id);
+
+    if (isNaN(id) && !isFinite(id) || !examples[id]){
+        document.location.href = "/";
+        return null;
+    }
+
     let example = examples[id];
 
     let nextId = id+1 < examples.length ? id+1 : 0;
@@ -42,6 +53,14 @@ function Details() {
                     <div>
                         <label>Description</label>
                         <p>{example.description}</p>
+                    </div>
+                    <div className="detailsActions">
+                        <a href="#">
+                            <button className="button">View Demo</button>
+                        </a>
+                        <a href="#">
+                            <button className="button">View on Github</button>
+                        </a>
                     </div>
                 </div>
             </div>

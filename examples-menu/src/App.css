@@ -9,7 +9,7 @@
   box-sizing: border-box;
   font-size: calc(10px + 2vmin);
   color: white;
-  padding: 23px 160px;
+  padding: 23px 0;
   box-shadow: 0 2px 3px 0 rgba(196, 196, 196, 0.5);
 }
 
@@ -20,6 +20,10 @@
 
 .logoContainer {
   flex: 1;
+}
+
+.logoContainer img {
+  margin: 2px 0;
 }
 
 .menuContainer {
@@ -34,13 +38,16 @@
 .footerContainer {
   display: flex;
   flex-direction: row;
-  padding: 60px 0;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .footerItem {
   flex: 1;
   align-self: center;
   text-align: center;
+  min-width: 250px;
+  padding: 40px 40px;
 }
 
 .App-logo {
@@ -51,8 +58,28 @@
 
 .pageWrapper {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
+  padding: 0 10px;
   margin: 0 auto;
+  box-sizing: border-box;
+}
+
+@media only screen and (max-width: 960px) {
+  .pageWrapper {
+    max-width: 600px;
+  }
+  .listContainer {
+    max-width: 400px !important;
+  }
+}
+
+@media only screen and (min-width: 960px) and (max-width: 1300px) {
+  .pageWrapper {
+    max-width: 960px;
+  }
+  .listContainer {
+    max-width: 800px !important;
+  }
 }
 
 .contentContainer {
@@ -63,9 +90,19 @@
   text-align: center;
 }
 
+.listContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: left;
+}
+
 .listTile {
   display: inline-block;
   margin : 10px;
+  width: 380px;
 }
 
 .tileTitle {
@@ -75,16 +112,44 @@
 .detailsContainer {
   margin-top: 50px;
   display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+@media only screen and (max-width: 1550px) {
+  .detailsContainer {
+    padding: 0 45px;
+  }
+  .backButton, .nextButton {
+    height: 60px !important;
+    width: 45px !important;
+    padding: 12px 5px !important;
+    text-align: center;
+  }
 }
 
 .detailsImage {
   margin: 10px;
 }
 
+.detailsImage img {
+  max-width: 661px;
+  width: 100%;
+}
+
 .detailsInfo {
   margin: 10px;
   padding: 20px;
   flex:1;
+}
+
+.detailsActions {
+  margin-top: 60px;
+}
+
+.detailsActions button {
+  margin-right: 20px;
+  margin-bottom: 20px;
 }
 
 .button {
