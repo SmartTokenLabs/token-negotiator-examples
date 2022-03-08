@@ -28,20 +28,20 @@ function App() {
             <div className="pageWrapper footerContainer">
                 <div className="footerItem">
                     <a href="mailto:contact@tokenscript.org">
-                        <img src="/images/icons-email.png" alt="Email icon" />
+                        <img src="/images/icons-email.svg" alt="Email icon" />
                     </a>
                     <h3>contact@tokenscript.org</h3>
                 </div>
                 <div className="footerItem">
                     <div>
                         <a href="https://twitter.com/TokenScript" target="_blank" rel="noreferrer">
-                            <img src="/images/icons-twitter.png" alt="Twitter icon" />
+                            <img src="/images/icons-twitter.svg" alt="Twitter icon" />
                         </a>
                         <a href="https://github.com/TokenScript" target="_blank" rel="noreferrer">
-                            <img src="/images/icons-github.png" alt="Github icon" />
+                            <img src="/images/icons-github.svg" alt="Github icon" />
                         </a>
                         <a href="https://linkedin.com/company/smart-token-labs" target="_blank" rel="noreferrer">
-                            <img src="/images/icons-linkedin.png" alt="LinkedIn icon" />
+                            <img src="/images/icons-linkedin.svg" alt="LinkedIn icon" />
                         </a>
                     </div>
                     <h3>Follow TokenScript on</h3>
@@ -49,7 +49,7 @@ function App() {
                 <div className="footerItem">
                     <div>
                         <a href="tel:+48 662 192 244">
-                            <img src="/images/icons-phone.png" alt="Phone icon" />
+                            <img src="/images/icons-phone.svg" alt="Phone icon" />
                         </a>
                     </div>
                     <h3>(Australia) +48 662 192 244</h3>

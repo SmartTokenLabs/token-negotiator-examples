@@ -51,9 +51,18 @@
   padding: 40px 40px;
 }
 
+.footerItem h3 {
+  font-size: 24px;
+  font-weight: normal;
+}
+
 .footerItem a {
   display: inline-block;
   margin: 0 5px;
+}
+
+.footerItem img:hover {
+  filter: invert(10%) sepia(94%) saturate(7466%) hue-rotate(254deg) brightness(85%) contrast(138%);
 }
 
 .App-logo {
@@ -163,11 +172,13 @@ a {
 
 .detailsInfo h2 {
   color: #0019ff;
+  font-weight: bold;
 }
 
 .detailsInfo label {
   color: #999;
   font-size: 16px;
+  font-weight: 500;
 }
 
 .detailsInfo p {
@@ -191,19 +202,17 @@ a {
   height: 44px;
   padding: 11px 0 12px 0;
   border-radius: 30px;
-  border: solid 2px #000;
+  border: solid 1px #000;
   background-color: #fff;
   color: #000;
   cursor: pointer;
-  /* font-family: SFProDisplay; */
   font-size: 16px;
   font-weight: 600;
   vertical-align: middle;
 }
 
 .button:hover {
-  background-color: #dfdfdf;
-  border-color: #dfdfdf;
+  background-color: #F3F3F3;
 }
 
 .button.primary {
@@ -213,8 +222,8 @@ a {
 }
 
 .button.primary:hover {
-  background-color: #180085;
-  border-color: #180085;
+  background-color: #1906D0;
+  border-color: #1906D0;
 }
 
 .backButton, .nextButton {
