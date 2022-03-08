@@ -1,0 +1,91 @@
+[
+  {
+    "name": "Devon Ticket Issuer (with email)",
+    "description": "Donec efficitur fermentum nisi, sodales feugiat orci malesuada sit amet. Nam quis odio justo. Morbi egestas fermentum mi, ac commodo ipsum sagittis ut. Cras quis urna volutpat metus egestas volutpat.",
+    "technology": "React, Ajax, XML, TypeScript, HTML",
+    "published": "April 2022",
+    "thumbUrl": "",
+    "imageUrl": "",
+    "demoUrl": "",
+    "githubUrl": "",
+    "isPrototype": false
+  },
+  {
+    "name": "Liscon (Passive Negotiation)",
+    "description": "Donec efficitur fermentum nisi, sodales feugiat orci malesuada sit amet. Nam quis odio justo. Morbi egestas fermentum mi, ac commodo ipsum sagittis ut. Cras quis urna volutpat metus egestas volutpat.",
+    "technology": "React, Ajax, XML, TypeScript, HTML",
+    "published": "April 2022",
+    "thumbUrl": "",
+    "imageUrl": "",
+    "demoUrl": "",
+    "githubUrl": "",
+    "isPrototype": false
+  },
+  {
+    "name": "Hotel Bogota (Passive Negotiation)",
+    "description": "Donec efficitur fermentum nisi, sodales feugiat orci malesuada sit amet. Nam quis odio justo. Morbi egestas fermentum mi, ac commodo ipsum sagittis ut. Cras quis urna volutpat metus egestas volutpat.",
+    "technology": "React, Ajax, XML, TypeScript, HTML",
+    "published": "April 2022",
+    "thumbUrl": "",
+    "imageUrl": "",
+    "demoUrl": "",
+    "githubUrl": "",
+    "isPrototype": false
+  },
+  {
+    "name": "Hotel Bogota (Active Negotiation)",
+    "description": "Donec efficitur fermentum nisi, sodales feugiat orci malesuada sit amet. Nam quis odio justo. Morbi egestas fermentum mi, ac commodo ipsum sagittis ut. Cras quis urna volutpat metus egestas volutpat.",
+    "technology": "React, Ajax, XML, TypeScript, HTML",
+    "published": "April 2022",
+    "thumbUrl": "",
+    "imageUrl": "",
+    "demoUrl": "",
+    "githubUrl": "",
+    "isPrototype": false
+  },
+  {
+    "name": "Devcon 2022 Bogota Colombia",
+    "description": "Donec efficitur fermentum nisi, sodales feugiat orci malesuada sit amet. Nam quis odio justo. Morbi egestas fermentum mi, ac commodo ipsum sagittis ut. Cras quis urna volutpat metus egestas volutpat.",
+    "technology": "React, Ajax, XML, TypeScript, HTML",
+    "published": "April 2022",
+    "thumbUrl": "",
+    "imageUrl": "",
+    "demoUrl": "",
+    "githubUrl": "",
+    "isPrototype": false
+  },
+  {
+    "name": "Emirates & ZedRun",
+    "description": "Donec efficitur fermentum nisi, sodales feugiat orci malesuada sit amet. Nam quis odio justo. Morbi egestas fermentum mi, ac commodo ipsum sagittis ut. Cras quis urna volutpat metus egestas volutpat.",
+    "technology": "Prototype only",
+    "published": "April 2022",
+    "thumbUrl": "",
+    "imageUrl": "",
+    "demoUrl": "",
+    "githubUrl": "",
+    "isPrototype": false
+  },
+
+  {
+    "name": "Route One & Asos",
+    "description": "Donec efficitur fermentum nisi, sodales feugiat orci malesuada sit amet. Nam quis odio justo. Morbi egestas fermentum mi, ac commodo ipsum sagittis ut. Cras quis urna volutpat metus egestas volutpat.",
+    "technology": "Prototype only",
+    "published": "April 2022",
+    "thumbUrl": "",
+    "imageUrl": "",
+    "demoUrl": "",
+    "githubUrl": "",
+    "isPrototype": false
+  },
+  {
+    "name": "Singtel & Axie Infinity",
+    "description": "Donec efficitur fermentum nisi, sodales feugiat orci malesuada sit amet. Nam quis odio justo. Morbi egestas fermentum mi, ac commodo ipsum sagittis ut. Cras quis urna volutpat metus egestas volutpat.",
+    "technology": "Prototype only",
+    "published": "April 2022",
+    "thumbUrl": "",
+    "imageUrl": "",
+    "demoUrl": "",
+    "githubUrl": "",
+    "isPrototype": false
+  }
+]

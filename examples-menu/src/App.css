@@ -1,0 +1,53 @@
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.App-header {
+  min-height: 90px;
+  box-sizing: border-box;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  padding: 23px 160px;
+  box-shadow: 0 2px 3px 0 rgba(196, 196, 196, 0.5);
+}
+
+.headerContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.logoContainer {
+  flex: 1;
+}
+
+.menuContainer {
+  align-self: end;
+}
+
+.App-footer {
+  margin-top: auto;
+  min-height: 277px;
+}
+
+.footerContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.footerItem {
+  flex: 1;
+  align-self: center;
+  text-align: center;
+}
+
+.App-logo {
+  width: 210px;
+  height: auto;
+}
+
+.pageWrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
