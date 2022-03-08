@@ -56,7 +56,7 @@ function Details() {
                     </div>
                     <div className="detailsActions">
                         <a href="#">
-                            <button className="button">View Demo</button>
+                            <button className="button primary">View Demo</button>
                         </a>
                         <a href="#">
                             <button className="button">View on Github</button>
