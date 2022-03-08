@@ -10,8 +10,8 @@ function List() {
     console.log(listItems);
 
     return (
-        <div>
-            <h1>This is the listing page</h1>
+        <div className="pageWrapper contentContainer">
+            <h1 className="listHeading">Token Negotiator Examples</h1>
             <div>
                 {listItems}
             </div>

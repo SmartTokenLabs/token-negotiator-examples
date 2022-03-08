@@ -5,7 +5,14 @@ class ExampleTile extends React.Component {
 
 
     render() {
-        return <Link to={"/details/" + this.props.index}><h1>{this.props.example.name}</h1></Link>;
+        return <div className="listTile">
+            <Link to={"/details/" + this.props.index}>
+                <div>
+                    <img src={this.props.example.thumbUrl} alt="Example thumbnail"/>
+                </div>
+                <h3 className="tileTitle">{this.props.example.name}</h3>
+            </Link>
+        </div>;
     }
 }
 

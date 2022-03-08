@@ -34,6 +34,7 @@
 .footerContainer {
   display: flex;
   flex-direction: row;
+  padding: 60px 0;
 }
 
 .footerItem {
@@ -45,9 +46,86 @@
 .App-logo {
   width: 210px;
   height: auto;
+  vertical-align: middle;
 }
 
 .pageWrapper {
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.contentContainer {
+  padding: 50px 10px;
+}
+
+.listHeading {
+  text-align: center;
+}
+
+.listTile {
+  display: inline-block;
+  margin : 10px;
+}
+
+.tileTitle {
+  text-align: center;
+}
+
+.detailsContainer {
+  margin-top: 50px;
+  display: flex;
+}
+
+.detailsImage {
+  margin: 10px;
+}
+
+.detailsInfo {
+  margin: 10px;
+  padding: 20px;
+  flex:1;
+}
+
+.button {
+  width: 264px;
+  height: 44px;
+  padding: 11px 0 12px 0;
+  border-radius: 30px;
+  border: solid 2px #000;
+  background-color: #fff;
+  color: #000;
+  cursor: pointer;
+  /* font-family: SFProDisplay; */
+  font-size: 16px;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+.button:hover {
+  background-color: #dfdfdf;
+  border: solid 2px #dfdfdf;
+}
+
+.backButton, .nextButton {
+  position: absolute;
+  top: calc(50vh - 45px);
+  height: 90px;
+  width: 90px;
+  background-color: #000;
+  padding: 27px 33px 27px 33px;
+  box-sizing: border-box;
+}
+
+.backButton {
+  border-radius: 0 8px 8px 0;
+}
+
+.nextButton {
+  right: 0;
+  border-radius: 8px 0 0 8px;
+}
+
+.nextButton img {
+  transform: rotate(180deg);
 }

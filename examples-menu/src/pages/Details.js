@@ -13,14 +13,39 @@ function Details() {
     let nextId = id+1 < examples.length ? id+1 : 0;
     let lastId = id-1 < 0 ? examples.length - 1 : id-1;
 
-    console.log(example);
-
     return (
         <div>
-            <h1>This is the details page</h1>
-            <h3>{example.name}</h3>
-            <Link to={"/details/" + lastId}>Previous</Link>
-            <Link to={"/details/" + nextId}>Next</Link>
+        <Link to={"/details/" + lastId} className="backButton">
+            <img src="/images/icons-arrow-left.svg" alt="Previous" />
+        </Link>
+        <Link to={"/details/" + nextId} className="nextButton">
+            <img src="/images/icons-arrow-left.svg" alt="Next" />
+        </Link>
+        <div className="pageWrapper contentContainer">
+            <div className="detailsContainer">
+                <div className="detailsImage">
+                    <img src={example.imageUrl} alt="Example" />
+                </div>
+                <div className="detailsInfo">
+                    <div>
+                        <label>Name</label>
+                        <h2>{example.name}</h2>
+                    </div>
+                    <div>
+                        <label>Technology</label>
+                        <p>{example.technology}</p>
+                    </div>
+                    <div>
+                        <label>When?</label>
+                        <p>{example.published}</p>
+                    </div>
+                    <div>
+                        <label>Description</label>
+                        <p>{example.description}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     );
 }
