@@ -40,10 +40,10 @@ function Details() {
     return (
         <div>
         <Link to={"/details/" + keys[lastId]} className="backButton">
-            <img src="/images/icons-arrow-left.svg" alt="Previous" />
+            <img src="images/icons-arrow-left.svg" alt="Previous" />
         </Link>
         <Link to={"/details/" + keys[nextId]} className="nextButton">
-            <img src="/images/icons-arrow-left.svg" alt="Next" />
+            <img src="images/icons-arrow-left.svg" alt="Next" />
         </Link>
         <div className="pageWrapper contentContainer">
             <div className="detailsContainer">

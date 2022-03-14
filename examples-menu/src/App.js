@@ -3,6 +3,8 @@ import List from "./pages/List";
 import Details from "./pages/Details";
 import {Routes, Route, Link} from "react-router-dom"
 
+let baseName = document.location.pathname.indexOf('token-negotiator-examples') > -1 ? "/token-negotiator-examples" : "/";
+
 function App() {
   return (
     <div className="App">
@@ -10,7 +12,7 @@ function App() {
         <div className="pageWrapper headerContainer">
             <div className="logoContainer">
                 <Link to="/">
-                    <img src="/images/logos-token-script.png" className="App-logo" alt="TokenScript logo" />
+                    <img src="images/logos-token-script.png" className="App-logo" alt="TokenScript logo" />
                 </Link>
             </div>
             <div className="menuContainer">
@@ -20,7 +22,7 @@ function App() {
             </div>
         </div>
         </header>
-        <Routes>
+        <Routes basename={baseName}>
             <Route index path="/" element={ <List/> } />
             <Route path={"/details/:id"} element={ <Details/> } />
         </Routes>
@@ -28,20 +30,20 @@ function App() {
             <div className="pageWrapper footerContainer">
                 <div className="footerItem">
                     <a href="mailto:sayhi@smarttokenlabs">
-                        <img src="/images/icons-email.svg" alt="Email icon" />
+                        <img src="images/icons-email.svg" alt="Email icon" />
                     </a>
                     <h3>sayhi@smarttokenlabs</h3>
                 </div>
                 <div className="footerItem">
                     <div>
                         <a href="https://twitter.com/TokenScript" target="_blank" rel="noreferrer">
-                            <img src="/images/icons-twitter.svg" alt="Twitter icon" />
+                            <img src="images/icons-twitter.svg" alt="Twitter icon" />
                         </a>
                         <a href="https://github.com/TokenScript" target="_blank" rel="noreferrer">
-                            <img src="/images/icons-github.svg" alt="Github icon" />
+                            <img src="images/icons-github.svg" alt="Github icon" />
                         </a>
                         <a href="https://linkedin.com/company/smart-token-labs" target="_blank" rel="noreferrer">
-                            <img src="/images/icons-linkedin.svg" alt="LinkedIn icon" />
+                            <img src="images/icons-linkedin.svg" alt="LinkedIn icon" />
                         </a>
                     </div>
                     <h3>Follow TokenScript on</h3>
