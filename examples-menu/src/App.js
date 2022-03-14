@@ -27,10 +27,10 @@ function App() {
         <footer className="App-footer">
             <div className="pageWrapper footerContainer">
                 <div className="footerItem">
-                    <a href="mailto:contact@tokenscript.org">
+                    <a href="mailto:sayhi@smarttokenlabs">
                         <img src="/images/icons-email.svg" alt="Email icon" />
                     </a>
-                    <h3>contact@tokenscript.org</h3>
+                    <h3>sayhi@smarttokenlabs</h3>
                 </div>
                 <div className="footerItem">
                     <div>
@@ -45,14 +45,6 @@ function App() {
                         </a>
                     </div>
                     <h3>Follow TokenScript on</h3>
-                </div>
-                <div className="footerItem">
-                    <div>
-                        <a href="tel:+48 662 192 244">
-                            <img src="/images/icons-phone.svg" alt="Phone icon" />
-                        </a>
-                    </div>
-                    <h3>(Australia) +48 662 192 244</h3>
                 </div>
             </div>
         </footer>
