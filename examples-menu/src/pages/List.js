@@ -1,7 +1,6 @@
 import React from 'react'
 import ExampleTile from "./../components/ExampleTile";
-
-let examples = require('../examples.json');
+import examples from '../examples';
 
 function List() {
 

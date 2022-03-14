@@ -1,7 +1,6 @@
 import React from 'react';
 import {Link, useParams} from "react-router-dom";
-
-let examples = require('../examples.json');
+import examples from '../examples';
 
 function Details() {
 
