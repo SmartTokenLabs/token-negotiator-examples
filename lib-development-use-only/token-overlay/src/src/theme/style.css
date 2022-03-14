@@ -11,7 +11,7 @@
   background: white;
 }
 
-.overlay-tn.light .overlay-tn .overlay-content-tn .toggle-tn input.mobileToggle-tn+label:after {
+.overlay-tn.light .overlay-content-tn .toggle-tn input.mobileToggle-tn+label:after {
   background: #037fed;
   box-shadow: 0 0 0 1px hsla(0, 0%, 0%, 0.1), 0 4px 0px 0 hsla(0, 0%, 0%, 0.04), 0 4px 9px hsla(0, 0%, 0%, 0.13), 0 3px 3px hsla(0, 0%, 0%, 0.05);
 }
@@ -23,19 +23,23 @@
 
 .overlay-tn.light .opening-btn-tn:hover,
 .overlay-tn.light .tokens-btn-tn:hover,
-.overlay-tn.light .connect-btn-tn:hover {
+.overlay-tn.light .connect-btn-tn:hover,
+.overlay-tn.light .btn-tn:hover {
   background: #c5c5c5 !important;
 }
 
 .overlay-tn.light .opening-btn-tn,
 .overlay-tn.light li.issuer-connect-banner-tn .connect-btn-tn, 
-.overlay-tn.light li.issuer-connect-banner-tn .tokens-btn-tn {
+.overlay-tn.light li.issuer-connect-banner-tn .tokens-btn-tn,
+.overlay-tn.light .btn-tn {
   color: black;
   background: #efefef;
+  font-weight: 400;
 }
 
 .overlay-tn.light li.issuer-connect-banner-tn .connect-btn-tn, 
-.overlay-tn.light li.issuer-connect-banner-tn .tokens-btn-tn {
+.overlay-tn.light li.issuer-connect-banner-tn .tokens-btn-tn,
+.overlay-tn.light .btn-tn {
   border: 1px solid #efefef;
 }
 
@@ -49,10 +53,11 @@
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 4px;
   border-top-left-radius: 3px;
+  overflow: hidden;
 }
 
-.overlay-tn.light .overlay-content-tn .brand-tn {
-  background-color: #000;
+.overlay-tn.light .overlay-content-tn {
+  border-top: 4px solid black;
 }
 
 .overlay-tn.light .overlay-content-tn .token-tn .title-tn,
@@ -173,8 +178,8 @@
   background-color: black;
 }
 
-.overlay-tn.dark .overlay-content-tn .brand-tn {
-  background-color: white;
+.overlay-tn.dark .overlay-content-tn {
+  border-top: 4px solid white;
 }
 
 .overlay-tn.dark .overlay-content-tn .token-tn {
@@ -194,14 +199,17 @@
 
 .overlay-tn.dark .opening-btn-tn,
 .overlay-tn.dark li.issuer-connect-banner-tn .connect-btn-tn, 
-.overlay-tn.dark li.issuer-connect-banner-tn .tokens-btn-tn {
+.overlay-tn.dark li.issuer-connect-banner-tn .tokens-btn-tn,
+.overlay-tn.dark .btn-tn {
   color: white;
   background: #101010;
   border: 1px solid gray;
+  font-weight: 400;
 }
 
 .overlay-tn.dark li.issuer-connect-banner-tn .connect-btn-tn, 
-.overlay-tn.dark li.issuer-connect-banner-tn .tokens-btn-tn {
+.overlay-tn.dark li.issuer-connect-banner-tn .tokens-btn-tn,
+.overlay-tn.dark .btn-tn {
   border: 1px solid #101010;
 }
 
@@ -252,7 +260,9 @@
 .overlay-tn .wallet-button-tn,
 .overlay-tn .opening-btn-tn,
 .overlay-tn .tokens-btn-tn,
-.overlay-tn .connect-btn-tn {
+.overlay-tn .connect-btn-tn,
+.overlay-tn .btn-tn
+{
   transition: all 0.25s;
 }
 
@@ -310,7 +320,6 @@
   transition: all .3s .1s;
   bottom: 88px;
   padding: 0;
-  overflow-x: hidden;
 }
 
 .overlay-tn .overlay-content-tn {
@@ -327,13 +336,9 @@
   z-index: 888;
 }
 
-.overlay-tn .overlay-content-tn .brand-tn {
-  width: 100%;
-  height: 4px;
-}
-
 .overlay-tn .overlay-content-tn .issuer-connect-title {
   margin: 0;
+  max-width: 160px;
 }
 
 .overlay-tn .overlay-content-tn .headline-tn {
@@ -463,7 +468,7 @@
   border: 3px solid #88bff6;
 }
 
-.overlay-tn .overlay-content-tn .toggle-tn input.mobileToggle-tn:checked+label:before {
+.overlay-content-tn .toggle-tn input.mobileToggle-tn:checked+label:before {
   background: #88bff6;
   transition: width 0.2s cubic-bezier(0, 0, 0, 0.1);
 }
@@ -476,12 +481,92 @@
   box-sizing: border-box;
 }
 
-.overlay-tn .overlay-content-tn .toggle-tn input:focus+label {
+.overlay-content-tn .toggle-tn input:focus+label {
   border: 3px solid #005fcc !important;
+}
+
+.overlay-content-tn input[type=checkbox] {
+  position: relative;
+  cursor: pointer;
+  z-index: 1;
 }
 
 .overlay-tn li.issuer-connect-banner-tn {
   box-sizing: border-box;
+}
+
+.overlay-tn .load-container-tn {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 200;
+  background-color: rgba(52, 52, 52, 0.70);
+  text-align: center;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* loader */
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 40px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 16px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #fff;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
+li.issuer-connect-banner-tn {
   list-style-type:none;
   display: flex;
   justify-content: space-between; 
@@ -490,12 +575,12 @@
   /* height: 2.7rem; */
 }
 
-.opening-btn-tn, li.issuer-connect-banner-tn .connect-btn-tn, li.issuer-connect-banner-tn .tokens-btn-tn {
+.opening-btn-tn, li.issuer-connect-banner-tn .connect-btn-tn, li.issuer-connect-banner-tn .tokens-btn-tn, .btn-tn {
   color: white;
   background: #101010;
 }
 
-.overlay-tn li.token-tn {
+li.token-tn, .load-more-tn {
   width: 100%;
   list-style-type: none;
 }
@@ -509,7 +594,26 @@
   cursor: pointer;
 }
 
-.overlay-tn li.issuer-connect-banner-tn .tokens-btn-tn {
+.load-more-tn {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.opening-btn-tn, li.issuer-connect-banner-tn .connect-btn-tn, li.issuer-connect-banner-tn .tokens-btn-tn, .btn-tn {
+    font-size: 0.75em;
+    font-weight: 200;
+    border: none;
+    padding: 7px 15px 7px 15px;
+    border-radius: 23px;
+    cursor: pointer;
+}
+
+.dismiss-error-tn {
+  margin-top: 20px;
+  border: 0 !important;
+}
+
+li.issuer-connect-banner-tn .tokens-btn-tn {
   display: none;
 }
 
@@ -532,7 +636,9 @@
   width: 50%;
 }
 
-.overlay-tn .overlay-content-tn.open .inner-content-tn {
+/* .overlay-tn .overlay-content-tn.open .inner-content-tn { */
+
+.view-content-tn.open .inner-content-tn {
   position: relative;
   left: -100%;
 }
@@ -574,6 +680,11 @@
 
 .overlay-tn .overlay-content-tn  {
   overflow: scroll;
+}
+
+.view-content-tn  {
+  overflow: hidden scroll;
+  height: 100%;
 }
 
 .overlay-tn .wallet-button-container-tn {

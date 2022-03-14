@@ -193,7 +193,7 @@ export class OnChainTokenModule {
 
         let tokens = [];
 
-        if(openSeaSlug) tokens = await this.getTokensOpenSea(address, chain, owner);
+        if(openSeaSlug) tokens = await this.getTokensOpenSea(address, chain, owner, openSeaSlug);
 
         if(!openSeaSlug || !tokens.length) tokens = await this.getTokensMoralis(address, chain, owner);
 
@@ -203,7 +203,7 @@ export class OnChainTokenModule {
 
     }
 
-    async getTokensOpenSea(address:string, chain:string, owner:string, offset=0, limit=20) {
+    async getTokensOpenSea(address:string, chain:string, owner:string, openSeaSlug:string, offset=0, limit=20) {
 
         if(this.getOnChainAPISupportBool('opensea', chain) === false) return;
 
@@ -214,8 +214,8 @@ export class OnChainTokenModule {
             const options = {
                 method: 'GET'
             };
-
-            return fetch('https://testnets-api.opensea.io/api/v1/assets?owner=0x647935c1bfa643d27afe0f32a5357975b56b771d&asset_contract_address=0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656&order_direction=desc&offset=0&limit=20', options)
+            
+            return fetch(`https://testnets-api.opensea.io/api/v1/assets?owner=${owner}&collection=${openSeaSlug}&order_direction=desc&offset=0&limit=20`, options)
             .then(response => response.json())
             .then(response => {
                 return response.assets;
