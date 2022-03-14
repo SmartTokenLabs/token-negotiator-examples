@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/static/css/main.87fb2ce3.css",
+    "main.js": "/static/js/main.63dff01b.js",
+    "static/js/787.1113f7e8.chunk.js": "/static/js/787.1113f7e8.chunk.js",
+    "static/media/SF-Pro-Display-Semibold.otf": "/static/media/SF-Pro-Display-Semibold.2e4649dd3a66a64ce00b.otf",
+    "static/media/SF-Pro-Display-Medium.otf": "/static/media/SF-Pro-Display-Medium.0541e22941454bd007b0.otf",
+    "static/media/SF-Pro-Display-Bold.otf": "/static/media/SF-Pro-Display-Bold.0d14364066badfe8accf.otf",
+    "static/media/SF-Pro-Display-Regular.otf": "/static/media/SF-Pro-Display-Regular.b089a1f90c2a5b839565.otf",
+    "index.html": "/index.html",
+    "main.87fb2ce3.css.map": "/static/css/main.87fb2ce3.css.map",
+    "main.63dff01b.js.map": "/static/js/main.63dff01b.js.map",
+    "787.1113f7e8.chunk.js.map": "/static/js/787.1113f7e8.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.87fb2ce3.css",
+    "static/js/main.63dff01b.js"
+  ]
+}
