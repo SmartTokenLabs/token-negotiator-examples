@@ -5,8 +5,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 
+const baseName = document.location.pathname.indexOf('token-negotiator-examples') > -1 ? "/token-negotiator-examples" : "/";
+
 ReactDOM.render(
-    <BrowserRouter>
+    <BrowserRouter basename={baseName}>
         <App />
     </BrowserRouter>,
     document.getElementById('root')

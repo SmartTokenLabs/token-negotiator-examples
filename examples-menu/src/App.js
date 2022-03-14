@@ -1,9 +1,7 @@
 import './App.css';
 import List from "./pages/List";
 import Details from "./pages/Details";
-import {Routes, Route, Link} from "react-router-dom"
-
-let baseName = document.location.pathname.indexOf('token-negotiator-examples') > -1 ? "/token-negotiator-examples" : "/";
+import {Routes, Route, Link} from "react-router-dom";
 
 function App() {
   return (
@@ -22,7 +20,7 @@ function App() {
             </div>
         </div>
         </header>
-        <Routes basename={baseName}>
+        <Routes>
             <Route index path="/" element={ <List/> } />
             <Route path={"/details/:id"} element={ <Details/> } />
         </Routes>
