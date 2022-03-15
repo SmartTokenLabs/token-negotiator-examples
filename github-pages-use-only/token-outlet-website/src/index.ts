@@ -1,3 +1,3 @@
-import { Outlet } from '@tokenscript/token-negotiator/dist/outlet/index';
+import { Outlet } from '@tokenscript/token-negotiator';
 
 new Outlet({ tokenName: 'devcon-remote' });
