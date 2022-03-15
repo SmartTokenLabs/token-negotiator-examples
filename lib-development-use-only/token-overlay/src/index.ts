@@ -1,7 +1,7 @@
 
 // @ts-nocheck
 
-// import { Client } from './dist';
+// import { Client } from './src/client/index';
 import { Client } from '@tokenscript/token-negotiator';
 
 declare global {
@@ -22,7 +22,6 @@ window.negotiator = new Client({
         { contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', ref: "stl rnd zed run", openSeaSlug: 'stl-rnd-zed' },
         { contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', ref: "stl rnd bayc derivatives", openSeaSlug: 'stl-rnd-bayc-derivatives' },
         { contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', ref: "stl riot racers", openSeaSlug: 'stl-rnd-riot-racers' },
-        { contract: '', chain: 'gnosis' }
     ],
     options: {
         overlay: {
@@ -36,46 +35,8 @@ window.negotiator = new Client({
     }
 });
 
-var curTokens = [];
-
 window.negotiator.on("tokens-selected", (tokens:any) => {
-
-    let tokensCtn = document.getElementById("ticketList");
-
-    let html = "";
-
     console.log(tokens);
-
-    for (let issuer in tokens.selectedTokens){
-
-        for (let i=0; i < tokens.selectedTokens[issuer].tokens.length; i++){
-
-            let token = tokens.selectedTokens[issuer].tokens[i];
-
-            html += `
-                <div class="ticketContainer">
-                  <div class="ticketDetails">
-                    <h5 class="ticketClass">
-                      ${token.ticketClass}
-                    </h5>
-                    <p class="ticketId">
-                      ${token.ticketId}
-                    </p class="ticketId">
-                    <p class="devconId">
-                      Devcon ID: ${token.devconId}
-                    </p>
-                    <button class="authButton" onclick="authenticateToken(this);" data-issuer="${issuer}" data-index="${i}">Authenticate</button>
-                  </div>
-                  <img alt="ticket-logo" class="ticketImg" src="ticket_example_image.svg"/>
-                </div>
-            `;
-        }
-    }
-
-    tokensCtn.innerHTML = html;
-
-    curTokens = tokens.selectedTokens;
-
 });
 
 window.negotiator.on("token-proof", (proof:any) => {
@@ -84,27 +45,31 @@ window.negotiator.on("token-proof", (proof:any) => {
 
 window.negotiator.negotiate();
 
-window.authenticateToken = (elem) => {
-
-    let issuer = elem.dataset.issuer;
-    let index = elem.dataset.index;
-
-    // authenticate ownership of token
-    window.negotiator.authenticate({
-        issuer: issuer,
-        unsignedToken: curTokens[issuer].tokens[index]
-    });
-}
-
 // PASSIVE
-// window.negotiator = new Client({
+
+// const negotiator = new Client({
 //     type: 'passive',
 //     issuers: [
-//         'devcon'
+//         'devcon',
+//         { contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'rinkeby-punk' },
+//         { contract: '0x0d0167a823c6619d430b1a96ad85b888bcf97c37', chain: 'eth' }
 //     ],
 //     options: {}
 // });
 
-// window.negotiator.negotiate().then((t:any) => {
-//     console.log('tokens:', t);
-// })
+// negotiator.on('tokens', (issuerTokens) => {
+
+//     // use tokens
+//     console.log(issuerTokens);
+
+// });
+
+// negotiator.on("token-proof", (tokenProof) => {
+
+//     // use proof
+
+// });
+
+// // invoke
+
+// negotiator.negotiate();
