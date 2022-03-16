@@ -44,6 +44,6 @@ Example use cases include; using this example to make a third party website that
 
 ## Support
 
-Alchemynft <info@alchemynft.org>
+sayhi@smarttokenlabs.com
 
 We look forward to hearing your feedback.
