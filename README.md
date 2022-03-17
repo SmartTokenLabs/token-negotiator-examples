@@ -7,7 +7,7 @@ For more information please visit: [https://tokenscript.org/](https://tokenscrip
 
 ## Examples
 
-https://tokenscript.github.io/token-negotiator-examples/
+https://tokenscript.github.io/token-negotiator-gh-pages
 
 Each of examples by default are configured for use in a local environment.
 See the README's inside each example for configuration and deployment.
