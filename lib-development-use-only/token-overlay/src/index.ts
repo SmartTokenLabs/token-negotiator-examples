@@ -22,7 +22,8 @@ window.negotiator = new Client({
         { contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', ref: "stl rnd zed run", openSeaSlug: 'stl-rnd-zed' },
         { contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', ref: "stl rnd bayc derivatives", openSeaSlug: 'stl-rnd-bayc-derivatives' },
         { contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', ref: "stl riot racers", openSeaSlug: 'stl-rnd-riot-racers' },
-        { contract: '0x22C1f6050E56d2876009903609a2cC3fEf83B415', chain: 'xdai', ref: "POAP", openSeaSlug: 'poap-v2'}
+        { contract: '0x22C1f6050E56d2876009903609a2cC3fEf83B415', chain: 'xdai', ref: "POAP", openSeaSlug: 'poap-v2'},
+        { contract: '0xafd1a2f17ce2a694d2ef649fe5ba51cc0282448a', chain: 'rinkeby'}
     ],
     options: {
         overlay: {
