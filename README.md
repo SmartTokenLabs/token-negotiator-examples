@@ -40,7 +40,7 @@ Example use cases include; using this example to make a third party website that
 
 ## Usage
 
-[NPM Package](https://www.npmjs.com/package/@alphawallet/token-negotiator)
+[NPM Package](https://www.npmjs.com/package/@tokenscript/token-negotiator)
 
 ## Support
 
