@@ -5,10 +5,6 @@ const TokenContext = createContext({
   tokens: []
 });
 
-const tokenKeys = [
-  'devcon'
-];
-
 let negotiator;
 
 const TokenContextProvider = (props) => {
@@ -21,9 +17,11 @@ const TokenContextProvider = (props) => {
     
     negotiator.on("tokens-selected", (tokens) => { 
     
-      let selectedTokens = [];
-
-      tokenKeys.map((token) => {
+      let selectedTokensState = [];
+      
+      const { selectedTokens } = tokens;
+      
+      tokens.selectedTokens['devcon'].map((token) => {
 
         selectedTokens.push(...tokens.selectedTokens[token].tokens);
         
@@ -67,7 +65,9 @@ class TokenNegotiatorInstance extends React.Component {
 
     negotiator = new Client({
       type: 'active',
-      issuers: tokenKeys,
+      issuers: [
+        { collectionID: 'devcon', tokenEndPoint: "http://localhost:3002/tokenConfig.json" }
+      ],
       options: {
         overlay: {
           openingHeading: "Open a new world of discounts available with your tokens.",
