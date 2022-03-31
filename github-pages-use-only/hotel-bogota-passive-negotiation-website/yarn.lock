@@ -2340,10 +2340,10 @@
   dependencies:
     "@babel/runtime" "^7.12.5"
 
-"@tokenscript/token-negotiator@^1.0.1-alpha":
-  "integrity" "sha512-dFID9/+u/k8BTdOKEjTpW4VUTZ4Xux9yMtyJBNKNYgmKRPLSRG+I8rGuww4rjeXYPIvieTleQTIllupzONYcUQ=="
-  "resolved" "https://registry.npmjs.org/@tokenscript/token-negotiator/-/token-negotiator-1.0.1-alpha.tgz"
-  "version" "1.0.1-alpha"
+"@tokenscript/token-negotiator@^1.0.5-alpha":
+  "integrity" "sha512-ogCSXFZeiJpyKTB4nXzELAflLMAHE1FBpyqGH49qeMurPczWV9mauArezDr3xtg67XHj4xW2RmU4RDek8SEUqg=="
+  "resolved" "https://registry.npmjs.org/@tokenscript/token-negotiator/-/token-negotiator-1.0.5-alpha.tgz"
+  "version" "1.0.5-alpha"
   dependencies:
     "@toruslabs/torus-embed" "^1.20.2"
     "@walletconnect/web3-provider" "^1.7.1"

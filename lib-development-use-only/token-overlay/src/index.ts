@@ -26,7 +26,7 @@ window.negotiator = new Client({
     options: {
         overlay: {
             openingHeading: "Open a new world of discounts available with your tokens.",
-            IssuerHeading: "Get discount with Ticket",
+            issuerHeading: "Get discount with Ticket",
             repeatAction: "try again",
             theme: "light",
             position: "bottom-right"
