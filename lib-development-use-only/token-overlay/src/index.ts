@@ -1,8 +1,8 @@
 
 // @ts-nocheck
 
-// import { Client } from './dist';
-import { Client } from './src/client/index';
+// import { Client } from './src/client/index';
+import { Client } from '@tokenscript/token-negotiator';
 
 declare global {
     interface Window {
