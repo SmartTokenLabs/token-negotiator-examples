@@ -6,7 +6,7 @@ const TokenContext = createContext({
 });
 
 const tokenKeys = [
-  'devcon'
+  (document.location.hostname === "localhost" ? "devcon" : "devcon-remote")
 ];
 
 let negotiator;

@@ -16,7 +16,6 @@
     "hotel-bogota-passive-install": "cd hotel-bogota-passive-negotiation-website && npm i",
     "hotel-bogota-active-install": "cd hotel-bogota-active-negotiation-website && npm i",
     "start": "concurrently \"npm run outlet\" \"npm run token-issuer\"  \"npm run hotel-bogota-passive\" \"npm run hotel-bogota-active\" ",
-    "build": "concurrently \"npm run outlet-build\" \"npm run token-issuer-build\"  \"npm run hotel-bogota-passive-build\" \"npm run hotel-bogota-active-build\" ",
     "install": "npm run clean --loglevel verbose && concurrently \"npm run outlet-install\" \"npm run token-issuer-install\"  \"npm run hotel-bogota-passive-install\" \"npm run hotel-bogota-active-install\" ",
     "clean": "shx rm -rf ./hotel-bogota-active-negotiation-website/build ./hotel-bogota-passive-negotiation-website/build ./ticket-issuer-url-website/build ./token-outlet-website/build",    
     "github-pages-build": "concurrently \"npm run github-pages-token-issuer-build\" \"npm run github-pages-hotel-bogota-passive-build\" \"npm run github-pages-hotel-bogota-active-build\" \"npm run github-pages-outlet-build\" ",
@@ -30,7 +29,8 @@
     "link-hotel-bogota-active": "cd hotel-bogota-active-negotiation-website && npm link ../../token-negotiator",
     "link": "concurrently \"npm run link-outlet\" \"npm run link-token-issuer\"  \"npm run link-hotel-bogota-passive\" \"npm run link-hotel-bogota-active\" ",
     "deploy-gh": "node scripts/deploy-gh.js",
-    "build": "concurrently \"npm run outlet-build\" \"npm run token-issuer-build\"  \"npm run hotel-bogota-passive-build\" \"npm run hotel-bogota-active-build\" "
+    "build": "concurrently \"npm run outlet-build\" \"npm run token-issuer-build\"  \"npm run hotel-bogota-passive-build\" \"npm run hotel-bogota-active-build\" ",
+    "copy-artifacts": "rm -R build && mkdir build && cp -R hotel-bogota-passive-negotiation-website/build build/hotel-bogota-passive-negotiation-website && cp -R hotel-bogota-active-negotiation-website/build build/hotel-bogota-active-negotiation-website && cp -R ticket-issuer-url-website/build build/ticket-issuer-url-website && cp -R token-outlet-website/build build/token-outlet-website"
   },
   "repository": {
     "type": "git",
