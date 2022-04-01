@@ -35,6 +35,6 @@ jobs:
       with:
         source-directory: 'build/*'
         destination_repo: 'TokenScript/token-negotiator-gh-pages'
-        user_email: ${{ secrets.GITHUB_USER_EMAIL }}
-        user_name: ${{ secrets.GITHUB_USER_NAME }}
+        user_email: ${{ secrets.USER_EMAIL_GITHUB }}
+        user_name: ${{ secrets.USER_NAME_GITHUB }}
         target-branch: ci-cd-test
