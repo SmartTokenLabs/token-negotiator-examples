@@ -30,7 +30,7 @@
     "link": "concurrently \"npm run link-outlet\" \"npm run link-token-issuer\"  \"npm run link-hotel-bogota-passive\" \"npm run link-hotel-bogota-active\" ",
     "deploy-gh": "node scripts/deploy-gh.js",
     "build": "concurrently \"npm run outlet-build\" \"npm run token-issuer-build\"  \"npm run hotel-bogota-passive-build\" \"npm run hotel-bogota-active-build\" ",
-    "copy-artifacts": "rm -R build && mkdir build && cp -R hotel-bogota-passive-negotiation-website/build build/hotel-bogota-passive-negotiation-website && cp -R hotel-bogota-active-negotiation-website/build build/hotel-bogota-active-negotiation-website && cp -R ticket-issuer-url-website/build build/ticket-issuer-url-website && cp -R token-outlet-website/build build/token-outlet-website"
+    "copy-artifacts": "mkdir build && cp -R hotel-bogota-passive-negotiation-website/build build/hotel-bogota-passive-negotiation-website && cp -R hotel-bogota-active-negotiation-website/build build/hotel-bogota-active-negotiation-website && cp -R ticket-issuer-url-website/build build/ticket-issuer-url-website && cp -R token-outlet-website/build build/token-outlet-website"
   },
   "repository": {
     "type": "git",
