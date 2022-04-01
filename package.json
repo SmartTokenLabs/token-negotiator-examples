@@ -16,6 +16,7 @@
     "hotel-bogota-passive-install": "cd hotel-bogota-passive-negotiation-website && npm i",
     "hotel-bogota-active-install": "cd hotel-bogota-active-negotiation-website && npm i",
     "start": "concurrently \"npm run outlet\" \"npm run token-issuer\"  \"npm run hotel-bogota-passive\" \"npm run hotel-bogota-active\" ",
+    "build": "concurrently \"npm run outlet-build\" \"npm run token-issuer-build\"  \"npm run hotel-bogota-passive-build\" \"npm run hotel-bogota-active-build\" ",
     "install": "npm run clean --loglevel verbose && concurrently \"npm run outlet-install\" \"npm run token-issuer-install\"  \"npm run hotel-bogota-passive-install\" \"npm run hotel-bogota-active-install\" ",
     "clean": "shx rm -rf ./hotel-bogota-active-negotiation-website/build ./hotel-bogota-passive-negotiation-website/build ./ticket-issuer-url-website/build ./token-outlet-website/build",    
     "github-pages-build": "concurrently \"npm run github-pages-token-issuer-build\" \"npm run github-pages-hotel-bogota-passive-build\" \"npm run github-pages-hotel-bogota-active-build\" \"npm run github-pages-outlet-build\" ",
