@@ -37,10 +37,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/download-artifact@v3
-        with:
-          name: build
-          path: build
+    - name: Download artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: build
+        path: build
 
     - name: Push artifacts to repo
       uses: dmnemec/copy_file_to_another_repo_action@main
