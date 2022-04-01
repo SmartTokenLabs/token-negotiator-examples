@@ -70,7 +70,9 @@ class TokenNegotiatorInstance extends React.Component {
       issuers: tokenKeys,
       options: {
         overlay: {
-          heading: "Get discount with Ticket",
+          openingHeading: "Open a new world of discounts available with your tokens.",
+          issuerHeading: "Get discount with Ticket",
+          repeatAction: "try again",
           theme: "light",
           position: "bottom-right"
         }

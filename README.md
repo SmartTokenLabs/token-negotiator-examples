@@ -7,7 +7,7 @@ For more information please visit: [https://tokenscript.org/](https://tokenscrip
 
 ## Examples
 
-https://tokenscript.github.io/token-negotiator-examples/
+https://tokenscript.github.io/token-negotiator-gh-pages
 
 Each of examples by default are configured for use in a local environment.
 See the README's inside each example for configuration and deployment.
@@ -40,10 +40,10 @@ Example use cases include; using this example to make a third party website that
 
 ## Usage
 
-[NPM Package](https://www.npmjs.com/package/@alphawallet/token-negotiator)
+[NPM Package](https://www.npmjs.com/package/@tokenscript/token-negotiator)
 
 ## Support
 
-Alchemynft <info@alchemynft.org>
+sayhi@smarttokenlabs.com
 
 We look forward to hearing your feedback.

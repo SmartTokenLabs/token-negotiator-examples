@@ -4,7 +4,7 @@
   "description": "outlet for tokens.",
   "main": "index.js",
   "dependencies": {
-    "@tokenscript/token-negotiator": "^1.0.1-alpha"
+    "@tokenscript/token-negotiator": "^1.0.6-alpha"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
