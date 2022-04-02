@@ -66,7 +66,7 @@ class TokenNegotiatorInstance extends React.Component {
     negotiator = new Client({
       type: 'active',
       issuers: [
-        { collectionID: 'devcon', tokenEndPoint: "http://localhost:3002/tokenConfig.json" }
+        { collectionID: 'devcon', tokenConfigURI: "http://localhost:3002/tokenConfig.json" }
       ],
       options: {
         overlay: {

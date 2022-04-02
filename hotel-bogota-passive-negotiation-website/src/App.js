@@ -16,7 +16,7 @@ const mockRoomDiscountData = 10;
 window.negotiator = new Client({
   type: 'passive',
   issuers: [
-    { collectionID: 'devcon', tokenEndPoint: "http://localhost:3002/tokenConfig.json" },
+    { collectionID: 'devcon', tokenConfigURI: "http://localhost:3002/tokenConfig.json" },
   ],
   options: {}
 });

@@ -14,14 +14,13 @@ declare global {
 window.negotiator = new Client({
     type: 'active',
     issuers: [
-        { collectionID: 'devcon', tokenEndPoint: "http://localhost:3002/tokenConfig.json" },
-        // { contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'rinkeby-punk' },
-        // { contract: '0x0d0167a823c6619d430b1a96ad85b888bcf97c37', chain: 'eth' }
-        // { contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', ref: "rinkeyby punks", openSeaSlug: 'rinkeby-punk' },
-        // { contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', ref: "stl rnd women tribe", openSeaSlug: 'stl-rnd-women-tribe-nfts' },
-        // { contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', ref: "stl rnd zed run", openSeaSlug: 'stl-rnd-zed' },
-        // { contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', ref: "stl rnd bayc derivatives", openSeaSlug: 'stl-rnd-bayc-derivatives' },
-        // { contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', ref: "stl riot racers", openSeaSlug: 'stl-rnd-riot-racers' },
+        { collectionID: 'devcon', tokenConfigURI: "http://localhost:3002/tokenConfig.json" },
+        { collectionID: 'rinkeby-punk', contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'rinkeby-punk' },
+        { collectionID: 'expansion-punk', contract: '0x0d0167a823c6619d430b1a96ad85b888bcf97c37', chain: 'eth' },
+        { collectionID: 'women-tribe', contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-women-tribe-nfts' },
+        { collectionID: 'zed', contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-zed' },
+        { collectionID: 'stl-rnd-bayc-derivatives', contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-bayc-derivatives' },
+        { collectionID: 'stl-rnd-riot-racers', contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-riot-racers' },
     ],
     options: {
         overlay: {
