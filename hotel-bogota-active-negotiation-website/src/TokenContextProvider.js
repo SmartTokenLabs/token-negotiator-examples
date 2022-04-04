@@ -5,10 +5,6 @@ const TokenContext = createContext({
   tokens: []
 });
 
-const tokenKeys = [
-  (document.location.hostname === "localhost" ? "devcon" : "devcon-remote")
-];
-
 let negotiator;
 
 const TokenContextProvider = (props) => {
@@ -21,9 +17,11 @@ const TokenContextProvider = (props) => {
     
     negotiator.on("tokens-selected", (tokens) => { 
     
-      let selectedTokens = [];
+      let selectedTokensState = [];
 
-      tokenKeys.map((token) => {
+      const { selectedTokens } = tokens;
+
+      tokens.selectedTokens['devcon'].map((token) => {
 
         selectedTokens.push(...tokens.selectedTokens[token].tokens);
         
@@ -65,9 +63,13 @@ class TokenNegotiatorInstance extends React.Component {
     
     super(props);
 
+    let devconUrl = (document.location.hostname === "localhost" ? "http://localhost:3002" : "http://localhost:3002")
+
     negotiator = new Client({
       type: 'active',
-      issuers: tokenKeys,
+      issuers: [
+        { collectionID: 'devcon', tokenConfigURI: devconUrl + "/tokenConfig.json" }
+      ],
       options: {
         overlay: {
           openingHeading: "Open a new world of discounts available with your tokens.",

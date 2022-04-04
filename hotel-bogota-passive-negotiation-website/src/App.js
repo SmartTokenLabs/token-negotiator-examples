@@ -13,11 +13,13 @@ const mockRoomData = [{ "type": "Deluxe Room", "price": 200000, "frequency": "pe
 // mock discount of 10% applied to any ticket selected. In a real world scenario, this maybe different per ticket type and retrieved from a backend service.
 const mockRoomDiscountData = 10;
 
-const tokenIssuers = [(document.location.hostname === "localhost" ? "devcon" : "devcon-remote")];
+const devconUrl = [(document.location.hostname === "localhost" ? "http://localhost:3002" : "http://localhost:3002")];
 
 window.negotiator = new Client({
   type: 'passive',
-  issuers: tokenIssuers,
+  issuers: [
+    { collectionID: 'devcon', tokenConfigURI: devconUrl + "/tokenConfig.json" },
+  ],
   options: {}
 });
 
