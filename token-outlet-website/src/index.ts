@@ -10,6 +10,6 @@ import config from '../../tokenConfig.json';
 //       It probably makes sense to have it here and update attestation library to take it as a parameter in getUseTicket().
 config.tokenParser = SignedDevconTicket;
 
-config.tokenOrigin = (document.location.hostname === "localhost" ? "http://localhost:3002/" : "https://tokenscript.github.io/token-negotiator-gh-pages/token-outlet-website/build/")
+config.tokenOrigin = (document.location.hostname === "localhost" ? "http://localhost:3002/" : "https://tokenscript.github.io/token-negotiator-examples/token-outlet-website/")
 
 new Outlet(config);

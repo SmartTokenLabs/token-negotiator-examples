@@ -69,7 +69,7 @@ class TokenNegotiatorInstance extends React.Component {
     super(props);
 
     config.collectionID = "devcon";
-    config.tokenOrigin = (document.location.hostname === "localhost" ? "http://localhost:3002/" : "https://tokenscript.github.io/token-negotiator-gh-pages/token-outlet-website/build/")
+    config.tokenOrigin = (document.location.hostname === "localhost" ? "http://localhost:3002/" : "https://tokenscript.github.io/token-negotiator-examples/token-outlet-website/")
 
     negotiator = new Client({
       type: 'active',

@@ -15,7 +15,7 @@ const mockRoomData = [{ "type": "Deluxe Room", "price": 200000, "frequency": "pe
 const mockRoomDiscountData = 10;
 
 config.collectionID = "devcon";
-config.tokenOrigin = (document.location.hostname === "localhost" ? "http://localhost:3002/" : "https://tokenscript.github.io/token-negotiator-gh-pages/token-outlet-website/build/")
+config.tokenOrigin = (document.location.hostname === "localhost" ? "http://localhost:3002/" : "https://tokenscript.github.io/token-negotiator-examples/token-outlet-website/")
 
 let tokenIssuers = [
   config
