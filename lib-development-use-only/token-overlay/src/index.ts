@@ -3,18 +3,22 @@
 
 // import { Client } from './src/client/index';
 import { Client } from '@tokenscript/token-negotiator';
+import config from './../public/tokenConfig.json';
 
 declare global {
     interface Window {
         negotiator?: any;
     }
 }
+
+config.collectionID = "devcon";
+config.tokenOrigin = (document.location.hostname === "localhost" ? "http://localhost:3002/" : "https://tokenscript.github.io/token-negotiator-gh-pages/token-outlet-website/build/")
     
 // ACTIVE
 window.negotiator = new Client({
     type: 'active',
     issuers: [
-        { collectionID: 'devcon', tokenConfigURI: "http://localhost:3002/tokenConfig.json" },
+        config,
         { collectionID: 'rinkeby-punk', contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'rinkeby-punk' },
         { collectionID: 'expansion-punk', contract: '0x0d0167a823c6619d430b1a96ad85b888bcf97c37', chain: 'eth' },
         { collectionID: 'women-tribe', contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-women-tribe-nfts' },
