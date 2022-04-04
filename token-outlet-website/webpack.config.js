@@ -49,7 +49,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, './build'),
-    filename: '[name].bundle.js',
+    filename: '[name].[chunkhash:8].js',
   },
   performance: {
     hints: false,
