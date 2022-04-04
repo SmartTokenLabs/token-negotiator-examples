@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import BookingDate from './BookingDate';
 import { Client } from '@tokenscript/token-negotiator';
 import './App.css';
+import config from '../../tokenConfig.json';
 
 // mock data e.g. server side hotel room price database
 const mockRoomData = [{ "type": "Deluxe Room", "price": 200000, "frequency": "per night", "image": "./hotel_3.jpg" }, { "type": "King Suite", "price": 320000, "frequency": "per night", "image": "./hotel_2.png" }, { "type": "Superior Deluxe Suite", "price": 250030, "frequency": "per night", "image": "./hotel_1.jpg" }]
@@ -13,13 +14,16 @@ const mockRoomData = [{ "type": "Deluxe Room", "price": 200000, "frequency": "pe
 // mock discount of 10% applied to any ticket selected. In a real world scenario, this maybe different per ticket type and retrieved from a backend service.
 const mockRoomDiscountData = 10;
 
-const devconUrl = [(document.location.hostname === "localhost" ? "http://localhost:3002" : "http://localhost:3002")];
+config.collectionID = "devcon";
+config.tokenOrigin = (document.location.hostname === "localhost" ? "http://localhost:3002/" : "https://tokenscript.github.io/token-negotiator-gh-pages/token-outlet-website/build/")
+
+let tokenIssuers = [
+  config
+];
 
 window.negotiator = new Client({
   type: 'passive',
-  issuers: [
-    { collectionID: 'devcon', tokenConfigURI: devconUrl + "/tokenConfig.json" },
-  ],
+  issuers: tokenIssuers,
   options: {}
 });
 
@@ -44,7 +48,7 @@ function App() {
   window.negotiator.on('tokens', (issuerTokens) => {
     let tokens = [];
     tokenIssuers.map((issuer) => {
-      tokens.push(...issuerTokens[issuer].tokens);
+      tokens.push(...issuerTokens[issuer.tokenName].tokens);
     });
     if (tokens.length > 0) {
       setTokens(tokens);

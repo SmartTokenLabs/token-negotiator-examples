@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Client } from '@tokenscript/token-negotiator';
 import Token from './components/Token';
 import './App.css';
+import config from '../../tokenConfig.json';
 
 const mockTicketData = [
   {
@@ -26,11 +27,16 @@ const mockTicketData = [
   },
 ];
 
-const tokenIssuers = [(document.location.hostname === "localhost" ? "devcon" : "devcon-remote")];
-
 function App() {
 
   let [tokens, setTokens] = useState([]);
+
+    config.collectionID = "devcon";
+    config.tokenOrigin = (document.location.hostname === "localhost" ? "http://localhost:3002/" : "https://tokenscript.github.io/token-negotiator-gh-pages/token-outlet-website/build/")
+
+    let tokenIssuers = [
+        config
+    ];
 
   let negotiator = new Client({
     type: 'passive',
@@ -44,7 +50,7 @@ function App() {
     
     tokenIssuers.map((issuer) => {
 
-      tokens.push(...issuerTokens[issuer].tokens);
+      tokens.push(...issuerTokens[issuer.tokenName].tokens);
 
     });
 

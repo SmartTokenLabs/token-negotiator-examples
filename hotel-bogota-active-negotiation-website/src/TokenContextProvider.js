@@ -1,9 +1,14 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { Client } from '@tokenscript/token-negotiator';
+import config from '../../tokenConfig.json';
 
 const TokenContext = createContext({ 
   tokens: []
 });
+
+const tokenKeys = [
+  'devcon'
+];
 
 let negotiator;
 
@@ -21,15 +26,15 @@ const TokenContextProvider = (props) => {
 
       const { selectedTokens } = tokens;
 
-      tokens.selectedTokens['devcon'].map((token) => {
+      tokenKeys.map((token) => {
 
-        selectedTokens.push(...tokens.selectedTokens[token].tokens);
+        selectedTokensState.push(...tokens.selectedTokens[token].tokens);
         
       });
 
       console.log('selected tokens', selectedTokens);
 
-      setTokens(selectedTokens);
+      setTokens(selectedTokensState);
 
     });
 
@@ -63,12 +68,13 @@ class TokenNegotiatorInstance extends React.Component {
     
     super(props);
 
-    let devconUrl = (document.location.hostname === "localhost" ? "http://localhost:3002" : "http://localhost:3002")
+    config.collectionID = "devcon";
+    config.tokenOrigin = (document.location.hostname === "localhost" ? "http://localhost:3002/" : "https://tokenscript.github.io/token-negotiator-gh-pages/token-outlet-website/build/")
 
     negotiator = new Client({
       type: 'active',
       issuers: [
-        { collectionID: 'devcon', tokenConfigURI: devconUrl + "/tokenConfig.json" }
+        config
       ],
       options: {
         overlay: {

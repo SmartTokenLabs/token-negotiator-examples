@@ -3,7 +3,7 @@
 
 // import { Client } from './src/client/index';
 import { Client } from '@tokenscript/token-negotiator';
-import config from './../public/tokenConfig.json';
+import config from './../../../tokenConfig.json';
 
 declare global {
     interface Window {
