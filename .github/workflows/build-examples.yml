@@ -44,14 +44,8 @@ jobs:
         name: build
         path: build
 
-    - name: Push artifacts to repo
-      uses: dmnemec/copy_file_to_another_repo_action@main
-      env:
-        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+    - name: Push artifacts to GH pages
+      uses: peaceiris/actions-gh-pages@v3
       with:
-        source_file: 'build'
-        destination_repo: 'TokenScript/token-negotiator-gh-pages'
-        destination_branch: ci-cd-test
-        destination_folder: 'examples'
-        user_email: ${{ secrets.USER_EMAIL_GITHUB }}
-        user_name: ${{ secrets.USER_NAME_GITHUB }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build
