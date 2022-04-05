@@ -3,6 +3,7 @@ import { Client } from '@tokenscript/token-negotiator';
 import Token from './components/Token';
 import './App.css';
 import config from '../../tokenConfig.json';
+import {updateTokenConfig} from "../../environment";
 
 const mockTicketData = [
   {
@@ -32,7 +33,8 @@ function App() {
   let [tokens, setTokens] = useState([]);
 
     config.collectionID = "devcon";
-    config.tokenOrigin = (document.location.hostname === "localhost" ? "http://localhost:3002/" : "https://tokenscript.github.io/token-negotiator-examples/token-outlet-website/")
+
+    config = updateTokenConfig(config);
 
     let tokenIssuers = [
         config

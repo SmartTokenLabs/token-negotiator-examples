@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { Client } from '@tokenscript/token-negotiator';
 import config from '../../tokenConfig.json';
+import {updateTokenConfig} from '../../environment';
 
 const TokenContext = createContext({ 
   tokens: []
@@ -69,7 +70,8 @@ class TokenNegotiatorInstance extends React.Component {
     super(props);
 
     config.collectionID = "devcon";
-    config.tokenOrigin = (document.location.hostname === "localhost" ? "http://localhost:3002/" : "https://tokenscript.github.io/token-negotiator-examples/token-outlet-website/")
+
+    config = updateTokenConfig(config);
 
     negotiator = new Client({
       type: 'active',

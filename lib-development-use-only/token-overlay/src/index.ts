@@ -4,6 +4,7 @@
 // import { Client } from './src/client/index';
 import { Client } from '@tokenscript/token-negotiator';
 import config from './../../../tokenConfig.json';
+import {updateTokenConfig} from "../../../environment";
 
 declare global {
     interface Window {
@@ -12,8 +13,9 @@ declare global {
 }
 
 config.collectionID = "devcon";
-config.tokenOrigin = (document.location.hostname === "localhost" ? "http://localhost:3002/" : "https://tokenscript.github.io/token-negotiator-examples/token-outlet-website/")
-    
+
+config = updateTokenConfig(config);
+
 // ACTIVE
 window.negotiator = new Client({
     type: 'active',

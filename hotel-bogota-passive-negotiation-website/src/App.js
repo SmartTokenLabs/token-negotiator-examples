@@ -7,6 +7,7 @@ import BookingDate from './BookingDate';
 import { Client } from '@tokenscript/token-negotiator';
 import './App.css';
 import config from '../../tokenConfig.json';
+import {updateTokenConfig} from "../../environment";
 
 // mock data e.g. server side hotel room price database
 const mockRoomData = [{ "type": "Deluxe Room", "price": 200000, "frequency": "per night", "image": "./hotel_3.jpg" }, { "type": "King Suite", "price": 320000, "frequency": "per night", "image": "./hotel_2.png" }, { "type": "Superior Deluxe Suite", "price": 250030, "frequency": "per night", "image": "./hotel_1.jpg" }]
@@ -15,7 +16,8 @@ const mockRoomData = [{ "type": "Deluxe Room", "price": 200000, "frequency": "pe
 const mockRoomDiscountData = 10;
 
 config.collectionID = "devcon";
-config.tokenOrigin = (document.location.hostname === "localhost" ? "http://localhost:3002/" : "https://tokenscript.github.io/token-negotiator-examples/token-outlet-website/")
+
+config = updateTokenConfig(config);
 
 let tokenIssuers = [
   config
