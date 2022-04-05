@@ -12,15 +12,17 @@ declare global {
     }
 }
 
-config.collectionID = "devcon";
+let devonConfig = config;
 
-config = updateTokenConfig(config);
+devonConfig.collectionID = "devcon";
+
+devonConfig = updateTokenConfig(devonConfig);
 
 // ACTIVE
 window.negotiator = new Client({
     type: 'active',
     issuers: [
-        config,
+        devonConfig,
         { collectionID: 'rinkeby-punk', contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'rinkeby-punk' },
         { collectionID: 'expansion-punk', contract: '0x0d0167a823c6619d430b1a96ad85b888bcf97c37', chain: 'eth' },
         { collectionID: 'women-tribe', contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-women-tribe-nfts' },

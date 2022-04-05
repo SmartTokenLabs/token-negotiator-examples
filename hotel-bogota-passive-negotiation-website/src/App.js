@@ -15,12 +15,14 @@ const mockRoomData = [{ "type": "Deluxe Room", "price": 200000, "frequency": "pe
 // mock discount of 10% applied to any ticket selected. In a real world scenario, this maybe different per ticket type and retrieved from a backend service.
 const mockRoomDiscountData = 10;
 
-config.collectionID = "devcon";
+let devonConfig = config;
 
-config = updateTokenConfig(config);
+devonConfig.collectionID = "devcon";
+
+devonConfig = updateTokenConfig(devonConfig);
 
 let tokenIssuers = [
-  config
+  devonConfig
 ];
 
 window.negotiator = new Client({

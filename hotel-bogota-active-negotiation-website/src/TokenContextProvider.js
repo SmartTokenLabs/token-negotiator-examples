@@ -69,14 +69,16 @@ class TokenNegotiatorInstance extends React.Component {
     
     super(props);
 
-    config.collectionID = "devcon";
+    let devconConfig = config;
 
-    config = updateTokenConfig(config);
+    devconConfig.collectionID = "devcon";
+
+    devconConfig = updateTokenConfig(devconConfig);
 
     negotiator = new Client({
       type: 'active',
       issuers: [
-        config
+        devconConfig
       ],
       options: {
         overlay: {

@@ -32,12 +32,14 @@ function App() {
 
   let [tokens, setTokens] = useState([]);
 
-    config.collectionID = "devcon";
+    let devconConfig = config;
 
-    config = updateTokenConfig(config);
+    devconConfig.collectionID = "devcon";
+
+    devconConfig = updateTokenConfig(devconConfig);
 
     let tokenIssuers = [
-        config
+        devconConfig
     ];
 
   let negotiator = new Client({

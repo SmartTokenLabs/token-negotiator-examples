@@ -2181,9 +2181,9 @@
 
 "@tokenscript/token-negotiator@file:../../token-negotiator":
   "resolved" "file:../../token-negotiator"
-  "version" "1.0.8-alpha"
+  "version" "1.0.9-alpha"
   dependencies:
-    "@tokenscript/attestation" "^1.0.6-alpha"
+    "@tokenscript/attestation" "^1.0.7-alpha"
     "@toruslabs/torus-embed" "^1.20.2"
     "@walletconnect/web3-provider" "^1.7.1"
     "asn1js" "^2.0.26"
