@@ -1,0 +1,84 @@
+@use 'sass:map';
+@use 'sass:color';
+@use 'styles/core';
+
+
+//
+//	TokenScript / Modules / Colors / Config
+//
+
+
+$config: () !default;
+$config-themes: () !default;
+$use_defaults: true !default;
+
+
+$config-defaults: (
+	white: #ffffff,
+	black: #000000,
+	grey: #7B7B7B,
+
+	beige:#F8EBC9,
+	gold: #C3AD6E,
+	gold-light: #A59875,
+
+	ts-blue: #0019FF,
+	ts-grey: #666666,
+	ts-grey-light: #DDDDDD,
+	ts-green: #47B309,
+);
+
+$config-theme-defaults: (
+	root: (
+		--brand: black,
+		--primary: ts-blue,
+		--brand-invert: white, // Sits on brand
+
+		--base: black,
+		--text: black,
+		--text-mid: ts-grey,
+		--text-light: ts-grey-light,
+		--headline: black,
+
+		--link: --primary,
+		--link-hover: black,
+
+		--button-text: white,
+		--button-bg: --primary,
+		--button-secondary-text: --brand,
+		--button-secondary-bg: --brand-invert,
+
+		--bg: white,
+
+		--state-error: ts-blue,
+		--state-success: ts-green,
+
+		--field-text: ts-grey,
+		--field-bg: white,
+	),
+	beige: (
+		--bg: beige,
+		--base: gold,
+		--headline: gold,
+		--text-light: gold-light,
+		--primary: black,
+
+		--button-bg: --primary,
+	),
+	dark: (
+		--bg: black,
+		--base: white,
+		--text: white,
+		--headline: white,
+		--text-light: grey,
+		--primary: white,
+
+		--button-text: black,
+		--button-bg: --primary,
+	),
+);
+
+@if $use_defaults {
+	$config: map.merge( $config, $config-defaults ) !global;
+	$config-themes: map.merge( $config-themes, $config-theme-defaults ) !global;
+}

@@ -1,0 +1,61 @@
+@use 'sass:math';
+@use 'styles/modules' as *;
+
+
+//
+//	TokenScript / Base / Visibility
+//
+
+
+.-visually-hidden {
+	width: 1px; height: 1px;
+	margin: -1px; padding: 0;
+	clip: rect( 0, 0, 0, 0 );
+	position: absolute;
+	border: 0;
+	overflow: hidden;
+}
+
+.-hide {
+	display: none !important;
+}
+
+.-hide-d {
+	display: none !important;
+}
+
+.-show-s {
+	display: none !important;
+}
+
+.-pe-none {
+	pointer-events: none;
+	cursor: default;
+}
+
+@for $i from 0 through 10 {
+	.-o#{$i} { opacity: math.div( $i, 10 ) !important; }
+}
+
+
+/**
+ * 	Media Queries
+ *	--------------------------------------------------
+ */
+
+/** Breakpoint:	Small ----------------------- */
+
+@include breakpoint-for( small ) using ( $bp ) {
+
+	.-hide-d {
+		display: inherit !important;
+	}
+
+	.-hide-s {
+		display: none !important;
+	}
+
+	.-show-s {
+		display: block !important;
+	}
+}

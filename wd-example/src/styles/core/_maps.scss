@@ -1,0 +1,24 @@
+@use 'sass:map';
+
+
+//
+//	TokenScript / Modules / Core / Functions
+//
+
+
+@function get( $map, $path, $default: null ) {
+	$return: null;
+
+	@if type-of( $path ) == string and ( str-index( $path, '.' ) or 0 ) > 0 {
+		$parent-key: str-slice( $path, 1, str-index( $path, '.' ) - 1 );
+		$child-key: str-slice( $path, str-index( $path, '.' ) + 1 );
+
+		@if type-of( map.get( $map, $parent-key )) == map {
+			$return: get( map.get( $map, $parent-key ), $child-key );
+		}
+	} @else {
+		$return: map.get( $map, $path );
+	}
+
+	@return if( $return, $return, $default );
+}

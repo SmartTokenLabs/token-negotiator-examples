@@ -1,0 +1,100 @@
+@use 'styles/modules' as *;
+
+
+//
+//	TokenScript / UI / App / Header
+//
+
+
+.a-header {
+	$a: &;
+
+	width: 100%; height: grid-baseline(11.25);
+	margin: 0 auto grid-baseline(0.25); padding: 0 var(--grid-gutter-width);
+	box-sizing: border-box;
+	display: flex; flex-flow: row nowrap; justify-content: center;
+	box-shadow: 0 grid-baseline(0.25) 0 0 color-get( --text-mid, 0.2 );
+
+	//	Elements
+
+	&_bar {
+		width: var(--grid-width); max-width: var(--grid-max-width);
+		display: flex; align-items: center;
+		flex: 1 1 auto;
+	}
+
+	&_logo {
+		width: auto;
+		flex: 1 1 auto;
+		display: flex;
+		box-sizing: border-box;
+		align-items: flex-end;
+	}
+
+	&_nav {
+		height: 100%;
+
+		&-item {
+
+			&:global(.-is-active) {
+				@include color-set( --link, --primary );
+
+				&::after {
+					content: '';
+					position: absolute;
+					right: 0; bottom: -2px; left: 0;
+					width: 100%;
+					border-bottom: grid-baseline(0.5) solid color-get( --primary );
+				}
+			}
+		}
+
+		&-button {
+			margin-left: grid-gutter(0.5);
+		}
+	}
+}
+
+
+/**
+ * 	Media Queries
+ *	--------------------------------------------------
+ */
+
+ /** Breakpoint:	Large ----------------------- */
+
+@include breakpoint-for( large ) using ( $bp ) {
+
+	.a-header {
+		$a: &;
+
+		&_nav {
+			&-item {
+				padding: 0 grid-gutter(0.75);
+			}
+
+			&-button {
+				margin-left: grid-gutter(0.75);
+			}
+		}
+	}
+}
+
+/** Breakpoint:	Small ----------------------- */
+
+@include breakpoint-for( small ) using ( $bp ) {
+
+	.a-header {
+		$a: &;
+
+		height: grid-baseline(9);
+
+		&_menu-button {
+			margin-right: grid-gutter(-1);
+
+			> span {
+				padding: 0;
+			}
+		}
+	}
+}

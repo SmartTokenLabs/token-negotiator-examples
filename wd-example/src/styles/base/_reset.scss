@@ -1,0 +1,107 @@
+
+
+//
+//	TokenScript / Styles / Base / Reset
+//
+
+
+html, body,
+p, ol, ul, li,
+dl, dt, dd,
+blockquote, figure, pre, iframe, hr,
+fieldset, legend, textarea,
+h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	text-size-adjust: 100%;
+}
+
+body {
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-size: 100%;
+	font-weight: normal;
+}
+
+article, aside, details, figcaption, figure, footer,
+header, hgroup, main, menu, nav, section, summary {
+	display: block;
+}
+
+address {
+	font-style: normal;
+}
+
+ul {
+	list-style: none;
+}
+
+input, textarea {
+	font-family: inherit;
+}
+
+audio, canvas, progress, video {
+	display: inline-block;
+	vertical-align: baseline;
+}
+	audio:not([controls]) {
+		display: none;
+		height: 0;
+	}
+
+button, html input[type="button"]{
+	cursor: pointer;
+	margin: 0;
+	outline: none;
+	font: inherit; color: inherit;
+	overflow: visible;
+	appearance: none;
+	background-color: transparent;
+	border: 0;
+}
+
+	button[disabled], html input[disabled] {
+		cursor: default;
+	}
+
+	button::-moz-focus-inner, input::-moz-focus-inner {
+		border: 0;
+		padding: 0;
+	}
+
+[tabindex]:focus {
+	outline: none;
+}
+
+code,
+pre {
+	-moz-osx-font-smoothing: auto;
+	-webkit-font-smoothing: auto;
+}
+
+img {
+	height: auto; max-width: 100%;
+	display: block;
+	border: 0;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+hr {
+	height: 1px;
+	background-color: #000000;
+	opacity: 0.1;
+	border: none;
+}

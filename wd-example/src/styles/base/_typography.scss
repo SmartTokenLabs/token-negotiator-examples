@@ -1,0 +1,85 @@
+@use 'styles/core';
+@use 'styles/modules' as *;
+
+
+//
+//	TokenScript / Base / Typography
+//
+
+
+/**
+ *	Type scale
+ *	--------------------------------------------------
+**/
+
+
+@each $type-key, $type-map in $type-config {
+	$type-el: core.get( $type-map, 'el' );
+	$type-bp: core.get( $type-map, 'breakpoints' );
+
+	.#{ $type-key } {
+		@include type-size( $type-key );
+
+		@if $type-bp {
+			@each $bp-key, $bp-type-value in $type-bp {
+				@include breakpoint-for( $bp-key ) using ( $bp ) {
+					@if type-of( $bp-type-value ) == map {
+						@include type-size(
+							core.get( $bp-type-value, 'px' ),
+							$lines: core.get( $bp-type-value, 'lines' ),
+							$margin: core.get( $bp-type-value, 'margin' ),
+							$spacing: core.get( $bp-type-value, 'spacing' )
+						);
+					} @else {
+						@include type-size( $bp-type-value );
+					}
+				}
+			}
+		}
+	}
+
+	// .#{ $type-key }r {
+	// 	@include type-size( $type-key, $responsive: true );
+	// }
+
+	@if type-of( $type-el ) == string {
+		#{ $type-el } {
+			@extend .#{ $type-key };
+		}
+	}
+}
+
+.f1, .f2, .f3, .f4, .f5, .f6  {
+
+	.-subtitle {
+		margin-top: 0;
+	}
+}
+
+
+//	Weights		----------------
+
+:root {
+	--font-weight-regular: 400;
+	--font-weight-bold: 500;
+	--font-weight-extra-bold: 700;
+}
+
+.-f-light { font-weight: 300 !important; }
+.-f-regular { font-weight: var( --font-weight-regular ) !important; }
+.-f-medium { font-weight: 500 !important; }
+.-f-semi-bold { font-weight: 600 !important; }
+.-f-bold { font-weight: var( --font-weight-bold ) !important; }
+.-f-extra-bold { font-weight: var( --font-weight-extra-bold ) !important; }
+.-f-black { font-weight: 900 !important; }
+
+.-f-italic {
+	font-style: italic;
+}
+.-f-caps {
+	text-transform: uppercase;
+}
+
+.-f-strikethrough {
+	text-decoration: line-through;
+}

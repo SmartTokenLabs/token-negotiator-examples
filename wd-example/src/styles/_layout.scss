@@ -1,0 +1,88 @@
+@use 'sass:math';
+@use 'styles/modules' as *;
+
+
+//
+//	TokenScript / Styles / Layout
+//
+
+
+.a-layout {
+	width: 100vw; min-height: 100vh;
+	box-sizing: border-box;
+	// display: grid;
+	position: relative; z-index: 10;
+	overflow-x: hidden;
+	background-color: color-get( --bg-secondary );
+
+	main {
+		min-width: 0;
+		position: relative; z-index: 10;
+		background-color: color-get( --bg );
+
+		section {
+			box-sizing: border-box;
+			justify-content: center;
+
+			.-span-2 {
+				grid-column: span 2;
+			}
+
+			.-span-3 {
+				grid-column: span 4;
+			}
+
+			&.-hm100 {
+				min-height: 100vh;
+			}
+			.-span-full {
+				width: 100%;
+				grid-column: 1 / -1;
+			}
+		}
+	}
+
+	aside {
+		height: 100vh;
+		position: sticky; top: 0;
+		display: grid;
+		grid-template-columns: 100%;
+		place-items: center;
+	}
+}
+
+
+.c-slider {
+	display: grid;
+	column-gap: grid-gutter(1);
+	grid-auto-flow: column;
+	grid-auto-columns: calc( #{percentage( math.div( 1, 9 ))} - #{ grid-gutter(1 - math.div( 1, 9 ))} );
+}
+
+
+
+/**
+ * 	Media Queries
+ *	--------------------------------------------------
+ */
+
+@media (hover: hover) {
+
+}
+
+
+/** Breakpoint:	Small ----------------------- */
+
+@include breakpoint-for( small ) using ( $bp ) {
+
+	.a-layout {
+		main {
+			section {
+				&.-hm100 {
+					min-height: auto;
+				}
+			}
+		}
+	}
+
+}

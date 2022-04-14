@@ -1,0 +1,32 @@
+@use 'styles/modules' as *;
+
+
+//
+//	TokenScript / Styles / Base / Init
+//
+
+
+html, body {
+	// height: 100%;
+	font-weight: var( --font-weight-regular );
+	color: color-get( --text );
+}
+
+body {
+	color: color-get( --text );
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: var( --font-weight-bold );
+	color: color-get( --headline );
+	transition: color 0.2s;
+}
+
+p {
+	color: color-get( --text );
+}
+
+a {
+	color: color-get( --link );
+	text-decoration: none;
+}

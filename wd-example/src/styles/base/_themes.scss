@@ -1,0 +1,26 @@
+@use 'styles/modules' as *;
+
+
+//
+//	TokenScript / Styles / Themes
+//
+
+
+:root {
+	@include color-theme-set( root );
+}
+.-t-beige {
+	@include color-theme-set( beige );
+}
+.-t-dark {
+	@include color-theme-set( dark );
+}
+
+.-color-primary { color: color-get( --primary ) !important; }
+.-color-text { color: color-get( --text ) !important; }
+.-color-text-mid { color: color-get( --text-mid ) !important; }
+.-color-text-light { color: color-get( --text-light ) !important; }
+.-color-base { color: color-get( --base ) !important; }
+.-color-error { color: color-get( --state-error ) !important; }
+.-color-success { color: color-get( --state-success ) !important; }
+.-color-white { color: color-get( white ) !important; }

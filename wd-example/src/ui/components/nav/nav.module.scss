@@ -1,0 +1,96 @@
+@use 'styles/modules' as *;
+
+
+//
+//	TokenScript / UI / Components / Nav
+//
+
+
+.c-nav {
+	$c: &;
+
+	display: flex;
+	position: relative; z-index: 5;
+
+	&-item {
+		padding: grid-baseline(0.75) grid-gutter(0.5); box-sizing: border-box;
+		font-weight: 500;
+		cursor: pointer;
+		white-space: nowrap;
+		display: flex; align-items: center;
+		position: relative; z-index: 0;
+		text-decoration: none;
+
+		&.-is-active {
+			color: color-get( --brand );
+			z-index: 2;
+
+			&:before {
+				opacity: 1;
+			}
+		}
+	}
+
+	& & {
+		margin: 0 grid-gutter(-0.5);
+		padding-left: grid-gutter(0.5); padding-right: grid-gutter(0.5);
+	}
+
+	//	States	 --------------------
+
+	//	Sizes	 --------------------
+
+	//	Formats	 --------------------
+
+	&.-format-vertical {
+		flex-direction: column;
+		overflow: visible;
+
+		> #{$c}-item {
+			&:before {
+				width: 2px; height: auto;
+				top: grid-baseline(0.5); right: auto; bottom: grid-baseline(0.5); left: 0;
+			}
+		}
+	}
+
+	//	Styles	 --------------------
+}
+
+
+/**
+ * 	Media Queries
+ *	--------------------------------------------------
+ */
+
+ @media (hover: hover) {
+
+	.c-nav {
+		$c: &;
+
+		&-item {
+			&:hover {
+				&:before {
+					opacity: 1;
+				}
+			}
+		}
+	}
+
+}
+
+/** Breakpoint:	Small ----------------------- */
+
+@include breakpoint-for( small ) using ( $bp ) {
+
+	.c-nav {
+		$c: &;
+
+		&-item {
+			@include type-size(f8);
+			padding: grid-baseline(0.75) grid-gutter(0.5);
+		}
+
+		//	Sizes	 --------------------
+	}
+}

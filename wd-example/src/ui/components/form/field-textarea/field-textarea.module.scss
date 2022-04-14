@@ -1,0 +1,17 @@
+@use 'styles/modules' as *;
+
+
+//
+//	TokenScript / UI / Components / Form / Field Textarea
+//
+
+
+.c-field-textarea {
+	$c: &;
+
+	//	Elements ----------------
+
+	textarea {
+		height: auto;
+	}
+}

@@ -1,0 +1,47 @@
+@use 'styles/modules' as *;
+
+
+//
+//	TokenScript / UI / Components / Link
+//
+
+
+.c-link {
+	$c: &;
+
+	position: relative;
+	cursor: pointer;
+	text-decoration: underline;
+	color: color-get( --link );
+	transition: color 0.2s;
+
+	&_button {
+		background-color: transparent; border: none;
+		-webkit-appearance: none; cursor: pointer;
+	}
+
+	//	Styles	 --------------------
+
+	&:global(.-style-text) {
+		@include color-set( --link, --text );
+		@include color-set( --link-hover, ts-blue );
+	}
+
+	//	States	 --------------------
+}
+
+
+/**
+ * 	Media Queries
+ *	--------------------------------------------------
+ */
+
+@media (hover: hover) {
+
+	.c-link {
+		&:hover {
+			color: color-get( --link-hover );
+		}
+	}
+
+}

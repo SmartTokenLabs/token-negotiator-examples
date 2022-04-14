@@ -1,0 +1,206 @@
+@use 'styles/modules' as *;
+@use 'sass:math';
+
+
+//
+//	TokenScript / UI / Components / Button
+//
+
+
+$easing: cubic-bezier(0.4, 0, 0, 1);
+$box-shadow: 2px 4px 8px 0 rgba( 0, 0, 0, 0.15 );
+
+.c-button {
+	$c: &;
+	$button-height: grid-baseline(5.5);
+
+	--btn-radius: #{grid-baseline(4)};
+
+	@include type-size( f7, $margin: false );
+	width: fit-content; height: $button-height;
+	min-width: grid-gutter(8);
+	padding: grid-baseline(1) grid-gutter(0.5); box-sizing: border-box;
+	position: relative;
+	display: inline-block;
+	text-align: center; text-decoration: none;
+	color: color-get( --button-text ); font-weight: 500;
+	background-color: color-get( --button-bg );
+	border-radius: var( --btn-radius );
+	box-shadow: none;
+	transform: translate3d(0,0,0);
+	transition:
+		color 0.3s,
+		background-color 0.3s,
+		border 0.3s,
+		box-shadow 0.3s,
+		transform 0.3s;
+	transition-timing-function: $easing;
+	-webkit-tap-highlight-color: rgba( 0, 0, 0, 0 );
+
+	&:not(.-style-none) {
+		background: color-get( --button-bg );
+
+		&:after {
+			content: '';
+			width: 100%; height: 100%;
+			position: absolute; top: 0; left: 0; z-index: 5;
+			background: color-get( black, 0.25 );
+			border-radius: var(--btn-radius);
+			opacity: 0;
+			transition: opacity 0.3s $easing;
+		}
+	}
+
+
+	//	Elements   ------------------
+
+	&_content {
+		height: 100%; width: 100%; max-width: 100%;
+		padding: 0 grid-baseline(2); box-sizing: border-box;
+		display: inline-flex; align-items: center; justify-content: center;
+		position: relative; z-index: 10;
+		transition: opacity 0.15s $easing;
+
+		span {
+			margin: 0 grid-baseline(0.5);
+		}
+	}
+		&_text {
+			display: flex;
+			white-space: nowrap;
+		}
+
+
+	//	Styles	 --------------------
+
+	&:global(.-style-none) {
+		@include color-set( --button-text, --text );
+		background: transparent;
+		border: none;
+		min-width: 0;
+		padding: 0;
+	}
+
+	&:global(.-style-outline) {
+		@include color-set( --button-text, --text );
+		background: transparent;
+		border: 1px solid color-get( --button-text );
+	}
+
+	&:global(.-style-green) {
+		@include color-set( --button-bg, ts-green );
+	}
+
+	&:global(.-style-secondary) {
+		@include color-set( --button-text, --button-secondary-text );
+		@include color-set( --button-bg, --button-secondary-bg );
+	}
+
+	//	Sizes	 --------------------
+
+	&.-size-l {
+		@include type-size( f6, $margin: false );
+		height: grid-baseline(7.5);
+		padding-right: grid-gutter(1.5); padding-left: grid-gutter(1.5);
+	}
+
+
+	//	Formats	 --------------------
+
+
+	&.-format-none {
+		padding: 0;
+
+		#{ $c }_content {
+			padding-left: 0; padding-right: 0;
+		}
+	}
+
+	&.-format-icon {
+		min-width: auto;
+		width: grid-baseline(5.5);
+		padding: grid-baseline(1);
+
+		#{ $c }_content {
+			padding: 0;
+		}
+
+		&.-size-m {
+			height: grid-baseline(6.5);
+			width: grid-baseline(6.5);
+		}
+
+		&.-size-l {
+			height: grid-baseline(7.5);
+			width: grid-baseline(7.5);
+		}
+	}
+
+	&.-format-block {
+		width: 100%;
+		flex: 1 1 auto;
+	}
+
+
+	//	States	 --------------------
+
+	&:active {
+		#{$c}_content {
+			opacity: 0.4;
+		}
+	}
+}
+
+
+
+/**
+ * 	Media Queries
+ *	--------------------------------------------------
+ */
+
+@media (hover: hover) {
+
+	.c-button {
+
+		&:hover {
+			box-shadow: $box-shadow;
+			transform: translate3d(0,-1px,0);
+
+			&:after {
+				opacity: 1;
+			}
+		}
+
+		&.-style-none:hover {
+			@include color-set( --button-text, --brand );
+			transform: none;
+			box-shadow: none;
+		}
+
+		&.-format-none:hover {
+			box-shadow: none;
+		}
+
+		&:global(.-style-outline) {
+			&:hover {
+				@include color-set( --button-text, --primary );
+				@include color-set( --text, base-60 );
+				background: transparent;
+				box-shadow: none;
+
+				&:after {
+					content: none;
+				}
+			}
+		}
+	}
+}
+
+
+/** Breakpoint:	Small ----------------------- */
+
+@include breakpoint-for( small ) using ( $bp ) {
+	.c-button {
+		letter-spacing: -1px;
+	}
+}

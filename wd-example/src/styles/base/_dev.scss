@@ -1,0 +1,81 @@
+@use 'styles/core';
+@use 'styles/modules' as *;
+
+
+//
+//	TokenScript / Base / Dev
+//
+
+
+/**
+ *	Breakpoint Helper
+ *	--------------------------------------------------
+**/
+
+@if $env == "development" {
+
+	@if $dev_show-helper {
+
+		body {
+			&:before {
+				padding: 0.5em 0.75em;
+				position: fixed; bottom: 0; right: 0; z-index: 9999;
+				font-family: monospace; font-size: 1.125em;
+				line-height: 1; color: #20D832;
+				background: rgba(0,0,0,0.8);
+			}
+		}
+
+		@each $bp-key, $bp-map in $breakpoint-config {
+			@include breakpoint-for( #{$bp-key} ) using ( $bp ) {
+				$grid-cols: core.get( $grid-config, '#{$bp-key}.columns' );
+				$bp-width: core.get( $bp, 'width' );
+				$bp-dir: core.get( $bp, 'dir' );
+				$bp-max: core.get( $bp, 'max' );
+
+				body {
+					//	breakpoint-helper
+					&:before {
+						@if $bp-key == default {
+							content: "#{$bp-key} / #{$grid-cols} cols";
+						} @else {
+							content: "#{$bp-key} / #{$bp-dir} #{$bp-width}px / #{$grid-cols} cols";
+						}
+					}
+
+				}
+			}
+		}
+	}
+
+	@if $dev_show-grid {
+
+		body {
+			&:after {
+				content: '';
+				height: 100%;
+				padding: 0;
+
+				position: fixed; top: 0; left: 50%; z-index: 110;
+				background: linear-gradient( 90deg, transparent #{ grid-gutter(0.5)}, $dev-grid-color-vertical #{ grid-gutter(0.5) }, $dev-grid-color-vertical calc( 100% - #{ grid-gutter(0.5)} ), transparent calc( 100% - #{ grid-gutter(0.5) } ));
+				background-size: grid-column-fluid(1);
+				background-position: 0; //gutters(0.5);
+				transform: translate3d( -50%, 0, 0 );
+				pointer-events: none;
+			}
+		}
+
+		@each $bp-key, $bp-map in $breakpoint-config {
+			@include breakpoint-for( #{$bp-key} ) using ( $bp ) {
+				$grid-cols: core.get( $grid-config, '#{$bp-key}.columns' );
+				$bp-max: core.get( $bp, 'max' );
+
+				body:after {
+					width: grid-column( $grid-cols );
+					max-width: calc( #{ percentage( $bp-max / 100 ) } - #{ grid-gutter(1) } );
+					background-size: grid-column-fluid(1) 1px;
+				}
+			}
+		}
+	}
+}

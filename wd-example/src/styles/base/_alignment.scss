@@ -1,0 +1,155 @@
+@use 'styles/core';
+@use 'styles/modules' as *;
+
+
+//
+//	TokenScript / Base / Alignment
+//
+
+
+$spacer-iterations: 6 !default;
+
+$spacer-props: (
+	'margin': 'm',
+	'padding': 'p'
+) !default;
+
+$spacer-sides: (
+	'top': 't',
+	'right': 'r',
+	'bottom': 'b',
+	'left': 'l'
+) !default;
+
+@each $prop, $prop-key in $spacer-props {
+	@for $i from 0 through $spacer-iterations {
+		@each $side, $side-key in $spacer-sides {
+			//	Baselines
+			.-#{$prop-key}#{$side-key}#{$i} { #{$prop}-#{$side}: grid-baseline($i) !important; }
+			//	Segments
+			.-#{$prop-key}#{$side-key}s#{$i} { #{$prop}-#{$side}: grid-baseline($i*4) !important; }
+			//	Columns
+			.-#{$prop-key}#{$side-key}c#{$i} { #{$prop}-#{$side}: grid-column($i) !important; }
+			//	Gutters
+			.-#{$prop-key}#{$side-key}g#{$i} { #{$prop}-#{$side}: grid-gutter($i) !important; }
+
+			@if $prop == 'margin' {
+				.-#{$prop-key}#{$side-key}n#{$i} {
+					#{$prop}-#{$side}: grid-baseline(-$i) !important;
+				}
+			}
+		}
+		.-#{$prop-key}x#{$i} {
+			#{$prop}-left: grid-gutter($i*0.5) !important;
+			#{$prop}-right: grid-gutter($i*0.5) !important;
+		}
+		.-#{$prop-key}y#{$i} {
+			#{$prop}-top: grid-baseline($i) !important;
+			#{$prop}-bottom: grid-baseline($i) !important;
+		}
+		@if $prop == 'margin' {
+			.-#{$prop-key}xn#{$i} {
+				#{$prop}-left: grid-gutter(-$i*0.5) !important;
+				#{$prop}-right: grid-gutter(-$i*0.5) !important;
+			}
+			.-#{$prop-key}yn#{$i} {
+				#{$prop}-top: grid-baseline(-$i) !important;
+				#{$prop}-bottom: grid-baseline(-$i) !important;
+			}
+		}
+	}
+}
+
+//	Alignment	----------------
+
+.-mla {
+	margin-left: auto !important;
+}
+.-mra {
+	margin-right: auto !important;
+}
+.-mta {
+	margin-top: auto !important;
+}
+.-mba {
+	margin-bottom: auto !important;
+}
+.-mxa {
+	margin-left: auto;
+	margin-right: auto;
+}
+.-mya {
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+.-a-center,
+.-align-center {
+	text-align: center;
+	justify-content: center;
+}
+.-align-left {
+	text-align: left;
+	justify-content: flex-start;
+}
+.-align-right {
+	text-align: right;
+	justify-content: flex-end;
+}
+.-va-center-inline {
+	display: inline-flex;
+	align-items: center;
+}
+.-va-center {
+	display: flex;
+	align-items: center;
+}
+.-va-start {
+	display: flex;
+	align-items: flex-start;
+}
+.-va-end {
+	display: flex;
+	align-items: flex-end;
+}
+.-a-start {
+	align-items: flex-start;
+}
+-a-center {
+	align-items: center;
+}
+.-a-end {
+	align-items: flex-end;
+}
+
+/**
+ * 	Media Queries
+ *	--------------------------------------------------
+ */
+
+/** Breakpoint:	Small ----------------------- */
+
+@include breakpoint-for( small ) using ( $bp ) {
+	//	Margin
+	.-mt0-s { margin-top: 0 !important; }
+	.-mr0-s { margin-right: 0 !important; }
+	.-mb0-s { margin-bottom: 0 !important; }
+	.-ml0-s { margin-left: 0 !important; }
+	.-mx0-s { margin-left: 0 !important; margin-right: 0 !important }
+
+	// Padding
+	.-pt0-s { padding-top: 0 !important; }
+	.-pr0-s { padding-right: 0 !important; }
+	.-pb0-s { padding-bottom: 0 !important; }
+	.-pl0-s { padding-left: 0 !important; }
+	.-px0-s { padding-left: 0 !important; padding-right: 0 !important }
+
+	@each $prop, $prop-key in $spacer-props {
+		@for $i from 0 through $spacer-iterations {
+			@each $side, $side-key in $spacer-sides {
+				.-#{$prop-key}#{$side-key}s#{$i} { #{$prop}-#{$side}: grid-baseline($i*1.75) !important; }
+				.-#{$prop-key}#{$side-key}g#{$i} { #{$prop}-#{$side}: 0 !important; }
+			}
+		}
+	}
+}

@@ -1,0 +1,112 @@
+@use 'styles/core';
+@use 'sass:map';
+
+
+//
+//	TokenScript / Modules / Typography / Config
+//
+
+
+$config: () !default;
+$use_defaults: true !default;
+
+
+$config-defaults: (
+	//	Type Defaults  ------
+	'default': (
+		px: core.$base-size,
+		lines: 3,
+		margin: 2,
+	),
+
+	//	Type Scales	 --------
+	'f1': (
+		px: 48,
+		lines: 7,
+		margin: 2,
+		el: h1,
+
+		breakpoints: (
+			'small': 'f4',
+		),
+	),
+	'f2': (
+		px: 42,
+		lines: 5.5,
+		margin: 2,
+		el: h2,
+
+		breakpoints: (
+			'small': 'f5',
+		),
+	),
+	'f3': (
+		px: 36,
+		lines: 5.5,
+		margin: 2,
+		spacing: -0.5,
+		el: h3,
+
+		breakpoints: (
+			'small': 'f5',
+		),
+	),
+	'f4': (
+		px: 32,
+		lines: 5,
+		margin: 1,
+		el: h4,
+
+		breakpoints: (
+			'small': 'f5',
+		),
+	),
+	'f5': (
+		px: 24,
+		lines: 4.5,
+		margin: 1,
+
+		breakpoints: (
+			'small': 'f6',
+		),
+	),
+	'f6': (
+		px: 20,
+		lines: 4,
+		margin: 1,
+		el: p,
+
+		breakpoints: (
+			'small': 'f7',
+		),
+	),
+	'f7': (
+		px: 16,
+		lines: 3,
+		margin: 1,
+	),
+
+	//	Small
+
+	'f8': (
+		px: 18,
+		lines: 3,
+		margin: 1,
+	),
+	'f9': (
+		px: 14,
+		lines: 3,
+		margin: 1,
+		el: h6,
+	),
+	'f10': (
+		px: 13,
+		lines: 2,
+		margin: 1,
+	),
+);
+
+
+@if $use_defaults {
+	$config: map.merge( $config, $config-defaults );
+}

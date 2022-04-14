@@ -1,0 +1,49 @@
+
+@use 'styles/modules' as *;
+
+
+//
+//	TokenScript / UI / Components / Product Item
+//
+
+
+.c-product-item {
+	$c: &;
+
+	margin: grid-baseline(3) 0;
+
+	// Elements
+
+	&_image {
+		margin-bottom: grid-baseline(2);
+
+		img {
+			width: 100%;
+		}
+	}
+
+	&_description {
+		padding: 0 grid-gutter(0.5);
+	}
+}
+
+/**
+ * 	Media Queries
+ *	--------------------------------------------------
+ */
+
+/** Breakpoint:	Small ----------------------- */
+
+@include breakpoint-for( small ) using ( $bp ) {
+
+	.c-product-item {
+		$c: &;
+
+		&_image {
+			display: flex;
+			justify-content: center;
+			background-color: #F1EFF0;
+			border-radius: grid-baseline(1);
+		}
+	}
+}

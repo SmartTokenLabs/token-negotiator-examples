@@ -1,0 +1,46 @@
+@use 'styles/modules' as *;
+
+
+//
+//	TokenScript / UI / Views / Car Industry
+//
+
+
+.v-car-industry {
+	$v: &;
+
+	&_slider-overlay {
+		position: absolute;
+		top: 50%; left: 50%;
+		transform: translate( -50%, -50% );
+		background-color: color-get( --bg, 0.5 );
+		padding: grid-baseline(5.5) grid-gutter(2);
+		width: fit-content;
+	}
+
+	&_slide {
+		min-height: grid-baseline(60);
+		height: 50vh;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+}
+
+/**
+ * 	Media Queries
+ *	--------------------------------------------------
+ */
+
+/** Breakpoint:	Small ----------------------- */
+
+@include breakpoint-for( small ) using ( $bp ) {
+
+	.v-car-industry {
+		$v: &;
+
+		&_slide {
+			min-height: grid-baseline(40);
+		}
+	}
+}

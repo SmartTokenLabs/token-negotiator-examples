@@ -1,0 +1,147 @@
+@use 'sass:math';
+@use 'styles/core';
+@use 'styles/modules' as *;
+
+
+//
+//	TokenScript / Base / Layout
+//
+
+
+//	Placeholders
+%section {
+	display: flex;
+	flex-direction: column; justify-content: stretch;
+	background-color: color-get( --bg );
+}
+	%grid {
+		width: var(--grid-width); max-width: var(--grid-max-width);
+		margin-left: auto; margin-right: auto; padding: 0 calc( var(--grid-gutter-width) / 2 ); box-sizing: border-box;
+		display: grid;
+		grid-template-columns: [start] repeat( var(--grid-columns), minmax( auto, 1fr ) ) [end];
+		grid-template-rows: auto;
+		grid-column-gap: var(--grid-gutter-width);
+
+		> div {
+			min-width: 0;
+			display: flex; flex-direction: column;
+		}
+
+		&.-g-hs {
+			flex: 0 1 auto;
+		}
+		&.-g-hg {
+			flex: 1 1 auto;
+		}
+
+		.-va-c {
+			justify-content: center;
+		}
+
+		//	Helpers	 ------------
+
+		&.-max-100 {
+			max-width: 100%;
+		}
+	}
+
+
+//	Layout
+
+$grid-cols: core.get( $grid-config, 'default.columns' );
+
+.section {
+	padding: grid-baseline(9) 0;
+	@extend %section;
+
+	&.-ps { padding: grid-baseline(4) 0; }
+
+}
+	.grid {
+		@extend %grid;
+		min-width: 0;
+
+		.grid {
+			padding-left: 0; padding-right: 0; max-width: 100%;
+		}
+
+		@for $i from 1 through $grid-cols {
+			&.-g-cols-#{$i} {
+				--grid-columns: #{$i};
+			}
+		}
+	}
+
+
+@each $bp-key, $bp-map in $breakpoint-config {
+	@include breakpoint-for( #{$bp-key} ) using ( $bp ) {
+		$grid-cols: core.get( $grid-config, '#{$bp-key}.columns' );
+		$bp-max: core.get( $bp, 'max' ); // percentage
+		$bp-width: core.get( $bp, 'width' ); // px
+
+		:root {
+			--breakpoint: "#{$bp-key}";
+			--breakpoint-width: #{$bp-width};
+			--grid-width: #{grid-column( $grid-cols )};
+			--grid-max-width: #{percentage( math.div( $bp-max, 100 ) )};
+			--grid-columns: #{$grid-cols};
+			--grid-column-width: #{grid-column(1)};
+			--grid-gutter-width: #{grid-gutter(1)};
+		}
+			@for $i from 1 through $grid-cols {
+				.-g-max-#{$i} {
+					max-width: grid-column($i);
+				}
+				.-g-min-#{$i} {
+					min-width: grid-column($i);
+				}
+			}
+
+			@if $bp-key == small {
+				.-s\:g-min-none { min-width: 0; }
+				.-s\:g-max-none { max-width: none; }
+			}
+	}
+}
+
+
+@include breakpoint-for( small ) using ( $bp ) {
+	$grid-cols: core.get( $grid-config, 'small.columns' );
+	$bp-max: core.get( $bp, 'max' );
+
+	.section {
+		padding: grid-baseline(6) 0;
+	}
+
+	%grid {
+		&.-g-cols-1,
+		&.-g-cols-2,
+		&.-g-cols-3,
+		&.-g-cols-4 {
+			--grid-columns: 1;
+		}
+
+		&.-s\:g-full {
+			width: 100%;
+			margin: 0;
+			padding: 0;
+			max-width: none;
+		}
+
+		@for $i from 1 through $grid-cols {
+			&.-s\:g-cols-#{$i} {
+				--grid-columns: #{$i};
+			}
+		}
+	}
+}
+
+// Positions
+
+.-p-relative {
+	position: relative;
+}
+
+.-p-absolute {
+	position: absolute;
+}

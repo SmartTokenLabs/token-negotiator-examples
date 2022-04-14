@@ -1,0 +1,38 @@
+@use 'sass:map';
+@use 'styles/core';
+
+
+//
+//	TokenScript / Modules / Breakpoints / Config
+//
+
+
+$config: () !default;
+$use_defaults: true !default;
+
+
+$config-defaults: (
+	default: (
+		dir: max,
+		width: 1439,
+		max: 92
+	),
+	large: (
+		dir: min,
+		width: 1440,
+		max:72
+	),
+	small: (
+		dir: max,
+		width: 960,
+		max: 92
+	),
+);
+
+
+@include core.set-state( 'breakpoint', default );
+
+
+@if $use_defaults {
+	$config: map.merge( $config, $config-defaults ) !global;
+}

@@ -1,0 +1,25 @@
+@use 'sass:map';
+
+
+//
+//	TokenScript / Config / Dev
+//
+
+
+
+$config: () !default;
+$use_defaults: true !default;
+
+
+$grid-color-horizontal: rgba( blue, 0.1 );
+$grid-color-vertical: rgba( red, 0.05 );
+
+
+$config-defaults: (
+
+);
+
+
+@if $use_defaults {
+	$config: map.merge( $config, $config-defaults ) !global;
+}

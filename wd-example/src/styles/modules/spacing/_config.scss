@@ -1,0 +1,19 @@
+@use 'sass:map';
+@use 'styles/core';
+
+
+//
+//	TokenScript / Modules / Spacing / Config
+//
+
+
+$config: () !default;
+$use_defaults: true !default;
+
+
+$config-defaults: ();
+
+
+@if $use_defaults {
+	$config: map.merge( $config, $config-defaults ) !global;
+}

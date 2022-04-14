@@ -1,0 +1,37 @@
+@use 'sass:map';
+@use 'styles/core';
+
+
+//
+//	TokenScript / Modules / Grid / Config
+//
+
+
+$config: () !default;
+$use_defaults: true !default;
+
+
+$config-defaults: (
+	default: (
+		columns: 9,
+		column-w: 84,
+		gutter-w: 24
+	),
+	large: (
+		columns: 12,
+		column-w: 72,
+		gutter-w: 32
+	),
+	small: (
+		columns: 6,
+		column-w: 72,
+		gutter-w: 16
+	),
+
+);
+
+
+
+@if $use_defaults {
+	$config: map.merge( $config, $config-defaults ) !global;
+}

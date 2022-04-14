@@ -1,0 +1,24 @@
+@use 'styles/modules' as *;
+
+
+//
+//	TokenScript / UI / Components / Form / Field Input
+//
+
+
+.c-field-input {
+	$c: &;
+
+	// Styles
+	&:global(.-style-underline) {
+
+		input[type] {
+			@include type-size( 'f6', $margin: 0 );
+			height: auto;
+			border-bottom: 1px solid color-get(--text);
+			border-radius: 0;
+			background-color: transparent;
+			padding: 0 0 grid-baseline(1);
+		}
+	}
+}

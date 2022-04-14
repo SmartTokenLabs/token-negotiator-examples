@@ -1,0 +1,44 @@
+@use 'styles/modules' as *;
+@use 'styles/core';
+
+//
+//	TokenScript / UI / Views / How It Works
+//
+
+
+.v-how-it-works {
+	$v: &;
+
+	&_step {
+		border-top: 1px solid color-get( --text, 0.15 );
+		padding: grid-baseline(8) 0;
+
+		&:last-child {
+			border-bottom: 1px solid color-get( --text, 0.15 );
+			margin-bottom: grid-baseline(8);
+		}
+
+		img {
+			max-width: core.rem(320);
+			margin: 0 auto;
+		}
+	}
+}
+
+/**
+ * 	Media Queries
+ *	--------------------------------------------------
+ */
+
+/** Breakpoint:	Small ----------------------- */
+
+@include breakpoint-for( small ) using ( $bp ) {
+
+	.v-how-it-works {
+		$v: &;
+
+		img {
+			margin-bottom: grid-baseline(2);
+		}
+	}
+}

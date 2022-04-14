@@ -1,0 +1,30 @@
+@use 'styles/modules' as *;
+
+
+//
+//	TokenScript / UI / Components / Logo
+//
+
+
+.c-logo {
+	$c: &;
+
+	display: block;
+	width: grid-gutter(7);
+
+	//	Elements   ------------------
+
+	svg {
+		width: auto; height: 100%; max-width: 100%;
+		display: block;
+	}
+
+	//	Styles	 --------------------
+
+	//	Sizes	 --------------------
+
+	//	Formats	 --------------------
+
+	//	States	 --------------------
+
+}

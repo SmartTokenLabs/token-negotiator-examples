@@ -1,0 +1,61 @@
+@use 'sass:math';
+@use 'styles/core' as *;
+@use 'config';
+
+
+//
+//	TokenScript / Modules / Grid / Functions
+//
+
+
+/*
+ *	Columns
+ *	--------------------------------------------------
+ */
+
+@function column( $columns: 1, $context: get-state( 'breakpoint' ) ) {
+	@if type-of( $columns ) == number {
+		$grid-map: get( config.$config, $context );
+		$column-w: get( $grid-map, 'column-w' );
+		$gutter-w: get( $grid-map, 'gutter-w' );
+		$context: 16;
+
+		@return math.div( $columns * ( $column-w + $gutter-w ), $context ) * 1rem;
+	} @else {
+		@error ('`$columns` of `#{$columns}` is not a number.');
+	}
+}
+
+@function column-fluid( $columns: 1, $context: get-state( 'breakpoint' ) ) {
+	@if type-of( $context ) == string {
+		$grid-cols: get( config.$config, '#{$context}.columns' );
+		@return $columns * ( math.div( 100%, $grid-cols ) );
+	} @else {
+		@error ('`$context` of `#{$context}` is not a string.');
+	}
+}
+
+/*
+ *	Gutters
+ *	--------------------------------------------------
+ */
+
+@function gutter( $gutters: 1, $context: get-state( 'breakpoint' ) ) {
+	@if type-of( $gutters ) == number {
+		$grid-map: get( config.$config, $context );
+		$gutter-w: get( config.$config, '#{$context}.gutter-w' );
+
+		@return $gutters * math.div( $gutter-w, 16 ) * 1rem;
+	} @else {
+		@error ('`$gutters` of `#{$gutters}` is not a number.');
+	}
+}
+
+/*
+ *	Baseline
+ *	--------------------------------------------------
+ */
+
+ @function baseline( $lines: 1 ) {
+	@return rem( $base-line * $lines );
+}

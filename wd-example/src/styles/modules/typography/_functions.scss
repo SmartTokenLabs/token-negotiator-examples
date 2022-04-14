@@ -1,0 +1,77 @@
+@use 'sass:math';
+@use 'styles/core';
+@use 'styles/modules/grid' as grid;
+@use 'config';
+
+
+//
+//	TokenScript / Modules / Typography / Functions
+//
+
+
+//	Font face
+@mixin font( $font-family, $file-path, $weight: normal, $style: normal, $version: 1 ) {
+	@font-face {
+		font-family: $font-family;
+		src: url('#{ $file-path }.woff2?bust=v#{ $version }')  format('woff2'),
+			 url('#{ $file-path }.woff?bust=v#{ $version }')   format('woff');
+		font-weight: $weight;
+		font-style: $style;
+		font-stretch: normal;
+		unicode-range: U+0020-FB02;
+		font-display: swap;
+	}
+}
+
+//	Font size
+@mixin size( $type-key: default, $lines: null, $margin: null, $spacing: null, $responsive: false ) {
+	$font-size: $type-key;
+	$type-lines: $lines;
+	$type-margin: if( $margin == null, 0, $margin );
+	$letter-spacing: if( $spacing == null, 0, $spacing );
+
+	@if type-of( $type-key ) == string {
+		$type-lines: if( $lines == null, lines( $type-key ), $lines );
+		$type-margin: if( $margin == null, margin( $type-key ), $margin );
+		$font-size: size( $type-key );
+		$letter-spacing: if( $spacing == null, spacing( $type-key ), $spacing );
+	}
+
+	@if $type-margin {
+		margin: grid.baseline( $type-margin ) 0;
+	}
+	@if $responsive {
+		font-size: #{ math.div( $font-size, 8 )}vmin;
+		line-height: 1;
+		letter-spacing: #{ math.div( $letter-spacing, 8 )}vmin;
+	} @else {
+		font-size: core.rem( $font-size );
+		line-height: core.rem( core.$base-line * $type-lines );
+		letter-spacing: #{ $letter-spacing }px;
+	}
+}
+
+//	Font family
+@mixin family( $font-family ) {
+	font-family: $font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI',  Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+}
+
+//	Size in PX
+@function size( $type-key: default, $map: config.$config ) {
+	@return core.get( $map, '#{ $type-key }.px', 16 );
+}
+
+//	Lines
+@function lines( $type-key: default, $map: config.$config ) {
+	@return core.get( $map, '#{ $type-key }.lines', 1 );
+}
+
+//	Margin
+@function margin( $type-key: default, $map: config.$config ) {
+	@return core.get( $map, '#{ $type-key }.margin', 0 );
+}
+
+//	Spacing
+@function spacing( $type-key: default, $map: config.$config ) {
+	@return core.get( $map, '#{ $type-key }.spacing', 0 );
+}

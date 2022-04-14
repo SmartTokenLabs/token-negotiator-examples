@@ -1,0 +1,22 @@
+@use 'sass:map';
+
+
+//
+//	TokenScript / Modules / Core / State
+//
+
+
+$global-state: () !default;
+
+@mixin set-state( $key, $value ) {
+	@if type-of( $key ) == string {
+		$new: ( $key: $value );
+		$global-state: map.merge( $global-state, $new ) !global;
+	} @else {
+		@error ('`$key` of `#{$key}` is not a string.');
+	}
+}
+
+@function get-state( $key ) {
+	@return map.get( $global-state, $key );
+}

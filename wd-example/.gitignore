@@ -1,0 +1,57 @@
+# Compiled
+# ------------
+dist
+build
+.next
+out
+sitemap.xml
+robots.txt
+
+
+# Dependencies
+# ------------
+node_modules
+package-lock.json
+yarn.lock
+!/yarn.lock
+test/node_modules
+
+# Environment
+# ------------
+.env
+.env*
+*.env
+
+# Logs
+# ------------
+lib-cov
+logs
+*.seed
+*.log
+*.out
+*.pid
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+# ------------
+.DS_Store
+.tmp
+
+# IDE
+# ------------
+*~
+*#
+.netbeans
+nbproject
+.idea
+*.sublime-project
+codekit-config.json
+
+# Dev
+# ------------
+.sass-cache
+.awspublish*
+aws-credentials.json
+.vercel

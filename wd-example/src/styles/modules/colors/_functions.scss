@@ -1,0 +1,60 @@
+@use 'styles/core';
+@use 'config';
+
+
+//
+//	TokenScript / Modules / Colors / Functions
+//
+
+
+@function toRGB( $color ) {
+	@return red( $color ), green( $color ), blue( $color );
+}
+
+@function get( $name, $opacity: 1, $format: color, $map: config.$config ) {
+	@if type-of( $name ) == string and str-slice( $name, 1, 2 ) == '--' {
+		$r: var( --color-#{ str-slice( $name, 3 ) });
+		@if $format == rgb {
+			@return $r;
+		}
+		@if $opacity != 1 {
+			@return rgba( $r, $opacity );
+		}
+		@return rgb( $r );
+	}
+	@if $name == transparent {
+		@return transparent;
+	}
+
+	$color: core.get( $map, $name, #ffffff );
+	@if type-of( $color ) != color {
+		@error 'Color #{ $name } doesn\'t exist in $colors config';
+	}
+	@if $format == rgb {
+		@return toRGB( $color );
+	}
+	@if $opacity != 1 {
+		@return rgba( $color, $opacity );
+	}
+
+	@return rgb( toRGB( $color )... );
+}
+
+//	Sets CSS color vars
+@mixin set( $name, $color ) {
+	@if str-slice( $name, 1, 2 ) != '--' {
+		@error 'Only accepts name prefixed with --';
+	}
+	$_color: get( $color, $format: rgb );
+	--color-#{ str-slice( $name, 3 ) }: #{ $_color };
+}
+
+@mixin theme-set( $name, $map: config.$config-themes) {
+	$theme: core.get( $map, $name );
+	@if type-of( $theme ) != map {
+		@error "Theme #{ $name } doesn't exist in $config-theme config";
+	}
+	@each $color-name, $color in $theme {
+		@include set( $color-name, $color );
+	}
+}

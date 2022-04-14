@@ -1,0 +1,32 @@
+@use 'sass:map';
+@use 'styles/core';
+@use 'config';
+
+
+//
+//	TokenScript / Modules / Breakpoints / Functions
+//
+
+
+@mixin for( $bp-key: default, $bp: core.get( config.$config, $bp-key ) ) {
+	@if $bp {
+		$bp-dir: core.get( $bp, 'dir' );
+		$bp-width: core.get( $bp, 'width' );
+
+		@include core.set-state( 'breakpoint', $bp-key );
+
+		@if $bp-key == default {
+			@content( $bp );
+		} @else {
+			@media ( #{$bp-dir}-width: core.em( $bp-width ) ) {
+				@content( $bp );
+			}
+		}
+
+		@include core.set-state( 'breakpoint', default );
+
+	} @else {
+		@error 'Breakpoint key `#{ $bp-key }` doesnt exist in config';
+	}
+
+}

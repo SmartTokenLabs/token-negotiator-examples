@@ -1,0 +1,21 @@
+@charset 'utf-8';
+
+
+//
+//	TokenScript / Styles / Main
+//
+
+//	Environment
+$env: 'development' !default;
+@debug #{ '→ Build Environment:' $env };
+
+//	Dev overlays
+$dev_show-helper: true !default;
+$dev_show-grid: false !default;
+$dev_show-baseline: true !default;
+
+$easing: cubic-bezier(0.4, 0, 0, 1);
+
+@import 'base';
+@import 'layout';
+@import 'fonts';
