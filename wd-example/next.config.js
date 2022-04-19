@@ -28,11 +28,16 @@ module.exports = phase => {
 	return {
 		reactStrictMode: true,
 		env,
-		webpack: ( config, options ) => {
+		webpack: ( config, { webpack }) => {
 			config.resolve.modules = [
 				'node_modules',
 				ROOT,
 			];
+
+			config.plugins.push(new webpack.IgnorePlugin({
+				resourceRegExp: /^electron$/
+			}),);
+
 			return config;
 		},
 		sassOptions: {

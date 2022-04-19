@@ -11,6 +11,8 @@ import Menu from 'ui/app/menu';
 //	Styles
 import 'styles/index.scss';
 
+import "@tokenscript/token-negotiator/dist/theme/style.css"
+
 export default function App({ Component, pageProps }) {
 	const Layout = Component.Layout ?? DefaultLayout;
 	const api = useStore( s => s.api );

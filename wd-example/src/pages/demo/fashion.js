@@ -2,6 +2,7 @@
 // App
 import { Page } from 'ui/app';
 import { Link, ProductItem, Banner } from 'ui/components';
+import { useEffect } from "react";
 
 
 //
@@ -23,6 +24,64 @@ export default function Fashion() {
 		{ title: 'Natural crinkle top with side ties in oatmeal', price: 69.90, image: { src: '/images/fashion-product-2.jpg', alt: '' } },
 		{ title: 'Long sleeve blouse with pocket detail in black', price: 69.90, image: { src: '/images/fashion-product-3.jpg', alt: '' } },
 	];
+
+	useEffect(()=> {
+
+		const init = async () => {
+
+			const { Client } = (await import("@tokenscript/token-negotiator"));
+
+			let negotiator = new Client({
+				type: 'active',
+				issuers: [
+					{
+						collectionID: 'rinkeby-punk',
+						contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656',
+						chain: 'rinkeby',
+						openSeaSlug: 'rinkeby-punk'
+					},
+					{
+						collectionID: 'women-tribe',
+						contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656',
+						chain: 'rinkeby',
+						openSeaSlug: 'stl-rnd-women-tribe-nfts'
+					},
+					{
+						collectionID: 'zed',
+						contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656',
+						chain: 'rinkeby',
+						openSeaSlug: 'stl-rnd-zed'
+					},
+					{
+						collectionID: 'stl-rnd-bayc-derivatives',
+						contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656',
+						chain: 'rinkeby',
+						openSeaSlug: 'stl-rnd-bayc-derivatives'
+					},
+					{
+						collectionID: 'stl-rnd-riot-racers',
+						contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656',
+						chain: 'rinkeby',
+						openSeaSlug: 'stl-rnd-riot-racers'
+					}
+				],
+				options: {
+					overlay: {
+						openingHeading: "Open a new world of discounts available with your tokens.",
+						issuerHeading: "Get discount with Ticket",
+						repeatAction: "try again",
+						theme: "light",
+						position: "bottom-right"
+					},
+					filters: {},
+				}
+			});
+
+			negotiator.negotiate();
+		};
+
+		init();
+	});
 
 	return (
 		<Page meta={ meta }>
@@ -47,6 +106,7 @@ export default function Fashion() {
 					{ products.map( ( p, i ) => <ProductItem key={ i } product={ p } /> ) }
 				</div>
 			</section>
+			<div className="overlay-tn"/>
 		</Page>
 	);
 };
