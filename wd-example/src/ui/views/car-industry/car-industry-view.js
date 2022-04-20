@@ -72,6 +72,19 @@ export default function CarIndustryView() {
 		return (tokens["stl-rnd-riot-racers"] && tokens["stl-rnd-riot-racers"].tokens.length > 0);
 	}
 
+	async function handleClick(){
+		// TODO: Actually pass the tokens through component
+		try {
+			await window.negotiator.authenticate({
+				issuer: "zed",
+				unsignedToken: {name: "some token", desc: "a really cool token"}
+			});
+		} catch (e) {
+			alert(e.message);
+			return;
+		}
+	}
+
 	return (
 		<Page className={ styles[ 'v-car-industry'] } meta={ meta }>
 			<section className="section">

@@ -36,17 +36,17 @@ export default function HowItWorksView() {
 						</div>
 					</div>
 					<div className={ clsx( 'grid -g-cols-2', styles[ 'v-how-it-works_step' ] ) }>
-						<Image src="/images/network-switch-graphic.jpg" />
+						<Image src="/images/connect-wallet-graphic.jpg" />
 						<div>
-							<h2 className="f3">2/ Switch to Rinkeby or Mumbai Network</h2>
-							<p>After you receive NFT tokens from us, make sure you switch to Rinkeby Test Network or Mumbai Network in your wallet.</p>
+							<h2 className="f3">2/ Connect to Wallet</h2>
+							<p>Click the icon in the bottom right corner. Then, connect your wallet to the Token Negotiator Demo.</p>
 						</div>
 					</div>
 					<div className={ clsx( 'grid -g-cols-2', styles[ 'v-how-it-works_step' ] ) }>
-						<Image src="/images/connect-wallet-graphic.jpg" />
+						<Image src="/images/network-switch-graphic.jpg" />
 						<div>
-							<h2 className="f3">3/ Connect to Wallet</h2>
-							<p>Click the icon in the bottom right corner. Then, connect your wallet to the Token Negotiator Demo.</p>
+							<h2 className="f3">3/ Switch to Rinkeby or Mumbai Network</h2>
+							<p>After you receive NFT tokens from us, make sure you switch to Rinkeby Test Network or Mumbai Network in your wallet.</p>
 						</div>
 					</div>
 					<div className={ clsx( 'grid -g-cols-2', styles[ 'v-how-it-works_step' ] ) }>

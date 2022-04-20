@@ -19,10 +19,17 @@ import styles from "./banner.module.scss";
 export default function Banner({ className, theme, image, headline, text, code, fineprint, children, onClick, enabled}) {
 	const [ claimed, setClaimed, selectedTokens ] = useState( false );
 
-	const handleOnClick = () => {
+	const handleOnClick = async () => {
+		// TODO: Actually pass the tokens through component
+		try {
+			await window.negotiator.authenticate({issuer: "zed", unsignedToken: {name:"some token", desc: "a really cool token"}});
+			setClaimed( true );
+		} catch (e){
+			alert(e.message);
+			return;
+		}
+
 		if ( onClick ) onClick();
-		//window.negotiator.authenticate();
-		setClaimed( true );
 	}
 
 	return (
