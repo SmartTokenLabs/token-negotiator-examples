@@ -25,6 +25,19 @@
 	&_description {
 		padding: 0 grid-gutter(0.5);
 	}
+
+	&_priceBox {
+		height: 65px;
+		p {
+			margin: 0 5px;
+		}
+		small {
+			font-size: 11px;
+		}
+	}
+	.discountPrice {
+		color: green;
+	}
 }
 
 /**

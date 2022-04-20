@@ -16,11 +16,12 @@ import styles from "./banner.module.scss";
 //
 
 
-export default function Banner({ className, theme, image, headline, text, code, fineprint, children, onClick }) {
-	const [ claimed, setClaimed ] = useState( false );
+export default function Banner({ className, theme, image, headline, text, code, fineprint, children, onClick, enabled}) {
+	const [ claimed, setClaimed, selectedTokens ] = useState( false );
 
 	const handleOnClick = () => {
 		if ( onClick ) onClick();
+		//window.negotiator.authenticate();
 		setClaimed( true );
 	}
 
@@ -40,9 +41,9 @@ export default function Banner({ className, theme, image, headline, text, code, 
 							)
 						)}
 						{ text && <p className="f7 -mt0">{ text }</p> }
-						<div className={ styles[ 'c-banner_actions' ] }>
+						<div style={{visibility: enabled ? 'visible' : 'hidden' }} className={ styles[ 'c-banner_actions' ] }>
 							<Button className={ claimed ? '-style-green' : '' } onClick={ handleOnClick }>{ claimed ? 'Success!' : 'Claim' }</Button>
-							{ code && <p className={ clsx( '-f-caps', styles[ 'c-banner_actions-code' ] ) }>Code: { code }</p> }
+							{/* code && <p className={ clsx( '-f-caps', styles[ 'c-banner_actions-code' ] ) }>Code: { code }</p> */}
 						</div>
 					</div>
 				)}

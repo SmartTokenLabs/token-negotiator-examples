@@ -2,7 +2,7 @@
 // App
 import { Page } from 'ui/app';
 import { Link, ProductItem, Banner } from 'ui/components';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 
 //
@@ -17,13 +17,15 @@ export default function Fashion() {
 	};
 
 	const products = [
-		{ title: 'Topshop casual shirt in khaki', price: 69.90, image: { src: '/images/fashion-product-1.jpg', alt: '' } },
-		{ title: 'Natural crinkle top with side ties in oatmeal', price: 69.90, image: { src: '/images/fashion-product-2.jpg', alt: '' } },
-		{ title: 'Long sleeve blouse with pocket detail in black', price: 69.90, image: { src: '/images/fashion-product-3.jpg', alt: '' } },
-		{ title: 'Topshop casual shirt in khaki', price: 69.90, image: { src: '/images/fashion-product-1.jpg', alt: '' } },
-		{ title: 'Natural crinkle top with side ties in oatmeal', price: 69.90, image: { src: '/images/fashion-product-2.jpg', alt: '' } },
-		{ title: 'Long sleeve blouse with pocket detail in black', price: 69.90, image: { src: '/images/fashion-product-3.jpg', alt: '' } },
+		{ title: 'Topshop casual shirt in khaki', price: 69.90, discountPrice: 49.90, image: { src: '/images/fashion-product-1.jpg', alt: '' } },
+		{ title: 'Natural crinkle top with side ties in oatmeal', price: 69.90, discountPrice: 49.90, image: { src: '/images/fashion-product-2.jpg', alt: '' } },
+		{ title: 'Long sleeve blouse with pocket detail in black', price: 69.90, discountPrice: 49.90, image: { src: '/images/fashion-product-3.jpg', alt: '' } },
+		{ title: 'Topshop casual shirt in khaki', price: 69.90, discountPrice: 49.90, image: { src: '/images/fashion-product-1.jpg', alt: '' } },
+		{ title: 'Natural crinkle top with side ties in oatmeal', price: 69.90, discountPrice: 49.90, image: { src: '/images/fashion-product-2.jpg', alt: '' } },
+		{ title: 'Long sleeve blouse with pocket detail in black', price: 69.90, discountPrice: 49.90, image: { src: '/images/fashion-product-3.jpg', alt: '' } },
 	];
+
+	const [selectedTokens, setSelectedTokens] = useState();
 
 	useEffect(()=> {
 
@@ -31,7 +33,7 @@ export default function Fashion() {
 
 			const { Client } = (await import("@tokenscript/token-negotiator"));
 
-			let negotiator = new Client({
+			window.negotiator = new Client({
 				type: 'active',
 				issuers: [
 					{
@@ -45,24 +47,6 @@ export default function Fashion() {
 						contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656',
 						chain: 'rinkeby',
 						openSeaSlug: 'stl-rnd-women-tribe-nfts'
-					},
-					{
-						collectionID: 'zed',
-						contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656',
-						chain: 'rinkeby',
-						openSeaSlug: 'stl-rnd-zed'
-					},
-					{
-						collectionID: 'stl-rnd-bayc-derivatives',
-						contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656',
-						chain: 'rinkeby',
-						openSeaSlug: 'stl-rnd-bayc-derivatives'
-					},
-					{
-						collectionID: 'stl-rnd-riot-racers',
-						contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656',
-						chain: 'rinkeby',
-						openSeaSlug: 'stl-rnd-riot-racers'
 					}
 				],
 				options: {
@@ -77,11 +61,36 @@ export default function Fashion() {
 				}
 			});
 
-			negotiator.negotiate();
+			window.negotiator.negotiate();
+
+			window.negotiator.on("tokens-selected", (data) => {
+				setSelectedTokens({...data.selectedTokens});
+			});
 		};
 
-		init();
+		if (document.getElementsByClassName("overlay-tn")[0].childElementCount === 0)
+			init();
 	});
+
+	function magEligible(){
+
+		let tokens = selectedTokens;
+
+		if (!tokens) return false;
+
+		return (tokens["rinkeby-punk"] && tokens["rinkeby-punk"].tokens.length > 0) &&
+				(tokens["women-tribe"] && tokens["women-tribe"].tokens.length > 0);
+	}
+
+	function productsEligible(){
+
+		let tokens = selectedTokens;
+
+		if (!tokens) return false;
+
+		return (tokens["rinkeby-punk"] && tokens["rinkeby-punk"].tokens.length > 0) ||
+			(tokens["women-tribe"] && tokens["women-tribe"].tokens.length > 0);
+	}
 
 	return (
 		<Page meta={ meta }>
@@ -100,10 +109,11 @@ export default function Fashion() {
 						fineprint="Available for 2 more days - exclusive to BAYC Derivative + Women Tribe holders"
 						buttonText="Claim"
 						onClick={ () => {} }
+						enabled={magEligible()}
 					/>
 				</div>
 				<div className="grid -g-cols-3">
-					{ products.map( ( p, i ) => <ProductItem key={ i } product={ p } /> ) }
+					{ products.map( ( p, i ) => <ProductItem key={ i } product={ p } discountEnabled={productsEligible()} /> ) }
 				</div>
 			</section>
 			<div className="overlay-tn"/>

@@ -5,7 +5,7 @@ import clsx from 'clsx';
 // App
 import { Page } from 'ui/app';
 import { Link, Slider, Button } from 'ui/components';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 //	Styles
 import styles from "./car-industry-view.module.scss";
@@ -22,39 +22,17 @@ export default function CarIndustryView() {
 		ogTitle: 'Car Industry Demo | TokenScript',
 	};
 
+	const [selectedTokens, setSelectedTokens] = useState();
+
 	useEffect(()=> {
 
 		const init = async () => {
 
 			const { Client } = (await import("@tokenscript/token-negotiator"));
 
-			let negotiator = new Client({
+			window.negotiator = new Client({
 				type: 'active',
 				issuers: [
-					{
-						collectionID: 'rinkeby-punk',
-						contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656',
-						chain: 'rinkeby',
-						openSeaSlug: 'rinkeby-punk'
-					},
-					{
-						collectionID: 'women-tribe',
-						contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656',
-						chain: 'rinkeby',
-						openSeaSlug: 'stl-rnd-women-tribe-nfts'
-					},
-					{
-						collectionID: 'zed',
-						contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656',
-						chain: 'rinkeby',
-						openSeaSlug: 'stl-rnd-zed'
-					},
-					{
-						collectionID: 'stl-rnd-bayc-derivatives',
-						contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656',
-						chain: 'rinkeby',
-						openSeaSlug: 'stl-rnd-bayc-derivatives'
-					},
 					{
 						collectionID: 'stl-rnd-riot-racers',
 						contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656',
@@ -74,11 +52,25 @@ export default function CarIndustryView() {
 				}
 			});
 
-			negotiator.negotiate();
+			window.negotiator.negotiate();
+
+			window.negotiator.on("tokens-selected", (data) => {
+				setSelectedTokens({...data.selectedTokens});
+			});
 		};
 
-		init();
+		if (document.getElementsByClassName("overlay-tn")[0].childElementCount === 0)
+			init();
 	});
+
+	function isEligible(){
+
+		let tokens = selectedTokens;
+
+		if (!tokens) return false;
+
+		return (tokens["stl-rnd-riot-racers"] && tokens["stl-rnd-riot-racers"].tokens.length > 0);
+	}
 
 	return (
 		<Page className={ styles[ 'v-car-industry'] } meta={ meta }>
@@ -95,7 +87,7 @@ export default function CarIndustryView() {
 									<span className="f5 -f-light -va-center -a-center -my0">Test Drive:</span>
 									Test Drive The New BMW
 								</h2>
-								<p className="f5 -f-light -color-white">Coming Soon...</p>
+								{ isEligible() ? <Button>Hire Today</Button> : <p className="f5 -f-light -color-white">Coming Soon...</p>}
 							</div>
 						</div>
 						<div className={ styles[ 'v-car-industry_slide'] } style={{ backgroundImage: 'url("/images/car-industry-1.jpg")' }}>

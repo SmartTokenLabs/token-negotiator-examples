@@ -2,7 +2,7 @@
 // App
 import { Page } from 'ui/app';
 import { Link, ProductItem, Banner } from 'ui/components';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 //
 //	TokenScript / Pages / Demo / Music & Events
@@ -16,14 +16,15 @@ export default function MusicEvents() {
 	};
 
 	const products = [
-		{ title: 'Ed Sheran Concert Live in Glasgow Music Centre', price: 69.90, image: { src: '/images/music-product-1.jpg', alt: '' } },
-		{ title: 'Metallica live in Amsterdam Live Concert', price: 69.90, image: { src: '/images/music-product-2.jpg', alt: '' } },
-		{ title: 'The Dip and myth of her Live in Sydney', price: 69.90, image: { src: '/images/music-product-3.jpg', alt: '' } },
-		{ title: 'Ed Sheran Concert Live in Glasgow Music Centre', price: 69.90, image: { src: '/images/music-product-1.jpg', alt: '' } },
-		{ title: 'Metallica live in Amsterdam Live Concert', price: 69.90, image: { src: '/images/music-product-2.jpg', alt: '' } },
-		{ title: 'The Dip and myth of her Live in Sydney', price: 69.90, image: { src: '/images/music-product-3.jpg', alt: '' } },
+		{ title: 'Ed Sheran Concert Live in Glasgow Music Centre', price: 69.90, discountPrice: 49.90, image: { src: '/images/music-product-1.jpg', alt: '' } },
+		{ title: 'Metallica live in Amsterdam Live Concert', price: 69.90, discountPrice: 49.90, image: { src: '/images/music-product-2.jpg', alt: '' } },
+		{ title: 'The Dip and myth of her Live in Sydney', price: 69.90, discountPrice: 49.90, image: { src: '/images/music-product-3.jpg', alt: '' } },
+		{ title: 'Ed Sheran Concert Live in Glasgow Music Centre', price: 69.90, discountPrice: 49.90, image: { src: '/images/music-product-1.jpg', alt: '' } },
+		{ title: 'Metallica live in Amsterdam Live Concert', price: 69.90, discountPrice: 49.90, image: { src: '/images/music-product-2.jpg', alt: '' } },
+		{ title: 'The Dip and myth of her Live in Sydney', price: 69.90, discountPrice: 49.90, image: { src: '/images/music-product-3.jpg', alt: '' } },
 	];
 
+	const [selectedTokens, setSelectedTokens] = useState();
 
 	useEffect(()=> {
 
@@ -31,21 +32,9 @@ export default function MusicEvents() {
 
 			const { Client } = (await import("@tokenscript/token-negotiator"));
 
-			let negotiator = new Client({
+			window.negotiator = new Client({
 				type: 'active',
 				issuers: [
-					{
-						collectionID: 'rinkeby-punk',
-						contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656',
-						chain: 'rinkeby',
-						openSeaSlug: 'rinkeby-punk'
-					},
-					{
-						collectionID: 'women-tribe',
-						contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656',
-						chain: 'rinkeby',
-						openSeaSlug: 'stl-rnd-women-tribe-nfts'
-					},
 					{
 						collectionID: 'zed',
 						contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656',
@@ -57,12 +46,6 @@ export default function MusicEvents() {
 						contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656',
 						chain: 'rinkeby',
 						openSeaSlug: 'stl-rnd-bayc-derivatives'
-					},
-					{
-						collectionID: 'stl-rnd-riot-racers',
-						contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656',
-						chain: 'rinkeby',
-						openSeaSlug: 'stl-rnd-riot-racers'
 					}
 				],
 				options: {
@@ -77,11 +60,34 @@ export default function MusicEvents() {
 				}
 			});
 
-			negotiator.negotiate();
+			window.negotiator.negotiate();
+
+			window.negotiator.on("tokens-selected", (data) => {
+				setSelectedTokens({...data.selectedTokens});
+			});
 		};
 
-		init();
+		if (document.getElementsByClassName("overlay-tn")[0].childElementCount === 0)
+			init();
 	});
+
+	function discountEligible(){
+
+		let tokens = selectedTokens;
+
+		if (!tokens) return false;
+
+		return (tokens["zed"] && tokens["zed"].tokens.length > 0) || vipEligible();
+	}
+
+	function vipEligible(){
+
+		let tokens = selectedTokens;
+
+		if (!tokens) return false;
+
+		return tokens["stl-rnd-bayc-derivatives"] && tokens["stl-rnd-bayc-derivatives"].tokens.length > 0;
+	}
 
 	return (
 		<Page meta={ meta }>
@@ -100,11 +106,12 @@ export default function MusicEvents() {
 						fineprint="Available for exclusive to BAYC Derivative holders"
 						buttonText="Claim"
 						code="XYZ15"
+						enabled={vipEligible()}
 						onClick={ () => {} }
 					/>
 				</div>
 				<div className="grid -g-cols-3">
-					{ products.map( ( p, i ) => <ProductItem key={ i } product={ p } /> ) }
+					{ products.map( ( p, i ) => <ProductItem key={ i } product={ p } discountEnabled={discountEligible()} /> ) }
 				</div>
 			</section>
 			<div className="overlay-tn"/>

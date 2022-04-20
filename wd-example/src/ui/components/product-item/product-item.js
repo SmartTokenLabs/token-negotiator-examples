@@ -16,7 +16,7 @@ import styles from "./product-item.module.scss";
 //
 
 
-export default function ProductItem({ product, className, onClick }) {
+export default function ProductItem({ product, className, onClick, discountEnabled }) {
 	const [ success, setSuccess ] = useState( false );
 
 	const handleAddToCart = () => {
@@ -35,9 +35,15 @@ export default function ProductItem({ product, className, onClick }) {
 				{ product?.title && (
 					<h2 className="f7 -f-regular -f-family-rubik">{ product.title }</h2>
 				)}
-				{ product?.price && (
-					<p className="f5 -f-extra-bold">${ product.price.toFixed(2) }</p>
-				)}
+				<div className={ styles[ 'c-product-item_priceBox' ] }>
+					{ product?.price && (
+						<p className="f5 -f-extra-bold" style={{textDecoration: discountEnabled ? "line-through 2px" : "none", display: "inline-block"}}>${ product.price.toFixed(2) }</p>
+					)}
+					{ discountEnabled && product?.discountPrice && (
+						<p className="f5 -f-extra-bold discountPrice" style={{display: "inline-block"}}>${ product.discountPrice.toFixed(2) }</p>
+					)}
+					<small style={{display: "block"}}>{discountEnabled && product?.discountPrice ? "Exclusive discount for NFT holders!" : "Discounts available for NFT holders"}</small>
+				</div>
 			</div>
 			<Button className={ clsx( '-mxa', success ? '-style-green' : '-style-outline' ) } onClick={ handleAddToCart }>
 				{ success ? 'Added' : 'Add to Cart' }
