@@ -2,7 +2,7 @@
 // App
 import { Page } from 'ui/app';
 import { Link, ProductItem, Banner } from 'ui/components';
-import { useEffect, useState } from "react";
+import { useStore } from "src/base/state";
 
 //
 //	TokenScript / Pages / Demo / Music & Events
@@ -24,52 +24,7 @@ export default function MusicEvents() {
 		{ title: 'The Dip and myth of her Live in Sydney', price: 69.90, discountPrice: 49.90, image: { src: '/images/music-product-3.jpg', alt: '' } },
 	];
 
-	const [selectedTokens, setSelectedTokens] = useState();
-
-	useEffect(()=> {
-
-		const init = async () => {
-
-			const { Client } = (await import("@tokenscript/token-negotiator"));
-
-			window.negotiator = new Client({
-				type: 'active',
-				issuers: [
-					{
-						collectionID: 'zed',
-						contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656',
-						chain: 'rinkeby',
-						openSeaSlug: 'stl-rnd-zed'
-					},
-					{
-						collectionID: 'stl-rnd-bayc-derivatives',
-						contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656',
-						chain: 'rinkeby',
-						openSeaSlug: 'stl-rnd-bayc-derivatives'
-					}
-				],
-				options: {
-					overlay: {
-						openingHeading: "Open a new world of discounts available with your tokens.",
-						issuerHeading: "Get discount with Ticket",
-						repeatAction: "try again",
-						theme: "light",
-						position: "bottom-right"
-					},
-					filters: {},
-				}
-			});
-
-			window.negotiator.negotiate();
-
-			window.negotiator.on("tokens-selected", (data) => {
-				setSelectedTokens({...data.selectedTokens});
-			});
-		};
-
-		if (document.getElementsByClassName("overlay-tn")[0].childElementCount === 0)
-			init();
-	});
+	const selectedTokens = useStore( s => s.selectedTokens );
 
 	function discountEligible(){
 
@@ -107,14 +62,15 @@ export default function MusicEvents() {
 						buttonText="Claim"
 						code="XYZ15"
 						enabled={vipEligible()}
+						selectedTokens={selectedTokens}
+						authTokens={["stl-rnd-bayc-derivatives"]}
 						onClick={ () => {} }
 					/>
 				</div>
 				<div className="grid -g-cols-3">
-					{ products.map( ( p, i ) => <ProductItem key={ i } product={ p } discountEnabled={discountEligible()} /> ) }
+					{ products.map( ( p, i ) => <ProductItem key={ i } product={ p } discountEnabled={discountEligible()} selectedTokens={selectedTokens} authTokens={["zed", "stl-rnd-bayc-derivatives"]} /> ) }
 				</div>
 			</section>
-			<div className="overlay-tn"/>
 		</Page>
 	);
 };

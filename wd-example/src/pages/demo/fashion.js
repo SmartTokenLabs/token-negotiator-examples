@@ -2,7 +2,7 @@
 // App
 import { Page } from 'ui/app';
 import { Link, ProductItem, Banner } from 'ui/components';
-import { useEffect, useState } from "react";
+import { useStore } from "src/base/state";
 
 
 //
@@ -25,52 +25,7 @@ export default function Fashion() {
 		{ title: 'Long sleeve blouse with pocket detail in black', price: 69.90, discountPrice: 49.90, image: { src: '/images/fashion-product-3.jpg', alt: '' } },
 	];
 
-	const [selectedTokens, setSelectedTokens] = useState();
-
-	useEffect(()=> {
-
-		const init = async () => {
-
-			const { Client } = (await import("@tokenscript/token-negotiator"));
-
-			window.negotiator = new Client({
-				type: 'active',
-				issuers: [
-					{
-						collectionID: 'rinkeby-punk',
-						contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656',
-						chain: 'rinkeby',
-						openSeaSlug: 'rinkeby-punk'
-					},
-					{
-						collectionID: 'women-tribe',
-						contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656',
-						chain: 'rinkeby',
-						openSeaSlug: 'stl-rnd-women-tribe-nfts'
-					}
-				],
-				options: {
-					overlay: {
-						openingHeading: "Open a new world of discounts available with your tokens.",
-						issuerHeading: "Get discount with Ticket",
-						repeatAction: "try again",
-						theme: "light",
-						position: "bottom-right"
-					},
-					filters: {},
-				}
-			});
-
-			window.negotiator.negotiate();
-
-			window.negotiator.on("tokens-selected", (data) => {
-				setSelectedTokens({...data.selectedTokens});
-			});
-		};
-
-		if (document.getElementsByClassName("overlay-tn")[0].childElementCount === 0)
-			init();
-	});
+	const selectedTokens = useStore( s => s.selectedTokens );
 
 	function magEligible(){
 
@@ -78,7 +33,7 @@ export default function Fashion() {
 
 		if (!tokens) return false;
 
-		return (tokens["rinkeby-punk"] && tokens["rinkeby-punk"].tokens.length > 0) &&
+		return (tokens["stl-rnd-bayc-derivatives"] && tokens["stl-rnd-bayc-derivatives"].tokens.length > 0) &&
 				(tokens["women-tribe"] && tokens["women-tribe"].tokens.length > 0);
 	}
 
@@ -88,7 +43,7 @@ export default function Fashion() {
 
 		if (!tokens) return false;
 
-		return (tokens["rinkeby-punk"] && tokens["rinkeby-punk"].tokens.length > 0) ||
+		return (tokens["stl-rnd-bayc-derivatives"] && tokens["stl-rnd-bayc-derivatives"].tokens.length > 0) ||
 			(tokens["women-tribe"] && tokens["women-tribe"].tokens.length > 0);
 	}
 
@@ -110,13 +65,19 @@ export default function Fashion() {
 						buttonText="Claim"
 						onClick={ () => {} }
 						enabled={magEligible()}
+						selectedTokens={selectedTokens}
+						authTokens={["stl-rnd-bayc-derivatives"]}
 					/>
 				</div>
 				<div className="grid -g-cols-3">
-					{ products.map( ( p, i ) => <ProductItem key={ i } product={ p } discountEnabled={productsEligible()} /> ) }
+					{ products.map( ( p, i ) =>
+						<ProductItem key={ i } product={ p }
+									 discountEnabled={productsEligible()}
+									 selectedTokens={selectedTokens}
+									 authTokens={["stl-rnd-bayc-derivatives", "rinkeby-punk"]} /> )
+					}
 				</div>
 			</section>
-			<div className="overlay-tn"/>
 		</Page>
 	);
 };

@@ -16,13 +16,16 @@ import styles from "./banner.module.scss";
 //
 
 
-export default function Banner({ className, theme, image, headline, text, code, fineprint, children, onClick, enabled}) {
-	const [ claimed, setClaimed, selectedTokens ] = useState( false );
+export default function Banner({ className, theme, image, headline, text, code, fineprint, children, onClick, enabled, selectedTokens, authTokens}) {
+	const [ claimed, setClaimed ] = useState( false );
 
 	const handleOnClick = async () => {
 		// TODO: Actually pass the tokens through component
 		try {
-			await window.negotiator.authenticate({issuer: "zed", unsignedToken: {name:"some token", desc: "a really cool token"}});
+			await window.negotiator.authenticate({
+				issuer: authTokens[0],
+				unsignedToken: {name:"some token", desc: "a really cool token"}
+			});
 			setClaimed( true );
 		} catch (e){
 			alert(e.message);

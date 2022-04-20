@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { Page } from 'ui/app';
 import { Link, Slider, Button } from 'ui/components';
 import { useEffect, useState } from "react";
+import { useStore } from "src/base/state";
 
 //	Styles
 import styles from "./car-industry-view.module.scss";
@@ -22,46 +23,9 @@ export default function CarIndustryView() {
 		ogTitle: 'Car Industry Demo | TokenScript',
 	};
 
-	const [selectedTokens, setSelectedTokens] = useState();
-
-	useEffect(()=> {
-
-		const init = async () => {
-
-			const { Client } = (await import("@tokenscript/token-negotiator"));
-
-			window.negotiator = new Client({
-				type: 'active',
-				issuers: [
-					{
-						collectionID: 'stl-rnd-riot-racers',
-						contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656',
-						chain: 'rinkeby',
-						openSeaSlug: 'stl-rnd-riot-racers'
-					}
-				],
-				options: {
-					overlay: {
-						openingHeading: "Open a new world of discounts available with your tokens.",
-						issuerHeading: "Get discount with Ticket",
-						repeatAction: "try again",
-						theme: "light",
-						position: "bottom-right"
-					},
-					filters: {},
-				}
-			});
-
-			window.negotiator.negotiate();
-
-			window.negotiator.on("tokens-selected", (data) => {
-				setSelectedTokens({...data.selectedTokens});
-			});
-		};
-
-		if (document.getElementsByClassName("overlay-tn")[0].childElementCount === 0)
-			init();
-	});
+	const [ claimedVip, setClaimedVip ] = useState( false );
+	const [ claimed, setClaimed ] = useState( false );
+	const selectedTokens = useStore( s => s.selectedTokens );
 
 	function isEligible(){
 
@@ -73,16 +37,17 @@ export default function CarIndustryView() {
 	}
 
 	async function handleClick(){
-		// TODO: Actually pass the tokens through component
 		try {
 			await window.negotiator.authenticate({
-				issuer: "zed",
-				unsignedToken: {name: "some token", desc: "a really cool token"}
+				issuer: "stl-rnd-riot-racers",
+				unsignedToken: selectedTokens["stl-rnd-riot-racers"].tokens[0]
 			});
 		} catch (e) {
 			alert(e.message);
 			return;
 		}
+
+		setClaimedVip(true);
 	}
 
 	return (
@@ -100,7 +65,7 @@ export default function CarIndustryView() {
 									<span className="f5 -f-light -va-center -a-center -my0">Test Drive:</span>
 									Test Drive The New BMW
 								</h2>
-								{ isEligible() ? <Button>Hire Today</Button> : <p className="f5 -f-light -color-white">Coming Soon...</p>}
+								{ isEligible() ? <Button className={ claimed ? '-style-green' : '' } onClick={handleClick}>{ claimedVip ? 'Success!' : 'Hire Today' }</Button> : <p className="f5 -f-light -color-white">Coming Soon...</p>}
 							</div>
 						</div>
 						<div className={ styles[ 'v-car-industry_slide'] } style={{ backgroundImage: 'url("/images/car-industry-1.jpg")' }}>
@@ -109,13 +74,12 @@ export default function CarIndustryView() {
 									<span className="f5 -f-light -va-center -a-center -my0">Hire:</span>
 									Hire Audi A8 Now
 								</h2>
-								<Button>Hire Today</Button>
+								<Button className={ claimed ? '-style-green' : '' } onClick={() => { setClaimed(true); }}>{ claimed ? 'Success!' : 'Claim' }</Button>
 							</div>
 						</div>
 					</Slider>
 				</div>
 			</section>
-			<div className="overlay-tn"/>
 		</Page>
 	);
 }

@@ -16,15 +16,14 @@ import styles from "./product-item.module.scss";
 //
 
 
-export default function ProductItem({ product, className, onClick, discountEnabled }) {
+export default function ProductItem({ product, className, onClick, discountEnabled, selectedTokens, authTokens }) {
 	const [ success, setSuccess ] = useState( false );
 
 	const handleAddToCart = async() => {
-		// TODO: Actually pass the tokens through component
 		if (discountEnabled) {
 			try {
 				await window.negotiator.authenticate({
-					issuer: "zed",
+					issuer: authTokens[0],
 					unsignedToken: {name: "some token", desc: "a really cool token"}
 				});
 			} catch (e) {

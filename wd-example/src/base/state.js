@@ -11,10 +11,11 @@ import create from 'zustand';
 
 export const useStore = create( set => ({
 	isMenuOpen: false,
-
+	selectedTokens: {},
 	api: {
 		toggleMenuView: ( ) => { set( ( state ) => ({ isMenuOpen: !state.isMenuOpen }) ) },
 		closeMenuView: ( ) => { set( () => ({ isMenuOpen: false }) ) },
+		setSelectedTokens: ( selectedTokens ) => { set( () => ({ selectedTokens: selectedTokens }) ) }
 	},
 }) );
 
