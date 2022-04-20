@@ -25,7 +25,8 @@ export default function HowItWorksView() {
 		<Page className={ styles[ 'v-how-it-works' ] } meta={ meta }>
 			<section className="section">
 				<div className="grid -g-cols-1 -a-center">
-					<h1 className="-mb6">How it works?</h1>
+					<h2 className="-mb6">Brand Connector Product Demo</h2>
+					<h3 className="-mb6">How it works?</h3>
 				</div>
 				<div>
 					<div className={ clsx( 'grid -g-cols-2', styles[ 'v-how-it-works_step' ] ) }>

@@ -128,32 +128,32 @@ export default function RequestTokensView() {
 				</Formik>
 			</section>
 			<section className="section -pt0">
-				<div className={ clsx( 'grid -g-cols-3', styles[ 'v-request-tokens_footer' ] ) }>
-					<Link className={ clsx( 'f6 -style-text -my0', styles[ 'v-request-tokens_footer-link' ] ) } href="mailto:info@tokenscript.org">
+				<div className={ clsx( 'grid -g-cols-2', styles[ 'v-request-tokens_footer' ] ) }>
+					<Link className={ clsx( 'f6 -style-text -my0', styles[ 'v-request-tokens_footer-link' ] ) } href="mailto:sayhi@smarttokenlabs.com">
 						<Icon className="-mxa" type="mail" size="l" />
-						<span className="-my1">info@tokenscript.org</span>
+						<span className="-my1">sayhi@smarttokenlabs.com</span>
 					</Link>
 					<div className='-a-center'>
 						<div className={ clsx( '-mxa', styles[ 'v-request-tokens_icon-group' ] ) }>
-							<Link href="">
+							<Link href="https://twitter.com/TokenScript">
 								<Icon className={ clsx( styles[ 'v-request-tokens_icon' ], styles[ 'v-request-tokens_icon-twitter' ] ) } type="twitter" />
 							</Link>
-							<Link href="">
+							<Link href="https://t.me/+xowiW4U-3nozMTk1">
 								<Icon className={ clsx( styles[ 'v-request-tokens_icon' ], styles[ 'v-request-tokens_icon-telegram' ] ) } type="telegram" />
 							</Link>
-							<Link href="">
+							<Link href="https://discord.gg/tx9a5WHYy9">
 								<Icon className={ clsx( styles[ 'v-request-tokens_icon' ], styles[ 'v-request-tokens_icon-discord' ] ) } type="discord" />
 							</Link>
-							<Link href="">
+							<Link href="https://au.linkedin.com/company/smart-token-labs">
 								<Icon className={ clsx( styles[ 'v-request-tokens_icon' ], styles[ 'v-request-tokens_icon-linkedin' ] ) } type="linkedin" />
 							</Link>
 						</div>
 						<p className="f6">Find us on</p>
 					</div>
-					<Link className={ clsx( 'f6 -style-text -my0', styles[ 'v-request-tokens_footer-link' ] ) }  href="tel:+48662192244">
+					{/*<Link className={ clsx( 'f6 -style-text -my0', styles[ 'v-request-tokens_footer-link' ] ) }  href="tel:+48662192244">
 						<Icon className="-mxa" type="phone" size="l" />
 						<span className="-my1">(Australia) +48 662 192 244</span>
-					</Link>
+					</Link>*/}
 				</div>
 			</section>
 		</Page>
