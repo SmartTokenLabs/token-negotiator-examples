@@ -1,9 +1,5 @@
-import { pinJSONToIPFS } from './pinata.js'
-//import 'dotenv/config';
 
-const alchemyKey = process.env.NEXT_PUBLIC_ALCHEMY_KEY;
-const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
-const web3 = createAlchemyWeb3(alchemyKey);
+import Web3 from "web3";
 
 export const safeMint = async ({
   sendTo,
@@ -13,41 +9,42 @@ export const safeMint = async ({
   name,
   imageURI,
   walletAddress,
-  description
+  description,
+  tokenUri
 }) => {
-  
-  if (imageURI.trim() === "" || (name.trim() === "")) {
-    return {
-      success: false,
-      status: "❗Please make sure all fields are completed before minting.",
+
+  /*if (tokenUri == null) {
+    if (imageURI.trim() === "" || (name.trim() === "")) {
+      return {
+        success: false,
+        status: "❗Please make sure all fields are completed before minting.",
+      }
     }
-  }
 
-  const metadata = new Object();
-  metadata.name = name;
-  metadata.image = imageURI;
-  metadata.description = description;
+    const metadata = new Object();
+    metadata.name = name;
+    metadata.image = imageURI;
+    metadata.description = description;
 
-  const pinataResponse = await pinJSONToIPFS(metadata);
+    const pinataResponse = await pinJSONToIPFS(metadata);
 
-  if (!pinataResponse.success) {
-    return {
-      success: false,
-      status: "😢 Something went wrong while uploading your tokenURI.",
+    if (!pinataResponse.success) {
+      return {
+        success: false,
+        status: "😢 Something went wrong while uploading your tokenURI.",
+      }
     }
-  }
 
-  const tokenURI = pinataResponse.pinataUrl;
+    tokenUri = pinataResponse.pinataUrl;
+  }*/
+  const web3 = new Web3(window.ethereum);
 
   window.contract = await new web3.eth.Contract(abi, contract);
-
-  console.log("Send to:" + sendTo);
-  console.log("Token URI: " + tokenURI);
 
   const transactionParameters = {
     to: contract,
     from: walletAddress,
-    'data': window.contract.methods.safeMint(sendTo, tokenURI).encodeABI()
+    'data': window.contract.methods.safeMint(sendTo, tokenUri).encodeABI()
   };
 
   //sign the transaction via Metamask

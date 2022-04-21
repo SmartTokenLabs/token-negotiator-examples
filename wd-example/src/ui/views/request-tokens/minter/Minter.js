@@ -48,7 +48,8 @@ const Minter = () => {
         chain: chain,
         name: collectionItem.name,
         imageURI: collectionItem.ipfs,
-        description: collectionItem.description
+        description: collectionItem.description,
+        tokenUri: collectionItem.metaUrl
       });
 
       setStatus(status);
