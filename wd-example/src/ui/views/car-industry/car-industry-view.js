@@ -55,7 +55,7 @@ export default function CarIndustryView() {
 			<section className="section">
 				<div className="grid -g-cols-1 -a-center">
 					<h1>Car Industry</h1>
-					<p className="-mt0 -mb6">Use “STL RnD Riot Racers” tokens. Don’t have them? <Link href="/request-tokens">Request</Link></p>
+					<p className="-mt0 -mb6">Use “STLRiotRacers” tokens. Don’t have them? <Link href="/request-tokens">Request</Link></p>
 				</div>
 				<div className="grid -g-cols-1">
 					<Slider opacityTo={ 0.25 } restMargin={ 48 }>

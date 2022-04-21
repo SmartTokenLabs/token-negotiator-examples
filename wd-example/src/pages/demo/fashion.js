@@ -52,7 +52,7 @@ export default function Fashion() {
 			<section className="section">
 				<div className="grid -g-cols-1 -a-center">
 					<h1>Fashion Store</h1>
-					<p className="-mt0 -mb6">Use “STL RnD Women Tribe NFTs” or ”Rinkby Punk” tokens. Don’t have them? <Link href="/request-tokens">Request</Link></p>
+					<p className="-mt0 -mb6">Use “STLWomenTribe” or ”STLExpansionPunk” tokens. Don’t have them? <Link href="/request-tokens">Request</Link></p>
 				</div>
 				<div className="grid -g-cols-1">
 					<Banner

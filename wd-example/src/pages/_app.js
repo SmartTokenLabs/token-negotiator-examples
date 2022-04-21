@@ -32,38 +32,38 @@ export default function App({ Component, pageProps }) {
 						collectionID: 'rinkeby-punk',
 						contract: '0x6d3495B5d83f6479Ab3023784f52B11AC3794e2F',
 						chain: 'rinkeby',
-						openSeaSlug: 'rinkeby-punk'
+						//openSeaSlug: 'rinkeby-punk'
 					},
 					{
 						collectionID: 'women-tribe',
 						contract: '0xDbaCB1C25d849321727534C1BB2bbd962272eB13',
 						chain: 'rinkeby',
-						openSeaSlug: 'stl-rnd-women-tribe-nfts'
+						//openSeaSlug: 'stl-rnd-women-tribe-nfts'
 					},
 					{
 						collectionID: 'zed',
 						contract: '0x8E3De6062c7041d483Cc1BE2654728f6956F7965',
 						chain: 'rinkeby',
-						openSeaSlug: 'stl-rnd-zed'
+						//openSeaSlug: 'stl-rnd-zed'
 					},
 					{
 						collectionID: 'stl-rnd-bayc-derivatives',
 						contract: '0x80A679106f24684BB4c92828ACce5e92d2AfFcad',
 						chain: 'rinkeby',
-						openSeaSlug: 'stl-rnd-bayc-derivatives'
+						//openSeaSlug: 'stl-rnd-bayc-derivatives'
 					},
 
 					{
 						collectionID: 'stl-rnd-riot-racers',
 						contract: '0x399653F4212bf3EA3AF9bCE45a294AB462f22436',
 						chain: 'rinkeby',
-						openSeaSlug: 'stl-rnd-riot-racers'
+						//openSeaSlug: 'stl-rnd-riot-racers'
 					}
 				],
 				options: {
 					overlay: {
 						openingHeading: "Open a new world of discounts available with your tokens.",
-						issuerHeading: "Get discount with Ticket",
+						issuerHeading: "Get discounts with tokens",
 						repeatAction: "try again",
 						theme: "light",
 						position: "bottom-right"
