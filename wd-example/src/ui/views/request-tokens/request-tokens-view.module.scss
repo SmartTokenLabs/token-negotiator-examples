@@ -83,3 +83,183 @@
 		}
 	}
 }
+
+// Minter styles
+.v-request-tokens {
+
+	:global .disclaimer, :global .status {
+		text-align: center;
+	}
+
+	:global .status {
+		margin: 20px;
+		word-wrap: break-word;
+		border-bottom: 1px solid;
+		padding: 20px;
+	}
+
+	:global .disclaimer {
+		min-height: 60px;
+		font-size: 11px;
+		color: black;
+	}
+
+	:global input:focus {
+		outline: none;
+		border-color: rgba(4, 4, 5, 0.4);
+	}
+
+	:global .uploadFile {
+		border: 4px dashed rgba(4, 4, 5, 0.1);
+		border-radius: 16px;
+		text-align: center;
+		padding: 32px 60px;
+	}
+
+	:global #walletButton {
+		text-align: right;
+		float:right;
+		margin-bottom: 50px;
+		line-height: 16px;
+		border: 1px solid #3258d5;
+		padding: 12px;
+		background: white;
+		cursor: pointer;
+	}
+
+	:global button {
+		border: 1px solid #3258d5;
+		color: #3258d5;
+		padding: 12px 32px;
+		width: 100px;
+		margin: 20px 0 0px 40px;
+		border-radius: 4px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		cursor: pointer;
+		transition: all .4s;
+	}
+
+	:global button:hover {
+		background-color: #213cab;
+	}
+
+	:global .collection-container {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		flex-direction: row;
+	}
+
+	:global .collection-container .nft-container {
+		margin: 20px;
+		width: 180px;
+	}
+
+	:global .collection-container .nft-container img {
+		display: block;
+		width: 180px;
+		border-radius: 5px;
+	}
+
+	:global .input-container {
+		display: flex;
+		justify-content: center;
+		margin: 40px 0 40px 0;
+	}
+
+	:global .text-center {
+		text-align: center;
+		display: inline-block;
+	}
+
+	:global select, :global input {
+		padding: 12px;
+		cursor: pointer;
+		border: 1px solid #3258d5;
+		border-radius: 2px;
+		margin: 0 20px;
+	}
+
+	:global select {
+		-webkit-appearance: none !important;
+		-moz-appearance: none !important;
+		background-color: #fafafa;
+		height: 45px;
+		width: 100%;
+		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAUCAMAAACtdX32AAAAdVBMVEUAAAD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhMdQaAAAAJ3RSTlMAAAECAwQGBwsOFBwkJTg5RUZ4eYCHkJefpaytrsXGy8zW3+Do8vNn0bsyAAAAYElEQVR42tXROwJDQAAA0Ymw1p9kiT+L5P5HVEi3qJn2lcPjtIuzUIJ/rhIGy762N3XaThqMN1ZPALsZPEzG1x8LrFL77DHBnEMxBewz0fJ6LyFHTPL7xhwzWYrJ9z22AqmQBV757MHfAAAAAElFTkSuQmCC);
+		background-position: 100%;
+		background-repeat: no-repeat;
+		border: 1px solid #ccc;
+		padding: 0.5rem;
+		border-radius: 0;
+	}
+
+	:global .input-container {
+		display: flex;
+		flex-direction: row;
+	}
+
+	:global .modal {
+		display: none; /* Hidden by default */
+		position: fixed; /* Stay in place */
+		z-index: 1; /* Sit on top */
+		padding-top: 100px; /* Location of the box */
+		left: 0;
+		top: 0;
+		width: 100%; /* Full width */
+		height: 100%; /* Full height */
+		overflow: auto; /* Enable scroll if needed */
+		background-color: rgb(0,0,0); /* Fallback color */
+		background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	}
+
+	/* Modal Content */
+	:global .modal-content {
+		background-color: #fefefe;
+		margin: auto;
+		padding: 20px;
+		border: 1px solid #888;
+		width: 80%;
+	}
+
+	/* The Close Button */
+	:global .close {
+		color: #aaaaaa;
+		float: right;
+		font-size: 28px;
+		font-weight: bold;
+	}
+
+	:global .close:hover,
+	:global .close:focus {
+		color: #000;
+		text-decoration: none;
+		cursor: pointer;
+	}
+
+	:global .alert {
+		margin: 20px 0;
+		padding: 20px;
+		background-color: #f44336;
+		color: white;
+		display: inline-block;
+	}
+
+	:global .closebtn {
+		margin-left: 15px;
+		color: white;
+		font-weight: bold;
+		float: right;
+		font-size: 22px;
+		line-height: 20px;
+		cursor: pointer;
+		transition: 0.3s;
+	}
+
+	:global .closebtn:hover {
+		color: black;
+	}
+}

@@ -20,7 +20,9 @@
 		"react-dom": "17.0.2",
 		"yup": "^0.32.11",
 		"zustand": "^3.6.5",
-		"@tokenscript/token-negotiator": "^1.0.13-alpha-wd"
+		"@tokenscript/token-negotiator": "^1.0.13-alpha-wd",
+		"@alch/alchemy-web3": "^1.0.1",
+		"axios": "^0.21.4"
 	},
 	"devDependencies": {
 		"dotenv": "^16.0.0",
