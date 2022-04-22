@@ -15,14 +15,14 @@ export default [
       {
         metaUrl: "https://gateway.pinata.cloud/ipfs/QmQumKykjybk95oF5QdkbQ6pkao7uLKBjES1ZtqeHYLBme",
         ipfs: "https://gateway.pinata.cloud/ipfs/QmRAF2zPcy6jJfi3w5JicTs1sdLaqywutyiYkspdeFeNNy",
-        imagePath: "./nfts/BAYC_4-1.png",
+        imagePath: "/nfts/BAYC_4-1.png",
         name: "4-1",
         description: "stl demo nft"
       },
       {
         metaUrl: "https://gateway.pinata.cloud/ipfs/QmSi2PjWCeZ4VbiGf7yxruxySFMdbyWnVKCDdAHJd7wmMg",
         ipfs: "https://gateway.pinata.cloud/ipfs/QmSZqeAU5w1ynjgEisy765L84vBTH4QJJLJUXKb9S5NarY",
-        imagePath: "./nfts/BAYC_4-2.png",
+        imagePath: "/nfts/BAYC_4-2.png",
         name: "4-2",
         description: "stl demo nft"
       }
@@ -44,7 +44,7 @@ export default [
       {
         metaUrl: "https://gateway.pinata.cloud/ipfs/QmezFufvu59KkR4SJUeMf6EAhzZwsg3mJeGyztLhSL1z78",
         ipfs: "https://gateway.pinata.cloud/ipfs/QmfHSGwXhFsBjxTYDRo5aJNvmmAgjAYmihdNXsF7Zfc2jm",
-        imagePath: "./nfts/DriversRun.png",
+        imagePath: "/nfts/DriversRun.png",
         name: "Drivers Run",
         description: "stl demo nft"
       }
@@ -66,7 +66,7 @@ export default [
       {
         metaUrl: "https://gateway.pinata.cloud/ipfs/QmdN4aSrCV6rpmVDLPAvXVAMcQ7FMJGYB1kWDtikqzP1r9",
         ipfs: "https://gateway.pinata.cloud/ipfs/QmP9pamMk45LxPy6ziCxCYjq435JdyRmCE28Z9QtPAuCHz",
-        imagePath: "./nfts/Expansion_Punk_16461.png",
+        imagePath: "/nfts/Expansion_Punk_16461.png",
         name: "16461",
         description: "stl demo nft"
       }
@@ -88,14 +88,14 @@ export default [
       {
         metaUrl: "https://gateway.pinata.cloud/ipfs/QmcQVZJxAvVQ7obNPAjcpxEKrLV6ox9TgyrcnX5uXDzKMR",
         ipfs: "https://gateway.pinata.cloud/ipfs/QmUKcBhBWGDDTwfLKWGJyJ66XNKrTGNCitVAKK4aLcxiKK",
-        imagePath: "./nfts/Women_Tribe_1370.png",
+        imagePath: "/nfts/Women_Tribe_1370.png",
         name: "1370",
         description: "stl demo nft"
       },
       {
         metaUrl: "https://gateway.pinata.cloud/ipfs/QmXcau2Mhsbm3UQ8xeQq62ZrcSbFNzNk2ffE6x9KMs1crX",
         ipfs: "https://gateway.pinata.cloud/ipfs/QmUEPVYoB15D2MR1oi2gpHTce4v9FQ3jDMEBAFAKPsaq8V",
-        imagePath: "./nfts/Women_Tribe_5274.png",
+        imagePath: "/nfts/Women_Tribe_5274.png",
         name: "5274",
         description: "stl demo nft"
       }
@@ -117,14 +117,14 @@ export default [
       {
         metaUrl: "https://gateway.pinata.cloud/ipfs/QmXZ7HxVR5FpXKyjc9aWTdEe3DhQXMRA6FHkoWEorkp2j7",
         ipfs: "https://gateway.pinata.cloud/ipfs/Qmb5Q4QQSpPYkf6ta355ve3SYXZfbFMp2PiWPKGHiaUFhr",
-        imagePath: "./nfts/Octane.png",
+        imagePath: "/nfts/Octane.png",
         name: "Octane",
         description: "stl demo nft"
       },
       {
         metaUrl: "https://gateway.pinata.cloud/ipfs/QmStVYUYb3CtNV2BoQp8JiHqkR8sJWWzq1KvRKPUoTVBgv",
         ipfs: "https://gateway.pinata.cloud/ipfs/QmdFox1wfNvLSZAodKn1YKhRn3DzYjWpCKq2UncpV1fTSJ",
-        imagePath: "./nfts/AirBender.png",
+        imagePath: "/nfts/AirBender.png",
         name: "Air Bender",
         description: "stl demo nft"
       },

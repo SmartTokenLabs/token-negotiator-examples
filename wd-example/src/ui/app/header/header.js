@@ -54,7 +54,7 @@ const Header = React.memo( function Header({ className }) {
 						Car Industry
 					</Nav.Item>
 					<Nav.Item className={ clsx( '-style-text -mya', styles[ 'a-header_nav-button' ] ) }  href="/request-tokens" format="button">
-						Try Yourself
+						Get Tokens
 					</Nav.Item>
 				</Nav>
 			</div>

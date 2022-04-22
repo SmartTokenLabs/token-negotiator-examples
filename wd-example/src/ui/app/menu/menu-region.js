@@ -47,7 +47,7 @@ export default function MenuRegion() {
 		{ title: 'Fashion', href: '/demo/fashion', id: 'fashion' },
 		{ title: 'Music & Events', href: '/demo/music-and-events', id: 'musicEvents' },
 		{ title: 'Car Industry', href: '/demo/car-industry', id: 'carIndustry' },
-		{ title: 'Try Yourself', href: '/request-tokens', id: 'requestTokens' },
+		{ title: 'Get Tokens', href: '/request-tokens', id: 'requestTokens' },
 	];
 
 	return (

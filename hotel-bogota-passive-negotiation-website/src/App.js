@@ -8,6 +8,7 @@ import { Client } from '@tokenscript/token-negotiator';
 import './App.css';
 import config from '../../tokenConfig.json';
 import {updateTokenConfig} from "../../environment";
+import "@tokenscript/token-negotiator/dist/theme/style.css";
 
 // mock data e.g. server side hotel room price database
 const mockRoomData = [{ "type": "Deluxe Room", "price": 200000, "frequency": "per night", "image": "./hotel_3.jpg" }, { "type": "King Suite", "price": 320000, "frequency": "per night", "image": "./hotel_2.png" }, { "type": "Superior Deluxe Suite", "price": 250030, "frequency": "per night", "image": "./hotel_1.jpg" }]

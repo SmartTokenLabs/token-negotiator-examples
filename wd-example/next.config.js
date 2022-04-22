@@ -26,6 +26,11 @@ module.exports = phase => {
 	};
 
 	return {
+		images: {
+			loader: 'akamai',
+			path: '',
+		},
+		trailingSlash: true,
 		reactStrictMode: true,
 		env,
 		webpack: ( config, { webpack }) => {

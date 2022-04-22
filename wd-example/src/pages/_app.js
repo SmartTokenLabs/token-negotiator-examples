@@ -30,34 +30,39 @@ export default function App({ Component, pageProps }) {
 				issuers: [
 					{
 						collectionID: 'rinkeby-punk',
+						onChain: true,
 						contract: '0x6d3495B5d83f6479Ab3023784f52B11AC3794e2F',
 						chain: 'rinkeby',
-						//openSeaSlug: 'rinkeby-punk'
+						openSeaSlug: 'stl-expansion-punks-nfts-v2'
 					},
 					{
 						collectionID: 'women-tribe',
+						onChain: true,
 						contract: '0xDbaCB1C25d849321727534C1BB2bbd962272eB13',
 						chain: 'rinkeby',
-						//openSeaSlug: 'stl-rnd-women-tribe-nfts'
+						openSeaSlug: 'stl-woman-tribe-nfts-v2'
 					},
 					{
 						collectionID: 'zed',
+						onChain: true,
 						contract: '0x8E3De6062c7041d483Cc1BE2654728f6956F7965',
 						chain: 'rinkeby',
-						//openSeaSlug: 'stl-rnd-zed'
+						openSeaSlug: 'stl-zed-run-nfts-v2'
 					},
 					{
 						collectionID: 'stl-rnd-bayc-derivatives',
+						onChain: true,
 						contract: '0x80A679106f24684BB4c92828ACce5e92d2AfFcad',
 						chain: 'rinkeby',
-						//openSeaSlug: 'stl-rnd-bayc-derivatives'
+						openSeaSlug: 'stl-bayc-nfts-v2'
 					},
 
 					{
 						collectionID: 'stl-rnd-riot-racers',
+						onChain: true,
 						contract: '0x399653F4212bf3EA3AF9bCE45a294AB462f22436',
 						chain: 'rinkeby',
-						//openSeaSlug: 'stl-rnd-riot-racers'
+						openSeaSlug: 'stl-riot-racers-nfts-v3'
 					}
 				],
 				options: {
