@@ -117,9 +117,8 @@
 	}
 
 	:global #walletButton {
-		text-align: right;
-		float:right;
-		margin-bottom: 50px;
+		margin: 0 auto;
+		width: 200px;
 		line-height: 16px;
 		border: 1px solid #3258d5;
 		padding: 12px;

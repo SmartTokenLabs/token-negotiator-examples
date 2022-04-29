@@ -28,12 +28,33 @@ export default function App({ Component, pageProps }) {
 			window.negotiator = new Client({
 				type: 'active',
 				issuers: [
-					{
+					/*{
 						collectionID: 'rinkeby-punk',
 						onChain: true,
 						contract: '0x6d3495B5d83f6479Ab3023784f52B11AC3794e2F',
 						chain: 'rinkeby',
 						openSeaSlug: 'stl-expansion-punks-nfts-v2'
+					},*/
+					{
+						collectionID: 'stl-bayc',
+						onChain: true,
+						contract: '0x3d8a0fB32b0F586FdC10447c22F477979dc526ec',
+						chain: 'rinkeby',
+						openSeaSlug: 'stl-bayc'
+					},
+					{
+						collectionID: 'stl-mayc',
+						onChain: true,
+						contract: '0x70F6aCb098d57917CD46e8c647fa9c45800D29f2',
+						chain: 'rinkeby',
+						openSeaSlug: 'stl-mayc'
+					},
+					{
+						collectionID: 'stl-nifty',
+						onChain: true,
+						contract: '0x60E04A774aD2Eca9e4093445dA67e649bb267879',
+						chain: 'rinkeby',
+						openSeaSlug: 'stl-nifty'
 					},
 					{
 						collectionID: 'women-tribe',
@@ -49,14 +70,13 @@ export default function App({ Component, pageProps }) {
 						chain: 'rinkeby',
 						openSeaSlug: 'stl-zed-run-nfts-v2'
 					},
-					{
+					/*{
 						collectionID: 'stl-rnd-bayc-derivatives',
 						onChain: true,
 						contract: '0x80A679106f24684BB4c92828ACce5e92d2AfFcad',
 						chain: 'rinkeby',
 						openSeaSlug: 'stl-bayc-nfts-v2'
-					},
-
+					},*/
 					{
 						collectionID: 'stl-rnd-riot-racers',
 						onChain: true,

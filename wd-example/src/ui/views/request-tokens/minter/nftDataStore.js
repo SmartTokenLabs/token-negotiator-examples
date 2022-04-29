@@ -3,6 +3,93 @@ export default [
     collection: "BAYC",
     contracts: {
       "Rinkeby" : {
+        contract: "0x3d8a0fB32b0F586FdC10447c22F477979dc526ec",
+        abi: require('./abis/erc721-abi.json')
+      },
+      "Mumbai" : {
+        contract: "0x594CeCc147F8F27fF6d269AE23D9a0Ff27d979F4",
+        abi: require('./abis/erc721-abi.json')
+      }
+    },
+    list: [
+      {
+        metaUrl: "https://gateway.pinata.cloud/ipfs/QmeSjSinHpPnmXmspMjwiXyN6zS4E9zccariGR3jxcaWtq/1013",
+        ipfs: "https://gateway.pinata.cloud/ipfs/QmWiozg1axUSpVowzdTvb5vq7pZyERvAFcTeT8qTojq6qe",
+        imagePath: "/nfts/BAYC_1013.png",
+        name: "1013",
+        description: "stl demo nft"
+      }
+    ]
+  },
+  {
+    collection: "MAYC",
+    contracts: {
+      "Rinkeby" : {
+        contract: "0x70F6aCb098d57917CD46e8c647fa9c45800D29f2",
+        abi: require('./abis/erc721-abi.json')
+      },
+      "Mumbai" : {
+        contract: "0xF19C56362cfdF66f7080e4A58bf199064e57E07c",
+        abi: require('./abis/erc721-abi.json')
+      }
+    },
+    list: [
+      {
+        metaUrl: "https://boredapeyachtclub.com/api/mutants/19748",
+        ipfs: "https://gateway.pinata.cloud/ipfs/QmZSGPAFQfnPWRTRjwdUz3TtEBfvGk99iCzMWjwRWHBdpn",
+        imagePath: "/nfts/MAYC_19748.png",
+        name: "19748",
+        description: "stl demo nft"
+      }
+    ]
+  },
+  {
+    collection: "NIFTY_DERIVATIVES",
+    contracts: {
+      "Rinkeby" : {
+        contract: "0x60E04A774aD2Eca9e4093445dA67e649bb267879",
+        abi: require('./abis/erc721-abi.json')
+      },
+      "Mumbai" : {
+        contract: "0x46187667817C50251bA0bF266ffF49Cb39b2de2B",
+        abi: require('./abis/erc721-abi.json')
+      }
+    },
+    list: [
+      {
+        metaUrl: "https://resources.niftytailor.com/1/0x0c8b0e8f975bf3dfb99904005385e825a391af81/380",
+        ipfs: "https://resources.niftytailor.com/1/0x0c8b0e8f975bf3dfb99904005385e825a391af81/380.png",
+        imagePath: "/nfts/NIFTY_1013_15.png",
+        name: "BAYC #1013-15",
+        description: "stl demo nft"
+      },
+      {
+        metaUrl: "https://resources.niftytailor.com/1/0x0c8b0e8f975bf3dfb99904005385e825a391af81/272",
+        ipfs: "https://resources.niftytailor.com/1/0x0c8b0e8f975bf3dfb99904005385e825a391af81/272.png",
+        imagePath: "/nfts/NIFTY_1013_3.png",
+        name: "BAYC #1013-3",
+        description: "stl demo nft"
+      },
+      {
+        metaUrl: "https://resources.niftytailor.com/1/0x0c8b0e8f975bf3dfb99904005385e825a391af81/249",
+        ipfs: "https://resources.niftytailor.com/1/0x0c8b0e8f975bf3dfb99904005385e825a391af81/249.png",
+        imagePath: "/nfts/NIFTY_19748_3.png",
+        name: "MAYC #19748-3",
+        description: "stl demo nft"
+      },
+      {
+        metaUrl: "https://resources.niftytailor.com/1/0x0c8b0e8f975bf3dfb99904005385e825a391af81/93",
+        ipfs: "https://resources.niftytailor.com/1/0x0c8b0e8f975bf3dfb99904005385e825a391af81/93.png",
+        imagePath: "/nfts/NIFTY_1013_2.png",
+        name: "MAYC #19748-2",
+        description: "stl demo nft"
+      }
+    ]
+  },
+  /*{
+    collection: "BAYC",
+    contracts: {
+      "Rinkeby" : {
         contract: "0x80A679106f24684BB4c92828ACce5e92d2AfFcad",
         abi: require('./abis/erc721-abi.json')
       },
@@ -27,7 +114,7 @@ export default [
         description: "stl demo nft"
       }
     ]
-  },
+  },*/
   {
     collection: "ZED",
     contracts: {
@@ -50,7 +137,7 @@ export default [
       }
     ]
   },
-  {
+  /*{
     collection: "EXPANSION_PUNKS",
     contracts: {
       "Rinkeby" : {
@@ -71,7 +158,7 @@ export default [
         description: "stl demo nft"
       }
     ]
-  },
+  },*/
   {
     collection: "WOMEN_TRIBE",
     contracts: {
