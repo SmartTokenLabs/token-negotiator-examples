@@ -13,10 +13,10 @@ export default [
     },
     list: [
       {
-        metaUrl: "https://gateway.pinata.cloud/ipfs/QmeSjSinHpPnmXmspMjwiXyN6zS4E9zccariGR3jxcaWtq/1013",
+        metaUrl: "https://gateway.pinata.cloud/ipfs/QmXdnWNa2CaRCUa4jMTirmkVJkygr2LtnccSuDY3yXrvVm/bayc_1013.json",
         ipfs: "https://gateway.pinata.cloud/ipfs/QmWiozg1axUSpVowzdTvb5vq7pZyERvAFcTeT8qTojq6qe",
-        imagePath: "/nfts/BAYC_1013.png",
-        name: "1013",
+        imagePath: "/nfts/tokens/images/BAYC_1013.png",
+        name: "#1013",
         description: "stl demo nft"
       }
     ]
@@ -35,10 +35,10 @@ export default [
     },
     list: [
       {
-        metaUrl: "https://boredapeyachtclub.com/api/mutants/19748",
+        metaUrl: "https://gateway.pinata.cloud/ipfs/QmXdnWNa2CaRCUa4jMTirmkVJkygr2LtnccSuDY3yXrvVm/mayc_19748.json",
         ipfs: "https://gateway.pinata.cloud/ipfs/QmZSGPAFQfnPWRTRjwdUz3TtEBfvGk99iCzMWjwRWHBdpn",
-        imagePath: "/nfts/MAYC_19748.png",
-        name: "19748",
+        imagePath: "/nfts/tokens/images/MAYC_19748.png",
+        name: "#19748",
         description: "stl demo nft"
       }
     ]
@@ -57,30 +57,30 @@ export default [
     },
     list: [
       {
-        metaUrl: "https://resources.niftytailor.com/1/0x0c8b0e8f975bf3dfb99904005385e825a391af81/380",
+        metaUrl: "https://gateway.pinata.cloud/ipfs/QmXdnWNa2CaRCUa4jMTirmkVJkygr2LtnccSuDY3yXrvVm/nifty_1013_15.json",
         ipfs: "https://resources.niftytailor.com/1/0x0c8b0e8f975bf3dfb99904005385e825a391af81/380.png",
-        imagePath: "/nfts/NIFTY_1013_15.png",
+        imagePath: "/nfts/tokens/images/NIFTY_1013_15.png",
         name: "BAYC #1013-15",
         description: "stl demo nft"
       },
       {
-        metaUrl: "https://resources.niftytailor.com/1/0x0c8b0e8f975bf3dfb99904005385e825a391af81/272",
+        metaUrl: "https://gateway.pinata.cloud/ipfs/QmXdnWNa2CaRCUa4jMTirmkVJkygr2LtnccSuDY3yXrvVm/nifty_1013_3.json",
         ipfs: "https://resources.niftytailor.com/1/0x0c8b0e8f975bf3dfb99904005385e825a391af81/272.png",
-        imagePath: "/nfts/NIFTY_1013_3.png",
+        imagePath: "/nfts/tokens/images/NIFTY_1013_3.png",
         name: "BAYC #1013-3",
         description: "stl demo nft"
       },
       {
-        metaUrl: "https://resources.niftytailor.com/1/0x0c8b0e8f975bf3dfb99904005385e825a391af81/249",
+        metaUrl: "https://gateway.pinata.cloud/ipfs/QmXdnWNa2CaRCUa4jMTirmkVJkygr2LtnccSuDY3yXrvVm/nifty_19748_2.json",
         ipfs: "https://resources.niftytailor.com/1/0x0c8b0e8f975bf3dfb99904005385e825a391af81/249.png",
-        imagePath: "/nfts/NIFTY_19748_3.png",
+        imagePath: "/nfts/tokens/images/NIFTY_19748_3.png",
         name: "MAYC #19748-3",
         description: "stl demo nft"
       },
       {
-        metaUrl: "https://resources.niftytailor.com/1/0x0c8b0e8f975bf3dfb99904005385e825a391af81/93",
+        metaUrl: "https://gateway.pinata.cloud/ipfs/QmXdnWNa2CaRCUa4jMTirmkVJkygr2LtnccSuDY3yXrvVm/nifty_19748_3.json",
         ipfs: "https://resources.niftytailor.com/1/0x0c8b0e8f975bf3dfb99904005385e825a391af81/93.png",
-        imagePath: "/nfts/NIFTY_1013_2.png",
+        imagePath: "/nfts/tokens/images/NIFTY_19748_2.png",
         name: "MAYC #19748-2",
         description: "stl demo nft"
       }

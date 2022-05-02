@@ -94,7 +94,8 @@ export default function App({ Component, pageProps }) {
 						position: "bottom-right"
 					},
 					filters: {},
-				}
+				},
+				ipfsBaseUrl: "https://smart-token-labs-demo-server.mypinata.cloud/ipfs/"
 			});
 
 			window.negotiator.negotiate();
