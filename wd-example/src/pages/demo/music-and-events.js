@@ -32,7 +32,7 @@ export default function MusicEvents() {
 
 		if (!tokens) return false;
 
-		return (tokens["zed"] && tokens["zed"].tokens.length > 0) || vipEligible();
+		return (tokens["stl-nifty"] && tokens["stl-nifty"].tokens.length > 0) || vipEligible();
 	}
 
 	function vipEligible(){
@@ -41,7 +41,10 @@ export default function MusicEvents() {
 
 		if (!tokens) return false;
 
-		return tokens["stl-rnd-bayc-derivatives"] && tokens["stl-rnd-bayc-derivatives"].tokens.length > 0;
+		return (
+			(tokens["stl-bayc"] && tokens["stl-bayc"].tokens.length > 0) ||
+			(tokens["stl-mayc"] && tokens["stl-mayc"].tokens.length > 0)
+		);
 	}
 
 	return (
@@ -49,7 +52,7 @@ export default function MusicEvents() {
 			<section className="section">
 				<div className="grid -g-cols-1 -a-center">
 					<h1>Music & Events Store</h1>
-					<p className="-mt0 -mb6">Use “STLZedRun” or ”STLBayc” tokens. Don’t have them? <Link href="/request-tokens">Request</Link></p>
+					<p className="-mt0 -mb6">Use “STLBayc”, "STLMayc" or ”STLNifty” tokens. Don’t have them? <Link href="/request-tokens">Request</Link></p>
 				</div>
 				<div className="grid -g-cols-1">
 					<Banner
@@ -63,12 +66,12 @@ export default function MusicEvents() {
 						code="XYZ15"
 						enabled={vipEligible()}
 						selectedTokens={selectedTokens}
-						authTokens={["stl-rnd-bayc-derivatives"]}
+						authTokens={["stl-bayc", "stl-bayc"]}
 						onClick={ () => {} }
 					/>
 				</div>
 				<div className="grid -g-cols-3">
-					{ products.map( ( p, i ) => <ProductItem key={ i } product={ p } discountEnabled={discountEligible()} selectedTokens={selectedTokens} authTokens={["zed", "stl-rnd-bayc-derivatives"]} /> ) }
+					{ products.map( ( p, i ) => <ProductItem key={ i } product={ p } discountEnabled={discountEligible()} selectedTokens={selectedTokens} authTokens={["stl-bayc", "stl-mayc", "stl-nifty"]} /> ) }
 				</div>
 			</section>
 		</Page>

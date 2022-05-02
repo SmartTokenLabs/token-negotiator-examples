@@ -63,14 +63,14 @@ export default function App({ Component, pageProps }) {
 						chain: 'rinkeby',
 						openSeaSlug: 'stl-woman-tribe-nfts-v2'
 					},
-					{
+					/*{
 						collectionID: 'zed',
 						onChain: true,
 						contract: '0x8E3De6062c7041d483Cc1BE2654728f6956F7965',
 						chain: 'rinkeby',
 						openSeaSlug: 'stl-zed-run-nfts-v2'
 					},
-					/*{
+					{
 						collectionID: 'stl-rnd-bayc-derivatives',
 						onChain: true,
 						contract: '0x80A679106f24684BB4c92828ACce5e92d2AfFcad',

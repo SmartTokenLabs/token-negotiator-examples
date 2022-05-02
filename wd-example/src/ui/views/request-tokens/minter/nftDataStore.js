@@ -114,7 +114,7 @@ export default [
         description: "stl demo nft"
       }
     ]
-  },*/
+  },
   {
     collection: "ZED",
     contracts: {
@@ -137,7 +137,7 @@ export default [
       }
     ]
   },
-  /*{
+  {
     collection: "EXPANSION_PUNKS",
     contracts: {
       "Rinkeby" : {

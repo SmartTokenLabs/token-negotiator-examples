@@ -33,7 +33,7 @@ export default function Fashion() {
 
 		if (!tokens) return false;
 
-		return (tokens["stl-rnd-bayc-derivatives"] && tokens["stl-rnd-bayc-derivatives"].tokens.length > 0) &&
+		return (tokens["stl-nifty"] && tokens["stl-nifty"].tokens.length > 0) &&
 				(tokens["women-tribe"] && tokens["women-tribe"].tokens.length > 0);
 	}
 
@@ -43,7 +43,7 @@ export default function Fashion() {
 
 		if (!tokens) return false;
 
-		return (tokens["stl-rnd-bayc-derivatives"] && tokens["stl-rnd-bayc-derivatives"].tokens.length > 0) ||
+		return (tokens["stl-nifty"] && tokens["stl-nifty"].tokens.length > 0) ||
 			(tokens["women-tribe"] && tokens["women-tribe"].tokens.length > 0);
 	}
 
@@ -52,7 +52,7 @@ export default function Fashion() {
 			<section className="section">
 				<div className="grid -g-cols-1 -a-center">
 					<h1>Fashion Store</h1>
-					<p className="-mt0 -mb6">Use “STLWomenTribe” or ”STLExpansionPunk” tokens. Don’t have them? <Link href="/request-tokens">Request</Link></p>
+					<p className="-mt0 -mb6">Use “STLWomenTribe” or ”STLNifty” tokens. Don’t have them? <Link href="/request-tokens">Request</Link></p>
 				</div>
 				<div className="grid -g-cols-1">
 					<Banner
@@ -66,7 +66,7 @@ export default function Fashion() {
 						onClick={ () => {} }
 						enabled={magEligible()}
 						selectedTokens={selectedTokens}
-						authTokens={["stl-rnd-bayc-derivatives"]}
+						authTokens={["stl-nifty"]}
 					/>
 				</div>
 				<div className="grid -g-cols-3">
@@ -74,7 +74,7 @@ export default function Fashion() {
 						<ProductItem key={ i } product={ p }
 									 discountEnabled={productsEligible()}
 									 selectedTokens={selectedTokens}
-									 authTokens={["stl-rnd-bayc-derivatives", "rinkeby-punk"]} /> )
+									 authTokens={["stl-nifty", "women-tribe"]} /> )
 					}
 				</div>
 			</section>
