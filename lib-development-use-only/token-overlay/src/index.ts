@@ -101,7 +101,7 @@ window.authenticateToken = (elem) => {
     // authenticate ownership of token
     window.negotiator.authenticate({
         issuer: issuer,
-        token: curTokens[issuer].tokens[index]
+        unsignedToken: curTokens[issuer].tokens[index]
     });
 }
 
