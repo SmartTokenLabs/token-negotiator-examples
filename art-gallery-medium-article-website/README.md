@@ -1,6 +1,6 @@
 # art-gallery-medium-article-website
 
-This is an on chain Token Negotiator example based around a Medium Article.
+This is an on chain Token Negotiator example based around a Medium article that will be release in the near future.
 
 ## install
 
