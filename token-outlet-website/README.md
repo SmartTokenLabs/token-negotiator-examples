@@ -4,20 +4,21 @@ The token issuer outlet is the location where tokens are stored and dispatched.
 
 A token issuers configuration file will contain the details to reach this web url to store and access tokens.
 
-## Serve 
+## serve 
 
 `npm run start`
+
 ## build / deploy
 
 `npm run build`
 
 `/build` can be deployed to a chsoen web server location.
 
-## Development of this library.
+## development of this library.
 
 See Developers Page inside Wiki
 
-### Help / Questions / Improvements
+### help / questions / improvements
 
-Please contact us or open an issue via github:
-Alphawallet <info@alphawallet.com>
+Please contact us to say hi or open an issue via github:
+<sayhi@smarttokenlabs.com>

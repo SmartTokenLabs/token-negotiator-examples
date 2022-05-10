@@ -54,7 +54,7 @@ tokens can be utilised.
 
 See Developers Page inside Wiki
 
-### Help / Questions / Improvements
+### help / questions / improvements
 
-Please contact us or open an issue via github:
-Alphawallet <info@alphawallet.com>
+Please contact us to say hi or open an issue via github:
+<sayhi@smarttokenlabs.com>
