@@ -6,7 +6,7 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",
-    "@tokenscript/token-negotiator": "1.0.21-alpha",
+    "@tokenscript/token-negotiator": "1.0.24-alpha",
     "node-polyfill-webpack-plugin": "^1.1.4",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
