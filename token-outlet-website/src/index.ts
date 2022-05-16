@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-// import { Outlet } from './src/outlet/index';
+// import { Outlet } from './dist/outlet/index';
 import { Outlet } from '@tokenscript/token-negotiator';
 
 import { SignedDevconTicket } from './Attestation/SignedDevonTicket';

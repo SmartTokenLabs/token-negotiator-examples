@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { Client } from '@tokenscript/token-negotiator';
+// import { Client } from './dist/client/index';
 import config from '../../tokenConfig.json';
 import {updateTokenConfig} from '../../environment';
 

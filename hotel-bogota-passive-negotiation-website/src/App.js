@@ -5,6 +5,7 @@ import TokenNotificationCard from './TokenNotificationCard';
 import Typography from '@material-ui/core/Typography';
 import BookingDate from './BookingDate';
 import { Client } from '@tokenscript/token-negotiator';
+// import { Client } from './dist/client/index';
 import './App.css';
 import config from '../../tokenConfig.json';
 import {updateTokenConfig} from "../../environment";

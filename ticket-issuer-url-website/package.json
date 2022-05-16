@@ -8,7 +8,7 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
-    "@tokenscript/token-negotiator": "^1.0.21-alpha",
+    "@tokenscript/token-negotiator": "^1.0.22-alpha",
     "node-polyfill-webpack-plugin": "^1.1.4",
     "npm-check-updates": "^11.8.5",
     "react": "^17.0.2",

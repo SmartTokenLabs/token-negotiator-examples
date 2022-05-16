@@ -16,17 +16,21 @@ const TokenContextProvider = (props) => {
     
     negotiator.on("tokens-selected", (tokens) => { 
     
-      let selectedTokensState = [];
+      setTimeout(() => {
 
-      const { selectedTokens } = tokens;
+        let selectedTokensState = [];
 
-      if(selectedTokens["demo-tokens"].tokens) {
+        const { selectedTokens } = tokens;
 
-        selectedTokensState.push(...selectedTokens["demo-tokens"].tokens);
+        if(selectedTokens["demo-tokens"].tokens) {
 
-      }
+          selectedTokensState.push(...selectedTokens["demo-tokens"].tokens);
 
-      setTokens(selectedTokensState);
+        }
+
+        setTokens(selectedTokensState);
+
+      }, 0);
 
     });
       

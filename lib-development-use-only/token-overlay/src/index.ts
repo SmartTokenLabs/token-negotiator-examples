@@ -25,13 +25,13 @@ window.negotiator = new Client({
     issuers: [
         devonConfig,
         { collectionID: 'rinkeby-punk', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'rinkeby-punk' },
-        { collectionID: 'expansion-punk', onChain: true, contract: '0x0d0167a823c6619d430b1a96ad85b888bcf97c37', chain: 'eth' },
-        { collectionID: 'women-tribe', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-women-tribe-nfts' },
-        { collectionID: 'zed', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-zed' },
-        { collectionID: 'stl-rnd-bayc-derivatives', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-bayc-derivatives' },
-        { collectionID: 'stl-rnd-riot-racers', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-riot-racers' },
-        { collectionID: 'poap', onChain: true, contract: '0x22C1f6050E56d2876009903609a2cC3fEf83B415', chain: 'xdai'},
-        { collectionID: 'stl-test-nfts', onChain: true, contract: '0xafd1a2f17ce2a694d2ef649fe5ba51cc0282448a', chain: 'rinkeby'}
+        // { collectionID: 'expansion-punk', onChain: true, contract: '0x0d0167a823c6619d430b1a96ad85b888bcf97c37', chain: 'eth' },
+        // { collectionID: 'women-tribe', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-women-tribe-nfts' },
+        // { collectionID: 'zed', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-zed' },
+        // { collectionID: 'stl-rnd-bayc-derivatives', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-bayc-derivatives' },
+        // { collectionID: 'stl-rnd-riot-racers', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-riot-racers' },
+        // { collectionID: 'poap', onChain: true, contract: '0x22C1f6050E56d2876009903609a2cC3fEf83B415', chain: 'xdai'},
+        // { collectionID: 'stl-test-nfts', onChain: true, contract: '0xafd1a2f17ce2a694d2ef649fe5ba51cc0282448a', chain: 'rinkeby'}
     ],
     options: {
         overlay: {

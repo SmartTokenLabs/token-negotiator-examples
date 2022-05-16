@@ -1,6 +1,7 @@
 {
    "onChain": false,
    "title": "Devcon",
+   "collectionID": "devcon",
    "tokenName": "devcon",
    "tokenOrigin": "http://localhost:3002/",
    "attestationOrigin": "https://stage.attestation.id/",
