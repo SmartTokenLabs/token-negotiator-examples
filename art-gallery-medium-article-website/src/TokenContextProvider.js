@@ -56,6 +56,8 @@ class TokenNegotiatorInstance extends React.Component {
     
     super(props);
 
+    if(negotiator) return;
+
     negotiator = new Client({
       type: 'active',
       issuers: [
