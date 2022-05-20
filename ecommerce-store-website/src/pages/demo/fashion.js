@@ -61,7 +61,7 @@ export default function Fashion() {
 						image={{ src: '/images/vogue-graphics.png' }}
 						headline="10% Off Vogue Magazine Subscription"
 						text="With supporting text below as a natural lead-in to additional content."
-						fineprint="Available for 2 more days - exclusive to BAYC Derivative + Women Tribe holders"
+						fineprint="Available for 2 more days - exclusive to STL Nifty + Women Tribe holders"
 						buttonText="Claim"
 						onClick={ () => {} }
 						enabled={magEligible()}
