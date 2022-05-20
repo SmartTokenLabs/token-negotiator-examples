@@ -19,20 +19,22 @@ devonConfig.collectionID = "devcon";
 
 devonConfig = updateTokenConfig(devonConfig);
 
+const issuers = [
+    devonConfig,
+    { collectionID: 'rinkeby-punk', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'rinkeby-punk' },
+    { collectionID: 'expansion-punk', onChain: true, contract: '0x0d0167a823c6619d430b1a96ad85b888bcf97c37', chain: 'eth' },
+    { collectionID: 'women-tribe', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-women-tribe-nfts' },
+    { collectionID: 'zed', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-zed' },
+    { collectionID: 'stl-rnd-bayc-derivatives', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-bayc-derivatives' },
+    { collectionID: 'stl-rnd-riot-racers', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-riot-racers' },
+    { collectionID: 'poap', onChain: true, contract: '0x22C1f6050E56d2876009903609a2cC3fEf83B415', chain: 'xdai'},
+    { collectionID: 'stl-test-nfts', onChain: true, contract: '0xafd1a2f17ce2a694d2ef649fe5ba51cc0282448a', chain: 'rinkeby'}
+];
+
 // ACTIVE
 window.negotiator = new Client({
     type: 'active',
-    issuers: [
-        devonConfig,
-        { collectionID: 'rinkeby-punk', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'rinkeby-punk' },
-        { collectionID: 'expansion-punk', onChain: true, contract: '0x0d0167a823c6619d430b1a96ad85b888bcf97c37', chain: 'eth' },
-        { collectionID: 'women-tribe', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-women-tribe-nfts' },
-        { collectionID: 'zed', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-zed' },
-        { collectionID: 'stl-rnd-bayc-derivatives', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-bayc-derivatives' },
-        { collectionID: 'stl-rnd-riot-racers', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-riot-racers' },
-        { collectionID: 'poap', onChain: true, contract: '0x22C1f6050E56d2876009903609a2cC3fEf83B415', chain: 'xdai'},
-        { collectionID: 'stl-test-nfts', onChain: true, contract: '0xafd1a2f17ce2a694d2ef649fe5ba51cc0282448a', chain: 'rinkeby'}
-    ],
+    issuers: issuers,
     options: {
         overlay: {
             openingHeading: "Open a new world of discounts available with your tokens.",
@@ -42,7 +44,9 @@ window.negotiator = new Client({
             position: "bottom-right"
         },
         filters: {},
-    }
+    },
+    autoLoadTokens: 3,
+    autoEnableTokens: true
 });
 
 var curTokens = [];
@@ -103,7 +107,21 @@ window.authenticateToken = (elem) => {
         issuer: issuer,
         unsignedToken: curTokens[issuer].tokens[index]
     });
-}
+};
+
+window.updateIssuers = () => {
+    // choose 3 random issuers to show
+    let newIssuers = [];
+
+    while (newIssuers.length < 3){
+        let issuer = issuers[Math.floor(Math.random()*issuers.length)];
+
+        if (newIssuers.indexOf(issuer) === -1)
+            newIssuers.push(issuer)
+    }
+
+    window.negotiator.negotiate(newIssuers, true);
+};
 
 // PASSIVE
 
