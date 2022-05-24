@@ -35,7 +35,7 @@ export default function App({ Component, pageProps }) {
 						chain: 'rinkeby',
 						openSeaSlug: 'stl-expansion-punks-nfts-v2'
 					},*/
-					{
+					/*{
 						collectionID: 'stl-bayc',
 						onChain: true,
 						contract: '0x3d8a0fB32b0F586FdC10447c22F477979dc526ec',
@@ -62,7 +62,7 @@ export default function App({ Component, pageProps }) {
 						contract: '0xDbaCB1C25d849321727534C1BB2bbd962272eB13',
 						chain: 'rinkeby',
 						openSeaSlug: 'stl-woman-tribe-nfts-v2'
-					},
+					},*/
 					/*{
 						collectionID: 'zed',
 						onChain: true,
@@ -77,13 +77,13 @@ export default function App({ Component, pageProps }) {
 						chain: 'rinkeby',
 						openSeaSlug: 'stl-bayc-nfts-v2'
 					},*/
-					{
+					/*{
 						collectionID: 'stl-rnd-riot-racers',
 						onChain: true,
 						contract: '0x399653F4212bf3EA3AF9bCE45a294AB462f22436',
 						chain: 'rinkeby',
 						openSeaSlug: 'stl-riot-racers-nfts-v3'
-					}
+					}*/
 				],
 				options: {
 					overlay: {
@@ -98,7 +98,7 @@ export default function App({ Component, pageProps }) {
 				ipfsBaseUrl: "https://smart-token-labs-demo-server.mypinata.cloud/ipfs/"
 			});
 
-			window.negotiator.negotiate();
+			//window.negotiator.negotiate();
 
 			window.negotiator.on("tokens-selected", (data) => {
 				api.setSelectedTokens({...data.selectedTokens});
