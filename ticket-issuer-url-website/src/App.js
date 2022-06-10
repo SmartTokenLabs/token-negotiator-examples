@@ -4,29 +4,33 @@ import Token from './components/Token';
 import './App.css';
 import config from '../../tokenConfig.json';
 import {updateTokenConfig} from "../../environment";
+import {Ticket} from "@tokenscript/attestation/dist/Ticket";
+import {KeyPair} from "@tokenscript/attestation/dist/libs/KeyPair";
+import {hexStringToBase64Url} from "@tokenscript/attestation/dist/libs/utils";
+import {TextField} from "@material-ui/core";
 
 const mockTicketData = [
-  {
-    ticket: "MIGWMA0MATYCBWE3ap3-AgEABEEEKJZVxMEXbkSZZBWnNUTX_5ieu8GUqf0bx_a0tBPF6QYskABaMJBYhDOXsmQt3csk_TfMZ2wdmfRkK7ePCOI2kgNCAOOZKRpcE6tLBuPbfE_SmwPk2wNjbj5vpa6kkD7eqQXvBOCa0WNo8dEHKvipeUGZZEWWjJKxooB44dEYdQO70Vgc",
-    secret:"45845870684",
-    id:"mah@mah.com"
-  },
-  {
-    ticket: "MIGXMA4MAjExAgVhN2qd_gIBAARBBCiWVcTBF25EmWQVpzVE1_-YnrvBlKn9G8f2tLQTxekGLJAAWjCQWIQzl7JkLd3LJP03zGdsHZn0ZCu3jwjiNpIDQgBbJBY1Ctlp_czUwB85yF1e5kpZ-lQ_-UZ7jaCYSFoEx028Jit1HIDLCJezKdsNn9c9IO7-HC-_r2ZLaYQ9GGrbHA==",
-    secret:"45845870684",
-    id:"mah@mah.com"
-  },
-  {
-    ticket: "MIGTMAoMATYCAgDeAgEABEEEKJZVxMEXbkSZZBWnNUTX_5ieu8GUqf0bx_a0tBPF6QYskABaMJBYhDOXsmQt3csk_TfMZ2wdmfRkK7ePCOI2kgNCAEZYXbNmWXDsAqIc5uf7SirR-dLCMLdEVN5teFrV93VbcKE_DED8c6jtFQ5LH2SRXwPEtXZqWfEh1c2OHTEYqfwb",
-    secret:"45845870684",
-    id:"mah@mah.com"
-  },
-  {
-    ticket: "MIGSMAkMATECAQECAQAEQQQollXEwRduRJlkFac1RNf_mJ67wZSp_RvH9rS0E8XpBiyQAFowkFiEM5eyZC3dyyT9N8xnbB2Z9GQrt48I4jaSA0IAOf4d0N9shWfPIgRXZPdBRhlRyIARDT0tJwNWYwy2ILVKnIy-qPzFsgdI6sZHm1OY6UsJKuDlp0A7EMC8vS5YhRs=",
-    secret:"45845870684",
-    id:"mah@mah.com"
-  },
+    {
+        ticketId: "1235",
+        ticketClass: 1
+    },
+    {
+        ticketId: "1236",
+        ticketClass: 2
+    },
+    {
+        ticketId: "1237",
+        ticketClass: 3
+    },
+    {
+        ticketId: "1238",
+        ticketClass: 4
+    },
 ];
+
+const secret = 45845870684n;
+const privKey = "MIICSwIBADCB7AYHKoZIzj0CATCB4AIBATAsBgcqhkjOPQEBAiEA/////////////////////////////////////v///C8wRAQgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHBEEEeb5mfvncu6xVoGKVzocLBwKb/NstzijZWfKBWxb4F5hIOtp3JqPEZV2k+/wOEQio/Re0SKaFVBmcR9CP+xDUuAIhAP////////////////////66rtzmr0igO7/SXozQNkFBAgEBBIIBVTCCAVECAQEEIM/T+SzcXcdtcNIqo6ck0nJTYzKL5ywYBFNSpI7R8AuBoIHjMIHgAgEBMCwGByqGSM49AQECIQD////////////////////////////////////+///8LzBEBCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcEQQR5vmZ++dy7rFWgYpXOhwsHApv82y3OKNlZ8oFbFvgXmEg62ncmo8RlXaT7/A4RCKj9F7RIpoVUGZxH0I/7ENS4AiEA/////////////////////rqu3OavSKA7v9JejNA2QUECAQGhRANCAARjMR62qoIK9pHk17MyHHIU42Ix+Vl6Q2gTmIF72vNpinBpyoBkTkV0pnI1jdrLlAjJC0I91DZWQhVhddMCK65c";
+
 
 function App() {
 
@@ -68,15 +72,51 @@ function App() {
 
   }, []);
 
-  const openTicketInIframe = async ({event, ticket, secret, id}) => {
+  const generateTicket = (email, ticketId, ticketClass) => {
+
+      let ticket = Ticket.createWithMail(email, "6", ticketId, ticketClass, {"6": KeyPair.privateFromPEM(privKey)}, secret);
+
+      if (!ticket.checkValidity()){
+          throw new Error("Ticket validity check failed");
+      }
+
+      if (!ticket.verify()){
+          throw new Error("Ticket verify failed");
+      }
+
+      /*let pok = PublicIdentifierProof.fromSecret(ticket.getCommitment(), email, ATTESTATION_TYPE.mail, secret);
+
+      if (!pok.verify()){
+          throw new Error("Pok validation failed");
+      }*/
+
+      let ticketInUrl = hexStringToBase64Url(ticket.getDerEncoding());
+      //let pokInUrl = encodeURI(pok.getInternalPok().getDerEncoding());
+
+      return {
+          ticket: ticketInUrl,
+          secret: secret.toString(),
+          id: email
+      };
+  }
+
+  const openTicketInIframe = async ({event, ticketId, ticketClass}) => {
     
     event.preventDefault();
 
-    // localhost:3002
-    const magicLink = `${config.tokenOrigin}?ticket=${ticket}&secret=${secret}&id=${id}`;
-    
-    // Github example
-    // const magicLink = `https://tokenscript.github.io/token-negotiator-examples/github-pages-use-only/token-outlet-website/build/index.html?ticket=${ticket}&secret=${secret}&id=${id}`;
+    if (!document.getElementById("form")[0].checkValidity()){
+        alert("Please enter an email")
+        return;
+    }
+
+    let genTicket = generateTicket(document.getElementById("email").value, ticketId, ticketClass);
+
+    console.log(genTicket);
+
+    //let decodedTicket = Ticket.fromBase64(genTicket.ticket, {"6": KeyPair.publicFromBase64orPEM(config.base64senderPublicKeys["6"])});
+    //console.log(decodedTicket);
+
+    const magicLink = `${config.tokenOrigin}?ticket=${genTicket.ticket}&secret=${genTicket.secret}&id=${genTicket.id}`;
 
     try {
         let tokens = await negotiator.addTokenViaMagicLink(magicLink);
@@ -85,6 +125,7 @@ function App() {
 
     } catch (e){
         console.log("Failed to add token via magic link: " + e);
+        alert(e);
     }
 
   }
@@ -119,22 +160,26 @@ function App() {
         </div>
       </div>
       <p className="flexCenter">Generate ticket:</p>
-      <div className="flexCenter">
-            <div className="ticketWrapper">
-              {
-                mockTicketData.map((mockTicket, index) => {
-                  return (
-                    <button key={index} className="makeTicket" onClick={event => openTicketInIframe({ 
-                      event,
-                      ticket: mockTicket.ticket,
-                      secret: mockTicket.secret,
-                      id: mockTicket.id
-                    })}>Create Ticket</button> 
-                  )
-                })
-              }
+      <form id={"form"}>
+          <div className="flexCenter" style={{margin: "20px"}}>
+            <TextField label={"Email:"} id={"email"} style={{"display": "block"}} required={true} />
+          </div>
+          <div className="flexCenter">
+                <div className="ticketWrapper">
+                  {
+                    mockTicketData.map((mockTicket, index) => {
+                      return (
+                        <button key={index} className="makeTicket" onClick={event => openTicketInIframe({
+                          event,
+                          ticketId: mockTicket.ticketId,
+                          ticketClass: mockTicket.ticketClass
+                        })}>Create Ticket</button>
+                      )
+                    })
+                  }
+                </div>
             </div>
-        </div>
+          </form>
     </main>
   );
 }
