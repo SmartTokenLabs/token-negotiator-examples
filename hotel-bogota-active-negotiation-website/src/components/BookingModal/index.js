@@ -114,6 +114,7 @@ export default function BookingModal({room}) {
         <Dialog
             open={open}
             onClose={handleClose}
+            disableEnforceFocus={true}
             aria-labelledby="form-dialog-title">
           {
             bookingDone &&
