@@ -9,7 +9,7 @@ function TokenCard({ tokenInstance, applyDiscount, discount, selectedPendingToke
 
   const isSelectedToken = (
     discount.tokenInstance && 
-    discount.tokenInstance.ticketId === tokenInstance.ticketId &&
+    discount.tokenInstance.ticketIdNumber === tokenInstance.ticketIdNumber &&
     discount.tokenInstance.ticketClass === tokenInstance.ticketClass &&
     discount.tokenInstance.devconId === tokenInstance.devconId
   );
@@ -27,7 +27,7 @@ function TokenCard({ tokenInstance, applyDiscount, discount, selectedPendingToke
           {tokenInstance.ticketClass.toString()}
         </Typography>
         <Typography className="ticketId" variant="body2" color="textSecondary" component="p">
-          {tokenInstance.ticketId.toString()}
+          {tokenInstance.ticketIdNumber.toString()}
         </Typography>
         <Typography className="devconId" variant="body2" color="textSecondary" component="p">
           Devcon ID: {tokenInstance.devconId.toString()}
