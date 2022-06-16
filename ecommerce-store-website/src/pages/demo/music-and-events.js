@@ -4,6 +4,11 @@ import { Page } from 'ui/app';
 import { Link, ProductItem, Banner } from 'ui/components';
 import { useStore } from "src/base/state";
 
+import imgMusicProduct1 from "../../../public/images/music-product-1.jpg";
+import imgMusicProduct2 from "../../../public/images/music-product-2.jpg";
+import imgMusicProduct3 from "../../../public/images/music-product-3.jpg";
+import imgVipBadge from "../../../public/images/vip-badge.png";
+
 //
 //	TokenScript / Pages / Demo / Music & Events
 //
@@ -16,12 +21,12 @@ export default function MusicEvents() {
 	};
 
 	const products = [
-		{ title: 'Ed Sheran Concert Live in Glasgow Music Centre', price: 69.90, discountPrice: 49.90, image: { src: '/images/music-product-1.jpg', alt: '' } },
-		{ title: 'Metallica live in Amsterdam Live Concert', price: 69.90, discountPrice: 49.90, image: { src: '/images/music-product-2.jpg', alt: '' } },
-		{ title: 'The Dip and myth of her Live in Sydney', price: 69.90, discountPrice: 49.90, image: { src: '/images/music-product-3.jpg', alt: '' } },
-		{ title: 'Ed Sheran Concert Live in Glasgow Music Centre', price: 69.90, discountPrice: 49.90, image: { src: '/images/music-product-1.jpg', alt: '' } },
-		{ title: 'Metallica live in Amsterdam Live Concert', price: 69.90, discountPrice: 49.90, image: { src: '/images/music-product-2.jpg', alt: '' } },
-		{ title: 'The Dip and myth of her Live in Sydney', price: 69.90, discountPrice: 49.90, image: { src: '/images/music-product-3.jpg', alt: '' } },
+		{ title: 'Ed Sheran Concert Live in Glasgow Music Centre', price: 69.90, discountPrice: 49.90, image: { src: imgMusicProduct1, alt: '' } },
+		{ title: 'Metallica live in Amsterdam Live Concert', price: 69.90, discountPrice: 49.90, image: { src: imgMusicProduct2, alt: '' } },
+		{ title: 'The Dip and myth of her Live in Sydney', price: 69.90, discountPrice: 49.90, image: { src: imgMusicProduct3, alt: '' } },
+		{ title: 'Ed Sheran Concert Live in Glasgow Music Centre', price: 69.90, discountPrice: 49.90, image: { src: imgMusicProduct1, alt: '' } },
+		{ title: 'Metallica live in Amsterdam Live Concert', price: 69.90, discountPrice: 49.90, image: { src: imgMusicProduct2, alt: '' } },
+		{ title: 'The Dip and myth of her Live in Sydney', price: 69.90, discountPrice: 49.90, image: { src: imgMusicProduct3, alt: '' } },
 	];
 
 	const selectedTokens = useStore( s => s.selectedTokens );
@@ -58,7 +63,7 @@ export default function MusicEvents() {
 					<Banner
 						className="-mb3"
 						theme="beige"
-						image={{ src: '/images/vip-badge.png' }}
+						image={{ src: imgVipBadge }}
 						headline={ <h2 className="f4 -f-medium">20% Off for your next VIP experience</h2> }
 						text="With supporting text below as a natural lead-in to additional content."
 						fineprint="Available for exclusive to BAYC Derivative holders"

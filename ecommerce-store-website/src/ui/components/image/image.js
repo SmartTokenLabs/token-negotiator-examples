@@ -21,7 +21,7 @@ export default function Image({ className, src, alt, height, width }) {
 
 	return (
 		<div className={ classList }>
-			<img src={ src } alt={ alt || '' } height={ height } width={ width } />
+			<NextImage src={ src } alt={ alt || '' } height={ height } width={ width } />
 		</div>
 	);
 }

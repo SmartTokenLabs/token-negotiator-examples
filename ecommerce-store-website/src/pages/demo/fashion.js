@@ -4,6 +4,10 @@ import { Page } from 'ui/app';
 import { Link, ProductItem, Banner } from 'ui/components';
 import { useStore } from "src/base/state";
 
+import imgVogueGraphics from "../../../public/images/vogue-graphics.png";
+import imgFashionProduct1 from "../../../public/images/fashion-product-1.jpg";
+import imgFashionProduct2 from "../../../public/images/fashion-product-2.jpg";
+import imgFashionProduct3 from "../../../public/images/fashion-product-3.jpg";
 
 //
 //	TokenScript / Pages / Demo / Fashion
@@ -17,12 +21,12 @@ export default function Fashion() {
 	};
 
 	const products = [
-		{ title: 'Topshop casual shirt in khaki', price: 69.90, discountPrice: 49.90, image: { src: '/images/fashion-product-1.jpg', alt: '' } },
-		{ title: 'Natural crinkle top with side ties in oatmeal', price: 69.90, discountPrice: 49.90, image: { src: '/images/fashion-product-2.jpg', alt: '' } },
-		{ title: 'Long sleeve blouse with pocket detail in black', price: 69.90, discountPrice: 49.90, image: { src: '/images/fashion-product-3.jpg', alt: '' } },
-		{ title: 'Topshop casual shirt in khaki', price: 69.90, discountPrice: 49.90, image: { src: '/images/fashion-product-1.jpg', alt: '' } },
-		{ title: 'Natural crinkle top with side ties in oatmeal', price: 69.90, discountPrice: 49.90, image: { src: '/images/fashion-product-2.jpg', alt: '' } },
-		{ title: 'Long sleeve blouse with pocket detail in black', price: 69.90, discountPrice: 49.90, image: { src: '/images/fashion-product-3.jpg', alt: '' } },
+		{ title: 'Topshop casual shirt in khaki', price: 69.90, discountPrice: 49.90, image: { src: imgFashionProduct1, alt: '' } },
+		{ title: 'Natural crinkle top with side ties in oatmeal', price: 69.90, discountPrice: 49.90, image: { src: imgFashionProduct2, alt: '' } },
+		{ title: 'Long sleeve blouse with pocket detail in black', price: 69.90, discountPrice: 49.90, image: { src: imgFashionProduct3, alt: '' } },
+		{ title: 'Topshop casual shirt in khaki', price: 69.90, discountPrice: 49.90, image: { src: imgFashionProduct1, alt: '' } },
+		{ title: 'Natural crinkle top with side ties in oatmeal', price: 69.90, discountPrice: 49.90, image: { src: imgFashionProduct2, alt: '' } },
+		{ title: 'Long sleeve blouse with pocket detail in black', price: 69.90, discountPrice: 49.90, image: { src: imgFashionProduct3, alt: '' } },
 	];
 
 	const selectedTokens = useStore( s => s.selectedTokens );
@@ -58,7 +62,7 @@ export default function Fashion() {
 					<Banner
 						className="-mb3 -style-center"
 						theme="dark"
-						image={{ src: '/images/vogue-graphics.png' }}
+						image={{ src: imgVogueGraphics }}
 						headline="10% Off Vogue Magazine Subscription"
 						text="With supporting text below as a natural lead-in to additional content."
 						fineprint="Available for 2 more days - exclusive to STL Nifty + Women Tribe holders"
