@@ -26,7 +26,7 @@ jobs:
         npm install
         npm run build
         npm run install-ecommerce
-        BASE_PATH="/token-negotiator-examples/ecommerce-store-website/" && npm run build-ecommerce
+        BASE_PATH="/token-negotiator-examples/ecommerce-store-website/" npm run build-ecommerce
         npm run install-barebones
         npm run build-barebones
         npm run copy-artifacts
