@@ -26,9 +26,6 @@ function TokenCard({ tokenInstance, applyDiscount, discount, selectedPendingToke
         <Typography className="ticketClass" gutterBottom variant="h5" component="h2">
           {tokenInstance.ticketClass.toString()}
         </Typography>
-        <Typography className="ticketId" variant="body2" color="textSecondary" component="p">
-          {tokenInstance.ticketIdNumber.toString()}
-        </Typography>
         <Typography className="devconId" variant="body2" color="textSecondary" component="p">
           Devcon ID: {tokenInstance.devconId.toString()}
         </Typography>

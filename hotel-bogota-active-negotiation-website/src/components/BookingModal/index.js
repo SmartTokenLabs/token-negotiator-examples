@@ -112,6 +112,7 @@ export default function BookingModal({room}) {
           Book
         </Button>
         <Dialog
+            disableEnforceFocus={true}
             open={open}
             onClose={handleClose}
             disableEnforceFocus={true}
