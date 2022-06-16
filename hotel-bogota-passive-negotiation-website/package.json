@@ -7,10 +7,7 @@
     "@material-ui/core": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@material-ui/pickers": "latest",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "@tokenscript/token-negotiator": "^1.0.21-alpha",
+    "@tokenscript/token-negotiator": "*",
     "add": "^2.0.6",
     "date-fns": "latest",
     "ethers": "^5.4.0",
@@ -23,6 +20,9 @@
     "web3": "^1.3.1"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
     "@walletconnect/web3-provider": "^1.7.1",
     "customize-cra": "^1.0.0",
     "gh-pages": "^3.2.1",
