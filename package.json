@@ -17,7 +17,7 @@
     "hotel-bogota-active-install": "cd hotel-bogota-active-negotiation-website && npm i",
     "start": "concurrently \"npm run outlet\" \"npm run token-issuer\"  \"npm run hotel-bogota-passive\" \"npm run hotel-bogota-active\" ",
     "install": "npm run clean --loglevel verbose && concurrently \"npm run outlet-install\" \"npm run token-issuer-install\"  \"npm run hotel-bogota-passive-install\" \"npm run hotel-bogota-active-install\" ",
-    "clean": "shx rm -rf ./hotel-bogota-active-negotiation-website/build ./hotel-bogota-passive-negotiation-website/build ./ticket-issuer-url-website/build ./token-outlet-website/build",    
+    "clean": "shx rm -rf ./hotel-bogota-active-negotiation-website/build ./hotel-bogota-passive-negotiation-website/build ./ticket-issuer-url-website/build ./token-outlet-website/build",
     "github-pages-build": "concurrently \"npm run github-pages-token-issuer-build\" \"npm run github-pages-hotel-bogota-passive-build\" \"npm run github-pages-hotel-bogota-active-build\" \"npm run github-pages-outlet-build\" ",
     "github-pages-token-issuer-build": "cd github-pages-use-only/ticket-issuer-url-website && npm run build",
     "github-pages-hotel-bogota-passive-build": "cd github-pages-use-only/hotel-bogota-passive-negotiation-website && npm run build",
@@ -37,9 +37,12 @@
     "unlink-wd": "cd wd-example && npm unlink ../../token-negotiator",
     "link": "concurrently \"npm run link-outlet\" \"npm run link-token-issuer\"  \"npm run link-hotel-bogota-passive\" \"npm run link-hotel-bogota-active\" \"npm run link-dev\" \"npm run link-wd\" ",
     "unlink": "concurrently \"npm run unlink-outlet\" \"npm run unlink-token-issuer\"  \"npm run unlink-hotel-bogota-passive\" \"npm run unlink-hotel-bogota-active\" \"npm run unlink-dev\" \"npm run unlink-wd\" ",
-    "deploy-gh": "node scripts/deploy-gh.js",
     "build": "concurrently \"npm run outlet-build\" \"npm run token-issuer-build\"  \"npm run hotel-bogota-passive-build\" \"npm run hotel-bogota-active-build\" ",
-    "copy-artifacts": "mkdir -p build && rm -Rf build/* && cp -R hotel-bogota-passive-negotiation-website/build build/hotel-bogota-passive-negotiation-website && cp -R hotel-bogota-active-negotiation-website/build build/hotel-bogota-active-negotiation-website && cp -R ticket-issuer-url-website/build build/ticket-issuer-url-website && cp -R token-outlet-website/build build/token-outlet-website"
+    "install-ecommerce": "cd ecommerce-store-website && npm i",
+    "build-ecommerce": "cd ecommerce-store-website && npm run build",
+    "install-barebones": "cd typescript-bare-bones-demo && npm i",
+    "build-barebones": "cd typescript-bare-bones-demo && npm run build",
+    "copy-artifacts": "sh ./scripts/copy_gh_artifacts.sh"
   },
   "repository": {
     "type": "git",

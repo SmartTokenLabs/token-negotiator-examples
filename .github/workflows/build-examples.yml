@@ -25,6 +25,10 @@ jobs:
       run: |
         npm install
         npm run build
+        npm run install-ecommerce
+        npm run build-ecommerce
+        npm run install-barebones
+        npm run build-barebones
         npm run copy-artifacts
 
     - uses: actions/upload-artifact@v3
