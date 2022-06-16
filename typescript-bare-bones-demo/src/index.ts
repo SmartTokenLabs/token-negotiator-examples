@@ -2,8 +2,13 @@
 // @ts-nocheck
 
 import { Client } from '@tokenscript/token-negotiator';
+<<<<<<< HEAD
 import config from './../../../tokenConfig.json';
 import {updateTokenConfig} from "../../../environment";
+=======
+import config from './../../tokenConfig.json';
+import {updateTokenConfig} from "../../environment";
+>>>>>>> a912b9d03d943ca1bf5275c10d02bc90f8762d19
 import "@tokenscript/token-negotiator/dist/theme/style.css";
 
 declare global {
