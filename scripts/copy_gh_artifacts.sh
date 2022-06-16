@@ -11,7 +11,7 @@ cp -R ticket-issuer-url-website/build build/ticket-issuer-url-website
 cp -R token-outlet-website/build build/token-outlet-website
 
 # Ecommerce example
-cp -R ecommerce-store-website/build build/ecommerce-store-website
+cp -R ecommerce-store-website/out build/ecommerce-store-website
 
 # Bare-bones example
 cp -R typescript-bare-bones-demo/build build/typescript-bare-bones-demo
