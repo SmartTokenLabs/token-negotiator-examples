@@ -1,0 +1,59 @@
+name: "ecommerce-store-website CI"
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "ecommerce-store-website/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "npm"
+      - run: |
+          echo -n "Node version: "
+          node -v
+          echo -n "Npm version: "
+          npm -v
+      - name: building
+        run: |
+          cd ecommerce-store-website
+          npm i
+          export APP_HOST=https://brandconnector.tokenscript.org
+          export BASE_PATH=/demo
+          npm run build
+          npx next export
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ecommerce-store-website
+          path: ecommerce-store-website/out/
+
+  deploy:
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: ecommerce-store-website
+          path: ecommerce-store-website/out/
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-1
+      - name: deploy
+        env:
+          S3_BUCKET: brandconnector-ts-site
+          CLOUDFRONT_ID: E3U7RHKWP3P1PT
+        run: |
+          aws s3 sync ecommerce-store-website/out/ "s3://${S3_BUCKET}/demo/" --cache-control 'max-age=31536000' --quiet \
+          && aws s3 cp "s3://${S3_BUCKET}/demo/index.html" "s3://${S3_BUCKET}/demo/index.html" --cache-control 'max-age=0,s-maxage=2592000' \
+          && aws cloudfront create-invalidation --distribution-id "${CLOUDFRONT_ID}" --paths '/demo/*'
