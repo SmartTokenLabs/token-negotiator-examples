@@ -23,7 +23,6 @@ module.exports = phase => {
 		APP_NAME: PKG.name,
 		APP_ENV: NODE_ENV,
 		APP_VERSION: PKG.version,
-		APP_HOST: process.env.APP_HOST,
 		BASE_PATH: process.env.BASE_PATH,
 	};
 
@@ -31,8 +30,7 @@ module.exports = phase => {
 
 	return {
 		images: {
-			loader: 'akamai',
-			path: env.APP_HOST || '',
+			loader: 'custom',
 		},
 		trailingSlash: true,
 		reactStrictMode: true,

@@ -25,7 +25,6 @@ jobs:
         run: |
           cd ecommerce-store-website
           npm i
-          export APP_HOST=https://brandconnector.tokenscript.org
           export BASE_PATH=/demo
           npm run build
           npx next export
