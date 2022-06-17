@@ -28,7 +28,6 @@ jobs:
         npm run install-barebones
         npm run build-barebones
         npm run install-ecommerce
-        export APP_HOST=https://tokenscript.github.io/
         export BASE_PATH=/token-negotiator-examples/ecommerce-store-website/ 
         npm run build-ecommerce
         npm run copy-artifacts
