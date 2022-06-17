@@ -12,6 +12,8 @@ import { useStore } from "src/base/state";
 import styles from "./car-industry-view.module.scss";
 import {createNegotiatorClient, updateNegotiatorIssuers} from "src/base/negotiator-client";
 
+import imgCarIndustry1 from "../../../../public/images/car-industry-1.jpg";
+import imgCarIndustry2 from "../../../../public/images/car-industry-2.jpg";
 
 //
 //	TokenScript / UI / Views / Car Industry
@@ -74,7 +76,7 @@ export default function CarIndustryView() {
 				</div>
 				<div className="grid -g-cols-1">
 					<Slider opacityTo={ 0.25 } restMargin={ 48 }>
-						<div className={ styles[ 'v-car-industry_slide'] } style={{ backgroundImage: 'url("/images/car-industry-2.jpg")' }}>
+						<div className={ styles[ 'v-car-industry_slide'] } style={{ backgroundImage: `url("${imgCarIndustry2.src}")` }}>
 							<div className={ clsx( '-a-center', styles[ 'v-car-industry_slider-overlay' ] ) }>
 								<h2 className="-f-family-rubik -f-regular">
 									<span className="f5 -f-light -va-center -a-center -my0">Test Drive:</span>
@@ -83,7 +85,7 @@ export default function CarIndustryView() {
 								{ isEligible() ? <Button className={ claimed ? '-style-green' : '' } onClick={handleClick}>{ claimedVip ? 'Success!' : 'Hire Today' }</Button> : <p className="f5 -f-light -color-white">Coming Soon...</p>}
 							</div>
 						</div>
-						<div className={ styles[ 'v-car-industry_slide'] } style={{ backgroundImage: 'url("/images/car-industry-1.jpg")' }}>
+						<div className={ styles[ 'v-car-industry_slide'] } style={{ backgroundImage: `url("${imgCarIndustry1.src}")` }}>
 							<div className={ clsx( '-a-center', styles[ 'v-car-industry_slider-overlay' ] ) }>
 								<h2 className="-f-family-rubik -f-regular">
 									<span className="f5 -f-light -va-center -a-center -my0">Hire:</span>
