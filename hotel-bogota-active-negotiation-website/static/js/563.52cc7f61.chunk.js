@@ -1,1 +1,0 @@
-(self.webpackChunkhotel_bogota_website=self.webpackChunkhotel_bogota_website||[]).push([[563],{36563:()=>{}}]);
