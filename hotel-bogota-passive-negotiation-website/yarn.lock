@@ -2210,7 +2210,7 @@
     "string.prototype.matchall" "^4.0.4"
     "url" "^0.11.0"
 
-"@tokenscript/token-negotiator@*":
+"@tokenscript/token-negotiator@1.0.24-rc3":
   "integrity" "sha512-zTQ5pTMeJXzpl7lpW75NFy52vxtj0gkovbVrLPC/kzZ7WKVNFMDLB0OBaX8+rbjRY6jAV7475DlMC5NJMxnCyQ=="
   "resolved" "https://registry.npmjs.org/@tokenscript/token-negotiator/-/token-negotiator-1.0.24-rc3.tgz"
   "version" "1.0.24-rc3"
