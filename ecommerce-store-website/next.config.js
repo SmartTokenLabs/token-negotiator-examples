@@ -23,14 +23,14 @@ module.exports = phase => {
 		APP_NAME: PKG.name,
 		APP_ENV: NODE_ENV,
 		APP_VERSION: PKG.version,
+		BASE_PATH: process.env.BASE_PATH,
 	};
 
 	const basePath = process.env.BASE_PATH ?? "/";
 
 	return {
 		images: {
-			loader: 'akamai',
-			path: '',
+			loader: 'custom',
 		},
 		trailingSlash: true,
 		reactStrictMode: true,
@@ -56,5 +56,6 @@ module.exports = phase => {
 		eslint: {
 			ignoreDuringBuilds: true,
 		},
+		basePath: env.BASE_PATH,
 	};
 };

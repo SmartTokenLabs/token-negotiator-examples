@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { connectWallet, getCurrentWalletConnected, safeMint } from "./utils/interact.js";
+import { Image } from "ui/components";
 import { chainMap, supportedChains } from './utils/network';
 import nftDataStore from './nftDataStore';
 
@@ -145,7 +146,7 @@ const Minter = () => {
       <div className="collection-container">
         {
           nftCollection.list && nftCollection.list.map((collectionItem, i) => {
-            return <div key={i} className="nft-container"><img src={collectionItem.imagePath}></img><button onClick={event => onMintPressed(event, collectionItem)}>Mint</button></div>;
+            return <div key={i} className="nft-container"><Image src={collectionItem.imagePath}></Image><button onClick={event => onMintPressed(event, collectionItem)}>Mint</button></div>;
           })
         }
       </div>

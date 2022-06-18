@@ -15,7 +15,7 @@ export default [
       {
         metaUrl: "https://gateway.pinata.cloud/ipfs/QmXdnWNa2CaRCUa4jMTirmkVJkygr2LtnccSuDY3yXrvVm/bayc_1013.json",
         ipfs: "https://gateway.pinata.cloud/ipfs/QmWiozg1axUSpVowzdTvb5vq7pZyERvAFcTeT8qTojq6qe",
-        imagePath: "/nfts/tokens/images/BAYC_1013.png",
+        imagePath: require("../../../../../public/nfts/tokens/images/BAYC_1013.png"),
         name: "#1013",
         description: "stl demo nft"
       }
@@ -37,7 +37,7 @@ export default [
       {
         metaUrl: "https://gateway.pinata.cloud/ipfs/QmXdnWNa2CaRCUa4jMTirmkVJkygr2LtnccSuDY3yXrvVm/mayc_19748.json",
         ipfs: "https://gateway.pinata.cloud/ipfs/QmZSGPAFQfnPWRTRjwdUz3TtEBfvGk99iCzMWjwRWHBdpn",
-        imagePath: "/nfts/tokens/images/MAYC_19748.png",
+        imagePath: require("../../../../../public/nfts/tokens/images/MAYC_19748.png"),
         name: "#19748",
         description: "stl demo nft"
       }
@@ -59,28 +59,28 @@ export default [
       {
         metaUrl: "https://gateway.pinata.cloud/ipfs/QmXdnWNa2CaRCUa4jMTirmkVJkygr2LtnccSuDY3yXrvVm/nifty_1013_15.json",
         ipfs: "https://resources.niftytailor.com/1/0x0c8b0e8f975bf3dfb99904005385e825a391af81/380.png",
-        imagePath: "/nfts/tokens/images/NIFTY_1013_15.png",
+        imagePath: require("../../../../../public/nfts/tokens/images/NIFTY_1013_15.png"),
         name: "BAYC #1013-15",
         description: "stl demo nft"
       },
       {
         metaUrl: "https://gateway.pinata.cloud/ipfs/QmXdnWNa2CaRCUa4jMTirmkVJkygr2LtnccSuDY3yXrvVm/nifty_1013_3.json",
         ipfs: "https://resources.niftytailor.com/1/0x0c8b0e8f975bf3dfb99904005385e825a391af81/272.png",
-        imagePath: "/nfts/tokens/images/NIFTY_1013_3.png",
+        imagePath: require("../../../../../public/nfts/tokens/images/NIFTY_1013_3.png"),
         name: "BAYC #1013-3",
         description: "stl demo nft"
       },
       {
         metaUrl: "https://gateway.pinata.cloud/ipfs/QmXdnWNa2CaRCUa4jMTirmkVJkygr2LtnccSuDY3yXrvVm/nifty_19748_2.json",
         ipfs: "https://resources.niftytailor.com/1/0x0c8b0e8f975bf3dfb99904005385e825a391af81/249.png",
-        imagePath: "/nfts/tokens/images/NIFTY_19748_3.png",
+        imagePath: require("../../../../../public/nfts/tokens/images/NIFTY_19748_3.png"),
         name: "MAYC #19748-3",
         description: "stl demo nft"
       },
       {
         metaUrl: "https://gateway.pinata.cloud/ipfs/QmXdnWNa2CaRCUa4jMTirmkVJkygr2LtnccSuDY3yXrvVm/nifty_19748_3.json",
         ipfs: "https://resources.niftytailor.com/1/0x0c8b0e8f975bf3dfb99904005385e825a391af81/93.png",
-        imagePath: "/nfts/tokens/images/NIFTY_19748_2.png",
+        imagePath: require("../../../../../public/nfts/tokens/images/NIFTY_19748_2.png"),
         name: "MAYC #19748-2",
         description: "stl demo nft"
       }
@@ -102,14 +102,14 @@ export default [
       {
         metaUrl: "https://gateway.pinata.cloud/ipfs/QmQumKykjybk95oF5QdkbQ6pkao7uLKBjES1ZtqeHYLBme",
         ipfs: "https://gateway.pinata.cloud/ipfs/QmRAF2zPcy6jJfi3w5JicTs1sdLaqywutyiYkspdeFeNNy",
-        imagePath: "/nfts/BAYC_4-1.png",
+        imagePath: require("../../../../../public/nfts/BAYC_4-1.png"),
         name: "4-1",
         description: "stl demo nft"
       },
       {
         metaUrl: "https://gateway.pinata.cloud/ipfs/QmSi2PjWCeZ4VbiGf7yxruxySFMdbyWnVKCDdAHJd7wmMg",
         ipfs: "https://gateway.pinata.cloud/ipfs/QmSZqeAU5w1ynjgEisy765L84vBTH4QJJLJUXKb9S5NarY",
-        imagePath: "/nfts/BAYC_4-2.png",
+        imagePath: require("../../../../../public/nfts/BAYC_4-2.png"),
         name: "4-2",
         description: "stl demo nft"
       }
@@ -131,7 +131,7 @@ export default [
       {
         metaUrl: "https://gateway.pinata.cloud/ipfs/QmezFufvu59KkR4SJUeMf6EAhzZwsg3mJeGyztLhSL1z78",
         ipfs: "https://gateway.pinata.cloud/ipfs/QmfHSGwXhFsBjxTYDRo5aJNvmmAgjAYmihdNXsF7Zfc2jm",
-        imagePath: "/nfts/DriversRun.png",
+        imagePath: require("../../../../../public/nfts/DriversRun.png"),
         name: "Drivers Run",
         description: "stl demo nft"
       }
@@ -153,7 +153,7 @@ export default [
       {
         metaUrl: "https://gateway.pinata.cloud/ipfs/QmdN4aSrCV6rpmVDLPAvXVAMcQ7FMJGYB1kWDtikqzP1r9",
         ipfs: "https://gateway.pinata.cloud/ipfs/QmP9pamMk45LxPy6ziCxCYjq435JdyRmCE28Z9QtPAuCHz",
-        imagePath: "/nfts/Expansion_Punk_16461.png",
+        imagePath: require("../../../../../public/nfts/Expansion_Punk_16461.png"),
         name: "16461",
         description: "stl demo nft"
       }
@@ -175,14 +175,14 @@ export default [
       {
         metaUrl: "https://gateway.pinata.cloud/ipfs/QmcQVZJxAvVQ7obNPAjcpxEKrLV6ox9TgyrcnX5uXDzKMR",
         ipfs: "https://gateway.pinata.cloud/ipfs/QmUKcBhBWGDDTwfLKWGJyJ66XNKrTGNCitVAKK4aLcxiKK",
-        imagePath: "/nfts/Women_Tribe_1370.png",
+        imagePath: require("../../../../../public/nfts/Women_Tribe_1370.png"),
         name: "1370",
         description: "stl demo nft"
       },
       {
         metaUrl: "https://gateway.pinata.cloud/ipfs/QmXcau2Mhsbm3UQ8xeQq62ZrcSbFNzNk2ffE6x9KMs1crX",
         ipfs: "https://gateway.pinata.cloud/ipfs/QmUEPVYoB15D2MR1oi2gpHTce4v9FQ3jDMEBAFAKPsaq8V",
-        imagePath: "/nfts/Women_Tribe_5274.png",
+        imagePath: require("../../../../../public/nfts/Women_Tribe_5274.png"),
         name: "5274",
         description: "stl demo nft"
       }
@@ -204,14 +204,14 @@ export default [
       {
         metaUrl: "https://gateway.pinata.cloud/ipfs/QmXZ7HxVR5FpXKyjc9aWTdEe3DhQXMRA6FHkoWEorkp2j7",
         ipfs: "https://gateway.pinata.cloud/ipfs/Qmb5Q4QQSpPYkf6ta355ve3SYXZfbFMp2PiWPKGHiaUFhr",
-        imagePath: "/nfts/Octane.png",
+        imagePath: require("../../../../../public/nfts/Octane.png"),
         name: "Octane",
         description: "stl demo nft"
       },
       {
         metaUrl: "https://gateway.pinata.cloud/ipfs/QmStVYUYb3CtNV2BoQp8JiHqkR8sJWWzq1KvRKPUoTVBgv",
         ipfs: "https://gateway.pinata.cloud/ipfs/QmdFox1wfNvLSZAodKn1YKhRn3DzYjWpCKq2UncpV1fTSJ",
-        imagePath: "/nfts/AirBender.png",
+        imagePath: require("../../../../../public/nfts/AirBender.png"),
         name: "Air Bender",
         description: "stl demo nft"
       },

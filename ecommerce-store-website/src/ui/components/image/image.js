@@ -9,6 +9,9 @@ import clsx from 'clsx';
 //	Styles
 import styles from "./image.module.scss";
 
+const staticImgLoader = ({src, width, quality}) => {
+	return src;
+}
 
 //
 //	TokenScript / UI / Components / Image
@@ -21,7 +24,7 @@ export default function Image({ className, src, alt, height, width }) {
 
 	return (
 		<div className={ classList }>
-			<img src={ src } alt={ alt || '' } height={ height } width={ width } />
+			<NextImage loader={ staticImgLoader } src={ src } alt={ alt || '' } height={ height } width={ width } />
 		</div>
 	);
 }
