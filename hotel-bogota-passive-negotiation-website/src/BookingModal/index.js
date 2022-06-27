@@ -68,6 +68,7 @@ export default function BookingModal({ roomType, applyDiscount, discount, price,
         Book
       </Button>
       <Dialog
+        disableEnforceFocus={true}
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title">

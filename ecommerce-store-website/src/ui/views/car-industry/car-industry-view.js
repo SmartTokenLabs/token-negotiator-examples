@@ -10,6 +10,7 @@ import { useStore } from "src/base/state";
 
 //	Styles
 import styles from "./car-industry-view.module.scss";
+import {createNegotiatorClient, updateNegotiatorIssuers} from "src/base/negotiator-client";
 
 import imgCarIndustry1 from "../../../../public/images/car-industry-1.jpg";
 import imgCarIndustry2 from "../../../../public/images/car-industry-2.jpg";
@@ -51,6 +52,20 @@ export default function CarIndustryView() {
 
 		setClaimedVip(true);
 	}
+
+	useEffect(()=> {
+
+		updateNegotiatorIssuers([
+			{
+				collectionID: 'stl-rnd-riot-racers',
+				onChain: true,
+				contract: '0x399653F4212bf3EA3AF9bCE45a294AB462f22436',
+				chain: 'rinkeby',
+				openSeaSlug: 'stl-riot-racers-nfts-v3'
+			}
+		]);
+
+	}, []);
 
 	return (
 		<Page className={ styles[ 'v-car-industry'] } meta={ meta }>

@@ -4,7 +4,8 @@ import './Token.css';
 
 function Token({ tokenInstance }) {
 
-  const { ticketClass, ticketId, devconId } = tokenInstance;
+  const { ticketClass, ticketIdNumber, devconId } = tokenInstance;
+
   return (
     <div className="ticketContainer">
       <div className="ticketDetails">
@@ -12,7 +13,7 @@ function Token({ tokenInstance }) {
           {ticketClass.toString()}
         </Typography>
         <Typography className="ticketId" variant="body2" color="textSecondary" component="p">
-          {ticketId && ticketId.toString()}
+          {ticketIdNumber && ticketIdNumber.toString()}
         </Typography>
         <Typography className="devconId" variant="body2" color="textSecondary" component="p">
           Devcon ID: {devconId && devconId.toString()}

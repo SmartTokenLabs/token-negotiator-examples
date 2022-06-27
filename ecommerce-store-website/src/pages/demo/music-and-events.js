@@ -3,6 +3,8 @@
 import { Page } from 'ui/app';
 import { Link, ProductItem, Banner } from 'ui/components';
 import { useStore } from "src/base/state";
+import {useEffect} from "react";
+import {createNegotiatorClient, updateNegotiatorIssuers} from "src/base/negotiator-client";
 
 import imgMusicProduct1 from "../../../public/images/music-product-1.jpg";
 import imgMusicProduct2 from "../../../public/images/music-product-2.jpg";
@@ -51,6 +53,34 @@ export default function MusicEvents() {
 			(tokens["stl-mayc"] && tokens["stl-mayc"].tokens.length > 0)
 		);
 	}
+
+	useEffect(()=> {
+
+		updateNegotiatorIssuers([
+			{
+				collectionID: 'stl-bayc',
+				onChain: true,
+				contract: '0x3d8a0fB32b0F586FdC10447c22F477979dc526ec',
+				chain: 'rinkeby',
+				openSeaSlug: 'stl-bayc'
+			},
+			{
+				collectionID: 'stl-mayc',
+				onChain: true,
+				contract: '0x70F6aCb098d57917CD46e8c647fa9c45800D29f2',
+				chain: 'rinkeby',
+				openSeaSlug: 'stl-mayc'
+			},
+			{
+				collectionID: 'stl-nifty',
+				onChain: true,
+				contract: '0x60E04A774aD2Eca9e4093445dA67e649bb267879',
+				chain: 'rinkeby',
+				openSeaSlug: 'stl-nifty'
+			}
+		]);
+
+	}, []);
 
 	return (
 		<Page meta={ meta }>

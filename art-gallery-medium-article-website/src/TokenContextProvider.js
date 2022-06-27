@@ -61,7 +61,7 @@ class TokenNegotiatorInstance extends React.Component {
     negotiator = new Client({
       type: 'active',
       issuers: [
-        { collectionID: "demo-tokens", contract: '0x26472AA24D795AbcB687bddb44d733ef55Ebdf09', chain: 'Rinkeby' }
+        { collectionID: 'demo-tokens', onChain: true, contract: '0x0d0167a823c6619d430b1a96ad85b888bcf97c37', chain: 'eth' }
       ],
       options: {
         overlay: {

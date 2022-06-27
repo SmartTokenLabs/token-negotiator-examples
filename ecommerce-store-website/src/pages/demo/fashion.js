@@ -3,6 +3,8 @@
 import { Page } from 'ui/app';
 import { Link, ProductItem, Banner } from 'ui/components';
 import { useStore } from "src/base/state";
+import {useEffect} from "react";
+import {createNegotiatorClient, updateNegotiatorIssuers} from "src/base/negotiator-client";
 
 import imgVogueGraphics from "../../../public/images/vogue-graphics.png";
 import imgFashionProduct1 from "../../../public/images/fashion-product-1.jpg";
@@ -50,6 +52,27 @@ export default function Fashion() {
 		return (tokens["stl-nifty"] && tokens["stl-nifty"].tokens.length > 0) ||
 			(tokens["women-tribe"] && tokens["women-tribe"].tokens.length > 0);
 	}
+
+	useEffect(()=> {
+
+		updateNegotiatorIssuers([
+			{
+				collectionID: 'stl-nifty',
+				onChain: true,
+				contract: '0x60E04A774aD2Eca9e4093445dA67e649bb267879',
+				chain: 'rinkeby',
+				openSeaSlug: 'stl-nifty'
+			},
+			{
+				collectionID: 'women-tribe',
+				onChain: true,
+				contract: '0xDbaCB1C25d849321727534C1BB2bbd962272eB13',
+				chain: 'rinkeby',
+				openSeaSlug: 'stl-woman-tribe-nfts-v2'
+			}
+		]);
+
+	}, []);
 
 	return (
 		<Page meta={ meta }>

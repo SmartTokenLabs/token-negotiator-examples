@@ -26,6 +26,8 @@ module.exports = phase => {
 		BASE_PATH: process.env.BASE_PATH,
 	};
 
+	const basePath = process.env.BASE_PATH ?? "/";
+
 	return {
 		images: {
 			loader: 'custom',
