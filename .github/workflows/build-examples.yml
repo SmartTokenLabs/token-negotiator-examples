@@ -1,10 +1,9 @@
 name: Build examples
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, staging ]
+  workflow_dispatch:
 
 jobs:
   build:

@@ -1,4 +1,4 @@
-name: "ecommerce-store-website CI"
+name: Build & Deploy ecommerce examples
 
 on:
   push:
