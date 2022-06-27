@@ -113,8 +113,7 @@ window.updateIssuers = () => {
     let newIssuers = [];
 
     while (newIssuers.length < 3){
-        // NOSONAR
-        let issuer = issuers[Math.floor(Math.random()*issuers.length)];
+        let issuer = issuers[Math.floor(Math.random()*issuers.length)]; //NOSONAR Ignore math.random warning as this isn't used for crypto functions
 
         if (newIssuers.indexOf(issuer) === -1)
             newIssuers.push(issuer)
