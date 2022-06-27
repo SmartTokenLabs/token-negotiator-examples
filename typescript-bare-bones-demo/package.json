@@ -4,7 +4,7 @@
   "description": "gateway to negotiate tokens from the token outlet",
   "main": "index.js",
   "dependencies": {
-    "@tokenscript/token-negotiator": "*"
+    "@tokenscript/token-negotiator": "1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
