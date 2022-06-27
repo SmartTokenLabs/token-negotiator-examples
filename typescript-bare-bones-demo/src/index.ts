@@ -113,6 +113,7 @@ window.updateIssuers = () => {
     let newIssuers = [];
 
     while (newIssuers.length < 3){
+        // NOSONAR
         let issuer = issuers[Math.floor(Math.random()*issuers.length)];
 
         if (newIssuers.indexOf(issuer) === -1)
