@@ -2,9 +2,10 @@
 
 This example showcases examples of how the Token Negotiator can be used for ecommerce based discounts and special features for token holders.
 
-## install
+## install & setup
 
 `npm i`
+`npm run build`
 
 ## serve 
 
