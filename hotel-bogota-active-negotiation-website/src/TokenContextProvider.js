@@ -116,7 +116,7 @@ class TokenNegotiatorInstance extends React.Component {
       filter: {}
     });
 
-    negotiator.negotiate();
+    setTimeout(() => negotiator.negotiate(), 0);
     
   }
   render() {
