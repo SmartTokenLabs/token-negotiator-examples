@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { Client } from '@tokenscript/token-negotiator/dist/client/index';
+import { Client } from '@tokenscript/token-negotiator';
 import "@tokenscript/token-negotiator/dist/theme/style.css";
 
 const TokenContext = createContext({ 
