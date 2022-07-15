@@ -29,7 +29,32 @@ let tokenIssuers = [
 window.negotiator = new Client({
   type: 'passive',
   issuers: tokenIssuers,
-  options: {}
+  options: {
+    unSupported: {
+      config: {
+        iE: false,
+        iE9: false,
+        edge: false,
+        chrome: false,
+        phantomJS: false,
+        fireFox: false,
+        safari: false,
+        android: false,
+        iOS: false,
+        mac: false,
+        windows: false,
+        touchDevice: false,
+        metaMask: false,
+        alphaWallet: false,
+        mew: false,
+        trust: false,
+        goWallet: false,
+        status: false,
+        isImToken: false,
+      },
+      errorMessage: "This browser cannot yet support token authentication."
+    }
+  }
 });
 
 function App() {
