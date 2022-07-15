@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { Client } from '@tokenscript/token-negotiator';
+import { Client } from '@tokenscript/token-negotiator/dist/client/index';
 import "@tokenscript/token-negotiator/dist/theme/style.css";
 
 const TokenContext = createContext({ 
@@ -75,7 +75,7 @@ class TokenNegotiatorInstance extends React.Component {
       filter: {}
     });
 
-    setTimeout(() => { negotiator.negotiate(); }, 0);
+    negotiator.negotiate();
     
   }
   render() {
