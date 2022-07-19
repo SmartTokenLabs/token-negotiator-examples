@@ -7,11 +7,11 @@ on:
     inputs:
       negotiatorBranch:
         description: "Use a specific branch from token-negotiator repo"
-        required: true,
-        default: "Use package.json version",
+        required: false
+        default: ""
         type: choice
         options:
-          - "Use package.json version"
+          - ""
           - staging
           - main
 

@@ -8,7 +8,7 @@ on:
       negotiatorBranch:
         description: "Use a specific branch from token-negotiator repo"
         required: false,
-        default: "",
+        default: ""
         type: choice
         options:
           -
