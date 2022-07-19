@@ -1,1 +1,0 @@
-(self.webpackChunkticket_issuer_website=self.webpackChunkticket_issuer_website||[]).push([[502],{71156:()=>{},50522:()=>{},66882:()=>{}}]);
