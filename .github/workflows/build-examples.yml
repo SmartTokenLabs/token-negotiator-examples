@@ -11,7 +11,7 @@ on:
         default: ""
         type: choice
         options:
-          -
+          - ""
           - staging
           - main
 
