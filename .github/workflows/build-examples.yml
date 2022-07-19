@@ -33,6 +33,8 @@ jobs:
 
     - name: Build
       run: |
+        echo "Github base ref: $GITHUB_BASE_REF"
+        echo "Requested branch: $NEGOTIATOR_BRANCH"
         if [[ $GITHUB_BASE_REF == "staging" ]]; then 
           echo "This is a staging branch PR, updating package.json files to use negotiator staging branch"
           scripts/use_negotiator_branch.js staging
