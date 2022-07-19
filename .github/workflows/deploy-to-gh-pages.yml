@@ -33,7 +33,8 @@ jobs:
 
     - name: Build
       run: |
-        if [ ! -z $NEGOTIATOR_BRANCH ] then 
+        if [ ! -z $NEGOTIATOR_BRANCH ] 
+        then 
           echo "Negotiator branch $NEGOTIATOR_BRANCH requested, updating package.json files"
           scripts/use_negotiator_branch.js $NEGOTIATOR_BRANCH
         fi
