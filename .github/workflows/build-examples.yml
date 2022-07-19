@@ -4,6 +4,16 @@ on:
   pull_request:
     branches: [ main, staging ]
   workflow_dispatch:
+    inputs:
+      negotiatorBranch:
+        description: "Use a specific branch from token-negotiator repo"
+        required: false,
+        default: "",
+        type: choice
+        options:
+          -
+          - staging
+          - main
 
 jobs:
   build:
@@ -23,6 +33,14 @@ jobs:
 
     - name: Build
       run: |
+        if [[ $GITHUB_BASE_REF == "staging"]]; then 
+          echo "This is a staging branch PR, updating package.json files to use negotiator staging branch"
+          scripts/use_negotiator_branch.js staging
+        fi
+        if [ ! -z $NEGOTIATOR_BRANCH ]; then 
+          echo "Negotiator branch $NEGOTIATOR_BRANCH requested, updating package.json files"
+          scripts/use_negotiator_branch.js $NEGOTIATOR_BRANCH
+        fi
         npm install
         npm run build
         npm run install-barebones
@@ -31,6 +49,8 @@ jobs:
         export BASE_PATH=/token-negotiator-examples/ecommerce-store-website
         npm run build-ecommerce
         npm run copy-artifacts
+      env:
+        NEGOTIATOR_BRANCH: ${{ inputs.negotiatorBranch }}
 
     - uses: actions/upload-artifact@v3
       with:
