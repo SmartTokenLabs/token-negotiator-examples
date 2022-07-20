@@ -36,11 +36,7 @@ function App() {
 
   let [tokens, setTokens] = useState([]);
 
-    let devconConfig = config;
-
-    devconConfig.collectionID = "devcon";
-
-    devconConfig = updateTokenConfig(devconConfig);
+    let devconConfig = updateTokenConfig(config);
 
     let tokenIssuers = [
         devconConfig
@@ -58,7 +54,7 @@ function App() {
     
     tokenIssuers.map((issuer) => {
 
-      tokens.push(...issuerTokens[issuer.tokenName].tokens);
+      tokens.push(...issuerTokens[issuer.collectionID].tokens);
 
     });
 

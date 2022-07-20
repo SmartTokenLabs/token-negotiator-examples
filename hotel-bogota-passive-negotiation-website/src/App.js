@@ -16,11 +16,7 @@ const mockRoomData = [{ "type": "Deluxe Room", "price": 200000, "frequency": "pe
 // mock discount of 10% applied to any ticket selected. In a real world scenario, this maybe different per ticket type and retrieved from a backend service.
 const mockRoomDiscountData = 10;
 
-let devonConfig = config;
-
-devonConfig.collectionID = "devcon";
-
-devonConfig = updateTokenConfig(devonConfig);
+let devonConfig = updateTokenConfig(config);
 
 let tokenIssuers = [
   devonConfig
@@ -29,31 +25,29 @@ let tokenIssuers = [
 window.negotiator = new Client({
   type: 'passive',
   issuers: tokenIssuers,
-  options: {
-    unSupported: {
-      config: {
-        iE: false,
-        iE9: false,
-        edge: false,
-        chrome: false,
-        phantomJS: false,
-        fireFox: false,
-        safari: false,
-        android: false,
-        iOS: false,
-        mac: false,
-        windows: false,
-        touchDevice: false,
-        metaMask: false,
-        alphaWallet: false,
-        mew: false,
-        trust: false,
-        goWallet: false,
-        status: false,
-        isImToken: false,
-      },
-      errorMessage: "This browser cannot yet support token authentication."
-    }
+  unSupportedUserAgent: {
+    config: {
+      iE: false,
+      iE9: false,
+      edge: false,
+      chrome: false,
+      phantomJS: false,
+      fireFox: false,
+      safari: false,
+      android: false,
+      iOS: false,
+      mac: false,
+      windows: false,
+      touchDevice: false,
+      metaMask: false,
+      alphaWallet: false,
+      mew: false,
+      trust: false,
+      goWallet: false,
+      status: false,
+      isImToken: false,
+    },
+    errorMessage: "This browser cannot yet support token authentication."
   }
 });
 
@@ -78,7 +72,7 @@ function App() {
   window.negotiator.on('tokens', (issuerTokens) => {
     let tokens = [];
     tokenIssuers.map((issuer) => {
-      tokens.push(...issuerTokens[issuer.tokenName].tokens);
+      tokens.push(...issuerTokens[issuer.collectionID].tokens);
     });
     if (tokens.length > 0) {
       setTokens(tokens);
@@ -86,12 +80,12 @@ function App() {
     }
   });
 
-  window.negotiator.on("token-proof", (tokenProof) => {
+  window.negotiator.on("token-proof", (result) => {
 
     setTimeout(() => {
 
       setSelectedPendingTokenInstance(null);
-      setTokenProofData(tokenProof);
+      setTokenProofData({issuer: result.issuer, proof: result.data.proof});
       setDiscount({ value: getApplicableDiscount(), tokenInstance: selectedPendingTokenInstance });
 
     }, 0);
