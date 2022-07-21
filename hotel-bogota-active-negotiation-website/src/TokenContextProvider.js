@@ -39,11 +39,11 @@ const TokenContextProvider = (props) => {
 
     });
 
-    negotiator.on("token-proof", (proof) => { 
+    negotiator.on("token-proof", (result) => {
 
-      console.log('token proof', proof);
+      console.log('token proof', result.data);
           
-      setProof(proof);
+      setProof(result.data);
 
     });
     
@@ -74,7 +74,7 @@ class TokenNegotiatorInstance extends React.Component {
     devconConfig.collectionID = "devcon";
 
     devconConfig = updateTokenConfig(devconConfig);
-    
+
     negotiator = new Client({
       type: 'active',
       issuers: [
@@ -87,7 +87,7 @@ class TokenNegotiatorInstance extends React.Component {
         theme: "light",
         position: "bottom-right"
       },
-      unSupported: {
+      unSupportedUserAgent: {
         config: {
           iE: false,
           iE9: false,

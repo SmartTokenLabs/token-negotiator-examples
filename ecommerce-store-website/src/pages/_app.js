@@ -92,7 +92,10 @@ export default function App({ Component, pageProps }) {
 					theme: "light",
 					position: "bottom-right"
 				},
-				ipfsBaseUrl: "https://smart-token-labs-demo-server.mypinata.cloud/ipfs/"
+				/*safeConnectOptions: {
+					url: "http://localhost:8081",
+					initialProof: "simple_challenge"
+				}*/
 			});
 
 			//window.negotiator.negotiate();

@@ -38,11 +38,7 @@ function App() {
 
   let [retryButton, setRetryButton] = useState("");
 
-    let devconConfig = config;
-
-    devconConfig.collectionID = "devcon";
-
-    devconConfig = updateTokenConfig(devconConfig);
+    let devconConfig = updateTokenConfig(config);
 
     let tokenIssuers = [
         devconConfig
@@ -50,8 +46,7 @@ function App() {
 
   let negotiator = new Client({
     type: 'passive',
-    issuers: tokenIssuers,
-    messagingForceTab: true
+    issuers: tokenIssuers
   });
 
   negotiator.on('tokens', (issuerTokens) => {
@@ -60,7 +55,7 @@ function App() {
     
     tokenIssuers.map((issuer) => {
 
-      tokens.push(...issuerTokens[issuer.tokenName].tokens);
+      tokens.push(...issuerTokens[issuer.collectionID].tokens);
 
     });
 
@@ -78,7 +73,7 @@ function App() {
             setRetryButton("An error occurred loading tokens");
         }
     });
-  
+
   useEffect(() => {
 
     negotiator.negotiate();

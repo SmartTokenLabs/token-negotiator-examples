@@ -69,8 +69,7 @@ class TokenNegotiatorInstance extends React.Component {
         repeatAction: "try again",
         theme: "light",
         position: "bottom-right"
-      },
-      filter: {}
+      }
     });
 
     negotiator.negotiate();
