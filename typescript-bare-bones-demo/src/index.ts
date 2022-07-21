@@ -34,15 +34,12 @@ const issuers = [
 window.negotiator = new Client({
     type: 'active',
     issuers: issuers,
-    options: {
-        overlay: {
-            openingHeading: "Open a new world of discounts available with your tokens.",
-            issuerHeading: "Get discount with Ticket",
-            repeatAction: "try again",
-            theme: "light",
-            position: "bottom-right"
-        },
-        filters: {},
+    uiOptions: {
+        openingHeading: "Open a new world of discounts available with your tokens.",
+        issuerHeading: "Get discount with Ticket",
+        repeatAction: "try again",
+        theme: "light",
+        position: "bottom-right"
     },
     autoLoadTokens: 3,
     autoEnableTokens: true

@@ -63,14 +63,12 @@ class TokenNegotiatorInstance extends React.Component {
       issuers: [
         { collectionID: 'demo-tokens', onChain: true, contract: '0x0d0167a823c6619d430b1a96ad85b888bcf97c37', chain: 'eth' }
       ],
-      options: {
-        overlay: {
-          openingHeading: "Open a new world of discounts available with your tokens.",
-          issuerHeading: "Discount with your tokens",
-          repeatAction: "try again",
-          theme: "light",
-          position: "bottom-right"
-        }
+      uiOptions: {
+        openingHeading: "Open a new world of discounts available with your tokens.",
+        issuerHeading: "Discount with your tokens",
+        repeatAction: "try again",
+        theme: "light",
+        position: "bottom-right"
       },
       filter: {}
     });

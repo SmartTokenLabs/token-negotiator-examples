@@ -9,6 +9,7 @@ import './App.css';
 import config from '../../tokenConfig.json';
 import {updateTokenConfig} from "../../environment";
 import "@tokenscript/token-negotiator/dist/theme/style.css";
+import Button from "@material-ui/core/Button";
 
 // mock data e.g. server side hotel room price database
 const mockRoomData = [{ "type": "Deluxe Room", "price": 200000, "frequency": "per night", "image": "./hotel_3.jpg" }, { "type": "King Suite", "price": 320000, "frequency": "per night", "image": "./hotel_2.png" }, { "type": "Superior Deluxe Suite", "price": 250030, "frequency": "per night", "image": "./hotel_1.jpg" }]
@@ -29,31 +30,29 @@ let tokenIssuers = [
 window.negotiator = new Client({
   type: 'passive',
   issuers: tokenIssuers,
-  options: {
-    unSupported: {
-      config: {
-        iE: false,
-        iE9: false,
-        edge: false,
-        chrome: false,
-        phantomJS: false,
-        fireFox: false,
-        safari: false,
-        android: false,
-        iOS: false,
-        mac: false,
-        windows: false,
-        touchDevice: false,
-        metaMask: false,
-        alphaWallet: false,
-        mew: false,
-        trust: false,
-        goWallet: false,
-        status: false,
-        isImToken: false,
-      },
-      errorMessage: "This browser cannot yet support token authentication."
-    }
+  unSupported: {
+    config: {
+      iE: false,
+      iE9: false,
+      edge: false,
+      chrome: false,
+      phantomJS: false,
+      fireFox: false,
+      safari: false,
+      android: false,
+      iOS: false,
+      mac: false,
+      windows: false,
+      touchDevice: false,
+      metaMask: false,
+      alphaWallet: false,
+      mew: false,
+      trust: false,
+      goWallet: false,
+      status: false,
+      isImToken: false,
+    },
+    errorMessage: "This browser cannot yet support token authentication."
   }
 });
 
@@ -74,6 +73,8 @@ function App() {
   let [discount, setDiscount] = useState({ value: undefined, tokenInstance: null });
   
   let [selectedPendingTokenInstance, setSelectedPendingTokenInstance] = useState();
+
+  let [retryButton, setRetryButton] = useState("");
 
   window.negotiator.on('tokens', (issuerTokens) => {
     let tokens = [];
@@ -96,6 +97,17 @@ function App() {
 
     }, 0);
 
+  });
+
+  window.negotiator.on("error", ({error, issuer}) => {
+    if (error.name === "POPUP_BLOCKED"){
+      setRetryButton("Popup blocked");
+    } else if (error.name === "USER_ABORT"){
+      setRetryButton("Action aborted");
+    } else {
+      console.log(error);
+      setRetryButton("An error occurred loading tokens");
+    }
   });
 
   // async example of initial hotel data loaded from source
@@ -187,6 +199,20 @@ function App() {
             component="p">
             Free shuttle service available to you as a Devcon Ticket holder! Enjoy the event.
           </Typography>
+        </div>
+      }
+      { retryButton &&
+        <div style={{color: "#f50057", textAlign:"center"}}>
+          <Typography
+            gutterBottom
+            variant="body2"
+            component="h4">{retryButton}</Typography>
+          <Button
+              style={{background: "#fff8f8"}}
+              onClick={() => {
+              setRetryButton("");
+              window.negotiator.negotiate();
+            }}>Retry</Button>
         </div>
       }
     </div>

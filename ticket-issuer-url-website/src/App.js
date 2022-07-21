@@ -36,6 +36,8 @@ function App() {
 
   let [tokens, setTokens] = useState([]);
 
+  let [retryButton, setRetryButton] = useState("");
+
     let devconConfig = config;
 
     devconConfig.collectionID = "devcon";
@@ -49,7 +51,7 @@ function App() {
   let negotiator = new Client({
     type: 'passive',
     issuers: tokenIssuers,
-    options: {}
+    messagingForceTab: true
   });
 
   negotiator.on('tokens', (issuerTokens) => {
@@ -65,6 +67,17 @@ function App() {
     setTokens(tokens);
     
   });
+
+    negotiator.on("error", ({error, issuer}) => {
+        if (error.name === "POPUP_BLOCKED"){
+            setRetryButton("Popup blocked");
+        } else if (error.name === "USER_ABORT"){
+            setRetryButton("Action aborted");
+        } else {
+            console.log(error);
+            setRetryButton("An error occurred loading tokens");
+        }
+    });
   
   useEffect(() => {
 
@@ -156,6 +169,15 @@ function App() {
             !tokens.length && <div>
               <b>- no ticket found -</b>
             </div>
+          }
+          { retryButton &&
+              <div>
+                  <h5 style={{color: "red"}}>{retryButton}</h5>
+                  <button className="makeTicket" style={{backgroundColor: "#f58b77"}} onClick={() => {
+                      setRetryButton("");
+                      negotiator.negotiate();
+                  }}>Retry</button>
+              </div>
           }
         </div>
       </div>

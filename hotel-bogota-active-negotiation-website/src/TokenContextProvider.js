@@ -80,40 +80,37 @@ class TokenNegotiatorInstance extends React.Component {
       issuers: [
         devconConfig
       ],
-      options: {
-        overlay: {
-          openingHeading: "Open a new world of discounts available with your tokens.",
-          issuerHeading: "Get discount with Ticket",
-          repeatAction: "try again",
-          theme: "light",
-          position: "bottom-right"
-        },
-        unSupported: {
-          config: {
-            iE: false,
-            iE9: false,
-            edge: false,
-            chrome: false,
-            phantomJS: false,
-            fireFox: false,
-            safari: false,
-            android: false,
-            iOS: false,
-            mac: false,
-            windows: false,
-            touchDevice: false,
-            metaMask: false,
-            alphaWallet: false,
-            mew: false,
-            trust: false,
-            goWallet: false,
-            status: false,
-            isImToken: false,
-          },
-          errorMessage: "This browser cannot yet support token authentication."
-        }
+      uiOptions: {
+        openingHeading: "Open a new world of discounts available with your tokens.",
+        issuerHeading: "Get discount with Ticket",
+        repeatAction: "try again",
+        theme: "light",
+        position: "bottom-right"
       },
-      filter: {}
+      unSupported: {
+        config: {
+          iE: false,
+          iE9: false,
+          edge: false,
+          chrome: false,
+          phantomJS: false,
+          fireFox: false,
+          safari: false,
+          android: false,
+          iOS: false,
+          mac: false,
+          windows: false,
+          touchDevice: false,
+          metaMask: false,
+          alphaWallet: false,
+          mew: false,
+          trust: false,
+          goWallet: false,
+          status: false,
+          isImToken: false,
+        },
+        errorMessage: "This browser cannot yet support token authentication."
+      }
     });
 
     negotiator.negotiate();
