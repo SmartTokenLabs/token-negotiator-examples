@@ -44,12 +44,12 @@ function App() {
         devconConfig
     ];
 
-  let negotiator = new Client({
+  window.negotiator = new Client({
     type: 'passive',
     issuers: tokenIssuers
   });
 
-  negotiator.on('tokens', (issuerTokens) => {
+  window.negotiator.on('tokens', (issuerTokens) => {
 
     let tokens = [];
     
@@ -63,7 +63,7 @@ function App() {
     
   });
 
-    negotiator.on("error", ({error, issuer}) => {
+  window.negotiator.on("error", ({error, issuer}) => {
         if (error.name === "POPUP_BLOCKED"){
             setRetryButton("Popup blocked");
         } else if (error.name === "USER_ABORT"){
@@ -76,7 +76,7 @@ function App() {
 
   useEffect(() => {
 
-    negotiator.negotiate();
+    window.negotiator.negotiate();
 
   }, []);
 
