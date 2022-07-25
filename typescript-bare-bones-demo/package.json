@@ -4,7 +4,7 @@
   "description": "gateway to negotiate tokens from the token outlet",
   "main": "index.js",
   "dependencies": {
-    "@tokenscript/token-negotiator": "^2.0.0",
+    "@tokenscript/token-negotiator": "^1.0.2",
     "source-map-loader": "^4.0.0"
   },
   "devDependencies": {
