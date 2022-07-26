@@ -92,10 +92,10 @@ export default function App({ Component, pageProps }) {
 					theme: "light",
 					position: "bottom-right"
 				},
-				/*safeConnectOptions: {
-					url: "http://localhost:8081",
-					initialProof: "simple_challenge"
-				}*/
+				safeConnectOptions: {
+					url: "https://safeconnect.tokenscript.org",
+					initialProof: false
+				}
 			});
 
 			//window.negotiator.negotiate();
