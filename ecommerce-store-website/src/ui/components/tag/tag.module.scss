@@ -1,0 +1,57 @@
+@use 'styles/modules' as *;
+
+
+//
+//	Brand Connector Demo / UI / Components / Tag
+//
+
+
+.c-tag {
+	$c: &;
+
+	display: inline-block;
+	background-color: color-get( --bg );
+	color: color-get( --text );
+	padding: grid-baseline(0.75) grid-baseline(1);
+	border-radius: 6px;
+
+	// Styles
+
+	&:global(.-style-muted) {
+		@include color-set( --bg, white );
+		@include color-set( --text, white );
+		background-color: color-get( --bg, 0.25 );
+	}
+
+	&:global(.-style-primary-faded) {
+		@include color-set( --bg, --primary );
+		@include color-set( --text, --primary );
+		background-color: color-get( --bg, 0.25 );
+	}
+
+	&:global(.-style-dark) {
+		@include color-set( --bg, base-110 );
+		@include color-set( --text, white );
+		background-color: color-get( --bg );
+	}
+
+	&:global(.-style-light-blue) {
+		@include color-set( --bg, light-blue );
+		@include color-set( --text, light-blue );
+		background-color: color-get( --bg, 0.33 );
+	}
+
+	&:global(.-style-square) {
+		border-radius: 0;
+	}
+
+	// Sizes
+
+	&.-size-s {
+		padding: grid-baseline(0.75) grid-baseline(1.75);
+	}
+
+	&.-size-m {
+		padding: grid-baseline(0.75) grid-baseline(2);
+	}
+}

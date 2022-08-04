@@ -1,0 +1,61 @@
+@use 'styles/modules' as *;
+
+
+//
+//	Brand Connector Demo / UI / Views / Fashion
+//
+
+
+.v-fashion {
+	$v: &;
+
+	&_hero {
+
+		&-logo {
+			max-width: grid-gutter(12);
+			min-width: grid-baseline(45);
+		}
+	}
+
+	&_promotion {
+
+		&-image {
+			max-width: 75%;
+			margin-left: auto;
+		}
+	}
+}
+
+/**
+ * 	Media Queries
+ *	--------------------------------------------------
+ */
+
+/** Breakpoint:	Small ----------------------- */
+
+@include breakpoint-for( small ) using ( $bp ) {
+
+	.v-fashion {
+		$a: &;
+
+
+		&_hero {
+
+			&-logo {
+				max-width: grid-gutter(25);
+				margin-right: auto; margin-left: auto;
+			}
+		}
+
+		&_promotion {
+			text-align: center;
+
+			&-image {
+				order: -1;
+				max-width: 60%;
+				min-height: grid-baseline(10);
+				margin: 0 auto;
+			}
+		}
+	}
+}

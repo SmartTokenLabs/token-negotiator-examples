@@ -2,11 +2,10 @@
 
 
 //
-//	TokenScript / Styles / Main
+//	Brand Connector Demo / Styles / Main
 //
-
 //	Environment
-$env: 'development' !default;
+$env: 'none' !default;
 @debug #{ '→ Build Environment:' $env };
 
 //	Dev overlays

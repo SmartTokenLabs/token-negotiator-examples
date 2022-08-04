@@ -2,47 +2,87 @@
 
 
 //
-//	TokenScript / UI / App / Header
+//	Brand Connector Demo / UI / App / Header
 //
 
+.c-popover {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	padding: grid-baseline(2) grid-baseline(3.5);
+	border-radius: 6px;
+	background-color: #252525;
+	max-width: grid-baseline(23);
+	margin-left: grid-baseline(15);
+
+	&:before {
+		content: '';
+		pointer-events: none;
+		width: 0; height: 0;
+		margin: grid-baseline(-5.75) 0 0 grid-baseline(1);
+		border: grid-baseline(2) solid transparent;
+		border-radius: 4px;
+		border-bottom-color: #252525;
+	}
+
+	@include breakpoint-for( small ) using ( $bp ) {
+		margin-top: grid-baseline(-1.75); margin-left: 0;
+		max-width: none;
+
+		&:before {
+			margin-left: grid-baseline(17);
+		}
+	}
+}
 
 .a-header {
 	$a: &;
 
-	width: 100%; height: grid-baseline(11.25);
-	margin: 0 auto grid-baseline(0.25); padding: 0 var(--grid-gutter-width);
-	box-sizing: border-box;
+	background-color: color-get( --bg );
+	box-shadow: 0 0 0 0 color-get( black, 0 );
+	width: 100%;
+	margin: 0 auto; padding: 0 calc( var(--grid-gutter-width) / 2 ); box-sizing: border-box;
 	display: flex; flex-flow: row nowrap; justify-content: center;
-	box-shadow: 0 grid-baseline(0.25) 0 0 color-get( --text-mid, 0.2 );
+
 
 	//	Elements
 
 	&_bar {
-		width: var(--grid-width); max-width: var(--grid-max-width);
-		display: flex; align-items: center;
+		@include color-set( --link-hover, --link );
+		width: var(--grid-width); max-width: 94%;
+		padding: grid-baseline(6.25) 0;
+		display: flex; align-items: flex-end;
 		flex: 1 1 auto;
 	}
 
-	&_logo {
-		width: auto;
-		flex: 1 1 auto;
+	&_logo-container {
+		position: relative;
 		display: flex;
-		box-sizing: border-box;
-		align-items: flex-end;
+		margin-right: grid-gutter(0.75);
 	}
+		&_logo {
+			@include color-set( --text, --base );
+			width: auto;
+			flex: 1 1 auto;
+			display: flex;
+			box-sizing: border-box;
+			align-items: flex-end;
+		}
 
 	&_nav {
-		height: 100%;
+		&-container {
+			position: relative;
+			margin-left: auto;
+		}
 
 		&-item {
 
 			&:global(.-is-active) {
-				@include color-set( --link, --primary );
 
-				&::after {
+				a::after {
 					content: '';
 					position: absolute;
-					right: 0; bottom: -2px; left: 0;
+					right: 0; bottom: grid-baseline(-1.25); left: 0;
 					width: 100%;
 					border-bottom: grid-baseline(0.5) solid color-get( --primary );
 				}
@@ -50,7 +90,42 @@
 		}
 
 		&-button {
-			margin-left: grid-gutter(0.5);
+			align-self: center;
+		}
+
+		&-tokens {
+			display: flex;
+			align-items: center;
+			border: 1px solid color-get( --base, 0.2 );
+			border-radius: 4px;
+			min-width: grid-baseline(35);
+
+			p {
+				color: color-get( --base );
+				margin: 0;
+				padding: grid-baseline(2.25) grid-baseline(2.5);
+				font-weight: 500;
+
+				&:first-child {
+					flex: 1;
+				}
+
+				+ p {
+					position: relative;
+					border-left: 1px solid color-get( --base, 0.2 );
+					padding-left: grid-baseline(3.25);
+
+					&:before {
+						content: '';
+						position: absolute;
+						top: 0; bottom: 0; left: grid-baseline(2);
+						margin: auto;
+						width: 4px; height: 4px;
+						border-radius: 50%;
+						background-color: #00FF66;
+					}
+				}
+			}
 		}
 	}
 }
@@ -61,25 +136,6 @@
  *	--------------------------------------------------
  */
 
- /** Breakpoint:	Large ----------------------- */
-
-@include breakpoint-for( large ) using ( $bp ) {
-
-	.a-header {
-		$a: &;
-
-		&_nav {
-			&-item {
-				padding: 0 grid-gutter(0.75);
-			}
-
-			&-button {
-				margin-left: grid-gutter(0.75);
-			}
-		}
-	}
-}
-
 /** Breakpoint:	Small ----------------------- */
 
 @include breakpoint-for( small ) using ( $bp ) {
@@ -87,13 +143,50 @@
 	.a-header {
 		$a: &;
 
-		height: grid-baseline(9);
+		&_bar {
+			flex-direction: column;
+			align-items: flex-start;
+			max-width: var(--grid-max-width);
+			margin-left: auto; margin-right: auto;
+			padding-top: grid-baseline(2.25); padding-bottom: grid-baseline(3);
+		}
 
-		&_menu-button {
-			margin-right: grid-gutter(-1);
+			&_logo-container {
+				padding-top: grid-baseline(3.25);
+				padding-bottom: grid-baseline(3.25);
+			}
 
-			> span {
-				padding: 0;
+			&_logo-img {
+				width: grid-column(2.25);
+			}
+
+		&_nav {
+			flex-flow: row wrap;
+			align-items: center;
+			gap: grid-baseline(3);
+			width: 100%;
+
+			&-item {
+				height: grid-baseline(7);
+
+				&:nth-last-child(2) {
+					margin-right: auto;
+					flex: 1;
+
+					+ div {
+						flex: 1;
+						width: 100%;
+					}
+				}
+			}
+
+			&-container {
+				width: 100%;
+				margin-left: 0;
+			}
+
+			&-tokens {
+				max-width: none;
 			}
 		}
 	}

@@ -1,0 +1,35 @@
+@use 'styles/modules' as *;
+
+
+//
+//	Brand Connector Demo / UI / Components / Minter
+//
+
+
+.c-minter {
+	$c: &;
+
+	// Elements
+
+	&_alert {
+		background-color: color-get( ts-blue, 0.25 );
+		color: #80B3FF;
+		width: fit-content;
+		padding: grid-baseline(2.75) grid-baseline(3);
+		border-radius: 6px;
+	}
+
+	&_image {
+		padding-bottom: 100%;
+		height: auto;
+		border-radius: grid-baseline(1);
+		overflow: hidden;
+	}
+
+	&_button {
+
+		&:global(.-style-primary-light) {
+			pointer-events: none;
+		}
+	}
+}

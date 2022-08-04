@@ -1,0 +1,39 @@
+@use 'styles/modules' as *;
+
+
+//
+//	Brand Connector Demo / UI / Sections / Labs Banner
+//
+
+
+.s-labs-banner {
+	$s: &;
+
+	padding: grid-baseline(14) 0;
+	background: linear-gradient( 234.79deg, color-get( ts-blue ) 37.73%, color-get( ts-blue-60 ) 118.69% );
+
+	&_logo {
+		color: color-get( --headline );
+	}
+}
+
+/**
+ * 	Media Queries
+ *	--------------------------------------------------
+ */
+
+/** Breakpoint:	Small ----------------------- */
+
+@include breakpoint-for( small ) using ( $bp ) {
+
+	.s-labs-banner {
+		$s: &;
+
+		padding: grid-baseline(8) 0;
+
+		&_logo {
+			order: -1;
+			margin-bottom: grid-baseline(2);
+		}
+	}
+}

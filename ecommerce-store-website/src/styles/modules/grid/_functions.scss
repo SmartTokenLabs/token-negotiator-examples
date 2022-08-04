@@ -4,7 +4,7 @@
 
 
 //
-//	TokenScript / Modules / Grid / Functions
+//	Brand Connector Demo / Modules / Grid / Functions
 //
 
 
@@ -45,7 +45,7 @@
 		$grid-map: get( config.$config, $context );
 		$gutter-w: get( config.$config, '#{$context}.gutter-w' );
 
-		@return $gutters * math.div( $gutter-w, 16 ) * 1rem;
+		@return $gutters * math.div( $gutter-w, 16 ) * 1vw;
 	} @else {
 		@error ('`$gutters` of `#{$gutters}` is not a number.');
 	}
@@ -57,5 +57,5 @@
  */
 
  @function baseline( $lines: 1 ) {
-	@return rem( $base-line * $lines );
+	@return calc( var( --baseline ) * $lines );
 }

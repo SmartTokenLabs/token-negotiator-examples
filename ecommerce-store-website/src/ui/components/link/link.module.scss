@@ -2,7 +2,7 @@
 
 
 //
-//	TokenScript / UI / Components / Link
+//	Brand Connector Demo / UI / Components / Link
 //
 
 
@@ -11,7 +11,7 @@
 
 	position: relative;
 	cursor: pointer;
-	text-decoration: underline;
+	text-decoration: none;
 	color: color-get( --link );
 	transition: color 0.2s;
 
@@ -24,8 +24,14 @@
 
 	&:global(.-style-text) {
 		@include color-set( --link, --text );
-		@include color-set( --link-hover, ts-blue );
+		@include color-set( --link-hover, --primary );
 	}
+
+	&:global(.-style-headline) {
+		@include color-set( --link, --headline );
+		@include color-set( --link-hover, --primary );
+	}
+
 
 	//	States	 --------------------
 }
@@ -43,5 +49,4 @@
 			color: color-get( --link-hover );
 		}
 	}
-
 }
