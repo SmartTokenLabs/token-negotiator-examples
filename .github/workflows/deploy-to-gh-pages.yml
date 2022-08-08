@@ -6,10 +6,10 @@ on:
       negotiatorBranch:
         description: "Use a specific branch from token-negotiator repo"
         required: false
-        default: ""
+        default: "none"
         type: choice
         options:
-          - ""
+          - "none"
           - staging
           - main
 
@@ -33,7 +33,7 @@ jobs:
 
     - name: Build
       run: |
-        if [ ! -z $NEGOTIATOR_BRANCH ]; 
+        if [[ ! -z $NEGOTIATOR_BRANCH && $NEGOTIATOR_BRANCH != "none" ]]; 
         then 
           echo "Negotiator branch $NEGOTIATOR_BRANCH requested, updating package.json files"
           scripts/use_negotiator_branch.js $NEGOTIATOR_BRANCH
