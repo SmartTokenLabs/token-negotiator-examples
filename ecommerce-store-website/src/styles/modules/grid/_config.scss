@@ -3,7 +3,7 @@
 
 
 //
-//	TokenScript / Modules / Grid / Config
+//	Brand Connector Demo / Modules / Grid / Config
 //
 
 
@@ -13,24 +13,21 @@ $use_defaults: true !default;
 
 $config-defaults: (
 	default: (
-		columns: 9,
-		column-w: 84,
-		gutter-w: 24
+		columns: 12,
+		column-w: 68,
+		gutter-w: 30
 	),
 	large: (
 		columns: 12,
-		column-w: 72,
-		gutter-w: 32
+		column-w: 96,
+		gutter-w: 48
 	),
 	small: (
 		columns: 6,
 		column-w: 72,
-		gutter-w: 16
+		gutter-w: 24
 	),
-
 );
-
-
 
 @if $use_defaults {
 	$config: map.merge( $config, $config-defaults ) !global;

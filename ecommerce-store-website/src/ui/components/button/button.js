@@ -12,20 +12,21 @@ import styles from "./button.module.scss";
 
 
 //
-//	TokenScript / UI / Components / Button
+//	Brand Connector Demo / UI / Components / Button
 //
 
 
 export default function Button( props ) {
 	const { children, className, ariaLabel, format, size, icon, iconSize, iconPos, iconFormat, iconTag, isLoading, iconLoaderSize, ...restProps } = props;
 	const _isIconButton = icon && !children;
-	const _icon = <Icon type={ icon } format={ iconFormat } size={ iconSize } tag={ iconTag } />;
-	let iconContent = typeof icon === 'string' ? _icon : icon;
+	const _icon = typeof icon === 'string' ? <Icon className={ styles[ 'c-button_icon' ] } type={ icon } format={ iconFormat } size={ iconSize } tag={ iconTag } /> : '';
+	let iconContent = typeof icon === 'string' ? _icon : <div className={ styles[ 'c-button_icon-custom' ] }>{ icon }</div>;
 	if ( isLoading ) iconContent = <Loader size={ iconLoaderSize } />;
+	const showIcon = icon || isLoading;
 
 	const sizeClass = size && styles[ `-size-${ size }` ] || null;
 	const formatClass = format && styles[ `-format-${ format }` ] || null;
-	const classes = clsx( styles[ 'c-button' ], className, formatClass, sizeClass, { [ styles[ '-format-icon' ]]: _isIconButton });
+	const classes = clsx( styles[ 'c-button' ], className, formatClass, sizeClass, { [ styles[ '-format-icon' ]]: _isIconButton, [ styles[ '-is-disabled' ] ]: isLoading });
 
 	return (
 		<Link
@@ -34,9 +35,9 @@ export default function Button( props ) {
 			{ ...restProps }
 		>
 			<span className={ styles[ 'c-button_content' ]}>
-				{ iconPos === 'before' && iconContent }
+				{ ( showIcon && iconPos === 'before' ) && iconContent }
 				{ children && <span className={ styles[ 'c-button_text' ] }>{ children }</span> }
-				{ iconPos === 'after' && iconContent }
+				{ ( showIcon && iconPos === 'after' ) && iconContent }
 			</span>
 		</Link>
 	);
@@ -64,7 +65,10 @@ Button.propTypes = {
 	className: PropTypes.string,
 	format: PropTypes.string,
 	size: PropTypes.string,
-	icon: PropTypes.string,
+	icon: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.node,
+	]),
 	iconSize: PropTypes.string,
 	iconFormat: PropTypes.string,
 	iconPos: PropTypes.string,
@@ -84,5 +88,5 @@ Button.defaultProps = {
 	iconPos: 'after',
 	element: 'button',
 	type: 'button',
-	iconLoaderSize: 'm',
+	iconLoaderSize: '',
 };

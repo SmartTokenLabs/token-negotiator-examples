@@ -3,7 +3,7 @@
 
 
 //
-//	TokenScript / Base / Alignment
+//	Brand Connector Demo / Base / Alignment
 //
 
 
@@ -102,7 +102,7 @@ $spacer-sides: (
 }
 .-va-center {
 	display: flex;
-	align-items: center;
+	align-items: center !important;
 }
 .-va-start {
 	display: flex;
@@ -115,12 +115,13 @@ $spacer-sides: (
 .-a-start {
 	align-items: flex-start;
 }
--a-center {
-	align-items: center;
-}
 .-a-end {
 	align-items: flex-end;
 }
+.-a-stretch {
+	align-items: stretch;
+}
+
 
 /**
  * 	Media Queries

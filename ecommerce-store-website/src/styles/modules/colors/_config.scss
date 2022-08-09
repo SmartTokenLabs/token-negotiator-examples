@@ -4,7 +4,7 @@
 
 
 //
-//	TokenScript / Modules / Colors / Config
+//	Brand Connector Demo / Modules / Colors / Config
 //
 
 
@@ -15,66 +15,106 @@ $use_defaults: true !default;
 
 $config-defaults: (
 	white: #ffffff,
+	grey-10: #f4f4f4,
+	grey-20: #F9F9F9,
+	grey-80: #374151,
 	black: #000000,
-	grey: #7B7B7B,
+	burnt-orange: #B8795E,
+	dark-purple: #332970,
+	light-purple: #7047EB,
+	light-blue: #92C3EF,
 
-	beige:#F8EBC9,
-	gold: #C3AD6E,
-	gold-light: #A59875,
+	base: #272727,
+	base-110: #0f0f0f,
+	base-105: #121212,
+	base-100: #151515,
+	base-90: #474747,
+	base-80: #535353,
+	base-60: #8C8C8C,
+	base-50: #A1A1A1,
 
-	ts-blue: #0019FF,
-	ts-grey: #666666,
-	ts-grey-light: #DDDDDD,
-	ts-green: #47B309,
+	ts-blue: #001AFF,
+	ts-blue-80: #3268FF,
+	ts-blue-60: #4F95FF,
+	ts-lime: #BDFF02,
+	ts-light-grey: #C0C0C0,
 );
 
 $config-theme-defaults: (
 	root: (
-		--brand: black,
-		--primary: ts-blue,
-		--brand-invert: white, // Sits on brand
+		--primary: ts-lime,
+		--primary-invert: black, // Sits on primary
+		--secondary: ts-blue,
+		--secondary-invert: white, // Sits on secondary
 
-		--base: black,
-		--text: black,
-		--text-mid: ts-grey,
-		--text-light: ts-grey-light,
-		--headline: black,
+		--base: white,
+		--text: ts-light-grey,
+		--text-dark: black,
+		--text-mid: grey-80,
+		--text-light: white,
+		--headline: white,
+		--headline-light: base,
 
 		--link: --primary,
-		--link-hover: black,
-
-		--button-text: white,
-		--button-bg: --primary,
-		--button-secondary-text: --brand,
-		--button-secondary-bg: --brand-invert,
-
-		--bg: white,
-
-		--state-error: ts-blue,
-		--state-success: ts-green,
-
-		--field-text: ts-grey,
-		--field-bg: white,
-	),
-	beige: (
-		--bg: beige,
-		--base: gold,
-		--headline: gold,
-		--text-light: gold-light,
-		--primary: black,
-
-		--button-bg: --primary,
-	),
-	dark: (
-		--bg: black,
-		--base: white,
-		--text: white,
-		--headline: white,
-		--text-light: grey,
-		--primary: white,
+		--link-hover: ts-blue-60,
+		--link-light: ts-blue-60,
+		--link-light-hover: --primary,
 
 		--button-text: black,
 		--button-bg: --primary,
+		--button-highlight: --brand-mid,
+
+		--bg: black,
+		--bg-light: base-100,
+
+		--state-error: ts-lime,
+
+		--field-text: base-90,
+		--field-bg: grey-10,
+	),
+	brand: (
+		--primary: white,
+		--text: white,
+		--headline: --primary,
+		--link: --primary,
+		--bg: st-blue,
+	),
+	grey-light: (
+		--bg: --bg-light,
+	),
+	dark: (
+		--headline: white,
+		--link: white,
+		--base: black,
+		--text: white,
+		--text-light: white,
+		--text-mid: ts-light-grey,
+	),
+	light: (
+		--bg: white,
+		--base: black,
+		--text: --base,
+		--text-light: base-60,
+		--headline: black,
+	),
+	burnt-orange: (
+		--bg: burnt-orange,
+		--base: black,
+		--headline: white,
+		--text: white,
+	),
+	purple: (
+		--bg: dark-purple,
+		--base: white,
+		--headline: white,
+		--text: white,
+		--text-mid: white,
+	),
+	light-purple: (
+		--bg: light-purple,
+		--base: black,
+		--headline: white,
+		--text: white,
 	),
 );
 

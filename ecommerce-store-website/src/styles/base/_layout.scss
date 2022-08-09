@@ -4,9 +4,13 @@
 
 
 //
-//	TokenScript / Base / Layout
+//	Brand Connector Demo / Base / Layout
 //
 
+
+:root {
+	--baseline: #{ type-size-responsive( 6, 10 ) };
+}
 
 //	Placeholders
 %section {
@@ -15,7 +19,8 @@
 	background-color: color-get( --bg );
 }
 	%grid {
-		width: var(--grid-width); max-width: var(--grid-max-width);
+		width: var(--grid-width);
+		max-width: var(--grid-max-width);
 		margin-left: auto; margin-right: auto; padding: 0 calc( var(--grid-gutter-width) / 2 ); box-sizing: border-box;
 		display: grid;
 		grid-template-columns: [start] repeat( var(--grid-columns), minmax( auto, 1fr ) ) [end];
@@ -23,8 +28,16 @@
 		grid-column-gap: var(--grid-gutter-width);
 
 		> div {
-			min-width: 0;
 			display: flex; flex-direction: column;
+			align-items: flex-start;
+
+			&:not([class*="-g-min-"]) {
+				min-width: 0;
+			}
+		}
+
+		&.-g-auto {
+			grid-template-columns: [start] repeat( var(--grid-columns), minmax( min-content, auto ) ) [end];
 		}
 
 		&.-g-hs {
@@ -51,11 +64,18 @@
 $grid-cols: core.get( $grid-config, 'default.columns' );
 
 .section {
-	padding: grid-baseline(9) 0;
+	padding: grid-baseline(14) 0;
 	@extend %section;
 
-	&.-ps { padding: grid-baseline(4) 0; }
+	&.-ps { padding: grid-baseline(12) 0; }
 
+	&.-pts { padding-top: grid-baseline(12); }
+
+	&.-pbs { padding-bottom: grid-baseline(12); }
+
+	&.-pl { padding: grid-baseline(35) 0; }
+
+	&.-pbl { padding-bottom: grid-baseline(35); }
 }
 	.grid {
 		@extend %grid;
@@ -89,8 +109,17 @@ $grid-cols: core.get( $grid-config, 'default.columns' );
 			--grid-gutter-width: #{grid-gutter(1)};
 		}
 			@for $i from 1 through $grid-cols {
+				.-g-cols-start-#{$i} {
+					grid-column-start: #{$i};
+				}
+				.-g-cols-end-#{$i} {
+					grid-column-end: #{$i};
+				}
+				.-g-cols-fill-#{$i} {
+					grid-column-start: span #{$i};
+				}
 				.-g-max-#{$i} {
-					max-width: grid-column($i);
+					max-width: min( #{ grid-column($i) }, #{ $bp-max * 1vw } );
 				}
 				.-g-min-#{$i} {
 					min-width: grid-column($i);
@@ -99,7 +128,7 @@ $grid-cols: core.get( $grid-config, 'default.columns' );
 
 			@if $bp-key == small {
 				.-s\:g-min-none { min-width: 0; }
-				.-s\:g-max-none { max-width: none; }
+				.-s\:g-max-none { max-width: var(--grid-max-width); }
 			}
 	}
 }
@@ -110,7 +139,16 @@ $grid-cols: core.get( $grid-config, 'default.columns' );
 	$bp-max: core.get( $bp, 'max' );
 
 	.section {
-		padding: grid-baseline(6) 0;
+		padding: grid-baseline(14) 0;
+
+
+		&.-ps { padding: grid-baseline(8) 0; }
+		&.-pts { padding-top: grid-baseline(8); }
+		&.-pbs { padding-bottom: grid-baseline(8); }
+
+		&.-pl { padding: grid-baseline(22) 0; }
+
+		&.-pbl { padding-bottom: grid-baseline(22); }
 	}
 
 	%grid {
@@ -129,10 +167,27 @@ $grid-cols: core.get( $grid-config, 'default.columns' );
 		}
 
 		@for $i from 1 through $grid-cols {
+			.-g-cols-start-#{$i} {
+				grid-column-start: auto;
+			}
+			.-g-cols-end-#{$i} {
+				grid-column-end: auto;
+			}
+			.-g-cols-fill-#{$i} {
+				grid-column-start: span 1;
+			}
 			&.-s\:g-cols-#{$i} {
 				--grid-columns: #{$i};
 			}
 		}
+
+		&[class*="-g-max-"] {
+			max-width: var(--grid-max-width);
+		}
+	}
+
+	[class*="-g-max-"] {
+		max-width: none;
 	}
 }
 

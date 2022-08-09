@@ -1,0 +1,52 @@
+@use 'styles/modules' as *;
+
+
+//
+//	Brand Connector Demo / UI / Components / Activation Banner
+//
+
+
+@keyframes scroll {
+	0% { transform: translateX(0%); }
+	100% { transform: translateX(-100%); }
+}
+
+.c-activation-banner {
+	$c: &;
+
+	position: relative;
+	display: flex; align-items: center;
+	width: 100vw;
+	max-width: 100%;
+	height: grid-baseline(10);
+	overflow-x: hidden;
+	background-color: color-get( --bg );
+	color: color-get( --text );
+
+	// Elements
+
+	&_container {
+		overflow-x: hidden;
+		display: flex;
+		flex-direction: row;
+		position: relative;
+		width: 100%;
+	}
+
+	&_content {
+		flex: 0 0 auto;
+		min-width: 100%;
+		z-index: 1;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		animation: scroll 100s linear 0s infinite;
+		animation-play-state: running;
+		animation-delay: 0s;
+		animation-direction: normal;
+
+		&-tag {
+			margin: 0 grid-baseline(0.75);
+		}
+	}
+}

@@ -9,7 +9,7 @@ import styles from "./visually-hidden.module.scss";
 
 
 //
-//	TokenScript / UI / Components / Visually Hidden
+//	Brand Connector Demo / UI / Components / Visually Hidden
 //
 
 

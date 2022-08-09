@@ -8,7 +8,7 @@ const PKG = require( './package.json' );
 
 
 //
-//	TokenScript / Next.js Config
+//	Brand Connector Demo / Next.js Config
 //
 
 
@@ -23,6 +23,7 @@ module.exports = phase => {
 		APP_NAME: PKG.name,
 		APP_ENV: NODE_ENV,
 		APP_VERSION: PKG.version,
+		APP_HOST: process.env.APP_HOST ?? process.env.VERCEL_URL,
 		BASE_PATH: process.env.BASE_PATH,
 	};
 
