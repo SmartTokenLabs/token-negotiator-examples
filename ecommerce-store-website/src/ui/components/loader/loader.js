@@ -12,7 +12,7 @@ import styles from './loader.module.scss';
 
 
 //
-//	TokenScript / UI / Components / Loader
+//	Brand Connector Demo / UI / Components / Loader
 //
 
 

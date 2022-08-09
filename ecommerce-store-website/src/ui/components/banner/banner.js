@@ -5,26 +5,30 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 // App
-import { Image, Button } from 'ui/components';
+import { Image, Button, Tag } from 'ui/components';
 
 // Styles
 import styles from "./banner.module.scss";
 
 
 //
-//	TokenScript / UI / Components / Banner
+//	Brand Connector Demo / UI / Components / Banner
 //
 
 
-export default function Banner({ className, theme, image, headline, text, code, fineprint, children, onClick, enabled, selectedTokens, authTokens}) {
+export default function Banner({ className, theme, image, headline, text, overlayImage, children, onClick, selectedTokens, authTokens, imageDimensions = [ 100, 100 ], imagePosition = "50% 50%" }) {
 	const [ claimed, setClaimed ] = useState( false );
+
+	const [ imageW, imageH ] = imageDimensions;
 
 	const handleOnClick = async () => {
 		// TODO: Actually pass the tokens through component
+		const issuer = authTokens[0];
 		try {
 			await window.negotiator.authenticate({
-				issuer: authTokens[0],
-				unsignedToken: {name:"some token", desc: "a really cool token"}
+				issuer,
+				unsignedToken: selectedTokens[ issuer ].tokens[0],
+				//unsignedToken: {name:"some token", desc: "a really cool token"}
 			});
 			setClaimed( true );
 		} catch (e){
@@ -37,28 +41,38 @@ export default function Banner({ className, theme, image, headline, text, code, 
 
 	return (
 		<div className={ clsx( styles[ 'c-banner' ], className, { [ `-t-${ theme }` ]:theme } ) }>
-			<div className={ styles[ 'c-banner_container' ] }>
-				{ image && <Image className={ styles[ 'c-banner_image' ] } src={ image?.src } /> }
-				{ children ? (
-					children
-				) : (
-					<div className={ styles[ 'c-banner_content' ] }>
-						{ headline && (
-							typeof headline !== 'string' ? (
-								headline
-							) : (
-								<h2 className="f5 -f-extra-bold">{ headline }</h2>
-							)
-						)}
-						{ text && <p className="f7 -mt0">{ text }</p> }
-						<div style={{visibility: enabled ? 'visible' : 'hidden' }} className={ styles[ 'c-banner_actions' ] }>
-							<Button className={ claimed ? '-style-green' : '' } onClick={ handleOnClick }>{ claimed ? 'Success!' : 'Claim' }</Button>
-							{/* code && <p className={ clsx( '-f-caps', styles[ 'c-banner_actions-code' ] ) }>Code: { code }</p> */}
+			{ image && (
+				<div className={ styles[ 'c-banner_bg' ] }>
+					<Image src={ image } width={ imageW } height={ imageH } objectFit="cover" objectPosition={ imagePosition } layout="fill" />
+				</div>
+			)}
+			<Tag className={ clsx( styles[ 'c-banner_tag' ], 'f9 -f-caps -f-medium -style-square' ) }>NFT Exclusive</Tag>
+			{ children ? (
+				children
+			) : (
+				<div className={ clsx( styles[ 'c-banner_content' ], 'grid -g-cols-2' ) }>
+					<div>
+						<div className="-g-max-4">
+							{ headline && (
+								typeof headline !== 'string' ? (
+									headline
+								) : (
+									<h2 className="f4 -f-extra-bold">{ headline }</h2>
+								)
+							)}
+						</div>
+						<div className="-g-max-3">
+							{ text && <p className="f7 -mt0 -mb1">{ text }</p> }
+						</div>
+						<div className={ styles[ 'c-banner_actions' ] }>
+							<Button className="-mt1" onClick={ handleOnClick }>{ claimed ? 'Success!' : 'Claim Now' }</Button>
 						</div>
 					</div>
-				)}
-			</div>
-			{ fineprint && <p className={ clsx( '-color-text-light -f-light', styles[ 'c-banner_fineprint' ] ) }>{ fineprint }</p> }
+					<div className={ styles[ 'c-banner_overlay' ] }>
+						<Image className={ styles[ 'c-banner_overlay-image' ] } src={ overlayImage } />
+					</div>
+				</div>
+			)}
 		</div>
 	);
 }
@@ -66,13 +80,12 @@ export default function Banner({ className, theme, image, headline, text, code, 
 Banner.propTypes = {
 	className: PropTypes.string,
 	theme: PropTypes.string,
-	image: PropTypes.object,
+	image: PropTypes.string,
 	headline: PropTypes.oneOfType([
 		PropTypes.string,
 		PropTypes.node,
 	]),
 	text: PropTypes.string,
-	code: PropTypes.string,
 	children: PropTypes.node,
 	onClick: PropTypes.func,
 }

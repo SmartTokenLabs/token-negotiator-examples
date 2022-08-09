@@ -3,7 +3,7 @@
 
 
 //
-//	TokenScript / UI / Components / Product Item
+//	Brand Connector Demo / UI / Components / Product Item
 //
 
 
@@ -15,28 +15,91 @@
 	// Elements
 
 	&_image {
+		position: relative;
 		margin-bottom: grid-baseline(2);
 
 		img {
-			width: 100%;
+			object-fit: cover;
 		}
 	}
 
-	&_description {
-		padding: 0 grid-gutter(0.5);
-	}
+		&_tag {
+			position: absolute;
+			top: grid-baseline(1); left: grid-baseline(2);
+			z-index: 1;
+			letter-spacing: 0.5px;
+		}
 
-	&_priceBox {
-		height: 65px;
+	&_price {
+		display: flex;
+		align-items: center;
+
 		p {
-			margin: 0 5px;
+			margin-top: 0; margin-bottom: 0;
 		}
-		small {
-			font-size: 11px;
+
+		&-sale {
+			order: 1;
+			color: color-get( --secondary );
+
+			+ p {
+				color: color-get( --text, 0.3 );
+				text-decoration: line-through;
+				margin-right: grid-gutter(0.5);
+			}
+		}
+
+		&-subtext {
+			color: color-get( --secondary );
 		}
 	}
-	.discountPrice {
-		color: green;
+
+	// Styles
+
+	&:global(.-t-dark) {
+		@include color-set( --secondary, --primary );
+
+		#{ $c }_description {
+			opacity: 0.6;
+		}
+	}
+
+
+	// Formats
+
+	&:not(.-format-featured) &:not(:global([class*="-t-"])) {
+		#{ $c }_content {
+			@include color-set( --headline, --text-mid );
+			@include color-set( --text, --text-mid );
+		}
+	}
+
+	&.-format-featured {
+		position: relative;
+
+		#{ $c } {
+			&_image {
+				position: absolute;
+				top: 0; right: 0; bottom: 0; left: 0;
+				margin-bottom: 0;
+			}
+
+			&_content {
+				position: absolute;
+				bottom: grid-baseline(5); left: grid-baseline(4);
+				z-index: 1;
+			}
+
+			&_price {
+				&-sale {
+					color: color-get( --text );
+				}
+
+				&-subtext {
+					color: color-get( --primary );
+				}
+			}
+		}
 	}
 }
 
@@ -52,11 +115,29 @@
 	.c-product-item {
 		$c: &;
 
+		text-align: left;
+
+		// Elements
+
 		&_image {
 			display: flex;
 			justify-content: center;
 			background-color: #F1EFF0;
 			border-radius: grid-baseline(1);
+		}
+
+		// Formats
+
+		&.-format-featured {
+			min-height: clamp( grid-baseline(70), 75vw, grid-baseline(100) );
+		}
+
+		&.-format-trending {
+			#{ $c } {
+				&_image {
+					max-height: clamp( grid-baseline(50), 60vw, grid-baseline(70) );
+				}
+			}
 		}
 	}
 }

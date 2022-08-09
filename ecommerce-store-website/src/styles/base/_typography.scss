@@ -3,7 +3,7 @@
 
 
 //
-//	TokenScript / Base / Typography
+//	Brand Connector Demo / Base / Typography
 //
 
 
@@ -18,8 +18,9 @@
 	$type-bp: core.get( $type-map, 'breakpoints' );
 
 	.#{ $type-key } {
-		@include type-size( $type-key );
+		@include type-size( $type-key, $responsive: true );
 
+		//	Breakpoints
 		@if $type-bp {
 			@each $bp-key, $bp-type-value in $type-bp {
 				@include breakpoint-for( $bp-key ) using ( $bp ) {
@@ -28,19 +29,16 @@
 							core.get( $bp-type-value, 'px' ),
 							$lines: core.get( $bp-type-value, 'lines' ),
 							$margin: core.get( $bp-type-value, 'margin' ),
-							$spacing: core.get( $bp-type-value, 'spacing' )
+							$spacing: core.get( $bp-type-value, 'spacing' ),
+							$responsive: true,
 						);
 					} @else {
-						@include type-size( $bp-type-value );
+						@include type-size( $bp-type-value, $responsive: true );
 					}
 				}
 			}
 		}
 	}
-
-	// .#{ $type-key }r {
-	// 	@include type-size( $type-key, $responsive: true );
-	// }
 
 	@if type-of( $type-el ) == string {
 		#{ $type-el } {
@@ -82,4 +80,10 @@
 
 .-f-strikethrough {
 	text-decoration: line-through;
+}
+
+.-f-break {
+	&:before {
+		content: '\A';
+	}
 }

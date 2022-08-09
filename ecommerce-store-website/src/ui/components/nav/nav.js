@@ -12,7 +12,7 @@ import styles from './nav.module.scss';
 
 
 //
-//	TokenScript / UI / Components / Nav
+//	Brand Connector Demo / UI / Components / Nav
 //
 
 
@@ -31,7 +31,7 @@ export function NavItem({ children, className, style, icon, format, isActive = f
 
 	const itemProps = {
 		...restProps,
-		element: restProps.href ? 'a' : 'button',
+		element: restProps.href ? 'a' : restProps?.onClick ? 'button' : '',
 		className: clsx( styles[ 'c-nav-item' ], className, { '-is-active': isActive }),
 		children,
 		style,

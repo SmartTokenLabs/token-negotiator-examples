@@ -1,0 +1,33 @@
+@use 'styles/modules' as *;
+
+//
+//	Brand Connector Demo / UI / Sections / Demo Hero
+//
+
+
+.s-demo-hero {
+	$s: &;
+
+	height: grid-baseline(65.5);
+
+	&:global(.section) {
+		padding: grid-baseline(6) 0;
+	}
+}
+
+/**
+ * 	Media Queries
+ *	--------------------------------------------------
+ */
+
+/** Breakpoint:	Small ----------------------- */
+
+@include breakpoint-for( small ) using ( $bp ) {
+
+	.s-demo-hero {
+		$a: &;
+
+		height: grid-baseline(78);
+		text-align: center;
+	}
+}

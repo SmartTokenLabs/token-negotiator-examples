@@ -1,14 +1,13 @@
 
+
 // App
-import { HowItWorksView } from 'ui/views';
-
+import { HomeView } from 'ui/views';
 
 //
-//	TokenScript / Pages / Index
+//	Brand Connector Demo / Pages / Home
 //
 
 
-export default function IndexPage( props ) {
-	return <HowItWorksView { ...props } />
+export default function Demo( props ) {
+	return <HomeView { ...props } />;
 }
-

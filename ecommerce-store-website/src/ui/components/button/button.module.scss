@@ -3,23 +3,23 @@
 
 
 //
-//	TokenScript / UI / Components / Button
+//	Brand Connector Demo / UI / Components / Button
 //
 
 
 $easing: cubic-bezier(0.4, 0, 0, 1);
-$box-shadow: 2px 4px 8px 0 rgba( 0, 0, 0, 0.15 );
+$box-shadow: 2px 4px 8px 0 rgba( 0, 0, 0, 0.2 );
 
 .c-button {
 	$c: &;
-	$button-height: grid-baseline(5.5);
+	$button-height: type-size-responsive( 56, 64 );
 
-	--btn-radius: #{grid-baseline(4)};
+	--btn-radius: #{grid-baseline(1)};
 
-	@include type-size( f7, $margin: false );
-	width: fit-content; height: $button-height;
-	min-width: grid-gutter(8);
-	padding: grid-baseline(1) grid-gutter(0.5); box-sizing: border-box;
+	font-size: type-size-responsive( 15, 18 );
+	flex-shrink: 0;
+	width: auto; height: $button-height;
+	padding: grid-baseline(1); box-sizing: border-box;
 	position: relative;
 	display: inline-block;
 	text-align: center; text-decoration: none;
@@ -38,7 +38,6 @@ $box-shadow: 2px 4px 8px 0 rgba( 0, 0, 0, 0.15 );
 	-webkit-tap-highlight-color: rgba( 0, 0, 0, 0 );
 
 	&:not(.-style-none) {
-		background: color-get( --button-bg );
 
 		&:after {
 			content: '';
@@ -51,8 +50,28 @@ $box-shadow: 2px 4px 8px 0 rgba( 0, 0, 0, 0.15 );
 		}
 	}
 
+	&.-is-disabled {
+		pointer-events: none;
+
+		#{$c}_content {
+			opacity: 0.75;
+		}
+	}
+
 
 	//	Elements   ------------------
+
+	&-group {
+		display: flex;
+		flex-flow: row nowrap;
+		align-items: center; justify-content: flex-start;
+		width: 100%;
+		grid-gap: grid-gutter(1);
+
+		#{ $c } {
+			flex: 1;
+		}
+	}
 
 	&_content {
 		height: 100%; width: 100%; max-width: 100%;
@@ -63,8 +82,18 @@ $box-shadow: 2px 4px 8px 0 rgba( 0, 0, 0, 0.15 );
 
 		span {
 			margin: 0 grid-baseline(0.5);
+
+			+ #{ $c }_icon {
+				padding-left: grid-gutter(1);
+				margin-left: auto;
+			}
 		}
 	}
+		&_icon-custom {
+			min-width: grid-baseline(4);
+			width: grid-gutter(1);
+		}
+
 		&_text {
 			display: flex;
 			white-space: nowrap;
@@ -74,34 +103,47 @@ $box-shadow: 2px 4px 8px 0 rgba( 0, 0, 0, 0.15 );
 	//	Styles	 --------------------
 
 	&:global(.-style-none) {
-		@include color-set( --button-text, --text );
+		@include color-set( --button-text, --text-light );
 		background: transparent;
 		border: none;
-		min-width: 0;
-		padding: 0;
 	}
 
-	&:global(.-style-outline) {
-		@include color-set( --button-text, --text );
-		background: transparent;
-		border: 1px solid color-get( --button-text );
-	}
-
-	&:global(.-style-green) {
-		@include color-set( --button-bg, ts-green );
+	&:global(.-style-primary-light) {
+		@include color-set( --button-text, --primary );
+		background-color: color-get( --button-bg, 0.2 );
 	}
 
 	&:global(.-style-secondary) {
-		@include color-set( --button-text, --button-secondary-text );
-		@include color-set( --button-bg, --button-secondary-bg );
+		@include color-set( --button-text, --secondary-invert );
+		background: linear-gradient( 234.79deg, color-get( ts-blue ) 37.73%, color-get( ts-blue-60 ) 118.69% );
+	}
+
+	&:global(.-style-outline) {
+		@include color-set( --button-text, --primary );
+		background: transparent;
+		border: 2px solid color-get( --primary );
+	}
+
+	&:global(.-style-light-outline) {
+		@include color-set( --button-text, --text );
+		background: transparent;
+		border: 2px solid color-get( --text );
 	}
 
 	//	Sizes	 --------------------
 
+	&.-size-s {
+		$button-height: type-size-responsive( 40, 56 );
+		height: $button-height;
+
+		#{$c}_content {
+			padding: 0 grid-baseline(1);
+		}
+	}
+
 	&.-size-l {
-		@include type-size( f6, $margin: false );
-		height: grid-baseline(7.5);
-		padding-right: grid-gutter(1.5); padding-left: grid-gutter(1.5);
+		height: grid-baseline(9);
+		line-height: grid-baseline(3);
 	}
 
 
@@ -111,34 +153,43 @@ $box-shadow: 2px 4px 8px 0 rgba( 0, 0, 0, 0.15 );
 	&.-format-none {
 		padding: 0;
 
-		#{ $c }_content {
+		#{$c}_content {
 			padding-left: 0; padding-right: 0;
 		}
 	}
 
 	&.-format-icon {
-		min-width: auto;
-		width: grid-baseline(5.5);
-		padding: grid-baseline(1);
+		--btn-radius: 50%;
 
-		#{ $c }_content {
-			padding: 0;
+		width: $button-height;
+		height: $button-height;
+		flex-shrink: 0;
+
+		#{$c}_content {
+			padding-left: 0; padding-right: 0;
+		}
+			.c-icon {
+				margin: 0;
+			}
+
+		&.-size-xs {
+			padding: grid-baseline(0.25);
+			height: grid-baseline(3.5);
+			width: grid-baseline(3.5);
 		}
 
-		&.-size-m {
-			height: grid-baseline(6.5);
-			width: grid-baseline(6.5);
+		&.-size-s {
+			width: grid-baseline(5);
+			height: grid-baseline(5);
 		}
-
 		&.-size-l {
-			height: grid-baseline(7.5);
-			width: grid-baseline(7.5);
+			width: grid-baseline(9);
+			height: grid-baseline(9);
 		}
 	}
 
 	&.-format-block {
 		width: 100%;
-		flex: 1 1 auto;
 	}
 
 
@@ -160,7 +211,7 @@ $box-shadow: 2px 4px 8px 0 rgba( 0, 0, 0, 0.15 );
 
 @media (hover: hover) {
 
-	.c-button {
+	.c-button:not(.-is-disabled) {
 
 		&:hover {
 			box-shadow: $box-shadow;
@@ -171,10 +222,14 @@ $box-shadow: 2px 4px 8px 0 rgba( 0, 0, 0, 0.15 );
 			}
 		}
 
-		&.-style-none:hover {
-			@include color-set( --button-text, --brand );
+		&:global(.-style-none):hover {
+			color: color-get( --button-text, 0.4 );
 			transform: none;
 			box-shadow: none;
+
+			&:after {
+				opacity: 0;
+			}
 		}
 
 		&.-format-none:hover {
@@ -186,6 +241,7 @@ $box-shadow: 2px 4px 8px 0 rgba( 0, 0, 0, 0.15 );
 				@include color-set( --button-text, --primary );
 				@include color-set( --text, base-60 );
 				background: transparent;
+				border-color: color-get( --text, 0.4 );
 				box-shadow: none;
 
 				&:after {
@@ -201,6 +257,27 @@ $box-shadow: 2px 4px 8px 0 rgba( 0, 0, 0, 0.15 );
 
 @include breakpoint-for( small ) using ( $bp ) {
 	.c-button {
-		letter-spacing: -1px;
+		$c: &;
+
+		width: 100%;
+
+		&-group {
+			flex-flow: row wrap;
+			gap: grid-baseline(3);
+
+			#{ $c } {
+				flex: 1 1 100%;
+			}
+		}
+
+
+		&_content {
+			span {
+
+				+ #{ $c }_icon {
+					padding-left: grid-gutter(4);
+				}
+			}
+		}
 	}
 }

@@ -3,26 +3,27 @@
 
 
 //
-//	TokenScript / Styles / Layout
+//	Brand Connector Demo / Styles / Layout
 //
 
 
 .a-layout {
+	$a: &;
+
 	width: 100vw; min-height: 100vh;
 	box-sizing: border-box;
-	// display: grid;
 	position: relative; z-index: 10;
 	overflow-x: hidden;
-	background-color: color-get( --bg-secondary );
 
 	main {
-		min-width: 0;
-		position: relative; z-index: 10;
+		width: 100%; height: 100%;
 		background-color: color-get( --bg );
 
 		section {
+			position: relative;
 			box-sizing: border-box;
 			justify-content: center;
+			backface-visibility: hidden;
 
 			.-span-2 {
 				grid-column: span 2;
@@ -41,24 +42,7 @@
 			}
 		}
 	}
-
-	aside {
-		height: 100vh;
-		position: sticky; top: 0;
-		display: grid;
-		grid-template-columns: 100%;
-		place-items: center;
-	}
 }
-
-
-.c-slider {
-	display: grid;
-	column-gap: grid-gutter(1);
-	grid-auto-flow: column;
-	grid-auto-columns: calc( #{percentage( math.div( 1, 9 ))} - #{ grid-gutter(1 - math.div( 1, 9 ))} );
-}
-
 
 
 /**
@@ -66,17 +50,14 @@
  *	--------------------------------------------------
  */
 
-@media (hover: hover) {
-
-}
-
-
 /** Breakpoint:	Small ----------------------- */
 
 @include breakpoint-for( small ) using ( $bp ) {
 
 	.a-layout {
 		main {
+			position: relative;
+
 			section {
 				&.-hm100 {
 					min-height: auto;

@@ -1,0 +1,95 @@
+@use 'styles/modules' as *;
+
+
+//
+//	Brand Connector Demo / UI / Components / Card
+//
+
+
+//	Variables
+$box-shadow: 2px 4px 8px 0 rgba( 0, 0, 0, 0.05 );
+$box-shadow-high: 2px 12px 24px -2px rgba( 0, 0, 0, 0.15 );
+
+.c-card {
+	$c: &;
+
+	position: relative; z-index: 10;
+	display: flex;
+	flex-direction: column; justify-content: flex-end;
+	box-shadow: $box-shadow-high;
+	color: color-get( --text );
+	border-radius: grid-baseline(0.5);
+	overflow: hidden;
+
+	//	Elements	 ----------------
+
+	&_wrapper {
+		display: flex;
+		flex-flow: column; justify-content: flex-end;
+		width: 100%; height: 100%;
+		padding: grid-baseline(5.5) grid-baseline(5.5); box-sizing: border-box;
+		border-radius: grid-baseline(0.5);
+		background-color: color-get( base-100 );
+	}
+
+	&_image {
+		position: relative;
+		background-repeat: no-repeat;
+		border-top-right-radius: grid-baseline(0.5);
+		border-top-left-radius: grid-baseline(0.5);
+		background-color: color-get( --text, 0.3 );
+		background-position: center center;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-blend-mode: multiply;
+		padding-bottom: 56.25%;
+		width: 100%;
+
+		+ #{ $c }_wrapper {
+			border-top-right-radius: 0;
+			border-top-left-radius: 0;
+		}
+	}
+
+	//	Sizes	 --------------------
+
+	//	Formats	 --------------------
+
+	//	Styles	 --------------------
+
+	&:global(.-style-outline) {
+		border: 1px solid color-get( base-80 );
+		border-radius: grid-baseline(2);
+
+		#{ $c }_wrapper {
+			background-color: transparent;
+		}
+	}
+
+	//	States	 --------------------
+
+	//	Themes	 --------------------
+
+	//	Contexts	 ----------------
+}
+
+
+/**
+ * 	Media Queries
+ *	--------------------------------------------------
+ */
+
+/** Breakpoint:	Small ----------------------- */
+
+@include breakpoint-for( small ) using ( $bp ) {
+
+	.c-card {
+		$c: &;
+
+		//	Elements	 ----------------
+
+		&_wrapper {
+			padding: grid-baseline(4) grid-gutter(3);
+		}
+	}
+}

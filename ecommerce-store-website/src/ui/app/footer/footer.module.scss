@@ -1,0 +1,158 @@
+@use 'styles/modules' as *;
+
+
+//
+//	Brand Connector Demo / UI / App / Footer
+//
+
+
+.a-footer {
+	$c: &;
+
+	background-color: color-get( --bg );
+
+	//	Elements
+
+	&_subscribe {
+		flex-flow: row wrap;
+
+		&-form {
+			margin-top: grid-baseline(1);
+
+			input[type] {
+				@include color-set( --field-text, --text );
+				max-width: clamp( grid-column(1.75), grid-gutter(7.5), grid-column(2.75) );
+
+				&::placeholder {
+					opacity: 0.4;
+				}
+			}
+
+			div[role=alert] {
+				position: absolute;
+			}
+		}
+	}
+
+	&_main {
+		@include color-set( --text, --text-light );
+		margin-top: grid-baseline(8);
+		margin-bottom: grid-baseline(8);
+
+		&-logo {
+			width: grid-column(0.625);
+		}
+
+		> #{ $c }_main-address {
+			grid-column: 2 / 4;
+			width: 100%;
+			padding: 0;
+			margin: 0;
+			flex-direction: row;
+			justify-content: flex-start;
+			grid-column-gap: var(--grid-gutter-width);
+			margin: grid-baseline(3) 0;
+		}
+
+		&-socials {
+			display: flex;
+			gap: grid-gutter(0.25);
+			margin-top: grid-baseline(3);
+		}
+	}
+
+	&_copywrite {
+		opacity: 0.6;
+	}
+
+	&_activation {
+		position: fixed;
+		right: 0; bottom: 0; left: 0;
+		z-index: 20;
+		width: 100%;
+		margin: 0 auto; padding: 0 calc( var(--grid-gutter-width) / 2 ); box-sizing: border-box;
+		display: flex; flex-flow: row nowrap; justify-content: center;
+		background-color: color-get( base-100 );
+
+		> div {
+			width: var(--grid-width); max-width: 100%;
+			display: flex; align-items: flex-end;
+			flex: 1 1 auto;
+		}
+
+		p {
+			opacity: 0.4;
+			padding-right: 100px;
+		}
+
+		&_icon {
+			display: inline-block;
+		}
+	}
+}
+
+/** Breakpoint:	Small ----------------------- */
+
+@include breakpoint-for( small ) using ( $bp ) {
+	.a-footer {
+		$c: &;
+
+		&_subscribe {
+
+			h6 {
+				@include type-size( 'f6', $margin: 0 );
+			}
+
+			&-form {
+				margin-top: 0;
+			}
+		}
+
+		&_main {
+			margin-top: grid-baseline(6);
+			margin-bottom: grid-baseline(3);
+
+			&-logo {
+				order: -1;
+
+				svg {
+					height: auto;
+				}
+			}
+
+			&-email {
+
+				&_container {
+					order: -1;
+				}
+
+				> a {
+					@include type-size( 'f7', $margin: 0 );
+				}
+			}
+
+			&-socials {
+				margin-top: 0;
+				gap: grid-gutter(1);
+			}
+
+			> #{ $c }_main-address {
+				grid-column: auto;
+				margin-top: 0;
+
+				address {
+					@include type-size( 'f8', $margin: 0, $lines: 2.5 );
+					padding-right: grid-gutter(0.75);
+				}
+			}
+		}
+
+		&_copywrite {
+			margin-bottom: grid-baseline(3);
+
+			p {
+				margin: 0;
+			}
+		}
+	}
+}

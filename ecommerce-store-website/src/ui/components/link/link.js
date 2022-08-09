@@ -11,7 +11,7 @@ import styles from './link.module.scss';
 
 
 //
-//	TokenScript / UI / Components / Link
+//	Brand Connector Demo / UI / Components / Link
 //
 
 

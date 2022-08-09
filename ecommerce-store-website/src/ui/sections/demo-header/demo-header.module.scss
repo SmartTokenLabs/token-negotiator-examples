@@ -1,0 +1,42 @@
+@use 'styles/modules' as *;
+
+
+//
+//	Brand Connector Demo / UI / Sections / Demo Header
+//
+
+
+.s-demo-header {
+	$s: &;
+
+	&:global(.section) {
+		padding-top: grid-baseline(12); padding-bottom: grid-baseline(3);
+	}
+
+	h1 {
+		margin-bottom: grid-baseline(5);
+	}
+}
+
+/**
+ * 	Media Queries
+ *	--------------------------------------------------
+ */
+
+/** Breakpoint:	Small ----------------------- */
+
+@include breakpoint-for( small ) using ( $bp ) {
+
+	.s-demo-header {
+		$v: &;
+
+
+		&:global(.section) {
+			padding-top: grid-baseline(5); padding-bottom: grid-baseline(5);
+		}
+
+		h1 {
+			margin-bottom: 0;
+		}
+	}
+}
