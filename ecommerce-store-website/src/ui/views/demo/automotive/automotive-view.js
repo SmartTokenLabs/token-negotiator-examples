@@ -70,7 +70,7 @@ export default function AutomotiveView() {
 								headline="Book your exclusive track day now"
 								text="Enjoy your once in a lifetime experience as a Riot Racer NFT holder!"
 								selectedTokens={ selectedTokens }
-								authTokens={ [ 'stl-rnd-riot-racers' ] }
+								authTokens={ [ 'stl-riot-racers' ] }
 							/>
 						</div>
 					</Animation.ScrollReveal>
