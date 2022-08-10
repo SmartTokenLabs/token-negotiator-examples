@@ -1,0 +1,68 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body {
+    height: 100%;
+  }
+
+  body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img, picture, video, canvas {
+    display: block;
+    max-width: 100%;
+  }
+
+  input, button, textarea, select {
+    font: inherit;
+  }
+
+  p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+  }
+
+  ul:not(.token-issuer-list-container-tn) {
+    display: flex;
+    list-style: none;
+    font-size: 14px;
+
+    li {
+      padding: 0 10px;
+      cursor: pointer;
+    }
+  }
+
+.overlay-fab-button-tn {
+    position: relative;
+    &::before {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        top: 7px;
+        left: 0;
+        width: 16px;
+        height: 16px;
+        background: #DF2B2B;
+        border: 2px solid #333333;
+    }
+}
+
+.overlay-tn:not(.open) {
+    .overlay-fab-button-tn {
+        background-color: #444;
+        background: #000 url('../images/gap_logo_inverted.svg') no-repeat center center !important;
+
+        svg {
+            display: none;
+        }
+    }
+        
+}
