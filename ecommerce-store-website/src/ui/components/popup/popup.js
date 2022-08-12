@@ -1,6 +1,4 @@
 
-//	Dependencies
-import { useState, useEffect } from "react";
 
 //
 //	Brand Connector Demo / UI / Components / PopUp
