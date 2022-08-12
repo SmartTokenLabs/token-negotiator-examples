@@ -153,9 +153,6 @@ export default function App({ Component, pageProps }) {
 	);
 };
 
-
-
-
 App.propTypes = {
 	Component: PropTypes.func,
 	pageProps: PropTypes.object,
