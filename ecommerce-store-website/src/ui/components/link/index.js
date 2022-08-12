@@ -1,7 +1,7 @@
 
 
 //
-//	TokenScript / UI / Components / Link
+//	Brand Connector Demo / UI / Components / Link
 //
 
 

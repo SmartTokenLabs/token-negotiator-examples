@@ -1,0 +1,89 @@
+@use 'styles/modules' as *;
+
+
+//
+//	Brand Connector Demo / UI / Views / Automotive
+//
+
+
+.v-automotive {
+	$v: &;
+
+	// Elements
+
+	&_hero {
+
+		&-logo {
+			max-width: grid-gutter(12);
+			min-width: grid-baseline(45);
+		}
+
+		&-tagline {
+			opacity: 0.6;
+		}
+	}
+
+	&_aside {
+		background-color: color-get( base-105 );
+		padding: grid-baseline(4);
+		border-radius: 10px;
+
+		&-headline {
+			margin-bottom: grid-baseline(6);
+		}
+
+		div > & {
+			align-items: stretch;
+		}
+
+		h4 {
+			opacity: 0.8;
+		}
+
+		p, &-button {
+			opacity: 0.5;
+		}
+
+		&-image {
+			height: auto;
+			margin-bottom: grid-baseline(4);
+		}
+
+		&-tag {
+			background-color: #313131;
+			border: 1px solid #404040;
+			padding: grid-baseline(1.5) grid-gutter(0.5);
+			margin-left: auto;
+		}
+	}
+}
+
+
+/**
+ * 	Media Queries
+ *	--------------------------------------------------
+ */
+
+/** Breakpoint:	Small ----------------------- */
+
+@include breakpoint-for( small ) using ( $bp ) {
+
+	.v-automotive {
+		$v: &;
+
+
+		&_hero {
+
+			&-logo {
+				max-width: grid-gutter(25);
+				margin: 0 auto;
+			}
+		}
+
+		&_aside {
+			&-headline {
+				margin-bottom: grid-baseline(4);
+			}
+		}
+	}
+}

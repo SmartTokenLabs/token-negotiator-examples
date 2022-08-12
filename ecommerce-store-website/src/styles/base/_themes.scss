@@ -2,25 +2,44 @@
 
 
 //
-//	TokenScript / Styles / Themes
+//	Brand Connector Demo / Styles / Themes
 //
 
 
 :root {
 	@include color-theme-set( root );
 }
-.-t-beige {
-	@include color-theme-set( beige );
+.-t-brand {
+	@include color-theme-set( brand );
+}
+.-t-grey-light {
+	@include color-theme-set( grey-light );
 }
 .-t-dark {
 	@include color-theme-set( dark );
 }
+.-t-light {
+	@include color-theme-set( light );
+}
+.-t-burnt-orange {
+	@include color-theme-set( burnt-orange );
+}
+.-t-purple {
+	@include color-theme-set( purple );
+}
+.-t-light-purple {
+	@include color-theme-set( light-purple );
+}
 
 .-color-primary { color: color-get( --primary ) !important; }
+.-color-secondary { color: color-get( --secondary ) !important; }
 .-color-text { color: color-get( --text ) !important; }
 .-color-text-mid { color: color-get( --text-mid ) !important; }
 .-color-text-light { color: color-get( --text-light ) !important; }
+.-color-headline { color: color-get( --headline ) !important; }
 .-color-base { color: color-get( --base ) !important; }
+.-color-base-90 { color: color-get( base-90 ) !important; }
+.-color-lime { color: color-get( ts-lime ) !important; }
 .-color-error { color: color-get( --state-error ) !important; }
-.-color-success { color: color-get( --state-success ) !important; }
-.-color-white { color: color-get( white ) !important; }
+.-color-ts-blue-80 { color: color-get( ts-blue-80 ) !important; }
+.-color-grey-20 { color: color-get( grey-20 ) !important }

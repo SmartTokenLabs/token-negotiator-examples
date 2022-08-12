@@ -1,0 +1,23 @@
+@use 'styles/modules' as *;
+
+
+//
+//	Brand Connector Demo / UI / Views / Home
+//
+
+
+.v-home {
+	$v: &;
+
+	// Elements
+
+	&_steps {
+		text-align: center;
+		padding-top: grid-baseline(4.75);
+
+		&-image {
+			max-height: grid-baseline(15);
+			margin: 0 auto grid-baseline(4);
+		}
+	}
+}

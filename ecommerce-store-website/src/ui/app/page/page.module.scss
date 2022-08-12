@@ -1,0 +1,14 @@
+@use 'styles/modules' as *;
+
+
+//
+//	Brand Connector Demo / UI / App / Page
+//
+
+
+.a-view {
+	$a: &;
+
+	flex: 1;
+	background-color: color-get( --bg );
+}

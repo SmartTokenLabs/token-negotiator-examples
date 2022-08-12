@@ -1,0 +1,60 @@
+@use 'styles/modules' as *;
+
+
+//
+//	Brand Connector Demo / UI / Components / Layer
+//
+
+
+.c-layer {
+	$c: &;
+
+	pointer-events: none;
+	position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 110;
+
+	//	Elements	 --------------------
+
+	&_outline {
+		width: auto;
+		position: absolute; z-index: 10;
+		top: grid-baseline(10); right: grid-gutter(0.25); left: grid-gutter(0.25);
+		pointer-events: none;
+		transform-origin: 0 0;
+
+		> div {
+			pointer-events: all;
+		}
+	}
+
+	&_overlay {
+		pointer-events: auto;
+		position: fixed;
+		top: 0; right: 0; bottom: 0; left: 0;
+	}
+
+	//	Styles	 ------------------------
+
+	//	States	 ------------------------
+}
+
+
+/**
+ * 	Media Queries
+ *	--------------------------------------------------
+ */
+
+/** Breakpoint:	Small ----------------------- */
+
+@include breakpoint-for( small ) using ( $bp ) {
+
+	.c-layer {
+		$c: &;
+
+		//	Elements	 --------------------
+
+		&_outline {
+			right: 0; left: 0;
+		}
+	}
+
+}
