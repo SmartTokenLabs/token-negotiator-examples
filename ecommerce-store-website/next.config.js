@@ -58,5 +58,8 @@ module.exports = phase => {
 			ignoreDuringBuilds: true,
 		},
 		basePath: env.BASE_PATH,
+		publicRuntimeConfig: {
+			basePath: env.BASE_PATH || ''
+		}
 	};
 };

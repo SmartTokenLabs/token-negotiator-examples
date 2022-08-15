@@ -9,8 +9,12 @@ import clsx from 'clsx';
 //	Styles
 import styles from "./image.module.scss";
 
+import getConfig from 'next/config'
+const { publicRuntimeConfig } = getConfig();
+const basePath = publicRuntimeConfig.basePath || '';
+
 const staticImgLoader = ({src, width, quality}) => {
-	return src;
+	return basePath + src;
 }
 
 //
