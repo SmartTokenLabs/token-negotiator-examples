@@ -36,6 +36,8 @@ module.exports = phase => {
 		},
 		trailingSlash: true,
 		reactStrictMode: true,
+		assetPrefix: basePath,
+		baseUrl: basePath,
 		env,
 		webpack: ( config, { webpack }) => {
 			config.resolve.modules = [
@@ -57,5 +59,8 @@ module.exports = phase => {
 			ignoreDuringBuilds: true,
 		},
 		basePath: env.BASE_PATH,
+		publicRuntimeConfig: {
+			basePath: env.BASE_PATH || ''
+		}
 	};
 };

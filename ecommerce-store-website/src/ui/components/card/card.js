@@ -16,6 +16,9 @@ import styles from "./card.module.scss";
 //	Brand Connector Demo  / UI / Components / Card
 //
 
+import getConfig from 'next/config'
+const { publicRuntimeConfig } = getConfig();
+const basePath = publicRuntimeConfig.basePath || '';
 
 const Card = React.memo( function Card( props ) {
 	const { className, children, image, href, external, ...restProps } = props;
@@ -34,7 +37,7 @@ const Card = React.memo( function Card( props ) {
 	};
 
 	const bgImgStyles = image ? {
-		'backgroundImage': `url(${ image })`,
+		'backgroundImage': `url(${ basePath + image })`,
 	} : null;
 
 	const renderContent = (
