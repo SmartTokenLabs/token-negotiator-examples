@@ -17,23 +17,6 @@ import styles from "./fashion-view.module.scss";
 //	Brand Connector Demo / UI / Views / Fashion
 //
 
-import excl1Img from "../../../../../public/images/fashion-exclusive-1.jpg";
-import excl2Img from "../../../../../public/images/fashion-exclusive-2.jpg";
-import excl3Img from "../../../../../public/images/fashion-exclusive-3.jpg";
-
-import fasItem1 from "../../../../../public/images/fashion-item-1.jpg";
-import fasItem2 from "../../../../../public/images/fashion-item-2.jpg";
-import fasItem3 from "../../../../../public/images/fashion-item-3.jpg";
-import fasItem4 from "../../../../../public/images/fashion-item-4.jpg";
-import fasItem5 from "../../../../../public/images/fashion-item-5.jpg";
-import fasItem6 from "../../../../../public/images/fashion-item-6.jpg";
-
-import jimLogo from "../../../../../public/images/jimmy-choo.png"
-import chanelLogo from "../../../../../public/images/chanel.png"
-import bvlgariLogo from "../../../../../public/images/bvlgari.png"
-import dgLogo from "../../../../../public/images/dg.png"
-import pradaLogo from "../../../../../public/images/prada.png"
-import vuittonLogo from "../../../../../public/images/louis-vuitton.png"
 
 export default function Fashion() {
 	const meta = {
@@ -41,18 +24,18 @@ export default function Fashion() {
 	};
 
 	const exclusiveProducts = [
-		{ image: { src: excl1Img, height: 686, width: 594 }, title: 'Jimmy Choo Mugler Knee Sandal', description: 'Gold Liquid Metal Leather Sandals with Gold Chain Fringes', price: 3700.00 },
-		{ image: { src: excl2Img, height: 686, width: 594 }, title: 'Jimmy Choo Micro Bon Bon', description: 'Black Smooth Nappa Mini Bag', price: 1149.99 },
-		{ image: { src: excl3Img, height: 686, width: 594 }, title: 'Jimmy Choo Azia 95', description: 'Malibu Liquid Metal Leather Sandals', price: 1295.00 },
+		{ image: { src: '/images/fashion-exclusive-1.jpg', height: 686, width: 594 }, title: 'Jimmy Choo Mugler Knee Sandal', description: 'Gold Liquid Metal Leather Sandals with Gold Chain Fringes', price: 3700.00 },
+		{ image: { src: '/images/fashion-exclusive-2.jpg', height: 686, width: 594 }, title: 'Jimmy Choo Micro Bon Bon', description: 'Black Smooth Nappa Mini Bag', price: 1149.99 },
+		{ image: { src: '/images/fashion-exclusive-3.jpg', height: 686, width: 594 }, title: 'Jimmy Choo Azia 95', description: 'Malibu Liquid Metal Leather Sandals', price: 1295.00 },
 	];
 
 	const products = [
-		{ image: { src: fasItem1, height: 686, width: 594 }, title: 'Statement - Lili Midi Dress', description: 'Dress like you do in your wildest dreams in the Lilly Midi Dress.', price: 119.99 },
-		{ image: { src: fasItem2, height: 686, width: 594 }, title: 'Real Vibes - Wrap Garden Dress', description: 'A gorgeous spring event dress, this Red Gardens Dress from Real Vibes is an event essential', price: 190.00 },
-		{ image: { src: fasItem3, height: 686, width: 594 }, title: 'Ask Judy - Coat', description: 'Beat the chill without sacrificing style is this Black wool blend detailed coat.', price: 139.99 },
-		{ image: { src: fasItem4, height: 686, width: 594 }, title: 'Lux Looks - Teal Dress', description: 'This teal modern design; delivers a simplified, well-made look for an audience who craves a relaxed coastal lifestyle.', price: 239.99 },
-		{ image: { src: fasItem5, height: 686, width: 594 }, title: 'Statement - Two-piece Outfit', description: 'This piece black outfit for a casual occasion or pair with heels for a more sophisticated look.', price: 179.00 },
-		{ image: { src: fasItem6, height: 686, width: 594 }, title: 'Surfer Girl - Straw Hat', description: 'Complete your summer style with the Sonny Hand Knotted Straw Hat by Surfer Girl.', price: 49.99 },
+		{ image: { src: '/images/fashion-item-1.jpg', height: 686, width: 594 }, title: 'Statement - Lili Midi Dress', description: 'Dress like you do in your wildest dreams in the Lilly Midi Dress.', price: 119.99 },
+		{ image: { src: '/images/fashion-item-2.jpg', height: 686, width: 594 }, title: 'Real Vibes - Wrap Garden Dress', description: 'A gorgeous spring event dress, this Red Gardens Dress from Real Vibes is an event essential', price: 190.00 },
+		{ image: { src: '/images/fashion-item-3.jpg', height: 686, width: 594 }, title: 'Ask Judy - Coat', description: 'Beat the chill without sacrificing style is this Black wool blend detailed coat.', price: 139.99 },
+		{ image: { src: '/images/fashion-item-4.jpg', height: 686, width: 594 }, title: 'Lux Looks - Teal Dress', description: 'This teal modern design; delivers a simplified, well-made look for an audience who craves a relaxed coastal lifestyle.', price: 239.99 },
+		{ image: { src: '/images/fashion-item-5.jpg', height: 686, width: 594 }, title: 'Statement - Two-piece Outfit', description: 'This piece black outfit for a casual occasion or pair with heels for a more sophisticated look.', price: 179.00 },
+		{ image: { src: '/images/fashion-item-6.jpg', height: 686, width: 594 }, title: 'Surfer Girl - Straw Hat', description: 'Complete your summer style with the Sonny Hand Knotted Straw Hat by Surfer Girl.', price: 49.99 },
 	];
 
 	const selectedTokens = useStore( s => s.selectedTokens );
@@ -122,12 +105,12 @@ export default function Fashion() {
 				className="-t-light -pt0"
 				headline="Brands"
 				logos={[
-					{ src: jimLogo, height: 144, width: 144, alt: 'Jimmy Choo', id: 'jimmy-choo' },
-					{ src: chanelLogo, height: 172, width: 230, alt: 'Chanel', id: 'chanel' },
-					{ src: bvlgariLogo, height: 50, width: 312, alt: 'Bvlgari', id: 'bvlgari' },
-					{ src: dgLogo, height: 92, width: 196, alt: 'Dolce & Gabbana', id: 'dolce' },
-					{ src: pradaLogo, height: 180, width: 236, alt: 'Prada', id: 'prada' },
-					{ src: vuittonLogo, height: 106, width: 432, alt: 'Louis Vuitton', id: 'louis-vuitton' },
+					{ src: '/images/jimmy-choo.png', height: 144, width: 144, alt: 'Jimmy Choo', id: 'jimmy-choo' },
+					{ src: '/images/chanel.png', height: 172, width: 230, alt: 'Chanel', id: 'chanel' },
+					{ src: '/images/bvlgari.png', height: 50, width: 312, alt: 'Bvlgari', id: 'bvlgari' },
+					{ src: '/images/dg.png', height: 92, width: 196, alt: 'Dolce & Gabbana', id: 'dolce' },
+					{ src: '/images/prada.png', height: 180, width: 236, alt: 'Prada', id: 'prada' },
+					{ src: '/images/louis-vuitton.png', height: 106, width: 432, alt: 'Louis Vuitton', id: 'louis-vuitton' },
 				]}
 			/>
 			<Demos currentDemo="fashion" headline="More demo Shops" />

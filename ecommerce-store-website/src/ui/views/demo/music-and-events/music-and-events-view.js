@@ -17,18 +17,6 @@ import styles from "./music-and-events-view.module.scss";
 //	Brand Connector Demo / UI / Views / Music and Events View
 //
 
-import musicImg1 from "../../../../../public/images/music-item-1.jpg";
-import musicImg2 from "../../../../../public/images/music-item-2.jpg";
-import musicImg3 from "../../../../../public/images/music-item-3.jpg";
-import musicImg4 from "../../../../../public/images/music-item-4.jpg";
-import musicImg5 from "../../../../../public/images/music-item-5.jpg";
-
-import yezusImg from "../../../../../public/images/yeezus.png";
-import slipknotImg from "../../../../../public/images/slipknot.png";
-import chillisImg from "../../../../../public/images/red-hot-chili-peppers.png";
-import marshmallowImg from "../../../../../public/images/marshmallow.png";
-import abbaImg from "../../../../../public/images/abba.png";
-import btsImg from "../../../../../public/images/bts.png";
 
 export default function MusicAndEventsView() {
 	const meta = {
@@ -36,11 +24,11 @@ export default function MusicAndEventsView() {
 	};
 
 	const products = [
-		{ image: { src: musicImg1, height: 862, width: 1306 }, title: 'The Kid Laroi', description: 'End of The World Tour 2022', price: 119.99, salePrice: 100.99, tag: 'featured' },
-		{ image: { src: musicImg2, height: 612, width: 594 }, title: 'DOJA Cat', description: 'Hot Pink Tour 2022-23, new dates added.', price: 78.99, salePrice: 59.99, tag: 'trending' },
-		{ image: { src: musicImg3, height: 282, width: 594 }, title: 'JOJI', description: 'Nectar the finale 2022', price: 68.99, salePrice: 49.99 },
-		{ image: { src: musicImg4, height: 282, width: 594 }, title: 'Dua Lipa', description: 'Future Nostalgia Feat. Elton John 2022', price: 84.99, salePrice: 65.99 },
-		{ image: { src: musicImg5, height: 282, width: 594 }, title: 'Coachella 2023', description: 'General Access', price: 449.00, salePrice: 430.00 },
+		{ image: { src: '/images/music-item-1.jpg', height: 862, width: 1306 }, title: 'The Kid Laroi', description: 'End of The World Tour 2022', price: 119.99, salePrice: 100.99, tag: 'featured' },
+		{ image: { src: '/images/music-item-2.jpg', height: 612, width: 594 }, title: 'DOJA Cat', description: 'Hot Pink Tour 2022-23, new dates added.', price: 78.99, salePrice: 59.99, tag: 'trending' },
+		{ image: { src: '/images/music-item-3.jpg', height: 282, width: 594 }, title: 'JOJI', description: 'Nectar the finale 2022', price: 68.99, salePrice: 49.99 },
+		{ image: { src: '/images/music-item-4.jpg', height: 282, width: 594 }, title: 'Dua Lipa', description: 'Future Nostalgia Feat. Elton John 2022', price: 84.99, salePrice: 65.99 },
+		{ image: { src: '/images/music-item-5.jpg', height: 282, width: 594 }, title: 'Coachella 2023', description: 'General Access', price: 449.00, salePrice: 430.00 },
 	];
 
 	const selectedTokens = useStore( s => s.selectedTokens );
@@ -101,12 +89,12 @@ export default function MusicAndEventsView() {
 				className="-t-light -pt0"
 				headline="Popular Brands"
 				logos={[
-					{ src: yezusImg, height: 114, width: 230, alt: 'Yeezus', id: 'yeezus' },
-					{ src: slipknotImg, height: 126, width: 298, alt: 'Slipknot', id: 'slipknot' },
-					{ src: chillisImg, height: 178, width: 178, alt: 'Red Hot Chili Peppers', id: 'chili-peppers' },
-					{ src: marshmallowImg, height: 146, width: 178, alt: 'Marshmallow', id: 'marshmallow' },
-					{ src: abbaImg, height: 112, width: 296, alt: 'ABBA', id: 'abba' },
-					{ src: btsImg, height: 192, width: 192, alt: 'BTS', id: 'bts' },
+					{ src: '/images/yeezus.png', height: 114, width: 230, alt: 'Yeezus', id: 'yeezus' },
+					{ src: '/images/slipknot.png', height: 126, width: 298, alt: 'Slipknot', id: 'slipknot' },
+					{ src: '/images/red-hot-chili-peppers.png', height: 178, width: 178, alt: 'Red Hot Chili Peppers', id: 'chili-peppers' },
+					{ src: '/images/marshmallow.png', height: 146, width: 178, alt: 'Marshmallow', id: 'marshmallow' },
+					{ src: '/images/abba.png', height: 112, width: 296, alt: 'ABBA', id: 'abba' },
+					{ src: '/images/bts.png', height: 192, width: 192, alt: 'BTS', id: 'bts' },
 				]}
 			/>
 			<Demos currentDemo="music-and-events" headline="More demo Shops" />
