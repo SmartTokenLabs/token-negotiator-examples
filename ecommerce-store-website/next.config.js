@@ -31,8 +31,7 @@ module.exports = phase => {
 
 	return {
 		images: {
-			loader: 'custom',
-			path: './'
+			loader: 'custom'
 		},
 		trailingSlash: true,
 		reactStrictMode: true,
