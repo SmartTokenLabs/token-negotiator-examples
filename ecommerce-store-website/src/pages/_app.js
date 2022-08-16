@@ -128,13 +128,10 @@ export default function App({ Component, pageProps }) {
 					...currentIssuers
 				],
 				uiOptions: {
-					overlay: {
-						openingHeading: "Open a new world of discounts available with your tokens.",
-						issuerHeading: "Get discounts with tokens",
-						repeatAction: "try again",
-						position: "bottom-right"
-					},
-					filters: {},
+					openingHeading: "Open a new world of discounts available with your tokens.",
+					issuerHeading: "Get discounts with tokens",
+					repeatAction: "try again",
+					position: "bottom-right"
 				},
 				ipfsBaseUrl: "https://smart-token-labs-demo-server.mypinata.cloud/ipfs/"
 			});
@@ -143,8 +140,11 @@ export default function App({ Component, pageProps }) {
 				api.setSelectedTokens({...data.selectedTokens});
 			});
 
-			api.setTokenNegotiatorInstance( window.negotiator );
-			api.setIsNegotiatorReady( true );
+			window.negotiator.negotiate().then( () =>
+				api.setIsNegotiatorReady( true )
+			).catch( ( error ) =>{
+				console.log( `Error: ${error}` );
+			});
 
 			if(ethereum) {
 				ethereum.on('networkChanged', function(networkId){
