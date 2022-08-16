@@ -19,6 +19,7 @@ import styles from "./automotive-view.module.scss";
 
 
 export default function AutomotiveView() {
+
 	const meta = {
 		title: 'Automotive | Brand Connector Demo',
 	};
@@ -70,7 +71,7 @@ export default function AutomotiveView() {
 								headline="Book your exclusive track day now"
 								text="Enjoy your once in a lifetime experience as a Riot Racer NFT holder!"
 								selectedTokens={ selectedTokens }
-								authTokens={ [ 'stl-riot-racers' ] }
+								authTokens={ [ 'stl-riot-racer' ] }
 							/>
 						</div>
 					</Animation.ScrollReveal>

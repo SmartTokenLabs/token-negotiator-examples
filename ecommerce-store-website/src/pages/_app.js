@@ -26,12 +26,6 @@ export default function App({ Component, pageProps }) {
 	const Layout = Component.Layout ?? DefaultLayout;
 	const api = useStore( s => s.api );
 
-	// TODO switch issuers based on the network the end user is connected.
-	// e.g. Rinkeby, Goerli, Mumbai. updateNegotiatorIssuers(issuers, null);
-	// 	ethereum.on('networkChanged', function(networkId){
-	// 		console.log('networkChanged',networkId);
-	// 	});
-
 	const rinkebyIssuers = [
 		{
 			collectionID: 'stl-bayc',
@@ -104,6 +98,24 @@ export default function App({ Component, pageProps }) {
 		}
 	]
 
+	const resetIssuers = (networkId) => {
+		const normalisedNetworkId = Number(networkId.replace('0x', ''));
+		if(normalisedNetworkId === 4) { // Rinkeby
+			console.log('load rinkeby issuers');
+			negotiator.issuers = rinkebyIssuers;
+		}
+		if(normalisedNetworkId === 5) { // Goerli
+			console.log('load goerli issuers');
+			negotiator.issuers = goerliIssuers;
+		}
+		if(normalisedNetworkId === 13881) { // Mumbai
+			console.log('load mumbai issuers');
+			negotiator.issuers = mumbaiIssuers;
+		}
+	}
+
+	let currentIssuers = goerliIssuers;
+
 	useEffect(()=> {
 
 		const init = async () => {
@@ -113,16 +125,13 @@ export default function App({ Component, pageProps }) {
 			window.negotiator = new Client({
 				type: 'active',
 				issuers: [
-					...goerliIssuers
+					...currentIssuers
 				],
 				uiOptions: {
-					overlay: {
-						openingHeading: "Open a new world of discounts available with your tokens.",
-						issuerHeading: "Get discounts with tokens",
-						repeatAction: "try again",
-						position: "bottom-right"
-					},
-					filters: {},
+					openingHeading: "Open a new world of discounts available with your tokens.",
+					issuerHeading: "Get discounts with tokens",
+					repeatAction: "try again",
+					position: "bottom-right"
 				},
 				ipfsBaseUrl: "https://smart-token-labs-demo-server.mypinata.cloud/ipfs/"
 			});
@@ -136,6 +145,16 @@ export default function App({ Component, pageProps }) {
 			).catch( ( error ) =>{
 				console.log( `Error: ${error}` );
 			});
+
+			if(ethereum) {
+				ethereum.on('networkChanged', function(networkId){
+					resetIssuers(networkId);
+					negotiator.negotiate();
+				});
+				resetIssuers(ethereum.chainId);
+				negotiator.negotiate();
+			}
+			
 		};
 
 		if (document.getElementsByClassName("overlay-tn")[0].childElementCount === 0)

@@ -20,6 +20,7 @@ export const useStore = create( subscribeWithSelector( set => ({
 
 	selectedTokens: {},
 	isNegotiatorReady: false,
+	tokenNegotiatorInstance: null,
 
 	api: {
 		setImageLoaded: () => set( state => ({
@@ -36,5 +37,6 @@ export const useStore = create( subscribeWithSelector( set => ({
 		}),
 		setIsNegotiatorReady: ( isNegotiatorReady )=> set( () => ({ isNegotiatorReady }) ),
 		setSelectedTokens: ( selectedTokens ) => { set( () => ({ selectedTokens: selectedTokens }) ) },
+		setTokenNegotiatorInstance: ( tokenNegotiatorInstance ) => { set( () => ({ tokenNegotiatorInstance }) ) },
 	},
 }) ));
