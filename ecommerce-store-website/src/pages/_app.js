@@ -26,12 +26,6 @@ export default function App({ Component, pageProps }) {
 	const Layout = Component.Layout ?? DefaultLayout;
 	const api = useStore( s => s.api );
 
-	// TODO switch issuers based on the network the end user is connected.
-	// e.g. Rinkeby, Goerli, Mumbai. updateNegotiatorIssuers(issuers, null);
-	// 	ethereum.on('networkChanged', function(networkId){
-	// 		console.log('networkChanged',networkId);
-	// 	});
-
 	const rinkebyIssuers = [
 		{
 			collectionID: 'stl-bayc',
@@ -104,6 +98,24 @@ export default function App({ Component, pageProps }) {
 		}
 	]
 
+	const resetIssuers = (networkId) => {
+		const normalisedNetworkId = Number(networkId.replace('0x', ''));
+		if(normalisedNetworkId === 4) { // Rinkeby
+			console.log('load rinkeby issuers');
+			negotiator.issuers = rinkebyIssuers;
+		}
+		if(normalisedNetworkId === 5) { // Goerli
+			console.log('load goerli issuers');
+			negotiator.issuers = goerliIssuers;
+		}
+		if(normalisedNetworkId === 13881) { // Mumbai
+			console.log('load mumbai issuers');
+			negotiator.issuers = mumbaiIssuers;
+		}
+	}
+
+	let currentIssuers = goerliIssuers;
+
 	useEffect(()=> {
 
 		const init = async () => {
@@ -113,7 +125,7 @@ export default function App({ Component, pageProps }) {
 			window.negotiator = new Client({
 				type: 'active',
 				issuers: [
-					...goerliIssuers
+					...currentIssuers
 				],
 				uiOptions: {
 					overlay: {
@@ -131,11 +143,18 @@ export default function App({ Component, pageProps }) {
 				api.setSelectedTokens({...data.selectedTokens});
 			});
 
-			window.negotiator.negotiate().then( () =>
-				api.setIsNegotiatorReady( true )
-			).catch( ( error ) =>{
-				console.log( `Error: ${error}` );
-			});
+			api.setTokenNegotiatorInstance( window.negotiator );
+			api.setIsNegotiatorReady( true );
+
+			if(ethereum) {
+				ethereum.on('networkChanged', function(networkId){
+					resetIssuers(networkId);
+					negotiator.negotiate();
+				});
+				resetIssuers(ethereum.chainId);
+				negotiator.negotiate();
+			}
+			
 		};
 
 		if (document.getElementsByClassName("overlay-tn")[0].childElementCount === 0)

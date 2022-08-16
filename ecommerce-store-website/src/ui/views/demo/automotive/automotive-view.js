@@ -19,6 +19,7 @@ import styles from "./automotive-view.module.scss";
 
 
 export default function AutomotiveView() {
+
 	const meta = {
 		title: 'Automotive | Brand Connector Demo',
 	};

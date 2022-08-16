@@ -104,7 +104,7 @@ function MinterButton({ className, onClick, isMinted = false }) {
 			icon={ isMinted && 'check' }
 			iconPos="before"
 		>
-			{ isMinted ? ( 'Minted' ) : ( 'Connect to Mint' )}
+			{ isMinted ? ( 'NFT Minted' ) : ( 'Mint Demo NFT' )}
 		</Button>
 	);
 }
