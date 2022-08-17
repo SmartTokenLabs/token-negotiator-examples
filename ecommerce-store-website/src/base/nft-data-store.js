@@ -58,7 +58,7 @@ export default [
 				description: "stl demo nft"
 			},
 			{
-				collection: "STL_WoW",
+				ref: "stl-wow",
 				metaUrl: "https://gateway.pinata.cloud/ipfs/QmQz59bHkB1U4AyZzCKhGvzAbjkWApJQ27ouZ4Bhngeb2T",
 				ipfs: "https://gateway.pinata.cloud/ipfs/",
 				imagePath: '/nfts/stl-wow-9211.png',
