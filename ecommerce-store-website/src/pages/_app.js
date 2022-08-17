@@ -7,8 +7,6 @@ import { useEffect }  from "react";
 import { useStore } from 'base/state';
 import { Layout as DefaultLayout, Context } from 'ui/app';
 
-import { updateNegotiatorIssuers } from './../base/negotiator-client';
-
 import ContextRegisterThanks from 'ui/app/context/context-register-thanks';
 
 //	Styles
@@ -140,9 +138,10 @@ export default function App({ Component, pageProps }) {
 				api.setSelectedTokens({...data.selectedTokens});
 			});
 
-			window.negotiator.negotiate().then( () =>
-				api.setIsNegotiatorReady( true )
-			).catch( ( error ) =>{
+			window.negotiator.negotiate().then( () => {
+				api.setIsNegotiatorReady( true );
+				api.setTokenNegotiatorInstance( window.negotiator );
+			}).catch( ( error ) =>{
 				console.log( `Error: ${error}` );
 			});
 
