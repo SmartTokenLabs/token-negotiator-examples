@@ -19,6 +19,7 @@ export default [
 		},
 		list: [
 			{
+				ref: "stl-bayc",
 				metaUrl: "https://gateway.pinata.cloud/ipfs/QmXdnWNa2CaRCUa4jMTirmkVJkygr2LtnccSuDY3yXrvVm/bayc_1013.json",
 				ipfs: "https://gateway.pinata.cloud/ipfs/QmWiozg1axUSpVowzdTvb5vq7pZyERvAFcTeT8qTojq6qe",
 				imagePath: "/nfts/tokens/images/BAYC_1013.png",
@@ -48,6 +49,7 @@ export default [
 		},
 		list: [
 			{
+				ref: "stl-wow",
 				metaUrl: "https://gateway.pinata.cloud/ipfs/QmUPQTm834uSNo951vh466wJ1Wh5ofSpRBwYRhyYqKfGMW",
 				ipfs: "https://gateway.pinata.cloud/ipfs/",
 				imagePath: '/nfts/stl-wow-4636.png',
@@ -56,6 +58,7 @@ export default [
 				description: "stl demo nft"
 			},
 			{
+				collection: "STL_WoW",
 				metaUrl: "https://gateway.pinata.cloud/ipfs/QmQz59bHkB1U4AyZzCKhGvzAbjkWApJQ27ouZ4Bhngeb2T",
 				ipfs: "https://gateway.pinata.cloud/ipfs/",
 				imagePath: '/nfts/stl-wow-9211.png',
@@ -85,6 +88,7 @@ export default [
 		},
 		list: [
 			{
+				ref: "stl-riot-racer",
 				metaUrl: "https://gateway.pinata.cloud/ipfs/QmStVYUYb3CtNV2BoQp8JiHqkR8sJWWzq1KvRKPUoTVBgv",
 				ipfs: "https://gateway.pinata.cloud/ipfs/QmdFox1wfNvLSZAodKn1YKhRn3DzYjWpCKq2UncpV1fTSJ",
 				imagePath: '/nfts/stl-rr-airbender.png',
@@ -93,6 +97,7 @@ export default [
 				description: "stl demo nft"
 			},
 			{
+				ref: "stl-riot-racer",
 				metaUrl: "https://gateway.pinata.cloud/ipfs/QmQpcGRAP19Q8BkQueUcmWoWxwjZ31Cvat8p7fa3Xr8213",
 				ipfs: "https://gateway.pinata.cloud/ipfs/QmQmBW5HVNw5tLzRKtrjNmbvmWVKrMduoepFfbDHWw3tS5",
 				imagePath: '/nfts/stl-rr-aurora.png',

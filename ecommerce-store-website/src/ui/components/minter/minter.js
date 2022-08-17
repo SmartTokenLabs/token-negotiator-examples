@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { useCurrentWallet } from 'ui/hooks';
 import { safeMint } from "base/utils/interact.js";
 import { Card, Button, Headline, Image, PopUp } from 'ui/components';
+import { useStore } from 'base/state';
 
 // Styles
 import styles from './minter.module.scss';
@@ -20,6 +21,7 @@ export default function Minter({ className }) {
 	const [ submissionStatus, setSubmissionStatus ] = useState( '' );
 	const [ mintedNFTs, setMintedNFTs ] = useState( [] );
 	const [changeOfNetworkRequired, setChangeOfNetworkRequired] = useState(false);
+	const selectedTokens = useStore( s => s.selectedTokens );
 
 	useEffect( () => {
 		if ( submissionStatus && !walletStatus ) setSubmissionStatus( walletStatus );
@@ -76,6 +78,10 @@ export default function Minter({ className }) {
 				{ nftCollections && nftCollections.map( ( nft, i ) => {
 					const { title, description, list } = nft;
 					const collectionItem = list[ 0 ];
+					const tokenIsSelected = (
+						selectedTokens && selectedTokens[collectionItem.ref] &&
+						selectedTokens[collectionItem.ref].tokens.length > 0
+					);
 
 					return (
 						<Card key={ i } className="-style-outline -mb6">
@@ -85,7 +91,7 @@ export default function Minter({ className }) {
 							<MinterButton
 								className={ clsx( styles[ 'c-minter_button' ], '-mta' ) }
 								onClick={ event => onMintPressed( event, nft, collectionItem ) }
-								isMinted={ mintedNFTs.indexOf( collectionItem.id ) > -1 }
+								isMinted={ mintedNFTs.indexOf( collectionItem.id ) > -1 || tokenIsSelected }
 							/>
 						</Card>
 					);
