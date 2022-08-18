@@ -25,9 +25,6 @@ export default function HomeView() {
 			<section className="section -ps">
 				<div className="grid -g-cols-1">
 					<div className="-g-max-8">
-						<Link href="https://brandconnector.Brand Connector Demo.org/" className="-style-headline -va-center -f-medium">
-							<Icon className="-mr1" type="arrow-left-long" />Back
-						</Link>
 						<Headline className="-mb6">Try The Product Demo</Headline>
 						{ ! walletAddress && (
 							<Button
