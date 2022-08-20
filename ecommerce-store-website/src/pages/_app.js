@@ -97,6 +97,7 @@ export default function App({ Component, pageProps }) {
 	]
 
 	const resetIssuers = (networkId) => {
+		if(!networkId) return;
 		const normalisedNetworkId = Number(networkId.replace('0x', ''));
 		if(normalisedNetworkId === 4) { // Rinkeby
 			console.log('load rinkeby issuers');
