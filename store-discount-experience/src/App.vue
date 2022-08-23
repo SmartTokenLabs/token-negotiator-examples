@@ -1,32 +1,5 @@
 <template id="app">
-  <header>
-    <div class="nav_1">
-      <div class="logo_nav">
-        <div class="logo">
-          <img src="./assets/images/gap_logo.svg" alt="" />
-        </div>
-        <nav>
-          <ul>
-            <li>OLD NAVY</li>
-            <li>BANANA REPUBLIC</li>
-            <li>ATHLETA</li>
-            <li>YZY GAP</li>
-          </ul>
-        </nav>
-      </div>
-      <div class="promo_text">
-        FREE SHIPPING ON $50+. FOR REWARDS MEMBERS
-        <a href="">SIGN IN OR JOIN DETAILS</a>
-      </div>
-      <div class="auth_menu">
-        <span>Sign In</span>
-        <span>Your account</span>
-      </div>
-    </div>
-    <div class="nav_2">
-      <img src="./assets/images/promo_banner.svg" />
-    </div>
-  </header>
+  <TheHeader />
   <main>
     <div class="products_navigation">
       <div class="logo">
@@ -108,7 +81,11 @@
                 alt="Product image"
               />
               <div class="product_name">{{ product.name }}</div>
-              <div class="price">{{ product.price.value }}</div>
+              <div class="price" :class="{discounted: product.isDiscounted}">{{ product.price.value }}</div>
+              <div v-if="product.isDiscounted" class="discount_info">
+                <div class="price">{{ product.price.sale }}</div>
+                <div class="discount_percentage">20%</div>
+              </div>
               <div class="category">{{ product.category }}</div>
             </div>
           </div>
@@ -120,20 +97,24 @@
 </template>
 
 <script>
-
   import { Client } from '@tokenscript/token-negotiator';
   import '@tokenscript/token-negotiator/dist/theme/style.css';
 
+  import TheHeader from './components/TheHeader.vue';
+
   export default {
+    components: {
+      TheHeader
+    },
     mounted() {
       this.negotiator = new Client({
           type: 'active',
-          issuers: [
+          issuers:  [
               { 
                 onChain: true, 
                 collectionID: 'demo-tokens', 
-                contract: '0x0d0167a823c6619d430b1a96ad85b888bcf97c37', 
-                chain: 'eth' 
+                contract: '0x3d8a0fB32b0F586FdC10447c22F477979dc526ec', 
+                chain: 'rinkeby'
               }
           ],
           uiOptions: {
@@ -152,10 +133,8 @@
       });
 
       this.negotiator.on("tokens-selected", (tokens) => {
-        if(tokens.selectedTokens['demo-tokens'].tokens.length) {
-          this.product.price.value = this.product.price.sale; 
-        } else {
-          this.product.price.value = this.product.price.full;
+        if(tokens.selectedTokens['demo-tokens'].tokens.length > 0) {
+          this.product.isDiscounted = true;
         }
       });
 
@@ -171,7 +150,8 @@
             value: "$79.99",
             full: "$79.99",
             sale: "$39.99"
-          }
+          },
+          isDiscounted: false
         }
       }
     }
@@ -196,67 +176,6 @@ body {
 
 .nav_2 img {
   width: 100%;
-}
-
-header {
-  color: #fff;
-  background-color: rgb(51, 51, 51);
-}
-
-header .nav_1 {
-  z-index: 402;
-  width: 100%;
-  height: auto;
-  display: flex;
-  margin-inline: auto;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1400px;
-  height: 40px;
-}
-
-header .logo_nav {
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
-
-header .logo {
-  background-color: #fff;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 3.125rem;
-  width: 3.125rem;
-  height: 100%;
-  color: #000;
-}
-
-header .promo_text {
-  font-size: 12px;
-}
-
-header a {
-  color: #fff;
-}
-
-header .auth_menu {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  font-size: 12px;
-}
-
-header ul {
-  display: flex;
-  list-style: none;
-  font-size: 12px;
-}
-
-header li {
-  padding: 0 10px;
-  cursor: pointer;
 }
 
 .products_navigation {
@@ -454,4 +373,22 @@ header li {
   font-size: 12px;
   font-weight: 600;
 }
+.products_list .price.discounted {
+  text-decoration: line-through
+}
+.discount_info {
+  display: flex;
+}
+.discount_percentage {
+  font-size: 12px;
+  background: red;
+  padding: 1px 4px 4px 4px;
+  color: white;
+  border-radius: 2px;
+  position: relative;
+  top: -2px;
+  left: 4px;
+  height: 11px;
+}
+
 </style>
