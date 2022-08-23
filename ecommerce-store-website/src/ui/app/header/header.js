@@ -27,6 +27,16 @@ const Header = React.memo( function Header({ className }) {
 	const selectedTokens = useStore( s => s.selectedTokens );
 	const [ walletAddress ] = useCurrentWallet();
 
+	var tokensFound = 0;
+	
+	if(Object.keys( selectedTokens )) {
+			tokensFound = Object.keys( selectedTokens ).map(( tokenCollection ) => {
+				return selectedTokens[tokenCollection].tokens.length;
+			})
+			if(tokensFound.length) tokensFound = tokensFound.reduce((a, b) => a + b);
+			else tokensFound = 0;
+	}
+
 	const [ isMenuOpen, setIsMenuOpen ] = useState( false );
 	const menuRef = useRef( null );
 
@@ -58,7 +68,7 @@ const Header = React.memo( function Header({ className }) {
 						<div>
 							{ walletAddress ? (
 								<div className={ styles[ 'a-header_nav-tokens' ] }>
-									<p className="f7">{ Object.keys( selectedTokens ).length } Tokens Found</p>
+									<p className="f7">{ tokensFound } Tokens Found</p>
 									<p>{ String( walletAddress ).substring( 0, 4 ) + '...' + String( walletAddress ).substring( 38 ) }</p>
 								</div>
 							) : (
