@@ -100,16 +100,13 @@ export default function App({ Component, pageProps }) {
 		if(!networkId) return;
 		const normalisedNetworkId = Number(networkId.replace('0x', ''));
 		if(normalisedNetworkId === 4) { // Rinkeby
-			console.log('load rinkeby issuers');
-			negotiator.issuers = rinkebyIssuers;
+			window.negotiator.negotiate(rinkebyIssuers);
 		}
 		if(normalisedNetworkId === 5) { // Goerli
-			console.log('load goerli issuers');
-			negotiator.issuers = goerliIssuers;
+			window.negotiator.negotiate(goerliIssuers);
 		}
 		if(normalisedNetworkId === 13881) { // Mumbai
-			console.log('load mumbai issuers');
-			negotiator.issuers = mumbaiIssuers;
+			window.negotiator.negotiate(mumbaiIssuers);
 		}
 	}
 
@@ -147,12 +144,10 @@ export default function App({ Component, pageProps }) {
 			});
 
 			if(ethereum) {
-				ethereum.on('networkChanged', function(networkId){
+				ethereum.on('chainChanged', function(networkId){
 					resetIssuers(networkId);
-					negotiator.negotiate();
 				});
 				resetIssuers(ethereum.chainId);
-				negotiator.negotiate();
 			}
 			
 		};
