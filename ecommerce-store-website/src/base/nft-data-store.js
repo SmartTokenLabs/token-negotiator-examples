@@ -4,10 +4,6 @@ export default [
 		title: "STL Bored Ape Yacht Club",
 		description: "Use a BAYC Token to get VIP room upgrades at the Music & Events demo shop.",
 		contracts: {
-			"Rinkeby" : {
-				contract: "0x3d8a0fB32b0F586FdC10447c22F477979dc526ec",
-				abi: require('./abis/erc721-abi.json')
-			},
 			"Mumbai" : {
 				contract: "0x594CeCc147F8F27fF6d269AE23D9a0Ff27d979F4",
 				abi: require('./abis/erc721-abi.json')
@@ -34,10 +30,6 @@ export default [
 		title: "STL WoW",
 		description: "Use a WoW Token to get access to exclusive early drops at the Fashion demo shop.",
 		contracts: {
-			"Rinkeby" : {
-				contract: "0xf0dDde481a5F3DaF2A5665F88D5767CB0732b638",
-				abi: require('./abis/erc721-abi.json')
-			},
 			"Mumbai": {
 				contract: "0xa432AC92c386b9929Bd9308C4e98505ac22d3A00",
 				abi: require('./abis/erc721-abi.json')
@@ -73,10 +65,6 @@ export default [
 		title: "STL Riot Racer",
 		description: "Use a Riot Racer Token to book a day at the race tracks at the Automotive demo shop.",
 		contracts: {
-			"Rinkeby" : {
-				contract: "0x399653F4212bf3EA3AF9bCE45a294AB462f22436",
-				abi: require('./abis/erc721-abi.json')
-			},
 			"Mumbai": {
 				contract: "0x165B81C550263f6E9AC9B1852D6A8bAC9538E6d7",
 				abi: require('./abis/erc721-abi.json')

@@ -8,4 +8,4 @@ export const chainMap = {
 	'0x137': 'Polygon'
 }
 
-export const supportedChains = [ 'Rinkeby', 'Mumbai' ];
+export const supportedChains = [ 'Goerli', 'Mumbai' ];
