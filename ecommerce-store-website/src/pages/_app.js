@@ -23,30 +23,6 @@ const CONTEXT_VIEWS = {
 export default function App({ Component, pageProps }) {
 	const Layout = Component.Layout ?? DefaultLayout;
 	const api = useStore( s => s.api );
-
-	const rinkebyIssuers = [
-		{
-			collectionID: 'stl-bayc',
-			onChain: true,
-			contract: '0x3d8a0fB32b0F586FdC10447c22F477979dc526ec',
-			chain: 'rinkeby',
-			openSeaSlug: undefined
-		},
-		{
-			collectionID: 'stl-wow',
-			onChain: true,
-			contract: '0xf0dDde481a5F3DaF2A5665F88D5767CB0732b638',
-			chain: 'rinkeby',
-			openSeaSlug: undefined
-		},
-		{
-			collectionID: 'stl-riot-racer',
-			onChain: true,
-			contract: '0x399653F4212bf3EA3AF9bCE45a294AB462f22436',
-			chain: 'rinkeby',
-			openSeaSlug: undefined
-		}
-	]
 	
 	const mumbaiIssuers = [
 		{
@@ -99,9 +75,6 @@ export default function App({ Component, pageProps }) {
 	const resetIssuers = (networkId) => {
 		if(!networkId) return;
 		const normalisedNetworkId = Number(networkId.replace('0x', ''));
-		if(normalisedNetworkId === 4) { // Rinkeby
-			window.negotiator.negotiate(rinkebyIssuers);
-		}
 		if(normalisedNetworkId === 5) { // Goerli
 			window.negotiator.negotiate(goerliIssuers);
 		}
