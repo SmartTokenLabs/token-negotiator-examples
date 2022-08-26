@@ -78,9 +78,12 @@ export default function Minter({ className }) {
 				{ nftCollections && nftCollections.map( ( nft, i ) => {
 					const { title, description, list } = nft;
 					const collectionItem = list[ 0 ];
+
+					const chain = ethereum.chainId === '0x13881' ? '-mumbai' : '-goerli';
+
 					const tokenIsSelected = (
-						selectedTokens && selectedTokens[collectionItem.ref] &&
-						selectedTokens[collectionItem.ref].tokens.length > 0
+						selectedTokens && selectedTokens[collectionItem.ref+chain] &&
+						selectedTokens[collectionItem.ref+chain].tokens.length > 0
 					);
 
 					return (
