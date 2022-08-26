@@ -34,7 +34,7 @@ export default function AutomotiveView() {
 	]
 
 	const selectedTokens = useStore( s => s.selectedTokens );
-	const promotionEnabled = checkNFTEligibility( selectedTokens, [ 'stl-riot-racer' ] );
+	const promotionEnabled = checkNFTEligibility( selectedTokens, [ 'stl-riot-racer-goerli', 'stl-riot-racer-mumbai' ] );
 
 	return (
 		<Page className={ clsx( styles[ 'v-automotive' ], '-t-dark' ) } meta={ meta }>
@@ -97,7 +97,7 @@ export default function AutomotiveView() {
 					<div className="-g-cols-fill-2 -mtn2">
 						<div className="grid -g-cols-2">
 							{ vehicles && vehicles.map( ( vehicle, i ) => (
-								<ProductItem
+								<ProductItem 
 									className="-t-dark"
 									key={ `vehicle-${ i }` }
 									product={{ ...vehicle, priceTag: 'day' }}
