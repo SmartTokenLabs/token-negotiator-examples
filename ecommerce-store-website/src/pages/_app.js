@@ -25,13 +25,13 @@ export default function App({ Component, pageProps }) {
 	const api = useStore( s => s.api );
 	
 	const mumbaiIssuers = [
-		{
-			collectionID: 'stl-bayc',
-			onChain: true,
-			contract: '0x594CeCc147F8F27fF6d269AE23D9a0Ff27d979F4',
-			chain: 'mumbai',
-			openSeaSlug: undefined
-		},
+		// {
+		// 	collectionID: 'stl-bayc',
+		// 	onChain: true,
+		// 	contract: '0x594CeCc147F8F27fF6d269AE23D9a0Ff27d979F4',
+		// 	chain: 'mumbai',
+		// 	openSeaSlug: undefined
+		// },
 		{
 			collectionID: 'stl-wow',
 			onChain: true,
@@ -56,20 +56,20 @@ export default function App({ Component, pageProps }) {
 			chain: 'goerli',
 			openSeaSlug: undefined
 		},
-		{
-			collectionID: 'stl-wow',
-			onChain: true,
-			contract: '0x87644E0A1287A4D96DecC29A13400a1be9759AF8',
-			chain: 'goerli',
-			openSeaSlug: undefined
-		},
-		{
-			collectionID: 'stl-riot-racer',
-			onChain: true,
-			contract: '0xae96095fF42B0Cae2DaD3d49E5EE11663280d819',
-			chain: 'goerli',
-			openSeaSlug: undefined
-		}
+		// {
+		// 	collectionID: 'stl-wow',
+		// 	onChain: true,
+		// 	contract: '0x87644E0A1287A4D96DecC29A13400a1be9759AF8',
+		// 	chain: 'goerli',
+		// 	openSeaSlug: undefined
+		// },
+		// {
+		// 	collectionID: 'stl-riot-racer',
+		// 	onChain: true,
+		// 	contract: '0xae96095fF42B0Cae2DaD3d49E5EE11663280d819',
+		// 	chain: 'goerli',
+		// 	openSeaSlug: undefined
+		// }
 	]
 
 	const resetIssuers = (networkId) => {
