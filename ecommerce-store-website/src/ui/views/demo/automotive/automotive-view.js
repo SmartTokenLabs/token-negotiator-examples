@@ -71,7 +71,7 @@ export default function AutomotiveView() {
 								headline="Book your exclusive track day now"
 								text="Enjoy your once in a lifetime experience as a Riot Racer NFT holder!"
 								selectedTokens={ selectedTokens }
-								authTokens={ [ 'stl-riot-racer' ] }
+								authTokens={ [ 'stl-riot-racer-goerli', 'stl-riot-racer-mumbai' ] }
 							/>
 						</div>
 					</Animation.ScrollReveal>
@@ -103,7 +103,7 @@ export default function AutomotiveView() {
 									product={{ ...vehicle, priceTag: 'day' }}
 									discountEnabled={ promotionEnabled }
 									selectedTokens={ selectedTokens }
-									authTokens={[ 'stl-riot-racer' ]}
+									authTokens={[ 'stl-riot-racer-goerli', 'stl-riot-racer-mumbai' ]}
 								/>
 							))}
 						</div>

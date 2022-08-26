@@ -39,7 +39,7 @@ export default function Fashion() {
 	];
 
 	const selectedTokens = useStore( s => s.selectedTokens );
-	const promotionEnabled = checkNFTEligibility( selectedTokens, [ 'stl-wow' ] );
+	const promotionEnabled = checkNFTEligibility( selectedTokens, [ 'stl-wow-goerli', 'stl-wow-mumbai' ] );
 
 	return (
 		<Page className={ styles[ 'v-fashion' ] } meta={ meta }>

@@ -32,7 +32,7 @@ export default function MusicAndEventsView() {
 	];
 
 	const selectedTokens = useStore( s => s.selectedTokens );
-	const promotionEnabled = checkNFTEligibility( selectedTokens, [ 'stl-bayc' ] );
+	const promotionEnabled = checkNFTEligibility( selectedTokens, [ 'stl-bayc-goerli', 'stl-bayc-mumbai' ] );
 
 	return (
 		<Page className={ styles[ 'v-events' ] } meta={ meta }>
@@ -68,7 +68,7 @@ export default function MusicAndEventsView() {
 								headline="Exclusive Choachella 2023 VIP Upgrade"
 								text="Hotel and VIP Experience"
 								selectedTokens={ selectedTokens }
-								authTokens={ [ "stl-bayc", "stl-bayc" ] }
+								authTokens={ [ "stl-bayc-goerli", "stl-bayc-mumbai" ] }
 							/>
 						</div>
 					</Animation.ScrollReveal>
@@ -80,7 +80,7 @@ export default function MusicAndEventsView() {
 							product={ { ...product, saleSubText: 'NFT Discount' } }
 							discountEnabled={ promotionEnabled }
 							selectedTokens={ selectedTokens }
-							authTokens={ ["stl-bayc", "stl-mayc", "stl-nifty"] }
+							authTokens={ ["stl-bayc", "stl-mayc", "stl-nifty", "stl-bayc-goerli", "stl-bayc-mumbai"] }
 						/>
 					))}
 				</div>
