@@ -106,6 +106,7 @@ export default function App({ Component, pageProps }) {
 			});
 
 			window.negotiator.on("tokens-selected", (data) => {
+				console.log('tokens', data);
 				api.setSelectedTokens({...data.selectedTokens});
 			});
 
