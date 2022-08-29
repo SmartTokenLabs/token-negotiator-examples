@@ -2,7 +2,7 @@
 
 
 //
-//	TokenScript / UI / Components / Logo
+//	Brand Connector Demo / UI / Components / Logo
 //
 
 
@@ -10,7 +10,7 @@
 	$c: &;
 
 	display: block;
-	width: grid-gutter(7);
+	width: grid-column(2.75);
 
 	//	Elements   ------------------
 
@@ -19,7 +19,64 @@
 		display: block;
 	}
 
+	&_small {
+		width: grid-baseline(6.5);
+
+		svg {
+			> path:first-child {
+				color: color-get( ts-blue);
+			}
+
+			> path:last-child {
+				color: color-get( --text );
+			}
+		}
+
+		//	Sizes	 --------------------
+
+		&.-size-s {
+			width: grid-column(0.35);
+		}
+
+		&.-size-l {
+			width: grid-column(1);
+		}
+	}
+
+	&_smart-token {
+		width: grid-column(3);
+
+		&_icon {
+			width: grid-column(0.7);
+		}
+	}
+
+	// Formats
+
+	&:global(.-format-collapsed) {
+		#{ $c } {
+			&_mask {
+				rect {
+					opacity: 0;
+					width: 0;
+				}
+			}
+
+			&_end {
+				transform: translateX(-85%);
+				transition: transform 0.5s ease-out 0.3s;
+			}
+		}
+	}
+
+
 	//	Styles	 --------------------
+
+	&:global(.-style-white) {
+		@include color-set( --primary, white );
+		@include color-set( --text, white );
+		color: color-get( white );
+	}
 
 	//	Sizes	 --------------------
 
@@ -27,4 +84,23 @@
 
 	//	States	 --------------------
 
+}
+
+/**
+ * 	Media Queries
+ *	--------------------------------------------------
+ */
+
+/** Breakpoint:	Small ----------------------- */
+
+@include breakpoint-for( small ) using ( $bp ) {
+	.c-logo {
+		$c: &;
+
+		&_small {
+			&.-size-l {
+				width: grid-column(0.5);
+			}
+		}
+	}
 }

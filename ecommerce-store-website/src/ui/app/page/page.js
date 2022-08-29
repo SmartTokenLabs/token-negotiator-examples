@@ -1,35 +1,47 @@
 //	Dependencies
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
+// Styles
+import styles from "./page.module.scss";
+
 
 //
-//	TokenScript / UI / App / Page
+//	Brand Connector Demo / UI / App / Page
 //
 
+import getConfig from 'next/config'
+const { publicRuntimeConfig } = getConfig();
+const basePath = publicRuntimeConfig.basePath || '';
 
 export default forwardRef( Page );
 
-function Page({ children, meta = {}, className }, ref ) {
+function Page({ children, meta = {}, className }, ref) {
+	const router = useRouter();
+	const currentSlug = router.asPath;
 
 	const siteUrl = process.env.APP_HOST || '';
 
+	const defaultTitle = 'Brand Connector Demo';
+	const defaultDescription = '';
+
 	const pageMeta = {
-		title: 'TokenScript',
-		ogTitle: 'TokenScript',
-		description: '',
-		ogDescription: '',
-		ogUrl: siteUrl,
+		title: defaultTitle,
+		description: defaultDescription,
+		ogTitle: meta?.title || defaultTitle,
+		ogDescription: meta?.description || defaultDescription,
+		ogUrl: currentSlug !== '/' ? siteUrl + currentSlug : siteUrl,
 		// ogImage: `${ siteUrl }/`,
-		ogSiteName: 'TokenScript',
+		ogSiteName: 'Brand Connector Demo',
 		ogType: 'website',
 		...meta,
 	};
 
 	return (
-		<div ref={ ref } className={ clsx( 'a-view', className ) }>
+		<div ref={ ref } className={ clsx( styles[ 'a-view' ], className ) }>
 			<Head>
 				<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
@@ -43,9 +55,19 @@ function Page({ children, meta = {}, className }, ref ) {
 				{ pageMeta?.ogSiteName && <meta property="og:site_name" content={ pageMeta?.ogSiteName } /> }
 				{ pageMeta?.ogType && <meta property="og:type" content={ pageMeta?.ogType } /> }
 
-				<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-				<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-				<link rel="icon" href="/favicon.ico" />
+				<link rel="icon" type="image/png" sizes="32x32" href={ basePath + "/favicon-32x32.png" } />
+				<link rel="icon" type="image/png" sizes="16x16" href={ basePath + "/favicon-16x16.png" } />
+				<link rel="icon" href={ basePath + "/favicon.ico"} />
+
+				<style dangerouslySetInnerHTML={{__html: `
+					@font-face {
+					  font-family: 'neueplak';
+					  font-style: normal;
+					  font-weight: 700;
+					  src: url('${basePath + "/fonts/neue-plak-extended-sb.woff2"}') format('woff2');
+					  font-display: swap;
+					}
+				`}}/>
 			</Head>
 			{ children }
 		</div>

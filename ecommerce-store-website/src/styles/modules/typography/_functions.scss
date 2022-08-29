@@ -1,11 +1,13 @@
 @use 'sass:math';
+@use "sass:list";
 @use 'styles/core';
 @use 'styles/modules/grid' as grid;
+@use 'styles/modules/breakpoints' as bp;
 @use 'config';
 
 
 //
-//	TokenScript / Modules / Typography / Functions
+//	Brand Connector Demo / Modules / Typography / Functions
 //
 
 
@@ -24,8 +26,12 @@
 }
 
 //	Font size
-@mixin size( $type-key: default, $lines: null, $margin: null, $spacing: null, $responsive: false ) {
-	$font-size: $type-key;
+//  $type-key: type-key or px size;
+@mixin size( $type-key: default, $lines: null, $margin: null, $spacing: null, $responsive: false, $min: 14, $max: 32 ) {
+	$font-size-px: $type-key;
+	$font-size-px-min: $min;
+	$font-size-px-max: $max;
+
 	$type-lines: $lines;
 	$type-margin: if( $margin == null, 0, $margin );
 	$letter-spacing: if( $spacing == null, 0, $spacing );
@@ -33,23 +39,63 @@
 	@if type-of( $type-key ) == string {
 		$type-lines: if( $lines == null, lines( $type-key ), $lines );
 		$type-margin: if( $margin == null, margin( $type-key ), $margin );
-		$font-size: size( $type-key );
+
+		$font-size-px: size( $type-key );
+		$font-size-min-list: size( $type-key, $prop: 'px-min' );
+		$font-size-max-list: size( $type-key, $prop: 'px-max' );
+
+		@if type-of( $font-size-min-list ) == list {
+			$font-size-px-min: list.nth( $font-size-min-list, 1 );
+			$font-size-bp-min: list.nth( $font-size-min-list, 2 );
+		}
+		@if type-of( $font-size-max-list ) == list {
+			$font-size-px-max: list.nth( $font-size-max-list, 1 );
+			$font-size-bp-max: list.nth( $font-size-max-list, 2 );
+		}
+
 		$letter-spacing: if( $spacing == null, spacing( $type-key ), $spacing );
 	}
 
-	@if $type-margin {
-		margin: grid.baseline( $type-margin ) 0;
-	}
+
 	@if $responsive {
-		font-size: #{ math.div( $font-size, 8 )}vmin;
-		line-height: 1;
-		letter-spacing: #{ math.div( $letter-spacing, 8 )}vmin;
+		@if type-of( $font-size-px-min ) != number or type-of( $font-size-px-max ) != number {
+			@debug "responsive true, without min or max";
+		} @else {
+			$size-clamp: size-responsive( $font-size-px-min, $font-size-px-max );
+			$line-height-px: core.$base-line * $type-lines;
+
+			$line-height-ratio: math.div( $line-height-px, $font-size-px );
+
+			// $line-height-ex: math.div( $line-height-px, $font-size-px ) * 1.75ex;
+
+			font-size: $size-clamp;
+			line-height: size-responsive( $font-size-px-min * $line-height-ratio, $font-size-px-max * $line-height-ratio );//grid.baseline( $type-lines ); //$line-height-ex;
+
+			@if $type-margin {
+				$margin-px: core.$base-line * $type-margin;
+				$margin-ratio: math.div( $margin-px, $font-size-px );
+				// $margin-ex: math.div( $margin-px, $font-size-px ) * 1.75ex;
+				margin: size-responsive( $font-size-px-min * $margin-ratio, $font-size-px-max * $margin-ratio ) 0;
+			}
+
+			//#{ math.div( $font-size, 16 )}vw;
+			// line-height: #{ math.div( core.$base-line * $type-lines, 16 )}vw;
+			// letter-spacing: #{ math.div( $letter-spacing, 8 )}vw;
+		}
 	} @else {
-		font-size: core.rem( $font-size );
+		@if $type-margin {
+			margin: grid.baseline( $type-margin ) 0;
+		}
+
+		font-size: core.rem( $font-size-px );
 		line-height: core.rem( core.$base-line * $type-lines );
 		letter-spacing: #{ $letter-spacing }px;
+
+
 	}
 }
+
+
 
 //	Font family
 @mixin family( $font-family ) {
@@ -57,8 +103,18 @@
 }
 
 //	Size in PX
-@function size( $type-key: default, $map: config.$config ) {
-	@return core.get( $map, '#{ $type-key }.px', 16 );
+@function size( $type-key: default, $map: config.$config, $prop: 'px' ) {
+	@return core.get( $map, '#{ $type-key }.#{ $prop }', 16 );
+}
+
+//	Scalable responsive size
+@function size-responsive( $px-min: 14, $px-max: 22, $bp-min-w: 960, $bp-max-w: 2560 ) {
+	$slope: math.div( $px-max - $px-min, $bp-max-w - $bp-min-w );
+	$slope-vw: $slope * 100;
+	$intercept-rems: core.rem( $px-min - $slope * $bp-min-w );
+	$min-rems: core.rem( $px-min );
+	$max-rems: core.rem( $px-max );
+	@return clamp( #{$min-rems}, #{$slope-vw}vw + #{$intercept-rems}, #{$max-rems} );
 }
 
 //	Lines

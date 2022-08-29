@@ -3,7 +3,7 @@
 
 
 //
-//	TokenScript / Modules / Typography / Config
+//	Brand Connector Demo / Modules / Typography / Config
 //
 
 
@@ -15,97 +15,94 @@ $config-defaults: (
 	//	Type Defaults  ------
 	'default': (
 		px: core.$base-size,
+		px-min: ( 14, 'small' ),
+		px-max: ( 22, 'large' ),
 		lines: 3,
 		margin: 2,
 	),
 
 	//	Type Scales	 --------
 	'f1': (
-		px: 48,
-		lines: 7,
-		margin: 2,
+		px: 64,
+		px-min: ( 36, 'small' ),
+		px-max: ( 92, 'large' ),
+		lines: 7.5,
+		margin: 3,
 		el: h1,
-
-		breakpoints: (
-			'small': 'f4',
-		),
 	),
 	'f2': (
-		px: 42,
-		lines: 5.5,
-		margin: 2,
+		px: 56,
+		px-min: ( 34, 'small' ),
+		px-max: ( 80, 'large' ),
+		lines: 6.75,
+		margin: 4,
 		el: h2,
-
-		breakpoints: (
-			'small': 'f5',
-		),
 	),
 	'f3': (
-		px: 36,
-		lines: 5.5,
-		margin: 2,
-		spacing: -0.5,
+		px: 48,
+		px-min: ( 32, 'small' ),
+		px-max: ( 64, 'large' ),
+		lines: 6,
+		margin: 3,
 		el: h3,
-
-		breakpoints: (
-			'small': 'f5',
-		),
 	),
 	'f4': (
-		px: 32,
-		lines: 5,
-		margin: 1,
+		px: 36,
+		px-min: ( 24, 'small' ),
+		px-max: ( 56, 'large' ),
+		lines: 4.25,
+		margin: 2,
 		el: h4,
 
-		breakpoints: (
-			'small': 'f5',
-		),
 	),
 	'f5': (
 		px: 24,
-		lines: 4.5,
-		margin: 1,
-
-		breakpoints: (
-			'small': 'f6',
-		),
+		px-min: ( 18, 'small' ),
+		px-max: ( 30, 'large' ),
+		lines: 4,
+		margin: 2,
+		el: h5,
 	),
 	'f6': (
-		px: 20,
-		lines: 4,
-		margin: 1,
+		px: 18,
+		px-min: ( 16, 'small' ),
+		px-max: ( 24, 'large' ),
+		lines: 3,
+		margin: 2,
 		el: p,
-
-		breakpoints: (
-			'small': 'f7',
-		),
 	),
 	'f7': (
-		px: 16,
-		lines: 3,
-		margin: 1,
+		px: 14,
+		px-min: ( 12, 'small' ),
+		px-max: ( 16, 'large' ),
+		lines: 2.5,
+		margin: 2,
 	),
 
 	//	Small
 
 	'f8': (
-		px: 18,
-		lines: 3,
-		margin: 1,
-	),
-	'f9': (
-		px: 14,
-		lines: 3,
-		margin: 1,
-		el: h6,
-	),
-	'f10': (
-		px: 13,
+		px: 12,
+		px-min: ( 12, 'small' ),
+		px-max: ( 14, 'large' ),
 		lines: 2,
 		margin: 1,
 	),
+	'f9': (
+		px: 10,
+		px-min: ( 10, 'small' ),
+		px-max: ( 12, 'large' ),
+		lines: 2,
+		margin: 1,
+	),
+	'f10': (
+		px: 8,
+		px-min: ( 8, 'small' ),
+		px-max: ( 10, 'large' ),
+		lines: 1.5,
+		margin: 1,
+	),
 );
-
 
 @if $use_defaults {
 	$config: map.merge( $config, $config-defaults );

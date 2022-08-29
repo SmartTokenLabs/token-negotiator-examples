@@ -1,0 +1,54 @@
+@use 'styles/modules' as *;
+
+
+//
+//	Brand Connector Demo / UI / Components / List
+//
+
+
+.c-list {
+	$c: &;
+
+	@include type-size( f6, $responsive: true );
+	display: flex;
+	color: color-get( --text );
+
+	// Styles
+
+	&:global(.-style-horizontal) {
+		align-items: center;
+		margin: 0 grid-gutter(-0.25);
+
+		li {
+			padding: 0 grid-gutter(0.25);
+		}
+	}
+
+	&:global(.-style-vertical) {
+		flex-direction: column;
+		gap: grid-baseline(0.5);
+		margin: grid-baseline(1.5) 0;
+	}
+
+	&:global(.-style-bullet) {
+		list-style: disc;
+		margin-left: grid-baseline(3);
+
+		li {
+
+			> *:first-child {
+				margin-top: 0;
+			}
+
+			> *:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	// Formats
+
+	&:global(.-format-ordered) {
+		margin-left: grid-baseline(2);
+	}
+}

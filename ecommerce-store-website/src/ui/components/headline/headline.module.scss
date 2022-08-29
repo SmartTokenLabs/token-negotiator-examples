@@ -1,0 +1,30 @@
+@use 'styles/modules' as *;
+
+
+//
+//	Brand Connector Demo / UI / Components / Headline
+//
+
+
+.c-headline {
+	$c: &;
+
+	width: 100%;
+	display: block;
+
+	// Styles
+
+	&:global(.-style-underline) {
+		position: relative;
+		width: max-content;
+
+		&::after {
+			content: '';
+			position: absolute;
+			bottom: grid-baseline(-2); right: 0; left: 0;
+			width: 50%;
+			border-bottom: 4px solid color-get( --headline );
+			margin-right: auto; margin-left: auto;
+		}
+	}
+}

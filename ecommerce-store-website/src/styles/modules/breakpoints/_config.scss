@@ -3,7 +3,7 @@
 
 
 //
-//	TokenScript / Modules / Breakpoints / Config
+//	Brand Connector Demo / Modules / Breakpoints / Config
 //
 
 
@@ -14,24 +14,22 @@ $use_defaults: true !default;
 $config-defaults: (
 	default: (
 		dir: max,
-		width: 1439,
-		max: 92
+		width: 1727,
+		max: 80
 	),
 	large: (
 		dir: min,
-		width: 1440,
-		max:72
+		width: 1728,
+		max: 72
 	),
 	small: (
 		dir: max,
 		width: 960,
-		max: 92
+		max: 90
 	),
 );
 
-
 @include core.set-state( 'breakpoint', default );
-
 
 @if $use_defaults {
 	$config: map.merge( $config, $config-defaults ) !global;

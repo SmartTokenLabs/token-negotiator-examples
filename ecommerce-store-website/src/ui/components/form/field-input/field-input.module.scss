@@ -2,7 +2,7 @@
 
 
 //
-//	TokenScript / UI / Components / Form / Field Input
+//	Brand Connector Demo / UI / Components / Form / Field Input
 //
 
 
@@ -13,7 +13,7 @@
 	&:global(.-style-underline) {
 
 		input[type] {
-			@include type-size( 'f6', $margin: 0 );
+			@include type-size( 'f5', $margin: 0, $responsive: true );
 			height: auto;
 			border-bottom: 1px solid color-get(--text);
 			border-radius: 0;
