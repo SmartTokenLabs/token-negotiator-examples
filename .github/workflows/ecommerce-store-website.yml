@@ -29,6 +29,12 @@ jobs:
           export BASE_PATH=/demo
           npm run build
           npx next export
+          short_sha="${GITHUB_SHA:0:7}"
+          build_version="${GITHUB_REF_NAME}-${short_sha}"
+          build_time="$(date --utc --iso-8601=seconds)"
+          find out/ -name index.html -print0 |\
+            xargs -0 -r \
+            sed -i "s/<head>/<head><meta name=\"build-version\" content=\"${build_version}\"><meta name=\"build-time\" content=\"${build_time}\">/"
       - uses: actions/upload-artifact@v3
         with:
           name: ecommerce-store-website
