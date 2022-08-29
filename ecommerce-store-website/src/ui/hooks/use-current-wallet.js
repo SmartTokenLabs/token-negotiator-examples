@@ -21,12 +21,12 @@ export default function useCurrentWallet() {
 	const [ nftCollections, setNFTCollections ] = useState( [] );
 	const [ chain, setChain ] = useState( '' );
 
-	function addWalletListener() {
-		if ( window.ethereum ) {
-			window.ethereum.on( 'chainChanged', ( chainId ) => {
+	function addWalletListener(provider) {
+		if ( provider ) {
+			provider.on( 'chainChanged', ( chainId ) => {
 				setChain( chainMap[ chainId ] ? chainMap[ chainId ] : 'unsupported chain: ' + chainId );
 			});
-			window.ethereum.on( 'accountsChanged', ( accounts ) => {
+			provider.on( 'accountsChanged', ( accounts ) => {
 				if ( accounts.length > 0 ) {
 					setWallet( accounts[ 0 ]);
 					setStatus('');
@@ -40,16 +40,21 @@ export default function useCurrentWallet() {
 
 	useEffect(async () => {
 		getCurrentWalletConnected().then((res) => {
-			const { address, status } = res;
+			const { address, status, provider } = res;
 			setWallet( address )
 			setStatus( status );
-			addWalletListener();
+			addWalletListener(provider);
 			setNFTCollections( nftDataStore );
-			setTimeout( () => {
-				if( window.ethereum && window.ethereum.chainId ){
-					setChain( chainMap[ window.ethereum.chainId ] ? chainMap[ window.ethereum.chainId ] : 'unsupported chain: ' + window.ethereum.chainId );
-				}
-			}, 2000);
+
+			if (provider)
+				setTimeout( async () => {
+
+					let chainId = await provider.getChainId();
+
+					if( chainId ){
+						setChain( chainMap[ chainId ] ? chainMap[ chainId ] : 'unsupported chain: ' + chainId );
+					}
+				}, 2000);
 		});
 	}, []);
 

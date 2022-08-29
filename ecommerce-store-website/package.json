@@ -15,6 +15,7 @@
 		"body-scroll-lock": "^4.0.0-beta.0",
 		"clsx": "^1.1.1",
 		"cors": "^2.8.5",
+		"ethers": "^5.7.0",
 		"formik": "^2.2.9",
 		"lodash-es": "^4.17.21",
 		"next": "^12.2.5",
