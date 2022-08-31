@@ -79,13 +79,15 @@ export default function Minter({ className }) {
 					const { title, description, list } = nft;
 					const collectionItem = list[ 0 ];
 
-					const chain = ethereum.chainId === '0x13881' ? '-mumbai' : '-goerli';
-
-					const tokenIsSelected = (
-						selectedTokens && selectedTokens[collectionItem.ref+chain] &&
-						selectedTokens[collectionItem.ref+chain].tokens.length > 0
-					);
-
+					let tokenIsSelected = false;
+					if (typeof ethereum !== "undefined") {
+						const chain = ethereum.chainId === '0x13881' ? '-mumbai' : '-goerli';
+						tokenIsSelected = (
+							selectedTokens && selectedTokens[collectionItem.ref+chain] &&
+							selectedTokens[collectionItem.ref+chain].tokens.length > 0
+						);
+					}
+						
 					return (
 						<Card key={ i } className="-style-outline -mb6">
 							<Image className={ styles[ 'c-minter_image' ] } src={ collectionItem.imagePath } />
