@@ -12,27 +12,34 @@ export const safeMint = async ({
 	description,
 	tokenUri
 }) => {
-	const web3 = new Web3(window.ethereum);
-
-	window.contract = await new web3.eth.Contract(abi, contract);
-
-	const transactionParameters = {
-		to: contract,
-		from: walletAddress,
-		'data': window.contract.methods.safeMint(sendTo, tokenUri).encodeABI()
-	};
 
 	//sign the transaction via Metamask
 	try {
-		const txHash = await window.ethereum
-			.request({
-				method: 'eth_sendTransaction',
-				params: [transactionParameters],
-			});
-		return {
-			success: true,
-			status: "✅ Check out your transaction: " + chain + " " + txHash
+
+		if(window.ethereum) {
+		
+			const web3 = new Web3(window.ethereum);
+
+			window.contract = await new web3.eth.Contract(abi, contract);
+
+			const transactionParameters = {
+				to: contract,
+				from: walletAddress,
+				'data': window.contract.methods.safeMint(sendTo, tokenUri).encodeABI()
+			};
+
+			const txHash = await window.ethereum
+				.request({
+					method: 'eth_sendTransaction',
+					params: [transactionParameters],
+				});
+			return {
+				success: true,
+				status: "✅ Check out your transaction: " + chain + " " + txHash
+			}
+			
 		}
+
 	} catch (error) {
 		return {
 			success: false,
@@ -61,7 +68,7 @@ export const connectWallet = async () => {
 	} else {
 		return {
 			address: "",
-			status: "You must have Metamask, Torus or Wallet Connect."
+			status: "You must have Metamask browser extension to connect."
 		};
 	}
 };
@@ -80,7 +87,7 @@ export const getCurrentWalletConnected = async () => {
 			} else {
 				return {
 					address: "",
-					status: "You must connect to Metamask, Torus or Wallet Connect to be able to request tokens.",
+					status: "You must connect to Metamask browser extension to connect.",
 				};
 			}
 		} catch (err) {
@@ -92,7 +99,7 @@ export const getCurrentWalletConnected = async () => {
 	} else {
 		return {
 			address: "",
-			status: "You must have Metamask, Torus or Wallet Connect."
+			status: "You must have Metamask browser extension to connect."
 		};
 	}
 };
