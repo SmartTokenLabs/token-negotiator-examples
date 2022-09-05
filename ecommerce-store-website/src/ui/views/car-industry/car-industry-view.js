@@ -10,7 +10,7 @@ import { useStore } from "src/base/state";
 
 //	Styles
 import styles from "./car-industry-view.module.scss";
-import {createNegotiatorClient, updateNegotiatorIssuers} from "src/base/negotiator-client";
+import {updateNegotiatorIssuers} from "src/base/negotiator-client";
 
 import imgCarIndustry1 from "../../../../public/images/car-industry-1.jpg";
 import imgCarIndustry2 from "../../../../public/images/car-industry-2.jpg";
