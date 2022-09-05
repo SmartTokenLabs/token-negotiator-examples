@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@tokenscript/token-negotiator": "git://github.com/tokenScript/token-negotiator.git#staging",
+    "@tokenscript/token-negotiator": "^2.0.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-scripts": "5.0.1",

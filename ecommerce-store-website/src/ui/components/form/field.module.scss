@@ -2,35 +2,35 @@
 
 
 //
-//	TokenScript / UI / Components / Form / Field
+//	Brand Connector Demo / UI / Components / Field
 //
 
 
 .c-field {
 	$c: &;
 
-	max-width: 100%;
+	max-width: 100%; width: 100%;
 	margin-bottom: grid-baseline(3);
 
 	//	Elements ----------------
 
-	input[type], textarea {
+	input[type] {
 		&:focus {
 			outline: 0;
 		}
 	}
 
-	input[type], textarea {
+	input[type] {
 		@include type-size( 'f6', $margin: 0 );
-		height: grid-baseline(7.5);
+		height: grid-baseline(8);
 		border-radius: grid-baseline(1);
-		padding: grid-baseline(2.5) grid-gutter(0.5);
+		padding: grid-baseline(2.5) grid-column(0.25);
 		box-sizing: border-box;
 		position: relative;
 		color: color-get( --field-text );
 		background-color: color-get( --field-bg );
 		width: 100%;
-		border: 1px solid color-get( --field-text, 0.2 );
+		border: none;
 		-moz-appearance: none;
 		-webkit-appearance: none;
 
@@ -40,8 +40,7 @@
 	}
 
 	&_message {
-		@include type-size( 'f9' );
+		@include type-size( 'f8' );
 		color: color-get( --state-error );
-		margin: 0;
 	}
 }

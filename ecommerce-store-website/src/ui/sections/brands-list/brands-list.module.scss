@@ -1,0 +1,45 @@
+@use 'styles/modules' as *;
+
+
+//
+//	Brand Connector Demo / UI / Sections / Brands List
+//
+
+
+.s-brands-list {
+	$s: &;
+
+	&_container {
+		grid-gap: grid-gutter(1.5);
+
+		li img {
+			max-height: grid-baseline(14);
+		}
+	}
+}
+
+/**
+ * 	Media Queries
+ *	--------------------------------------------------
+ */
+
+/** Breakpoint:	Small ----------------------- */
+
+@include breakpoint-for( small ) using ( $bp ) {
+
+	.s-brands-list {
+		$s: &;
+
+		//	Elements	 ----------------
+
+		&_container {
+			&:global(.grid) {
+				gap: grid-gutter(5);
+			}
+
+			li {
+				padding-right: grid-gutter(2); padding-left: grid-gutter(2);
+			}
+		}
+	}
+}

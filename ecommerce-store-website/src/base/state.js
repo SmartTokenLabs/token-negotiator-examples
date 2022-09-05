@@ -1,28 +1,42 @@
 
 //	Dependencies
-import Router from 'next/router';
 import create from 'zustand';
+import { subscribeWithSelector } from 'zustand/middleware'
+import _debounce from 'lodash-es/debounce';
+import _isNil from 'lodash-es/isNil';
 
 
 //
-//	TokenScript / Base / State
+//	Brand Connector Demo / Base / State
 //
 
 
-export const useStore = create( set => ({
-	isMenuOpen: false,
+export const useStore = create( subscribeWithSelector( set => ({
+	imagesLoaded: 0,
+
+	isContextOpen: false,
+	contextView: null,
+	contextProps: null,
+
 	selectedTokens: {},
+	isNegotiatorReady: false,
+	tokenNegotiatorInstance: null,
+
 	api: {
-		toggleMenuView: ( ) => { set( ( state ) => ({ isMenuOpen: !state.isMenuOpen }) ) },
-		closeMenuView: ( ) => { set( () => ({ isMenuOpen: false }) ) },
-		setSelectedTokens: ( selectedTokens ) => { set( () => ({ selectedTokens: selectedTokens }) ) }
+		setImageLoaded: () => set( state => ({
+			imagesLoaded: state.imagesLoaded + 1,
+		})),
+
+		setContextView: ( contextView, contextProps ) => set( state => {
+			const _isToggleClosed = state.contextView === contextView;
+			return {
+				isContextOpen: !_isToggleClosed && !_isNil( contextView ),
+				contextView: _isToggleClosed ? null : contextView,
+				contextProps: _isToggleClosed ? null : contextProps,
+			};
+		}),
+		setIsNegotiatorReady: ( isNegotiatorReady )=> set( () => ({ isNegotiatorReady }) ),
+		setSelectedTokens: ( selectedTokens ) => { set( () => ({ selectedTokens: selectedTokens }) ) },
+		setTokenNegotiatorInstance: ( tokenNegotiatorInstance ) => { set( () => ({ tokenNegotiatorInstance }) ) },
 	},
-}) );
-
-const state = useStore.getState();
-
-function handleRouteChange() {
-	state.api.closeMenuView();
-}
-
-Router.events.on( 'routeChangeStart', handleRouteChange );
+}) ));

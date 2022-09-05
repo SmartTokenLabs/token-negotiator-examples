@@ -1,0 +1,18 @@
+
+@use 'styles/modules' as *;
+
+.overlay-tn {
+
+	.overlay-fab-button-tn {
+		display: flex;
+		align-items: center; justify-content: center;
+		background: linear-gradient( 234.79deg, color-get( ts-blue ) 37.73%, color-get( ts-blue-60 ) 118.69% ) !important;
+		box-shadow: inset 0px 4px 8px color-get( ts-blue ) !important;
+		padding: grid-baseline(2.5);
+
+		> svg {
+			width: 100%; height: 100%;
+			max-width: grid-baseline(6);
+		}
+	}
+}

@@ -1,0 +1,104 @@
+@use 'styles/modules' as *;
+
+
+//
+//	Brand Connector Demo / UI / App / Context
+//
+
+
+.a-context {
+	$a: &;
+
+	width: grid-gutter(14);
+	min-width: grid-column(5);
+	padding-bottom: grid-baseline(2);
+	margin-top: grid-baseline(8); margin-bottom: grid-baseline(8); box-sizing: border-box;
+	display: flex; flex-flow: column nowrap;
+	position: relative; z-index: 10;
+	color: color-get( --text );
+	background-color: color-get( --bg );
+	border-radius: grid-baseline(1);
+
+	&_header {
+		padding: 0;
+
+		&_close {
+			@include color-set( --text-light, --base );
+			position: absolute; top: grid-baseline(1); right: grid-gutter(0.5);
+			z-index: 1;
+		}
+
+		&_logo-container {
+			margin: grid-baseline(6.75) 0 grid-baseline(-3);
+		}
+	}
+
+	footer {
+		padding: grid-baseline(2) 0;
+		border-top: 1px solid color-get( --base, 0.1 );
+	}
+
+	section {
+		padding: grid-baseline(4) 0;
+		justify-content: flex-start;
+		background-color: transparent;
+	}
+
+	&_region {
+		position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 90;
+		display: flex; flex-flow: column nowrap; align-items: center;
+		pointer-events: none;
+		overflow-y: hidden;
+
+		&.-is-active {
+			pointer-events: auto;
+			overflow-y: auto;
+		}
+	}
+
+	&_overlay {
+		position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 0;
+		background-color: color-get( --base );
+		cursor: pointer;
+		will-change: opacity;
+	}
+}
+
+
+/**
+ * 	Media Queries
+ *	--------------------------------------------------
+ */
+
+/** Breakpoint:	Small ----------------------- */
+
+@include breakpoint-for( small ) using ( $bp ) {
+
+	.a-context {
+		$a: &;
+
+		width: auto; max-width: 100%;
+		min-width: 0;
+		margin: 0;
+		border-radius: grid-baseline(3);
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+
+		//	Formats
+
+		&_region {
+			justify-content: flex-end;
+		}
+	}
+}
+
+/** Breakpoint:	Small ----------------------- */
+
+@include breakpoint-for( large ) using ( $bp ) {
+
+	.a-context {
+		$a: &;
+
+		--grid-max-width: 92%;
+	}
+}

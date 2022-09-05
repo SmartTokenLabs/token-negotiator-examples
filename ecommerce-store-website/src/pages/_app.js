@@ -1,108 +1,129 @@
 
 //	Dependencies
 import PropTypes from 'prop-types';
-import Head from 'next/head';
+import { useEffect }  from "react";
 
 //	App
 import { useStore } from 'base/state';
-import { Layout as DefaultLayout } from 'ui/app';
-import Menu from 'ui/app/menu';
-import { useEffect }  from "react";
+import { Layout as DefaultLayout, Context } from 'ui/app';
+
+import ContextRegisterThanks from 'ui/app/context/context-register-thanks';
 
 //	Styles
 import 'styles/index.scss';
+import "./ui/styles/_app.scss";
+import "@tokenscript/token-negotiator/dist/theme/style.css";
 
-import "@tokenscript/token-negotiator/dist/theme/style.css"
+const CONTEXT_VIEWS = {
+	'register-thanks': {
+		c: ContextRegisterThanks,
+	},
+}
 
 export default function App({ Component, pageProps }) {
-
 	const Layout = Component.Layout ?? DefaultLayout;
 	const api = useStore( s => s.api );
+	
+	const mumbaiIssuers = [
+		{
+			collectionID: 'stl-bayc-mumbai',
+			onChain: true,
+			contract: '0x594CeCc147F8F27fF6d269AE23D9a0Ff27d979F4',
+			chain: 'mumbai',
+			openSeaSlug: undefined
+		},
+		{
+			collectionID: 'stl-wow-mumbai',
+			onChain: true,
+			contract: '0xa432AC92c386b9929Bd9308C4e98505ac22d3A00',
+			chain: 'mumbai',
+			openSeaSlug: undefined
+		},
+		{
+			collectionID: 'stl-riot-racer-mumbai',
+			onChain: true,
+			contract: '0x165B81C550263f6E9AC9B1852D6A8bAC9538E6d7',
+			chain: 'mumbai',
+			openSeaSlug: undefined
+		}
+	]
+	
+	const goerliIssuers = [
+		{
+			collectionID: 'stl-bayc-goerli',
+			onChain: true,
+			contract: '0xc361201E5B1005cCDE47B32F223BC145DE393F62',
+			chain: 'goerli',
+			openSeaSlug: undefined
+		},
+		{
+			collectionID: 'stl-wow-goerli',
+			onChain: true,
+			contract: '0x87644E0A1287A4D96DecC29A13400a1be9759AF8',
+			chain: 'goerli',
+			openSeaSlug: undefined
+		},
+		{
+			collectionID: 'stl-riot-racer-goerli',
+			onChain: true,
+			contract: '0xae96095fF42B0Cae2DaD3d49E5EE11663280d819',
+			chain: 'goerli',
+			openSeaSlug: undefined
+		}
+	]
+
+	const resetIssuers = (networkId) => {
+		if(!networkId) return;
+		const normalisedNetworkId = Number(networkId.replace('0x', ''));
+		if(normalisedNetworkId === 5) { // Goerli
+			window.negotiator.negotiate(goerliIssuers);
+		}
+		if(normalisedNetworkId === 13881) { // Mumbai
+			window.negotiator.negotiate(mumbaiIssuers);
+		}
+	}
+
+	let currentIssuers = goerliIssuers;
 
 	useEffect(()=> {
 
 		const init = async () => {
 
 			const { Client } = (await import("@tokenscript/token-negotiator"));
-
+			
 			window.negotiator = new Client({
 				type: 'active',
 				issuers: [
-					/*{
-						collectionID: 'rinkeby-punk',
-						onChain: true,
-						contract: '0x6d3495B5d83f6479Ab3023784f52B11AC3794e2F',
-						chain: 'rinkeby',
-						openSeaSlug: 'stl-expansion-punks-nfts-v2'
-					},*/
-					/*{
-						collectionID: 'stl-bayc',
-						onChain: true,
-						contract: '0x3d8a0fB32b0F586FdC10447c22F477979dc526ec',
-						chain: 'rinkeby',
-						openSeaSlug: 'stl-bayc'
-					},
-					{
-						collectionID: 'stl-mayc',
-						onChain: true,
-						contract: '0x70F6aCb098d57917CD46e8c647fa9c45800D29f2',
-						chain: 'rinkeby',
-						openSeaSlug: 'stl-mayc'
-					},
-					{
-						collectionID: 'stl-nifty',
-						onChain: true,
-						contract: '0x60E04A774aD2Eca9e4093445dA67e649bb267879',
-						chain: 'rinkeby',
-						openSeaSlug: 'stl-nifty'
-					},
-					{
-						collectionID: 'women-tribe',
-						onChain: true,
-						contract: '0xDbaCB1C25d849321727534C1BB2bbd962272eB13',
-						chain: 'rinkeby',
-						openSeaSlug: 'stl-woman-tribe-nfts-v2'
-					},*/
-					/*{
-						collectionID: 'zed',
-						onChain: true,
-						contract: '0x8E3De6062c7041d483Cc1BE2654728f6956F7965',
-						chain: 'rinkeby',
-						openSeaSlug: 'stl-zed-run-nfts-v2'
-					},
-					{
-						collectionID: 'stl-rnd-bayc-derivatives',
-						onChain: true,
-						contract: '0x80A679106f24684BB4c92828ACce5e92d2AfFcad',
-						chain: 'rinkeby',
-						openSeaSlug: 'stl-bayc-nfts-v2'
-					},*/
-					/*{
-						collectionID: 'stl-rnd-riot-racers',
-						onChain: true,
-						contract: '0x399653F4212bf3EA3AF9bCE45a294AB462f22436',
-						chain: 'rinkeby',
-						openSeaSlug: 'stl-riot-racers-nfts-v3'
-					}*/
+					...currentIssuers
 				],
-				options: {
-					overlay: {
-						openingHeading: "Open a new world of discounts available with your tokens.",
-						issuerHeading: "Get discounts with tokens",
-						repeatAction: "try again",
-						theme: "light",
-						position: "bottom-right"
-					},
-					filters: {},
+				uiOptions: {
+					openingHeading: "Open a new world of discounts available with your tokens.",
+					issuerHeading: "Get discounts with tokens",
+					repeatAction: "try again",
+					position: "bottom-right"
 				},
 				ipfsBaseUrl: "https://smart-token-labs-demo-server.mypinata.cloud/ipfs/"
 			});
 
-			//window.negotiator.negotiate();
-
 			window.negotiator.on("tokens-selected", (data) => {
+				console.log('tokens', data);
 				api.setSelectedTokens({...data.selectedTokens});
 			});
+
+			window.negotiator.negotiate().then( () => {
+				api.setIsNegotiatorReady( true );
+				api.setTokenNegotiatorInstance( window.negotiator );
+			}).catch( ( error ) =>{
+				console.log( `Error: ${error}` );
+			});
+
+			if(ethereum) {
+				ethereum.on('chainChanged', function(networkId){
+					resetIssuers(networkId);
+				});
+				resetIssuers(ethereum.chainId);
+			}
+			
 		};
 
 		if (document.getElementsByClassName("overlay-tn")[0].childElementCount === 0)
@@ -112,15 +133,10 @@ export default function App({ Component, pageProps }) {
 	return (
 		<>
 			<Layout pageProps={ pageProps }>
-				<Head>
-					<link rel="preconnect" href="https://fonts.googleapis.com" />
-					<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
-					<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet" />
-				</Head>
 				<Component { ...pageProps } />
 			</Layout>
-			<Menu.Region onClose={ () => api.closeMenuView() } />
-			<div className="overlay-tn"/>
+			<Context.Region onClose={ () => api.setContextView() } views={ CONTEXT_VIEWS } />
+			<div className="overlay-tn" />
 		</>
 	);
 };

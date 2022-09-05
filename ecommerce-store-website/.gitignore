@@ -11,8 +11,6 @@ robots.txt
 # Dependencies
 # ------------
 node_modules
-package-lock.json
-yarn.lock
 !/yarn.lock
 test/node_modules
 
@@ -21,6 +19,7 @@ test/node_modules
 .env
 .env*
 *.env
+!.env.example
 
 # Logs
 # ------------
