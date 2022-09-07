@@ -11,12 +11,12 @@ import { useStore } from 'base/state';
 // Styles
 import styles from './minter.module.scss';
 
-
 //
 //	Brand Connector Demo / UI / Components / Minter
 //
 
 export default function Minter({ className }) {
+
 	const [ walletAddress, nftCollections, chain, walletStatus ] = useCurrentWallet();
 	const [ submissionStatus, setSubmissionStatus ] = useState( '' );
 	const [ mintedNFTs, setMintedNFTs ] = useState( [] );
@@ -34,6 +34,23 @@ export default function Minter({ className }) {
 	}
 
 	const onMintPressed = async ( event, nft, collectionItem ) => {
+
+		// console.log('onMintPressed 101', walletAddress && window?.negotiator);
+
+		// console.log('addWalletListener: ', window.connectedWallet);
+		if ( window.connectedWallet ) {
+			setChain( chainMap[ connectedWallet.chainId ] ? chainMap[ connectedWallet.chainId ] : 'unsupported chain: ' + chainId );
+		// 	window.connectedWallet.provider.listAccounts().then(accounts => {
+		// 		if(accounts.length > 0) {
+		// 			setWallet( accounts[ 0 ]);
+		// 			setStatus('');
+		// 		} else {
+		// 			setWallet( '' );
+		// 			setStatus( 'You must connect to Metamask, Torus or Wallet Connect to be able to request tokens.' );
+		// 		}
+		// 	});
+		}
+
 		if ( !walletAddress && window?.negotiator ) window.negotiator.negotiate();
 
 		if ( walletStatus ) {
@@ -48,6 +65,19 @@ export default function Minter({ className }) {
 		} else {
 
 			setChangeOfNetworkRequired(false);
+
+			console.log(
+				'onMintPressed: ',
+				walletAddress,
+				sendTo,
+				abi,
+				contract,
+				chain,
+				name,
+				imageURI,
+				description,
+				tokenUri,
+			);
 
 			const { status, success } = await safeMint({
 				walletAddress: walletAddress,
@@ -96,7 +126,8 @@ export default function Minter({ className }) {
 							<MinterButton
 								className={ clsx( styles[ 'c-minter_button' ], '-mta' ) }
 								onClick={ event => onMintPressed( event, nft, collectionItem ) }
-								isMinted={ mintedNFTs.indexOf( collectionItem.id ) > -1 || tokenIsSelected }
+								// isMinted={ mintedNFTs.indexOf( collectionItem.id ) > -1 || tokenIsSelected }
+								isMinted={ false }
 							/>
 						</Card>
 					);

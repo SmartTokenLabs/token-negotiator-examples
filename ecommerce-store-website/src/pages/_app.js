@@ -89,7 +89,8 @@ export default function App({ Component, pageProps }) {
 
 		const init = async () => {
 
-			const { Client } = (await import("@tokenscript/token-negotiator"));
+			const { Client } = (await import("./../dist/client/index"));
+			// const { Client } = (await import("@tokenscript/token-negotiator"));
 			
 			window.negotiator = new Client({
 				type: 'active',
@@ -109,6 +110,11 @@ export default function App({ Component, pageProps }) {
 				console.log('tokens', data);
 				api.setSelectedTokens({...data.selectedTokens});
 			});
+			
+			window.negotiator.on("connected-wallet", (connectedWallet) => {
+				window.connectedWallet = connectedWallet;
+				// 
+			});
 
 			window.negotiator.negotiate().then( () => {
 				api.setIsNegotiatorReady( true );
@@ -117,12 +123,18 @@ export default function App({ Component, pageProps }) {
 				console.log( `Error: ${error}` );
 			});
 
-			if(ethereum) {
-				ethereum.on('chainChanged', function(networkId){
-					resetIssuers(networkId);
-				});
-				resetIssuers(ethereum.chainId);
-			}
+			// if(window.connectedWallet){
+			// 	window.connectedWallet.getNetwork().then((networkObj) => { 
+			// 		networkObj.chainId
+			// 	});
+			// }
+			
+			// if(ethereum) {
+			// 	ethereum.on('chainChanged', function(networkId){
+			// 		resetIssuers(networkId);
+			// 	});
+			// 	resetIssuers(ethereum.chainId);
+			// }
 			
 		};
 

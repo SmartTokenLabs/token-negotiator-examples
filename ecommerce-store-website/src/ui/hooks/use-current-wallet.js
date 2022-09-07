@@ -22,12 +22,11 @@ export default function useCurrentWallet() {
 	const [ chain, setChain ] = useState( '' );
 
 	function addWalletListener() {
-		if ( window.ethereum ) {
-			window.ethereum.on( 'chainChanged', ( chainId ) => {
-				setChain( chainMap[ chainId ] ? chainMap[ chainId ] : 'unsupported chain: ' + chainId );
-			});
-			window.ethereum.on( 'accountsChanged', ( accounts ) => {
-				if ( accounts.length > 0 ) {
+		console.log('addWalletListener: ', window.connectedWallet);
+		if ( window.connectedWallet ) {
+			setChain( chainMap[ connectedWallet.chainId ] ? chainMap[ connectedWallet.chainId ] : 'unsupported chain: ' + chainId );
+			window.connectedWallet.provider.listAccounts().then(accounts => {
+				if(accounts.length > 0) {
 					setWallet( accounts[ 0 ]);
 					setStatus('');
 				} else {
@@ -36,6 +35,20 @@ export default function useCurrentWallet() {
 				}
 			});
 		}
+		// if ( window.connectedWallet ) {
+		// 	window.connectedWallet.on( 'chainChanged', ( chainId ) => {
+		// 		setChain( chainMap[ chainId ] ? chainMap[ chainId ] : 'unsupported chain: ' + chainId );
+		// 	});
+		// 	window.connectedWallet.on( 'accountsChanged', ( accounts ) => {
+		// 		if ( accounts.length > 0 ) {
+		// 			setWallet( accounts[ 0 ]);
+		// 			setStatus('');
+		// 		} else {
+		// 			setWallet( '' );
+		// 			setStatus( 'You must connect to Metamask, Torus or Wallet Connect to be able to request tokens.' );
+		// 		}
+		// 	});
+		// }
 	}
 
 	useEffect(async () => {
@@ -46,8 +59,8 @@ export default function useCurrentWallet() {
 			addWalletListener();
 			setNFTCollections( nftDataStore );
 			setTimeout( () => {
-				if( window.ethereum && window.ethereum.chainId ){
-					setChain( chainMap[ window.ethereum.chainId ] ? chainMap[ window.ethereum.chainId ] : 'unsupported chain: ' + window.ethereum.chainId );
+				if( window.connectedWallet && window.connectedWallet.chainId ){
+					setChain( chainMap[ window.connectedWallet.chainId ] ? chainMap[ window.connectedWallet.chainId ] : 'unsupported chain: ' + window.connectedWallet.chainId );
 				}
 			}, 2000);
 		});

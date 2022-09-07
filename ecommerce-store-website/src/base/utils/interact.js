@@ -16,20 +16,32 @@ export const safeMint = async ({
 	//sign the transaction via Metamask
 	try {
 
-		if(window.ethereum) {
+		if(window.connectedWallet) {
+
+			console.log(
+				'safe mint: ',
+				sendTo,
+				abi,
+				contract,
+				chain,
+				name,
+				imageURI,
+				walletAddress,
+				description,
+				tokenUri
+			);
 		
-			const web3 = new Web3(window.ethereum);
+			const web3 = new Web3(window.connectedWallet.provider);
 
 			window.contract = await new web3.eth.Contract(abi, contract);
 
 			const transactionParameters = {
 				to: contract,
 				from: walletAddress,
-				'data': window.contract.methods.safeMint(sendTo, tokenUri).encodeABI()
+				data: window.contract.methods.safeMint(sendTo, tokenUri).encodeABI()
 			};
 
-			const txHash = await window.ethereum
-				.request({
+			const txHash = await window.connectedWallet.sendTransaction({
 					method: 'eth_sendTransaction',
 					params: [transactionParameters],
 				});
@@ -49,11 +61,9 @@ export const safeMint = async ({
 }
 
 export const connectWallet = async () => {
-	if ( window.ethereum ) {
+	if ( window.connectedWallet ) {
 		try {
-			const addressArray = await window.ethereum.request({
-				method: "eth_requestAccounts",
-			});
+			const addressArray = await window.connectedWallet.provider.listAccounts();
 			const obj = {
 				status: "",
 				address: addressArray[0],
@@ -74,11 +84,9 @@ export const connectWallet = async () => {
 };
 
 export const getCurrentWalletConnected = async () => {
-	if (window.ethereum) {
+	if (window.connectedWallet) {
 		try {
-			const addressArray = await window.ethereum.request({
-				method: "eth_accounts",
-			});
+			const addressArray = await window.connectedWallet.provider.listAccounts();
 			if (addressArray.length > 0) {
 				return {
 					address: addressArray[0],
