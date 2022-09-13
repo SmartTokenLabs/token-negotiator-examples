@@ -17,7 +17,13 @@ cp -R ecommerce-store-website/out build/ecommerce-store-website
 cp -R typescript-bare-bones-demo/build build/typescript-bare-bones-demo
 
 # Art gallery example
-#cp -R art-gallery-medium-article-website/build build/art-gallery-medium-article-website
+cp -R art-gallery-medium-article-website/build build/art-gallery-medium-article-website
+
+# Vue Js example 1
+cp -R vue-boilerplate/dist dist/vue-boilerplate
+
+# Vue Js example 2 (VITE + UMD)
+cp -R vue-boilerplate/dist dist/vue-boilerplate
 
 # Examples index
 cp index.html build/
