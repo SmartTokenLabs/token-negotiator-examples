@@ -20,10 +20,10 @@ cp -R typescript-bare-bones-demo/build build/typescript-bare-bones-demo
 cp -R art-gallery-medium-article-website/build build/art-gallery-medium-article-website
 
 # Vue Js example 1
-cp -R vue-boilerplate/dist dist/vue-boilerplate
+cp -R vue-boilerplate/dist build/vue-boilerplate
 
 # Vue Js example 2 (VITE + UMD)
-cp -R vue-boilerplate/dist dist/vue-boilerplate
+cp -R vue-boilerplate/dist build/vue-boilerplate
 
 # Examples index
 cp index.html build/
