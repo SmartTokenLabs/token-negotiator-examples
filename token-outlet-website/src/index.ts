@@ -1,4 +1,4 @@
-import { Outlet } from './dist/outlet/index';
+import { Outlet } from '@tokenscript/token-negotiator';
 import {updateTokenConfig} from "../../environment";
 // @ts-ignore
 import config from '../../tokenConfig.json';

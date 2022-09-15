@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "asn1js": "^2.0.26",
-    "pvutils": "^1.0.17"
+    "pvutils": "^1.0.17",
+    "@tokenscript/token-negotiator": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
