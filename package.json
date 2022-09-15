@@ -48,7 +48,7 @@
     "build-ecommerce": "cd ecommerce-store-website && npm run build-static",
     "install-barebones": "cd typescript-bare-bones-demo && npm i --force",
     "build-barebones": "cd typescript-bare-bones-demo && npm run build",
-    "copy-artifacts": "sh ./scripts/copy_gh_artifacts.sh"    
+    "copy-artifacts": "sh ./scripts/copy_gh_artifacts.sh"
   },
   "repository": {
     "type": "git",
