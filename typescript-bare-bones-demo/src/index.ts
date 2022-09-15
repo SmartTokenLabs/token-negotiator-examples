@@ -123,32 +123,3 @@ window.updateIssuers = () => {
 
     window.negotiator.negotiate(newIssuers, true);
 };
-
-// PASSIVE
-
-// const negotiator = new Client({
-//     type: 'passive',
-//     issuers: [
-//         'devcon',
-//         { contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'rinkeby-punk' },
-//         { contract: '0x0d0167a823c6619d430b1a96ad85b888bcf97c37', chain: 'eth' }
-//     ],
-//     options: {}
-// });
-
-// negotiator.on('tokens', (issuerTokens) => {
-
-//     // use tokens
-//     console.log(issuerTokens);
-
-// });
-
-// negotiator.on("token-proof", (tokenProof) => {
-
-//     // use proof
-
-// });
-
-// // invoke
-
-// negotiator.negotiate();
