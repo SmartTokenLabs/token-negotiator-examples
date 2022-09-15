@@ -4,7 +4,6 @@ const TerserPlugin = require("terser-webpack-plugin");
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 const isModern = false;
-
 module.exports = {
   plugins: [
       new HtmlWebpackPlugin({
@@ -15,8 +14,8 @@ module.exports = {
       new NodePolyfillPlugin()
   ],
   mode: 'development',
-  entry: path.resolve(__dirname, './src/index.ts'),
-  devtool: 'inline-source-map',
+  entry: './src/index.ts',
+  devtool: 'eval-source-map',
   module: {
     rules: [
       {
