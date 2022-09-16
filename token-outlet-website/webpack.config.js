@@ -4,6 +4,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 const isModern = false;
+
 module.exports = {
   plugins: [
       new HtmlWebpackPlugin({
@@ -15,7 +16,7 @@ module.exports = {
   ],
   mode: 'development',
   entry: './src/index.ts',
-  devtool: 'eval-source-map',
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {
@@ -31,16 +32,16 @@ module.exports = {
         test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
         type: 'asset/inline',
       },
-      // {
-      //   test: /\.m?js$/,
-      //   exclude: /(node_modules|bower_components)/,
-      //   use: {
-      //     loader: 'babel-loader',
-      //     options: {
-      //       presets: ['@babel/preset-env']
-      //     }
-      //   }
-      // }
+      {
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      }
     ],
   },
   resolve: {
