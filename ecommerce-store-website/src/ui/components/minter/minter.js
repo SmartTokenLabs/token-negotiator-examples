@@ -37,18 +37,25 @@ export default function Minter({ className }) {
 
 		// console.log('onMintPressed 101', walletAddress && window?.negotiator);
 
+		console.log(
+			walletAddress,
+			
+		);
+
 		// console.log('addWalletListener: ', window.connectedWallet);
 		if ( window.connectedWallet ) {
-			setChain( chainMap[ connectedWallet.chainId ] ? chainMap[ connectedWallet.chainId ] : 'unsupported chain: ' + chainId );
-		// 	window.connectedWallet.provider.listAccounts().then(accounts => {
-		// 		if(accounts.length > 0) {
-		// 			setWallet( accounts[ 0 ]);
-		// 			setStatus('');
-		// 		} else {
-		// 			setWallet( '' );
-		// 			setStatus( 'You must connect to Metamask, Torus or Wallet Connect to be able to request tokens.' );
-		// 		}
-		// 	});
+
+			var chain = chainMap[ connectedWallet.chainId ] ? chainMap[ connectedWallet.chainId ] : 'unsupported chain: ' + chainId;
+			// setChain( chainMap[ connectedWallet.chainId ] ? chainMap[ connectedWallet.chainId ] : 'unsupported chain: ' + chainId );
+			// window.connectedWallet.provider.listAccounts().then(accounts => {
+			// 	if(accounts.length > 0) {
+			// 		setWallet( accounts[ 0 ]);
+			// 		setStatus('');
+			// 	} else {
+			// 		setWallet( '' );
+			// 		setStatus( 'You must connect to Metamask, Torus or Wallet Connect to be able to request tokens.' );
+			// 	}
+			// });
 		}
 
 		if ( !walletAddress && window?.negotiator ) window.negotiator.negotiate();
@@ -114,6 +121,7 @@ export default function Minter({ className }) {
 						const chain = ethereum.chainId === '0x13881' ? '-mumbai' : '-goerli';
 						tokenIsSelected = (
 							selectedTokens && selectedTokens[collectionItem.ref+chain] &&
+							selectedTokens[collectionItem.ref+chain].tokens &&
 							selectedTokens[collectionItem.ref+chain].tokens.length > 0
 						);
 					}

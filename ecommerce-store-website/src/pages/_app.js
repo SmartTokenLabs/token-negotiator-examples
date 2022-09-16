@@ -30,21 +30,24 @@ export default function App({ Component, pageProps }) {
 			onChain: true,
 			contract: '0x594CeCc147F8F27fF6d269AE23D9a0Ff27d979F4',
 			chain: 'mumbai',
-			openSeaSlug: undefined
+			openSeaSlug: undefined,
+			blockchain: 'evm'
 		},
 		{
 			collectionID: 'stl-wow-mumbai',
 			onChain: true,
 			contract: '0xa432AC92c386b9929Bd9308C4e98505ac22d3A00',
 			chain: 'mumbai',
-			openSeaSlug: undefined
+			openSeaSlug: undefined,
+			blockchain: 'evm'
 		},
 		{
 			collectionID: 'stl-riot-racer-mumbai',
 			onChain: true,
 			contract: '0x165B81C550263f6E9AC9B1852D6A8bAC9538E6d7',
 			chain: 'mumbai',
-			openSeaSlug: undefined
+			openSeaSlug: undefined,
+			blockchain: 'evm'
 		}
 	]
 	
@@ -54,21 +57,24 @@ export default function App({ Component, pageProps }) {
 			onChain: true,
 			contract: '0xc361201E5B1005cCDE47B32F223BC145DE393F62',
 			chain: 'goerli',
-			openSeaSlug: undefined
+			openSeaSlug: undefined,
+			blockchain: 'evm'
 		},
 		{
 			collectionID: 'stl-wow-goerli',
 			onChain: true,
 			contract: '0x87644E0A1287A4D96DecC29A13400a1be9759AF8',
 			chain: 'goerli',
-			openSeaSlug: undefined
+			openSeaSlug: undefined,
+			blockchain: 'evm'
 		},
 		{
 			collectionID: 'stl-riot-racer-goerli',
 			onChain: true,
 			contract: '0xae96095fF42B0Cae2DaD3d49E5EE11663280d819',
 			chain: 'goerli',
-			openSeaSlug: undefined
+			openSeaSlug: undefined,
+			blockchain: 'evm'
 		}
 	]
 

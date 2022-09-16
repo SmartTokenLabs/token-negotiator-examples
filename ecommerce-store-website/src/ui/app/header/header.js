@@ -10,6 +10,7 @@ import _ from "lodash";
 import { useStore } from 'base/state';
 import { useCurrentWallet } from 'ui/hooks';
 import { Logo, Link, Nav, Button, Image, Icon, Layer } from "ui/components";
+import window from 'next';
 
 // Styles
 import styles from "./header.module.scss";
@@ -28,13 +29,17 @@ const Header = React.memo( function Header({ className }) {
 	const [ walletAddress ] = useCurrentWallet();
 
 	var tokensFound = 0;
+
+	if(window?.connectedWallet) {
 	
-	if(Object.keys( selectedTokens )) {
-			tokensFound = Object.keys( selectedTokens ).map(( tokenCollection ) => {
-				return selectedTokens[tokenCollection].tokens.length;
-			})
-			if(tokensFound.length) tokensFound = tokensFound.reduce((a, b) => a + b);
-			else tokensFound = 0;
+		if(Object.keys( selectedTokens )) {
+				tokensFound = Object.keys( selectedTokens ).map(( tokenCollection ) => {
+					return selectedTokens[tokenCollection].tokens.length;
+				})
+				if(tokensFound.length) tokensFound = tokensFound.reduce((a, b) => a + b);
+				else tokensFound = 0;
+		}
+
 	}
 
 	const [ isMenuOpen, setIsMenuOpen ] = useState( false );
