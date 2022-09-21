@@ -3,7 +3,7 @@
    "onChain": false,
    "title": "Devcon",
    "image": "https://raw.githubusercontent.com/TokenScript/token-negotiator/main/mock-images/devcon.svg",
-   "tokenOrigin": "http://localhost:3002/",
+   "tokenOrigin": "https://stltesting.tk/token-outlet/",
    "attestationOrigin": "https://attestation.id/",
    "unEndPoint": "https://crypto-verify.herokuapp.com/use-devcon-ticket",
    "base64senderPublicKeys": {
