@@ -1,0 +1,1 @@
+{"ast":null,"code":"import * as safeJson from \"@walletconnect/safe-json\";\nexport const safeJsonParse = safeJson.safeJsonParse;\nexport const safeJsonStringify = safeJson.safeJsonStringify; //# sourceMappingURL=json.js.map","map":null,"metadata":{},"sourceType":"module"}

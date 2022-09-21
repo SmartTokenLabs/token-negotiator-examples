@@ -1,0 +1,1 @@
+{"ast":null,"code":"'use strict'; // TODO: remove, semver-major\n\nmodule.exports = require('get-intrinsic');","map":null,"metadata":{},"sourceType":"script"}

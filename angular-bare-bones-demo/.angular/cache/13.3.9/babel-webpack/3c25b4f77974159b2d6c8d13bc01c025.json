@@ -1,0 +1,1 @@
+{"ast":null,"code":"'use strict';\n\nvar implementation = require('./implementation');\n\nmodule.exports = function getPolyfill() {\n  if (String.prototype.matchAll) {\n    try {\n      ''.matchAll(RegExp.prototype);\n    } catch (e) {\n      return String.prototype.matchAll;\n    }\n  }\n\n  return implementation;\n};","map":null,"metadata":{},"sourceType":"script"}

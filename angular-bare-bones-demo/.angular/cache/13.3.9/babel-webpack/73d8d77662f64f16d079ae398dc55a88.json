@@ -1,0 +1,1 @@
+{"ast":null,"code":"'use strict'; // https://ecma-international.org/ecma-262/6.0/#sec-isarray\n\nmodule.exports = require('../helpers/IsArray');","map":null,"metadata":{},"sourceType":"script"}

@@ -7,7 +7,7 @@ import { useCurrentWallet } from 'ui/hooks';
 import { safeMint } from "base/utils/interact.js";
 import { Card, Button, Headline, Image, PopUp } from 'ui/components';
 import { useStore } from 'base/state';
-
+import nftDataStore from 'base/nft-data-store';
 // Styles
 import styles from './minter.module.scss';
 
@@ -17,16 +17,12 @@ import styles from './minter.module.scss';
 
 export default function Minter({ className }) {
 
-	const [ walletAddress, nftCollections, chain, walletStatus ] = useCurrentWallet();
 	const [ submissionStatus, setSubmissionStatus ] = useState( '' );
+	const [ warningText, setWarningText ] = useState( "Please change your wallet's network to either Goerli or Mumbai" );
 	const [ mintedNFTs, setMintedNFTs ] = useState( [] );
 	const [changeOfNetworkRequired, setChangeOfNetworkRequired] = useState(false);
 	const selectedTokens = useStore( s => s.selectedTokens );
-
-	useEffect( () => {
-		if ( submissionStatus && !walletStatus ) setSubmissionStatus( walletStatus );
-	}, [ walletStatus ] );
-
+	
 	const onClosePopUpEvent = () => {
 		
 		setChangeOfNetworkRequired(false);
@@ -35,59 +31,14 @@ export default function Minter({ className }) {
 
 	const onMintPressed = async ( event, nft, collectionItem ) => {
 
-		// console.log('onMintPressed 101', walletAddress && window?.negotiator);
+		const [ walletAddress, nftCollections, chain, status, walletProvider ] = useCurrentWallet();
 
-		console.log(
-			walletAddress,
-			
-		);
-
-		// console.log('addWalletListener: ', window.connectedWallet);
-		if ( window.connectedWallet ) {
-
-			var chain = chainMap[ connectedWallet.chainId ] ? chainMap[ connectedWallet.chainId ] : 'unsupported chain: ' + chainId;
-			// setChain( chainMap[ connectedWallet.chainId ] ? chainMap[ connectedWallet.chainId ] : 'unsupported chain: ' + chainId );
-			// window.connectedWallet.provider.listAccounts().then(accounts => {
-			// 	if(accounts.length > 0) {
-			// 		setWallet( accounts[ 0 ]);
-			// 		setStatus('');
-			// 	} else {
-			// 		setWallet( '' );
-			// 		setStatus( 'You must connect to Metamask, Torus or Wallet Connect to be able to request tokens.' );
-			// 	}
-			// });
-		}
-
-		if ( !walletAddress && window?.negotiator ) window.negotiator.negotiate();
-
-		if ( walletStatus ) {
-			setSubmissionStatus( walletStatus );
-			return;
-		}
-
-		if( !nft.contracts[ chain ] ) {
-
-			setChangeOfNetworkRequired(true);
-
-		} else {
+		if(walletAddress && nft.contracts[ chain ]) {
 
 			setChangeOfNetworkRequired(false);
 
-			console.log(
-				'onMintPressed: ',
-				walletAddress,
-				sendTo,
-				abi,
-				contract,
-				chain,
-				name,
-				imageURI,
-				description,
-				tokenUri,
-			);
-
 			const { status, success } = await safeMint({
-				walletAddress: walletAddress,
+				walletAddress,
 				sendTo: walletAddress,
 				abi: nft.contracts[ chain ].abi,
 				contract: nft.contracts[ chain ].contract,
@@ -95,12 +46,23 @@ export default function Minter({ className }) {
 				name: collectionItem.name,
 				imageURI: collectionItem.ipfs,
 				description: collectionItem.description,
-				tokenUri: collectionItem.metaUrl
+				tokenUri: collectionItem.metaUrl,
+				walletProvider
 			});
-			if ( success ) setMintedNFTs( [ ...mintedNFTs, collectionItem.id ] );
+			if ( success ) { 
+				setMintedNFTs( [ ...mintedNFTs, collectionItem.id ] );
+			}
 			setSubmissionStatus( status );
-		}
 
+		} else {
+
+			if(walletAddress && !nft.contracts[ chain ] ) setChangeOfNetworkRequired(true);
+
+			setSubmissionStatus( "Please Connect your wallet with Brand Connector to continue." );
+
+			window.negotiator.negotiate();
+
+		}
 
 	};
 
@@ -112,7 +74,7 @@ export default function Minter({ className }) {
 				</div>
 			)}
 			<div className="grid -g-cols-3 -mbn6">
-				{ nftCollections && nftCollections.map( ( nft, i ) => {
+				{ nftDataStore && nftDataStore.map( ( nft, i ) => {
 					const { title, description, list } = nft;
 					const collectionItem = list[ 0 ];
 
@@ -141,7 +103,7 @@ export default function Minter({ className }) {
 					);
 				})}
 			</div>
-			<PopUp closeEvent={onClosePopUpEvent} isOpen={ changeOfNetworkRequired } />
+			<PopUp closeEvent={onClosePopUpEvent} isOpen={ changeOfNetworkRequired } txt={warningText} />
 		</div>
 	);
 };

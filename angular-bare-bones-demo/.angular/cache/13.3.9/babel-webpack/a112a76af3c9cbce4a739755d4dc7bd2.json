@@ -1,0 +1,1 @@
+{"ast":null,"code":"'use strict';\n\nvar GetIntrinsic = require('get-intrinsic');\n\nvar $Math = GetIntrinsic('%Math%');\nvar $Number = GetIntrinsic('%Number%');\nmodule.exports = $Number.MAX_SAFE_INTEGER || $Math.pow(2, 53) - 1;","map":null,"metadata":{},"sourceType":"script"}

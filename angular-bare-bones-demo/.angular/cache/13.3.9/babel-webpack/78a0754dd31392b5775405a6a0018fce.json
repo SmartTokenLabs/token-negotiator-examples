@@ -1,0 +1,1 @@
+{"ast":null,"code":"'use strict';\n\nvar callBound = require('call-bind/callBound');\n\nvar $exec = callBound('RegExp.prototype.exec');\n\nmodule.exports = function regexTester(regex) {\n  return function test(s) {\n    return $exec(regex, s) !== null;\n  };\n};","map":null,"metadata":{},"sourceType":"script"}

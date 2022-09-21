@@ -1,0 +1,1 @@
+{"ast":null,"code":"module.exports = createRandomId;\n\nfunction createRandomId() {\n  // random id\n  return Math.floor(Number.MAX_SAFE_INTEGER * Math.random());\n}","map":null,"metadata":{},"sourceType":"script"}

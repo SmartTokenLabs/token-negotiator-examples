@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { AsnSchemaStorage } from \"./schema\";\nexport const schemaStorage = new AsnSchemaStorage();","map":null,"metadata":{},"sourceType":"module"}

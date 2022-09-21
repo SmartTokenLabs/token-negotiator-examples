@@ -1,0 +1,1 @@
+{"ast":null,"code":"export class AsnSchemaValidationError extends Error {\n  constructor() {\n    super(...arguments);\n    this.schemas = [];\n  }\n\n}","map":null,"metadata":{},"sourceType":"module"}

@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { isNode } from \"@walletconnect/environment\";\nexport const isNodeJs = isNode;\nexport * from \"@walletconnect/environment\"; //# sourceMappingURL=env.js.map","map":null,"metadata":{},"sourceType":"module"}

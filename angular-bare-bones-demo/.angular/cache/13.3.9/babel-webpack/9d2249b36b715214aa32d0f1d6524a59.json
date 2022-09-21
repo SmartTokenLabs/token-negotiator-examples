@@ -1,0 +1,1 @@
+{"ast":null,"code":"// for backwards compat\nmodule.exports = require('json-rpc-engine/src/createScaffoldMiddleware');","map":null,"metadata":{},"sourceType":"script"}

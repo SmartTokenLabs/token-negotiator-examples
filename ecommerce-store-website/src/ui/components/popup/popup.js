@@ -4,7 +4,7 @@
 //	Brand Connector Demo / UI / Components / PopUp
 //
 
-export default function PopUp({ isOpen, closeEvent }) {
+export default function PopUp({ isOpen, closeEvent, txt }) {
 
 	return (
 		<div>
@@ -26,7 +26,7 @@ export default function PopUp({ isOpen, closeEvent }) {
 						borderRadius: '10px',
 						padding: '20px 20px 40px 32px',
 					}}>
-						<p>Please change your wallet's network to either Goerli or Mumbai.</p>
+						<p>{txt}</p>
 						<button 
 							onClick={ e => closeEvent() } 
 							style={{ color: 'white', width: '100%' }}

@@ -21,12 +21,12 @@ export const useStore = create( subscribeWithSelector( set => ({
 	selectedTokens: {},
 	isNegotiatorReady: false,
 	tokenNegotiatorInstance: null,
+	tokenNegotiatorWalletInsance: null,
 
 	api: {
 		setImageLoaded: () => set( state => ({
 			imagesLoaded: state.imagesLoaded + 1,
 		})),
-
 		setContextView: ( contextView, contextProps ) => set( state => {
 			const _isToggleClosed = state.contextView === contextView;
 			return {
@@ -38,5 +38,7 @@ export const useStore = create( subscribeWithSelector( set => ({
 		setIsNegotiatorReady: ( isNegotiatorReady )=> set( () => ({ isNegotiatorReady }) ),
 		setSelectedTokens: ( selectedTokens ) => { set( () => ({ selectedTokens: selectedTokens }) ) },
 		setTokenNegotiatorInstance: ( tokenNegotiatorInstance ) => { set( () => ({ tokenNegotiatorInstance }) ) },
+		setTokenNegotiatorWalletInsance: ( tokenNegotiatorWalletInsance ) => { set( () => ({ tokenNegotiatorWalletInsance }) ) },
 	},
 }) ));
+

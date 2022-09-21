@@ -1,0 +1,1 @@
+{"ast":null,"code":"'use strict';\n\nvar GetIntrinsic = require('get-intrinsic');\n\nvar $abs = GetIntrinsic('%Math.abs%'); // http://262.ecma-international.org/5.1/#sec-5.2\n\nmodule.exports = function abs(x) {\n  return $abs(x);\n};","map":null,"metadata":{},"sourceType":"script"}

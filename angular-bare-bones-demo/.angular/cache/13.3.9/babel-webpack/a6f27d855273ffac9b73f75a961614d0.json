@@ -1,0 +1,1 @@
+{"ast":null,"code":"'use strict';\n\nmodule.exports = function isLeadingSurrogate(charCode) {\n  return typeof charCode === 'number' && charCode >= 0xD800 && charCode <= 0xDBFF;\n};","map":null,"metadata":{},"sourceType":"script"}

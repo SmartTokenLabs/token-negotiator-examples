@@ -1,0 +1,1 @@
+{"ast":null,"code":"'use strict';\n\nvar toPrimitive = require('es-to-primitive/es2015'); // https://ecma-international.org/ecma-262/6.0/#sec-toprimitive\n\n\nmodule.exports = function ToPrimitive(input) {\n  if (arguments.length > 1) {\n    return toPrimitive(input, arguments[1]);\n  }\n\n  return toPrimitive(input);\n};","map":null,"metadata":{},"sourceType":"script"}

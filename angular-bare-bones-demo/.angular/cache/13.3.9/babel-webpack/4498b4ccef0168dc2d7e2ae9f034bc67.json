@@ -1,0 +1,1 @@
+{"ast":null,"code":"export class AsnArray extends Array {\n  constructor(items = []) {\n    if (typeof items === \"number\") {\n      super(items);\n    } else {\n      super();\n\n      for (const item of items) {\n        this.push(item);\n      }\n    }\n  }\n\n}","map":null,"metadata":{},"sourceType":"module"}

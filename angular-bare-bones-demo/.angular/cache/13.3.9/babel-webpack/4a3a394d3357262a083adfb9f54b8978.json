@@ -1,0 +1,1 @@
+{"ast":null,"code":"'use strict';\n\nmodule.exports = function isTrailingSurrogate(charCode) {\n  return typeof charCode === 'number' && charCode >= 0xDC00 && charCode <= 0xDFFF;\n};","map":null,"metadata":{},"sourceType":"script"}

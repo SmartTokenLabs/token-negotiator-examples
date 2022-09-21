@@ -1,0 +1,1 @@
+{"ast":null,"code":"export const LENGTH_0 = 0;\nexport const LENGTH_1 = 1;\nexport const LENGTH_16 = 16;\nexport const LENGTH_32 = 32;\nexport const LENGTH_64 = 64;\nexport const LENGTH_128 = 128;\nexport const LENGTH_256 = 256;\nexport const LENGTH_512 = 512;\nexport const LENGTH_1024 = 1024; //# sourceMappingURL=length.js.map","map":null,"metadata":{},"sourceType":"module"}

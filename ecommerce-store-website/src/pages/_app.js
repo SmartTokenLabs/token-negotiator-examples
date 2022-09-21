@@ -80,7 +80,7 @@ export default function App({ Component, pageProps }) {
 
 	const resetIssuers = (networkId) => {
 		if(!networkId) return;
-		const normalisedNetworkId = Number(networkId.replace('0x', ''));
+		const normalisedNetworkId = Number(networkId.toString().replace('0x', ''));
 		if(normalisedNetworkId === 5) { // Goerli
 			window.negotiator.negotiate(goerliIssuers);
 		}
@@ -95,8 +95,7 @@ export default function App({ Component, pageProps }) {
 
 		const init = async () => {
 
-			const { Client } = (await import("./../dist/client/index"));
-			// const { Client } = (await import("@tokenscript/token-negotiator"));
+			const { Client } = (await import("@tokenscript/token-negotiator"));
 			
 			window.negotiator = new Client({
 				type: 'active',
@@ -118,8 +117,9 @@ export default function App({ Component, pageProps }) {
 			});
 			
 			window.negotiator.on("connected-wallet", (connectedWallet) => {
+				console.log('window.connectedWallet added');
 				window.connectedWallet = connectedWallet;
-				// 
+				resetIssuers(connectedWallet.chainId);
 			});
 
 			window.negotiator.negotiate().then( () => {
@@ -128,19 +128,6 @@ export default function App({ Component, pageProps }) {
 			}).catch( ( error ) =>{
 				console.log( `Error: ${error}` );
 			});
-
-			// if(window.connectedWallet){
-			// 	window.connectedWallet.getNetwork().then((networkObj) => { 
-			// 		networkObj.chainId
-			// 	});
-			// }
-			
-			// if(ethereum) {
-			// 	ethereum.on('chainChanged', function(networkId){
-			// 		resetIssuers(networkId);
-			// 	});
-			// 	resetIssuers(ethereum.chainId);
-			// }
 			
 		};
 

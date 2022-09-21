@@ -1,0 +1,1 @@
+{"ast":null,"code":"\"use strict\";\n\nimport { langEn as en } from \"./lang-en\";\nexport const wordlists = {\n  en: en\n}; //# sourceMappingURL=wordlists.js.map","map":null,"metadata":{},"sourceType":"module"}
