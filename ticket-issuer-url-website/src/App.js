@@ -38,6 +38,8 @@ function App() {
 
     let devconConfig = updateTokenConfig(config);
 
+	devconConfig.accessRequestType = "write";
+
     let tokenIssuers = [
         devconConfig
     ];
