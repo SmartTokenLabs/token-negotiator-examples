@@ -27,5 +27,6 @@
     "node-polyfill-webpack-plugin": "^2.0.1",
     "sass": "^1.54.8",
     "sass-loader": "^13.0.2"
-  }
+  },
+  "homepage": "./"
 }
