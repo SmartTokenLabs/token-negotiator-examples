@@ -9,7 +9,7 @@ export const updateTokenConfig = (config) => {
         }*/
 
         if (document.location.pathname.indexOf("token-negotiator-examples") === 1){
-            config.tokenOrigin = "https://tokenscript.github.io/token-negotiator-examples/token-outlet-website/";
+            config.tokenOrigin = "https://stltesting.tk/token-outlet/";
         } else {
             config.tokenOrigin = "https://tokenscript.github.io/token-negotiator-gh-pages/token-outlet-website/";
         }
