@@ -12,10 +12,14 @@ if (document.referrer && (document.referrer.indexOf("3010") > -1 || document.ref
 devconConfig.whitelistDialogRenderer = (permissionTxt: string, acceptBtn: string, denyBtn: string) => {
 	return `
 		<div class="tn-auth-box">
-			<img alt="devcon" src="devcon_bogota.svg" style="width: 200px;" />
-			<p>${permissionTxt}</p>
-			${acceptBtn}
-			${denyBtn}
+			<div class="tn-auth-heading">
+				<img alt="devcon" src="devcon_logo.svg" style="width: 150px;" />
+			</div>
+			<div class="tn-auth-content">
+				<p>${permissionTxt}</p>
+				${acceptBtn}
+				${denyBtn}
+			</div>
 		</div>
 	`;
 };
