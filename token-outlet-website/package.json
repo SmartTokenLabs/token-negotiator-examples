@@ -6,7 +6,7 @@
   "dependencies": {
     "asn1js": "^2.0.26",
     "pvutils": "^1.0.17",
-    "@tokenscript/token-negotiator": "^2.0.0"
+    "@tokenscript/token-negotiator": "2.2.0-dc.2"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
