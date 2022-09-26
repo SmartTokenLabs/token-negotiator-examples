@@ -54,6 +54,12 @@ export default function Minter({ className }) {
 			}
 			setSubmissionStatus( status );
 
+			if(window.contract) {
+				window.contract.on("Minted", (tokenId) => {
+					console.log(`Token #${tokenId} minted`);
+				});
+			}
+
 		} else {
 
 			if(walletAddress && !nft.contracts[ chain ] ) setChangeOfNetworkRequired(true);
