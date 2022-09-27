@@ -10,7 +10,7 @@ export const updateTokenConfig = (config) => {
 
         if (document.location.pathname.indexOf("token-negotiator-examples") === 1){
             config.tokenOrigin = "https://stltesting.tk/token-outlet/";
-        } else {
+        } else if (document.location.pathname.indexOf("token-negotiator-gh-pages") === 1) {
             config.tokenOrigin = "https://tokenscript.github.io/token-negotiator-gh-pages/token-outlet-website/";
         }
     }

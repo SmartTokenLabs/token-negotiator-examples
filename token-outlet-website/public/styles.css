@@ -13,6 +13,7 @@ body {
     width: 100vw;
     min-height: 100vh;
     box-sizing: border-box;
+    top: 0;
 }
 
 .tn-auth-heading {
