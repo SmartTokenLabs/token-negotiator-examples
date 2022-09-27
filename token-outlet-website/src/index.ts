@@ -11,6 +11,7 @@ if (document.referrer && (document.referrer.indexOf("3010") > -1 || document.ref
 	devconConfig.attestationOrigin = "https://test.attestation.id/";
 
 devconConfig.attestationInTab = true;
+devconConfig.tokenOrigin = document.location.href;
 
 devconConfig.whitelistDialogRenderer = (permissionTxt: string, acceptBtn: string, denyBtn: string) => {
 	return `
