@@ -25,10 +25,6 @@
 
 /* override Google Material */
 
-/* .MuiDialog-paper {
-  margin: 8px !important;
-} */
-
 .MuiDialogActions-root {
   justify-content: flex-start !important;
 }
