@@ -52,3 +52,55 @@ body {
 #tn-access-deny {
     background: none;
 }
+
+<!-- Ticket List -->
+
+#ticketList {
+    width: 320px;
+    margin: 50px auto;
+}
+.ticketContainer {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    margin: 20px;
+}
+.ticketDetails {
+    position: absolute;
+    width: 100%;
+}
+.ticketClass {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+}
+.ticketId {
+    position: absolute;
+    top: 52px;
+    right: 34px;
+}
+.devconId {
+    position: absolute;
+    top: 75px;
+    right: 34px;
+    font-size: 12px;
+}
+.ticketImg {
+    width: 300px;
+    text-align: right;
+}
+.authButton {
+    position: absolute;
+    top: 15px;
+    right: 34px;
+    text-align: center;
+    background-color: #000;
+    color: #FFF;
+    border: none;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.authButton:hover {
+    background-color: #494949;
+}
