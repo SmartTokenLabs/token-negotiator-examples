@@ -8,11 +8,11 @@ export const updateTokenConfig = (config) => {
             return config;
         }*/
 
-        if (document.location.pathname.indexOf("token-negotiator-examples") === 1 ||
+        /*if (document.location.pathname.indexOf("token-negotiator-examples") === 1 ||
 			document.location.hostname.indexOf("stltesting.tk") > -1){
             config.tokenOrigin = "https://stltesting.tk/token-outlet/";
 			config.attestationOrigin = "https://test.attestation.id/";
-        } else if (document.location.pathname.indexOf("token-negotiator-gh-pages") === 1) {
+        } else*/ if (document.location.pathname.indexOf("token-negotiator-gh-pages") === 1) {
             config.tokenOrigin = "https://tokenscript.github.io/token-negotiator-gh-pages/token-outlet-website/";
         }
     }
