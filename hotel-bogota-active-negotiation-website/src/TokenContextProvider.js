@@ -7,8 +7,10 @@ const TokenContext = createContext({
   tokens: []
 });
 
+export const collectionID = config.collectionID;
+
 const tokenKeys = [
-  config.collectionID
+  collectionID
 ];
 
 window.negotiator = null;
