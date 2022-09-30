@@ -112,7 +112,7 @@ function App() {
 
     let genTicket = generateTicket(document.getElementById("email").value, ticketId, ticketClass);
 
-    const magicLink = `${config.tokenOrigin}?ticket=${genTicket.ticket}&secret=${genTicket.secret}&id=${genTicket.id}`;
+    const magicLink = `${config.tokenOrigin}?${config.tokenUrlName ?? "ticket"}=${genTicket.ticket}&secret=${genTicket.secret}&${config.tokenIdName ?? "id"}=${genTicket.id}`;
 
     try {
         let tokens = await negotiator.addTokenViaMagicLink(magicLink);
