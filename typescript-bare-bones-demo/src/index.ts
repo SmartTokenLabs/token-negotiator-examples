@@ -106,7 +106,10 @@ window.authenticateToken = (elem) => {
     // authenticate ownership of token
     window.negotiator.authenticate({
         issuer: issuer,
-        unsignedToken: curTokens[issuer].tokens[index]
+        unsignedToken: curTokens[issuer].tokens[index],
+		options: {
+			useRedirect: !!document.querySelector("#use-redirect:checked")?.value
+		}
     });
 };
 
@@ -123,3 +126,5 @@ window.updateIssuers = () => {
 
     window.negotiator.negotiate(newIssuers, true);
 };
+
+window.negotiator.readProofCallback();

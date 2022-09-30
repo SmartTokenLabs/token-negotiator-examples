@@ -28,6 +28,13 @@ devconConfig.whitelistDialogRenderer = (permissionTxt: string, acceptBtn: string
 	`;
 };
 
+window.addEventListener("auth-callback", (e: CustomEvent) => {
+	console.log("AUTH-CALLBACK: ")
+	console.log(e.detail);
+});
+
+//negotiate(false);
+
 new Outlet(devconConfig);
 
 declare global {
@@ -64,7 +71,10 @@ function negotiate(active: boolean){
 		// authenticate ownership of token
 		client.authenticate({
 			issuer: issuer,
-			unsignedToken: curTokens[issuer].tokens[index]
+			unsignedToken: curTokens[issuer].tokens[index],
+			options: {
+				useRedirect: !!document.querySelector("#use-redirect:checked")
+			}
 		});
 	};
 
