@@ -40,6 +40,14 @@ function App() {
 
 	devconConfig.accessRequestType = "write";
 
+	if (document.location.hash.length > 1){
+		const params = new URLSearchParams(document.location.hash.substring(1));
+		const outletUrl = params.get('outlet');
+		if (outletUrl){
+			devconConfig.tokenOrigin = outletUrl;
+		}
+	}
+
     let tokenIssuers = [
         devconConfig
     ];
@@ -184,6 +192,17 @@ function App() {
                   }
                 </div>
             </div>
+			  <div className="flexCenter">
+				  <div className="ticketWrapper">
+					  <TextField label={"Ticket ID:"} id={"createTicketId"} required="false" />
+					  <button type="button" className="makeTicket" onClick={event => {
+						  if (!document.getElementById("createTicketId").value)
+							  return alert("Please enter a ticket ID");
+
+						openTicketInIframe({event, ticketId: document.getElementById("createTicketId").value, ticketClass: 1})
+					  }}>Create Ticket With ID</button>
+				  </div>
+			  </div>
           </form>
     </main>
   );
