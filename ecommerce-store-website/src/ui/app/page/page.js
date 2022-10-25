@@ -13,6 +13,9 @@ import styles from "./page.module.scss";
 //	Brand Connector Demo / UI / App / Page
 //
 
+import getConfig from 'next/config'
+const { publicRuntimeConfig } = getConfig();
+const basePath = publicRuntimeConfig.basePath || '';
 
 export default forwardRef( Page );
 
@@ -52,9 +55,19 @@ function Page({ children, meta = {}, className }, ref) {
 				{ pageMeta?.ogSiteName && <meta property="og:site_name" content={ pageMeta?.ogSiteName } /> }
 				{ pageMeta?.ogType && <meta property="og:type" content={ pageMeta?.ogType } /> }
 
-				<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" />
-				<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png" />
-				<link rel="icon" href="/images/favicon.ico" />
+				<link rel="icon" type="image/png" sizes="32x32" href={ basePath + "/favicon-32x32.png" } />
+				<link rel="icon" type="image/png" sizes="16x16" href={ basePath + "/favicon-16x16.png" } />
+				<link rel="icon" href={ basePath + "/favicon.ico"} />
+
+				<style dangerouslySetInnerHTML={{__html: `
+					@font-face {
+					  font-family: 'neueplak';
+					  font-style: normal;
+					  font-weight: 700;
+					  src: url('${basePath + "/fonts/neue-plak-extended-sb.woff2"}') format('woff2');
+					  font-display: swap;
+					}
+				`}}/>
 			</Head>
 			{ children }
 		</div>

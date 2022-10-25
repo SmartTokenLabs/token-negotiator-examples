@@ -29,8 +29,6 @@ const mockTicketData = [
 ];
 
 const secret = 45845870684n;
-const privKey = "MIICSwIBADCB7AYHKoZIzj0CATCB4AIBATAsBgcqhkjOPQEBAiEA/////////////////////////////////////v///C8wRAQgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHBEEEeb5mfvncu6xVoGKVzocLBwKb/NstzijZWfKBWxb4F5hIOtp3JqPEZV2k+/wOEQio/Re0SKaFVBmcR9CP+xDUuAIhAP////////////////////66rtzmr0igO7/SXozQNkFBAgEBBIIBVTCCAVECAQEEIM/T+SzcXcdtcNIqo6ck0nJTYzKL5ywYBFNSpI7R8AuBoIHjMIHgAgEBMCwGByqGSM49AQECIQD////////////////////////////////////+///8LzBEBCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcEQQR5vmZ++dy7rFWgYpXOhwsHApv82y3OKNlZ8oFbFvgXmEg62ncmo8RlXaT7/A4RCKj9F7RIpoVUGZxH0I/7ENS4AiEA/////////////////////rqu3OavSKA7v9JejNA2QUECAQGhRANCAARjMR62qoIK9pHk17MyHHIU42Ix+Vl6Q2gTmIF72vNpinBpyoBkTkV0pnI1jdrLlAjJC0I91DZWQhVhddMCK65c";
-
 
 function App() {
 
@@ -39,6 +37,8 @@ function App() {
   let [retryButton, setRetryButton] = useState("");
 
     let devconConfig = updateTokenConfig(config);
+
+	devconConfig.accessRequestType = "write";
 
     let tokenIssuers = [
         devconConfig
@@ -82,7 +82,7 @@ function App() {
 
   const generateTicket = (email, ticketId, ticketClass) => {
 
-      let ticket = Ticket.createWithMail(email, "6", ticketId, ticketClass, {"6": KeyPair.privateFromPEM(privKey)}, secret);
+      let ticket = Ticket.createWithMail(email, "6", ticketId, ticketClass, {"6": KeyPair.privateFromPEM(devconConfig.ticketIssuesUrlWebsitePrivateKey)}, secret);
 
       if (!ticket.checkValidity()){
           throw new Error("Ticket validity check failed");
@@ -92,14 +92,7 @@ function App() {
           throw new Error("Ticket verify failed");
       }
 
-      /*let pok = PublicIdentifierProof.fromSecret(ticket.getCommitment(), email, ATTESTATION_TYPE.mail, secret);
-
-      if (!pok.verify()){
-          throw new Error("Pok validation failed");
-      }*/
-
       let ticketInUrl = hexStringToBase64Url(ticket.getDerEncoding());
-      //let pokInUrl = encodeURI(pok.getInternalPok().getDerEncoding());
 
       return {
           ticket: ticketInUrl,
@@ -118,11 +111,6 @@ function App() {
     }
 
     let genTicket = generateTicket(document.getElementById("email").value, ticketId, ticketClass);
-
-    console.log(genTicket);
-
-    //let decodedTicket = Ticket.fromBase64(genTicket.ticket, {"6": KeyPair.publicFromBase64orPEM(config.base64senderPublicKeys["6"])});
-    //console.log(decodedTicket);
 
     const magicLink = `${config.tokenOrigin}?ticket=${genTicket.ticket}&secret=${genTicket.secret}&id=${genTicket.id}`;
 
