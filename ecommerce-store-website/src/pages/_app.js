@@ -74,7 +74,7 @@ export default function App({ Component, pageProps }) {
 
 	const resetIssuers = (networkId) => {
 		if(!networkId) return;
-		const normalisedNetworkId = Number(networkId.replace('0x', ''));
+		const normalisedNetworkId = Number(networkId.toString().replace('0x', ''));
 		if(normalisedNetworkId === 5) { // Goerli
 			window.negotiator.negotiate(goerliIssuers);
 		}
@@ -106,7 +106,6 @@ export default function App({ Component, pageProps }) {
 			});
 
 			window.negotiator.on("tokens-selected", (data) => {
-				console.log('tokens', data);
 				api.setSelectedTokens({...data.selectedTokens});
 			});
 
@@ -117,12 +116,9 @@ export default function App({ Component, pageProps }) {
 				console.log( `Error: ${error}` );
 			});
 
-			if(ethereum) {
-				ethereum.on('chainChanged', function(networkId){
-					resetIssuers(networkId);
-				});
-				resetIssuers(ethereum.chainId);
-			}
+			window.negotiator.on('connected-wallet', (_connectedWallet) => {
+				resetIssuers(window.connectedWallet.chainId);
+			});
 			
 		};
 
@@ -132,8 +128,8 @@ export default function App({ Component, pageProps }) {
 
 	return (
 		<>
-			<Layout pageProps={ pageProps }>
-				<Component { ...pageProps } />
+			<Layout pageProps={ pageProps } connectedWallet={ 'connectedWalletInstance' }>
+				<Component { ...pageProps } connectedWallet={ 'connectedWalletInstance' } />
 			</Layout>
 			<Context.Region onClose={ () => api.setContextView() } views={ CONTEXT_VIEWS } />
 			<div className="overlay-tn" />

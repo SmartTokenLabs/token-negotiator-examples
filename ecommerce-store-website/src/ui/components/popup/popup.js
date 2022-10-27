@@ -4,8 +4,12 @@
 //	Brand Connector Demo / UI / Components / PopUp
 //
 
+import { useStore } from 'base/state';
+
 export default function PopUp({ isOpen, closeEvent }) {
 
+	const msg = typeof window !== "undefined" && window.connectedWallet ? "Please change your wallet's network to either Goerli or Mumbai." : "Please connect your wallet to continue.";
+	
 	return (
 		<div>
 			{ isOpen &&
@@ -26,7 +30,7 @@ export default function PopUp({ isOpen, closeEvent }) {
 						borderRadius: '10px',
 						padding: '20px 20px 40px 32px',
 					}}>
-						<p>Please change your wallet's network to either Goerli or Mumbai.</p>
+						<p>{msg}</p>
 						<button 
 							onClick={ e => closeEvent() } 
 							style={{ color: 'white', width: '100%' }}

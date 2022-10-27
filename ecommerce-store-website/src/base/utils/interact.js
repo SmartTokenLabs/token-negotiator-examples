@@ -1,7 +1,6 @@
 
-import Web3 from "web3";
-
 export const safeMint = async ({
+	connectedWallet,
 	sendTo,
 	abi,
 	contract,
@@ -12,94 +11,41 @@ export const safeMint = async ({
 	description,
 	tokenUri
 }) => {
+	
+	window.negotiator.ui.showLoaderDelayed([
+		"<h4>Mint Demo NFT...</h4>",
+		"<small>Sign the new transaction in your wallet</small>"
+	], 600, true);
 
-	//sign the transaction via Metamask
 	try {
 
-		if(window.ethereum) {
+		window.contract = new _ethers.Contract(contract, abi, connectedWallet.provider.getSigner());
+		const txHash = await window.contract.safeMint(sendTo, tokenUri);
+
+		window.negotiator.ui.showLoaderDelayed([ 
+			"<h4>Minting...</h4>",
+			"<small>Transaction in progress</small>"
+		], 0, true);
+
+		setTimeout(() => { window.negotiator.ui.dismissLoader() }, 5000);
 		
-			const web3 = new Web3(window.ethereum);
-
-			window.contract = await new web3.eth.Contract(abi, contract);
-
-			const transactionParameters = {
-				to: contract,
-				from: walletAddress,
-				'data': window.contract.methods.safeMint(sendTo, tokenUri).encodeABI()
-			};
-
-			const txHash = await window.ethereum
-				.request({
-					method: 'eth_sendTransaction',
-					params: [transactionParameters],
-				});
-			return {
-				success: true,
-				status: "✅ Check out your transaction: " + chain + " " + txHash
-			}
-			
+		return {
+			success: true,
+			status: "✅ Check out your transaction: " + chain + " " + txHash?.hash
 		}
 
 	} catch (error) {
+
+		window.negotiator.ui.showError('😥 Something went wrong. Please ensure you are using a supported network.');
+
+		console.warn(error.message);
+		
 		return {
 			success: false,
-			status: "😥 Something went wrong: " + error.message
+			status: "😥 Something went wrong. Please ensure you are using a supported network."
 		}
+
 	}
+
 }
 
-export const connectWallet = async () => {
-	if ( window.ethereum ) {
-		try {
-			const addressArray = await window.ethereum.request({
-				method: "eth_requestAccounts",
-			});
-			const obj = {
-				status: "",
-				address: addressArray[0],
-			};
-			return obj;
-		} catch (err) {
-			return {
-				address: "",
-				status: "😥 " + err.message,
-			};
-		}
-	} else {
-		return {
-			address: "",
-			status: "You must have Metamask browser extension to connect."
-		};
-	}
-};
-
-export const getCurrentWalletConnected = async () => {
-	if (window.ethereum) {
-		try {
-			const addressArray = await window.ethereum.request({
-				method: "eth_accounts",
-			});
-			if (addressArray.length > 0) {
-				return {
-					address: addressArray[0],
-					status: "",
-				};
-			} else {
-				return {
-					address: "",
-					status: "You must connect to Metamask browser extension to connect.",
-				};
-			}
-		} catch (err) {
-			return {
-				address: "",
-				status: "😥 " + err.message,
-			};
-		}
-	} else {
-		return {
-			address: "",
-			status: "You must have Metamask browser extension to connect."
-		};
-	}
-};
