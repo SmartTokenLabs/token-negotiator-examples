@@ -16,7 +16,7 @@ export default function useCurrentWallet() {
 	const [ status, setStatus ] = useState( '' );
 	const [ nftCollections, setNFTCollections ] = useState( [] );
 	const [ chain, setChain ] = useState( '' );
-	const [ walletInstance, setWalletInstance ] = useState(null);
+	const [ walletInstance, setWalletInstance ] = useState();
 	if(typeof window !== 'undefined' && window.negotiator){
 		window.negotiator.on('connected-wallet', (connectedWallet) => {
 			if(connectedWallet) {
