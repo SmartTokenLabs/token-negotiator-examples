@@ -9,6 +9,8 @@ import { Layout as DefaultLayout, Context } from 'ui/app';
 
 import ContextRegisterThanks from 'ui/app/context/context-register-thanks';
 
+import { chainMap } from 'src/base/utils/network';
+
 //	Styles
 import 'styles/index.scss';
 import "./ui/styles/_app.scss";
@@ -74,11 +76,11 @@ export default function App({ Component, pageProps }) {
 
 	const resetIssuers = (networkId) => {
 		if(!networkId) return;
-		const normalisedNetworkId = Number(networkId.toString().replace('0x', ''));
-		if(normalisedNetworkId === 5) { // Goerli
+		const normalisedNetworkId = chainMap[networkId] ? chainMap[networkId] : '';
+		if(normalisedNetworkId === 'Goerli') { // Goerli
 			window.negotiator.negotiate(goerliIssuers);
 		}
-		if(normalisedNetworkId === 13881) { // Mumbai
+		if(normalisedNetworkId === 'Mumbai') { // Mumbai
 			window.negotiator.negotiate(mumbaiIssuers);
 		}
 	}
@@ -118,6 +120,10 @@ export default function App({ Component, pageProps }) {
 
 			window.negotiator.on('connected-wallet', (_connectedWallet) => {
 				resetIssuers(window.connectedWallet.chainId);
+			});
+
+			window.negotiator.on('network-change', (chain) => {
+				resetIssuers(chain);
 			});
 			
 		};

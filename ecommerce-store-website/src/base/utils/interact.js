@@ -36,13 +36,13 @@ export const safeMint = async ({
 
 	} catch (error) {
 
-		window.negotiator.ui.showError('😥 Something went wrong. Please ensure you are using a supported network.');
+		window.negotiator.ui.showError('Something went wrong, please try again.');
 
 		console.warn(error.message);
 		
 		return {
 			success: false,
-			status: "😥 Something went wrong. Please ensure you are using a supported network."
+			status: "Something went wrong, please try again.");
 		}
 
 	}

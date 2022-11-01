@@ -1,6 +1,6 @@
 export const chainMap = {
 	'0x4': 'Rinkeby',
-	'0x80001': 'Mumbai',
+	'0x13881': 'Mumbai',
 	'0x1': 'Ethereum',
 	'0x3': 'Ropsten',
 	'0x5': 'Goerli',
