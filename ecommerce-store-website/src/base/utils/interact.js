@@ -42,7 +42,7 @@ export const safeMint = async ({
 		
 		return {
 			success: false,
-			status: "Something went wrong, please try again.");
+			status: "😥 Something went wrong: " + error.message
 		}
 
 	}
