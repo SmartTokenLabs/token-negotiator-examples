@@ -53,7 +53,6 @@ export default function Minter({ className }) {
 
 			const x = await walletInstance.provider.getNetwork();
 			// connectedWallet.provider.getNetwork
-			console.log('nick', x);
 
 			const { status, success } = await safeMint({
 				connectedWallet: walletInstance,
