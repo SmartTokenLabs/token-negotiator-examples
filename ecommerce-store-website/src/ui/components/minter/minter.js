@@ -102,7 +102,7 @@ export default function Minter({ className }) {
 							<MinterButton
 								className={ clsx( styles[ 'c-minter_button' ], '-mta' ) }
 								onClick={ event => onMintPressed( event, nft, collectionItem ) }
-								isMinted={ false }
+								isMinted={ mintedNFTs.indexOf( collectionItem.id ) > -1 || tokenIsSelected }
 							/>
 						</Card>
 					);
