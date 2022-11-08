@@ -1,0 +1,72 @@
+name: Build & Deploy Token Outlet Website
+
+on:
+  push:
+    branches:
+      - main
+      - staging
+    paths:
+      - "token-outlet-website/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "npm"
+          cache-dependency-path: token-outlet-website/package-lock.json
+      - run: |
+          echo -n "Node version: "
+          node -v
+          echo -n "Npm version: "
+          npm -v
+      - name: building
+        run: |
+          cd token-outlet-website
+          npm ci
+          npm run build
+          short_sha="${GITHUB_SHA:0:7}"
+          build_version="${GITHUB_REF_NAME}-${short_sha}"
+          build_time="$(date --utc --iso-8601=seconds)"
+          find build/ -name index.html -print0 |\
+            xargs -0 -r \
+            sed -i "s/<head>/<head><meta name=\"build-version\" content=\"${build_version}\"><meta name=\"build-time\" content=\"${build_time}\">/"
+      - uses: actions/upload-artifact@v3
+        with:
+          name: token-outlet-website
+          path: token-outlet-website/build/
+
+  deploy:
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: token-outlet-website
+          path: token-outlet-website/build/
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-1
+      - name: inject env based on branch
+        run: |
+          if [ "${GITHUB_REF_NAME}" = "main" ]; then
+            S3_BUCKET=outlet-brandconnector-main
+            CLOUDFRONT_ID=EMR4CSTTFBKQC
+          else
+            S3_BUCKET=outlet-brandconnector-stage
+            CLOUDFRONT_ID=E2HZ5C4XHGSGF7
+          fi
+          echo "S3_BUCKET=${S3_BUCKET}" >> $GITHUB_ENV
+          echo "CLOUDFRONT_ID=${CLOUDFRONT_ID}" >> $GITHUB_ENV
+      - name: deploy
+        run: |
+          aws s3 sync token-outlet-website/build/ "s3://${S3_BUCKET}/" --cache-control 'max-age=31536000' --quiet \
+          && aws s3 cp "s3://${S3_BUCKET}/index.html" "s3://${S3_BUCKET}/index.html" --cache-control 'max-age=600,s-maxage=2592000' \
+          && aws cloudfront create-invalidation --distribution-id "${CLOUDFRONT_ID}" --paths '/*'
