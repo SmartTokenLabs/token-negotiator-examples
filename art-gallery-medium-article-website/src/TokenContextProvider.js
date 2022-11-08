@@ -22,10 +22,10 @@ const TokenContextProvider = (props) => {
 
         const { selectedTokens } = tokens;
 
-        if(selectedTokens["demo-tokens"].tokens) {
-
-          selectedTokensState.push(...selectedTokens["demo-tokens"].tokens);
-
+        for(let token in selectedTokens) {
+          if (selectedTokens[token].tokens.length > 0) {
+            selectedTokensState.push(...selectedTokens[token].tokens);
+          }
         }
 
         setTokens(selectedTokensState);
