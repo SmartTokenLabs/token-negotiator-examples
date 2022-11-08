@@ -16,14 +16,11 @@ let devonConfig = updateTokenConfig(config);
 
 const issuers = [
     devonConfig,
-    { collectionID: 'rinkeby-punk', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'rinkeby-punk' },
+	{ collectionID: 'stl-bayc', onChain: true, contract: '0xc361201E5B1005cCDE47B32F223BC145DE393F62', chain: 'goerli'},
+	{ collectionID: 'stl-wow', onChain: true, contract: '0x87644E0A1287A4D96DecC29A13400a1be9759AF8', chain: 'goerli'},
+	{ collectionID: 'stl-riot-racer', onChain: true, contract: '0xae96095fF42B0Cae2DaD3d49E5EE11663280d819', chain: 'goerli'},
     { collectionID: 'expansion-punk', onChain: true, contract: '0x0d0167a823c6619d430b1a96ad85b888bcf97c37', chain: 'eth' },
-    { collectionID: 'women-tribe', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-women-tribe-nfts' },
-    { collectionID: 'zed', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-zed' },
-    { collectionID: 'stl-rnd-bayc-derivatives', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-bayc-derivatives' },
-    { collectionID: 'stl-rnd-riot-racers', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-riot-racers' },
     { collectionID: 'poap', onChain: true, contract: '0x22C1f6050E56d2876009903609a2cC3fEf83B415', chain: 'xdai'},
-    { collectionID: 'stl-test-nfts', onChain: true, contract: '0xafd1a2f17ce2a694d2ef649fe5ba51cc0282448a', chain: 'rinkeby' },
     { onChain: true, collectionID: "Perion", contract: '0x96af92ae2d822a0f191455ceca4d4e7ee227668e', chain: 'mumbai', blockchain: "evm" },
     { collectionID: 'COOLCATS-#2426-14', onChain: true, contract: '0x3C7e352481F4b2fdEc1e642a3f0018661c77513D', chain: 'eth', openSeaSlug: 'devcon-vi-suit-up-collection' },
     { collectionID: 'Town-Hall', onChain: true, contract: '0x81b30ff521D1fEB67EDE32db726D95714eb00637', chain: 'Optimism' },
@@ -35,9 +32,10 @@ const issuers = [
 window.negotiator = new Client({
     type: 'active',
     issuers: [
-        devonConfig,
-        /*{ collectionID: 'rinkeby-punk', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'rinkeby-punk' },
-        { collectionID: 'women-tribe', onChain: true, contract: '0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656', chain: 'rinkeby', openSeaSlug: 'stl-rnd-women-tribe-nfts' }*/
+		{ collectionID: 'stl-bayc', onChain: true, contract: '0xc361201E5B1005cCDE47B32F223BC145DE393F62', chain: 'goerli'},
+		{ collectionID: 'stl-wow', onChain: true, contract: '0x87644E0A1287A4D96DecC29A13400a1be9759AF8', chain: 'goerli'},
+		{ collectionID: 'stl-riot-racer', onChain: true, contract: '0xae96095fF42B0Cae2DaD3d49E5EE11663280d819', chain: 'goerli'},
+		devonConfig
     ],
     uiOptions: {
         //uiType: "inline",
