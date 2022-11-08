@@ -1,4 +1,6 @@
-import { OffChainTokenConfig, OnChainTokenConfig } from '../../../../token-negotiator/dist/client/interface';
+// import { OffChainTokenConfig, OnChainTokenConfig } from '../../../../token-negotiator/dist/client/interface';
+
+import { OffChainTokenConfig, OnChainTokenConfig } from '@tokenscript/token-negotiator/dist/client/interface';
 
 const issuersData: (OffChainTokenConfig | OnChainTokenConfig)[] = [
   {
