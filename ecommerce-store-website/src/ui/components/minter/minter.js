@@ -17,7 +17,8 @@ import styles from './minter.module.scss';
 //
 
 export default function Minter({ className }) {
-	const [ walletAddress, nftCollections, chain, walletStatus ] = useCurrentWallet();
+
+	const [ walletAddress, nftCollections, chain, walletStatus, walletInstance ] = useCurrentWallet();
 	const [ submissionStatus, setSubmissionStatus ] = useState( '' );
 	const [ mintedNFTs, setMintedNFTs ] = useState( [] );
 	const [changeOfNetworkRequired, setChangeOfNetworkRequired] = useState(false);
@@ -34,6 +35,7 @@ export default function Minter({ className }) {
 	}
 
 	const onMintPressed = async ( event, nft, collectionItem ) => {
+
 		if ( !walletAddress && window?.negotiator ) window.negotiator.negotiate();
 
 		if ( walletStatus ) {
@@ -49,7 +51,11 @@ export default function Minter({ className }) {
 
 			setChangeOfNetworkRequired(false);
 
+			const x = await walletInstance.provider.getNetwork();
+			// connectedWallet.provider.getNetwork
+
 			const { status, success } = await safeMint({
+				connectedWallet: walletInstance,
 				walletAddress: walletAddress,
 				sendTo: walletAddress,
 				abi: nft.contracts[ chain ].abi,
@@ -61,7 +67,7 @@ export default function Minter({ className }) {
 				tokenUri: collectionItem.metaUrl
 			});
 			if ( success ) setMintedNFTs( [ ...mintedNFTs, collectionItem.id ] );
-			setSubmissionStatus( status );
+			if( status ) setSubmissionStatus( status );
 		}
 
 

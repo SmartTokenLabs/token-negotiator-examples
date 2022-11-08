@@ -37,6 +37,6 @@ export const useStore = create( subscribeWithSelector( set => ({
 		}),
 		setIsNegotiatorReady: ( isNegotiatorReady )=> set( () => ({ isNegotiatorReady }) ),
 		setSelectedTokens: ( selectedTokens ) => { set( () => ({ selectedTokens: selectedTokens }) ) },
-		setTokenNegotiatorInstance: ( tokenNegotiatorInstance ) => { set( () => ({ tokenNegotiatorInstance }) ) },
+		setTokenNegotiatorInstance: ( tokenNegotiatorInstance ) => { set( () => ({ tokenNegotiatorInstance }) ) }
 	},
 }) ));
