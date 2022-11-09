@@ -1,7 +1,7 @@
 export default [
 	{
 		collection: "STL_BAYC",
-		title: "STL Bored Ape Yacht Club",
+		title: "STL Bored Ape Yacht Club (Goerli or Mumbai Network)",
 		description: "Use a BAYC Token to get VIP room upgrades at the Music & Events demo shop.",
 		contracts: {
 			"Mumbai" : {
@@ -27,13 +27,13 @@ export default [
 	},
 	{
 		collection: "STL_WoW",
-		title: "STL WoW",
+		title: "STL WoW (Goerli or Mumbai Network)",
 		description: "Use a WoW Token to get access to exclusive early drops at the Fashion demo shop.",
 		contracts: {
 			"Mumbai": {
 				contract: "0xa432AC92c386b9929Bd9308C4e98505ac22d3A00",
 				abi: require('./abis/erc721-abi.json')
-			}, 
+			},
 			"Goerli": {
 				contract: "0x87644E0A1287A4D96DecC29A13400a1be9759AF8",
 				abi: require('./abis/erc721-abi.json')
@@ -62,7 +62,7 @@ export default [
 	},
 	{
 		collection: "STL_RIOT_RACER",
-		title: "STL Riot Racer",
+		title: "STL Riot Racer (Goerli or Mumbai Network)",
 		description: "Use a Riot Racer Token to book a day at the race tracks at the Automotive demo shop.",
 		contracts: {
 			"Mumbai": {
@@ -92,7 +92,7 @@ export default [
 				name: "STL Aurora",
 				id: "air_aurora",
 				description: "stl demo nft"
-			}			
+			}
 		]
 	}
 ]
