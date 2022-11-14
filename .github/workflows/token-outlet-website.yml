@@ -1,6 +1,17 @@
 name: Build & Deploy Token Outlet Website
 
 on:
+  workflow_dispatch:
+    inputs:
+      negotiatorBranch:
+        description: "Use a specific branch from token-negotiator repo"
+        required: false
+        default: "none"
+        type: choice
+        options:
+          - "none"
+          - staging
+          - main
   push:
     branches:
       - main
@@ -24,7 +35,16 @@ jobs:
           echo -n "Npm version: "
           npm -v
       - name: building
+        env:
+          NEGOTIATOR_BRANCH: ${{ inputs.negotiatorBranch }}
         run: |
+          if [[ "${GITHUB_EVENT_NAME}" = push ]]; then
+            NEGOTIATOR_BRANCH="${GITHUB_REF_NAME}"
+          fi
+          if [[ ! -z $NEGOTIATOR_BRANCH && $NEGOTIATOR_BRANCH != "none" ]]; then
+            echo "Negotiator branch $NEGOTIATOR_BRANCH requested, updating package.json files"
+            scripts/use_negotiator_branch.js $NEGOTIATOR_BRANCH
+          fi
           cd token-outlet-website
           npm ci
           npm run build
