@@ -5,6 +5,9 @@ import { Client } from '@tokenscript/token-negotiator';
 import config from './../../tokenConfig.json';
 import {updateTokenConfig} from "../../environment";
 import "@tokenscript/token-negotiator/dist/theme/style.css";
+import {SignedUNChallenge} from "@tokenscript/token-negotiator/dist/client/auth/signedUNChallenge";
+import {AttestedAddress} from "@tokenscript/token-negotiator/dist/client/auth/attestedAddress";
+import {AuthenticationMethod} from "@tokenscript/token-negotiator/dist/client/auth/abstractAuthentication";
 
 declare global {
     interface Window {
@@ -106,10 +109,26 @@ window.authenticateToken = (elem) => {
     let issuer = elem.dataset.issuer;
     let index = elem.dataset.index;
 
+	/*const challengeType = (document.getElementById("challenge-type") as HTMLSelectElement)?.value;
+	let challengeClass: AuthenticationMethod;
+
+	switch (challengeType){
+		case "attestedAddress":
+			challengeClass = AttestedAddress;
+			break;
+		case "signedUN":
+		default:
+			challengeClass = SignedUNChallenge;
+	}*/
+
     // authenticate ownership of token
     window.negotiator.authenticate({
         issuer: issuer,
-        unsignedToken: curTokens[issuer].tokens[index]
+        unsignedToken: curTokens[issuer].tokens[index],
+		//type: challengeClass
+		options: {
+			useRedirect: true
+		}
     });
 };
 
@@ -126,3 +145,7 @@ window.updateIssuers = () => {
 
     window.negotiator.negotiate(newIssuers, true);
 };
+
+/*window.clearStoredProofs = () => {
+	localStorage.removeItem("tn-proof");
+}*/
