@@ -26,7 +26,7 @@ function Page({ children, meta = {}, className }, ref) {
 	const siteUrl = process.env.APP_HOST || '';
 
 	const defaultTitle = 'Brand Connector Demo';
-	const defaultDescription = '';
+	const defaultDescription = 'Brand Connector is a simple website tool that lets any brand customise content, offers or rewards to any NFTs in any user wallet.';
 
 	const pageMeta = {
 		title: defaultTitle,
@@ -34,7 +34,7 @@ function Page({ children, meta = {}, className }, ref) {
 		ogTitle: meta?.title || defaultTitle,
 		ogDescription: meta?.description || defaultDescription,
 		ogUrl: currentSlug !== '/' ? siteUrl + currentSlug : siteUrl,
-		// ogImage: `${ siteUrl }/`,
+		ogImage: 'https://brandconnector.io/og-brand-connector.jpg',
 		ogSiteName: 'Brand Connector Demo',
 		ogType: 'website',
 		...meta,
@@ -54,6 +54,15 @@ function Page({ children, meta = {}, className }, ref) {
 				{ pageMeta?.ogImage && <meta property="og:image" content={ pageMeta?.ogImage } /> }
 				{ pageMeta?.ogSiteName && <meta property="og:site_name" content={ pageMeta?.ogSiteName } /> }
 				{ pageMeta?.ogType && <meta property="og:type" content={ pageMeta?.ogType } /> }
+
+				<meta name="twitter:card" content="summary_large_image" />
+				<meta name="twitter:domain" content="https://brandconnector.io/demo/" />
+				<meta name="twitter:description" content={pageMeta?.description} />
+				<meta name="twitter:site" content="@TokenScript" />
+				<meta name="twitter:url" content="https://brandconnector.io/demo/" />
+				<meta name="twitter:title" content="Brand Connector Demo" />
+				<meta name="twitter:image" content="https://brandconnector.io/og-brand-connector.jpg" />
+				<meta name="twitter:creator" content="@TokenScript" />
 
 				<link rel="icon" type="image/png" sizes="32x32" href={ basePath + "/favicon-32x32.png" } />
 				<link rel="icon" type="image/png" sizes="16x16" href={ basePath + "/favicon-16x16.png" } />
