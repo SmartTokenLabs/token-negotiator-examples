@@ -110,7 +110,10 @@ function App() {
       // authenticate ownership of token
       window.negotiator.authenticate({
         issuer: 'devcon',
-        unsignedToken: ticket
+        unsignedToken: ticket,
+        options: {
+          useRedirect: true,
+        }
       });
     
     }

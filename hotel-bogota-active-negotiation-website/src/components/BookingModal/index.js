@@ -42,7 +42,10 @@ export default function BookingModal({room}) {
     try {
       await negotiator.authenticate({
         issuer: 'devcon',
-        unsignedToken: tokens[0]
+        unsignedToken: tokens[0],
+        options: {
+          useRedirect: true,
+        }
       });
       setLoadingTokenProof(true);
     } catch (e) {
