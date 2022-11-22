@@ -7,8 +7,10 @@ const TokenContext = createContext({
   tokens: []
 });
 
+export const collectionID = config.collectionID;
+
 const tokenKeys = [
-  'devcon'
+  collectionID
 ];
 
 window.negotiator = null;
@@ -70,8 +72,6 @@ class TokenNegotiatorInstance extends React.Component {
     super(props);
 
     let devconConfig = config;
-
-    devconConfig.collectionID = "devcon";
 
     devconConfig = updateTokenConfig(devconConfig);
 
