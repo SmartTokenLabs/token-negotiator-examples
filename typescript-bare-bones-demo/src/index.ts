@@ -125,10 +125,9 @@ window.authenticateToken = (elem) => {
     window.negotiator.authenticate({
         issuer: issuer,
         unsignedToken: curTokens[issuer].tokens[index],
-		//type: challengeClass,
-		options: {
-			useRedirect: !!document.querySelector("#use-redirect:checked")?.value
-		}
+		    options: {
+			    useRedirect: !!document.querySelector("#use-redirect:checked")?.value
+		    }
     });
 };
 

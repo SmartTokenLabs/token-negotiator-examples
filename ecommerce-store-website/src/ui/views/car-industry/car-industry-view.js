@@ -43,7 +43,10 @@ export default function CarIndustryView() {
 		try {
 			await window.negotiator.authenticate({
 				issuer: "stl-rnd-riot-racers",
-				unsignedToken: selectedTokens["stl-rnd-riot-racers"].tokens[0]
+				unsignedToken: selectedTokens["stl-rnd-riot-racers"].tokens[0],
+				options: {
+          useRedirect: true,
+        }
 			});
 		} catch (e) {
 			alert(e.message);

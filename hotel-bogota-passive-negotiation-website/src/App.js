@@ -110,7 +110,10 @@ function App() {
       // authenticate ownership of token
       window.negotiator.authenticate({
         issuer: config.collectionID,
-        unsignedToken: ticket
+        unsignedToken: ticket,
+        options: {
+          useRedirect: true,
+        }
       });
     
     }

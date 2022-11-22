@@ -43,6 +43,9 @@ export default function BookingModal({room}) {
       await negotiator.authenticate({
         issuer: collectionID,
         unsignedToken: tokens[0]
+        options: {
+          useRedirect: true,
+        }
       });
       setLoadingTokenProof(true);
     } catch (e) {
