@@ -42,7 +42,7 @@ export default function BookingModal({room}) {
     try {
       await negotiator.authenticate({
         issuer: collectionID,
-        unsignedToken: tokens[0]
+        unsignedToken: tokens[0],
         options: {
           useRedirect: true,
         }
