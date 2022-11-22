@@ -77,6 +77,7 @@ class TokenNegotiatorInstance extends React.Component {
 
     window.negotiator = new Client({
       type: 'active',
+      forceOffChainTokenRedirect: false,
       issuers: [
         devconConfig
       ],
