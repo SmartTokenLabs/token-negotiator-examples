@@ -76,7 +76,7 @@ function App() {
 
   useEffect(() => {
 
-    if(!(window.document.referrer.includes("outlet") || window.document.referrer.includes("3002"))){
+    if((window.document.referrer.includes("outlet") ||)){
       window.negotiator.negotiate();
     }
 
@@ -114,9 +114,7 @@ function App() {
 
     let genTicket = generateTicket(document.getElementById("email").value, ticketId, ticketClass);
 
-    // http://localhost:3002/?ticket=${genTicket.ticket}&secret=${genTicket.secret}&id=${genTicket.id}`;
     const magicLink = `${config.tokenOrigin}?ticket=${genTicket.ticket}&secret=${genTicket.secret}&id=${genTicket.id}`;
-    console.log(magicLink);
 
     try {
         let tokens = await negotiator.addTokenViaMagicLink(magicLink);
