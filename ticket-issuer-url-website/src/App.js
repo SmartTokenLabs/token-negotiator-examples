@@ -76,7 +76,7 @@ function App() {
 
   useEffect(() => {
 
-    if((window.document.referrer.includes("outlet") ||)){
+    if(!(window.document.referrer.includes("outlet") || window.document.referrer.includes("3002"))){
       window.negotiator.negotiate();
     }
 
