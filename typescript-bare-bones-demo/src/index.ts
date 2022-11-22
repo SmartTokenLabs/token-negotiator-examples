@@ -109,7 +109,10 @@ window.authenticateToken = (elem) => {
     // authenticate ownership of token
     window.negotiator.authenticate({
         issuer: issuer,
-        unsignedToken: curTokens[issuer].tokens[index]
+        unsignedToken: curTokens[issuer].tokens[index],
+        options: {
+            useRedirect: true,
+        }
     });
 };
 

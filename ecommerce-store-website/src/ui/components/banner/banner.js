@@ -28,6 +28,9 @@ export default function Banner({ className, theme, image, headline, text, overla
 			await window.negotiator.authenticate({
 				issuer,
 				unsignedToken: selectedTokens[ issuer ].tokens[0],
+				options: {
+          useRedirect: true,
+        }
 				//unsignedToken: {name:"some token", desc: "a really cool token"}
 			});
 			setClaimed( true );
