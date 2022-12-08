@@ -48,6 +48,8 @@ const TokenContextProvider = (props) => {
       setProof(result.data);
 
     });
+
+    window.negotiator.negotiate();
     
   }, []);
 
@@ -88,8 +90,6 @@ class TokenNegotiatorInstance extends React.Component {
         position: "bottom-right"
       }
     });
-
-    window.negotiator.negotiate();
     
   }
   render() {
