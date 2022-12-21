@@ -52,6 +52,10 @@ jobs:
         npm run install-ecommerce
         export BASE_PATH=/token-negotiator-examples/ecommerce-store-website
         npm run build-ecommerce
+        npm run install-vue
+        npm run build-vue
+        npm run build-angular
+        npm run install-angular
         npm run copy-artifacts
       env:
         NEGOTIATOR_BRANCH: ${{ inputs.negotiatorBranch }}
