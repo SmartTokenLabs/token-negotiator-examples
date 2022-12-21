@@ -119,6 +119,7 @@ export default function App({ Component, pageProps }) {
 			});
 
 			window.negotiator.on('connected-wallet', (_connectedWallet) => {
+				window.connectedWallet = _connectedWallet;
 				resetIssuers(window.connectedWallet.chainId);
 			});
 
