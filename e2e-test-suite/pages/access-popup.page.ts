@@ -7,9 +7,9 @@ export default class AccessPopup {
         this.page = page
     }
 
-    // iframeClipboard = () => this.page.frameLocator('iframe[allow="clipboard-read"]')
-    // btnAccept = () => this.iframeClipboard().locator('#tn-access-accept')
-    // btnDeny = () => this.iframeClipboard().locator('#tn-access-deny')
-    btnAccept = () => this.page.locator('#tn-access-accept')
-    btnDeny = () => this.page.locator('#tn-access-deny')
+    iframeClipboard = () => this.page.frameLocator('iframe[allow="clipboard-read"]')
+    btnAccept = () => this.iframeClipboard().locator('#tn-access-accept')
+    btnDeny = () => this.iframeClipboard().locator('#tn-access-deny')
+    // btnAccept = () => this.page.locator('#tn-access-accept')
+    // btnDeny = () => this.page.locator('#tn-access-deny')
 }
