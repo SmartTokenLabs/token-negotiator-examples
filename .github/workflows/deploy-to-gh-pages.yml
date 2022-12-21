@@ -52,8 +52,8 @@ jobs:
           npm run build-ecommerce
           # npm run install-vue
           # npm run build-vue
-          npm run install-angular
-          npm run build-angular
+          # npm run install-angular
+          # npm run build-angular
           npm run copy-artifacts
           short_sha="${GITHUB_SHA:0:7}"
           build_version="${GITHUB_REF_NAME}-${short_sha}"

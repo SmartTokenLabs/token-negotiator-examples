@@ -15,7 +15,6 @@ import { chainMap } from 'src/base/utils/network';
 import 'styles/index.scss';
 import "./ui/styles/_app.scss";
 import "@tokenscript/token-negotiator/dist/theme/style.css";
-import { initial } from 'lodash-es';
 
 const CONTEXT_VIEWS = {
 	'register-thanks': {
