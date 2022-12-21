@@ -9,7 +9,7 @@ export default function StoreItem({ item, discount }) {
   return (
     <div style={{ textAlign: "center", margin: "20px" }}>
       <p style={{ fontWeight: "800" }}>{title}</p>
-      <img style={{ border: "4px solid black", width: size }} src={src} />
+      <img style={{ border: "4px solid black", width: size }} src={src} alt={src} />
       { discount && 
         <div>
           <div>Price: ${itemPrice}</div>
