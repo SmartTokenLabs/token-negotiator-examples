@@ -11,6 +11,10 @@ import { Demos } from 'ui/sections';
 //	Styles
 import styles from "./home-view.module.scss";
 
+import { TokenContext } from "./../../../pages/TokenContextProvider";
+
+import React, { useContext, useState, useEffect } from "react";
+
 //
 //	Brand Connector Demo / UI / Views / Home
 //
@@ -19,6 +23,10 @@ export default function HomeView(props) {
 
 	const isNegotiatorReady = useStore( s => s.isNegotiatorReady );
 	const walletAddress = typeof window !== 'undefined' && props.connectedWallet ? props.connectedWallet.address : undefined;
+	
+	const { tokens } = useContext(TokenContext);
+
+	console.log('....nick', tokens);
 	
 	return (
 		<Page className={ styles[ 'v-home' ] }>
