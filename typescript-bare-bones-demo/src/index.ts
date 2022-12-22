@@ -50,10 +50,10 @@ window.negotiator = new Client({
         position: "bottom-right"
     },
     autoLoadTokens: 3,
-    safeConnectOptions: {
-        url: "https://safeconnect.tokenscript.org",
-        initialProof: false
-    }
+    // safeConnectOptions: {
+    //     url: "https://safeconnect.tokenscript.org",
+    //     initialProof: false
+    // }
 });
 
 var curTokens = [];
