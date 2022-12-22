@@ -72,10 +72,10 @@
         errorMessage: "This browser is not supported. Please try using Chrome, Edge, FireFox or Safari."
       }
     },
-    safeConnectOptions: {
-      url: "https://safeconnect.tokenscript.org",
-      initialProof: false
-    }
+    // safeConnectOptions: {
+    //   url: "https://safeconnect.tokenscript.org",
+    //   initialProof: false
+    // }
   });
 
   negotiatorObj.client.on("tokens-selected", (tokens) => {
