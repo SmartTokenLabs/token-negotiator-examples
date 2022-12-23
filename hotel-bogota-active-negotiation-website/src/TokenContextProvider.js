@@ -7,8 +7,10 @@ const TokenContext = createContext({
   tokens: []
 });
 
+export const collectionID = config.collectionID;
+
 const tokenKeys = [
-  'devcon'
+  collectionID
 ];
 
 window.negotiator = null;
@@ -46,6 +48,8 @@ const TokenContextProvider = (props) => {
       setProof(result.data);
 
     });
+
+    window.negotiator.negotiate();
     
   }, []);
 
@@ -71,8 +75,6 @@ class TokenNegotiatorInstance extends React.Component {
 
     let devconConfig = config;
 
-    devconConfig.collectionID = "devcon";
-
     devconConfig = updateTokenConfig(devconConfig);
 
     window.negotiator = new Client({
@@ -88,8 +90,6 @@ class TokenNegotiatorInstance extends React.Component {
         position: "bottom-right"
       }
     });
-
-    window.negotiator.negotiate();
     
   }
   render() {

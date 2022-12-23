@@ -1,4 +1,3 @@
-
 export const updateTokenConfig = (config) => {
 
     if (document.location.hostname !== "localhost"){
@@ -9,11 +8,16 @@ export const updateTokenConfig = (config) => {
         }
 
         if (document.location.pathname.indexOf("token-negotiator-examples") === 1){
-            config.tokenOrigin = "https://tokenscript.github.io/token-negotiator-examples/token-outlet-website/";
+            // config.tokenOrigin = "https://tokenscript.github.io/token-negotiator-examples/token-outlet-website/";
+            config.tokenOrigin = "https://outlet-stage.brandconnector.io/";
         } else {
-            config.tokenOrigin = "https://tokenscript.github.io/token-negotiator-gh-pages/token-outlet-website/";
+            // config.tokenOrigin = "https://tokenscript.github.io/token-negotiator-gh-pages/token-outlet-website/";
+            config.tokenOrigin = "https://outlet.brandconnector.io/";
         }
     }
 
     return config;
 }
+
+
+

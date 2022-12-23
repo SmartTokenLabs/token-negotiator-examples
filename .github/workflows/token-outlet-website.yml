@@ -46,7 +46,7 @@ jobs:
             scripts/use_negotiator_branch.js $NEGOTIATOR_BRANCH
           fi
           cd token-outlet-website
-          npm ci
+          npm install
           npm run build
           short_sha="${GITHUB_SHA:0:7}"
           build_version="${GITHUB_REF_NAME}-${short_sha}"

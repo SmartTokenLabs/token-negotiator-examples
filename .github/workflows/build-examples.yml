@@ -45,6 +45,12 @@ jobs:
           echo "Negotiator branch $NEGOTIATOR_BRANCH requested, updating package.json files"
           scripts/use_negotiator_branch.js $NEGOTIATOR_BRANCH
         fi
+        npm run install-angular-bare-bones-demo
+        npm run install-art-gallery-medium-article-website
+        npm run install-vue-boilerplate
+        npm run build-angular-bare-bones-demo
+        npm run build-art-gallery-medium-article-website
+        npm run build-vue-boilerplate
         npm install
         npm run build
         npm run install-barebones

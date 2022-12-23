@@ -6,5 +6,6 @@ module.exports = defineConfig({
     plugins: [
       new NodePolyfillPlugin()
     ]
-  }
+  },
+  publicPath: process.env.NODE_ENV === 'production' ? '/token-negotiator-examples/vue-boilerplate' : '/'
 })

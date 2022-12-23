@@ -38,6 +38,8 @@ function App() {
 
     let devconConfig = updateTokenConfig(config);
 
+	devconConfig.accessRequestType = "write";
+
     let tokenIssuers = [
         devconConfig
     ];
@@ -74,7 +76,9 @@ function App() {
 
   useEffect(() => {
 
-    window.negotiator.negotiate();
+    if(!(window.document.referrer.includes("outlet") || window.document.referrer.includes("3002"))){
+      window.negotiator.negotiate();
+    }
 
   }, []);
 

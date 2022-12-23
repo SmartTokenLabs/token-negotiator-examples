@@ -9,7 +9,9 @@ let packages = [
 	"hotel-bogota-passive-negotiation-website",
 	"ticket-issuer-url-website",
 	"token-outlet-website",
-	"typescript-bare-bones-demo"
+	"typescript-bare-bones-demo",
+	"angular-bare-bones-demo",
+	"vue-boilerplate",
 ];
 
 const args = process.argv.slice(2);

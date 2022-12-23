@@ -10,7 +10,7 @@ import {createTheme} from '@material-ui/core/styles';
 import {ThemeProvider} from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import {TokenContext} from "./../../TokenContextProvider";
+import {collectionID, TokenContext} from "./../../TokenContextProvider";
 import './BookingModal.css';
 
 const theme = createTheme({
@@ -41,8 +41,11 @@ export default function BookingModal({room}) {
   const useToken = async () => {
     try {
       await negotiator.authenticate({
-        issuer: 'devcon',
-        unsignedToken: tokens[0]
+        issuer: collectionID,
+        unsignedToken: tokens[0],
+        options: {
+          useRedirect: true,
+        }
       });
       setLoadingTokenProof(true);
     } catch (e) {

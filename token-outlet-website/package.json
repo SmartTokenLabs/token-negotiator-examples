@@ -6,7 +6,7 @@
   "dependencies": {
     "asn1js": "^2.0.26",
     "pvutils": "^1.0.17",
-    "@tokenscript/token-negotiator": "^2.1.1"
+    "@tokenscript/token-negotiator": "^2.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
@@ -33,7 +33,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf build",
-    "build": "npm run clean && webpack --mode=production",
+    "build": "npm run clean && webpack --mode=production && cp -R public/* build/",
     "start": "webpack serve --open"
   },
   "author": "alphawallet",
