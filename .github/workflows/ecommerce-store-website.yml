@@ -1,6 +1,7 @@
 name: Build & Deploy ecommerce examples
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
