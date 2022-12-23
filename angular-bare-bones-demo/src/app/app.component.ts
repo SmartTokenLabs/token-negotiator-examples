@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Client } from '@tokenscript/token-negotiator';
+import { Issuer } from '@tokenscript/token-negotiator/dist/client/interface';
 
-
-import "@tokenscript/token-negotiator/dist/theme/style.css";
-import { OffChainTokenConfig, OnChainTokenConfig } from '@tokenscript/token-negotiator/dist/client/interface';
 import issuersData from './issues';
 
 
@@ -17,7 +15,7 @@ import issuersData from './issues';
 
 export class AppComponent implements OnInit {
   
-  public issuers: (OffChainTokenConfig | OnChainTokenConfig)[] = issuersData;
+  public issuers: Issuer[] = issuersData;
   public negotiator: Client;
 
   constructor() { 
@@ -32,10 +30,10 @@ export class AppComponent implements OnInit {
           position: "bottom-right"
       },
       autoLoadTokens: 3,
-      safeConnectOptions: {
-          url: "https://safeconnect.tokenscript.org",
-          initialProof: false
-      }
+      // safeConnectOptions: {
+      //     url: "https://safeconnect.tokenscript.org",
+      //     initialProof: false
+      // }
     })
   }
 

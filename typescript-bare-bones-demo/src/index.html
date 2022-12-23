@@ -8,10 +8,31 @@
     <meta name="robots" content="noindex">
     <meta name="googlebot" content="noindex">
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        .buttons-list {
+            position: absolute;
+            float: left;
+            bottom: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        .buttons-list > * {
+            margin: 5px;
+            align-self: flex-start;
+        }
+    </style>
   </head>
   <body>
-    <div class="buttons-list" style="position: absolute; float: left;">
+    <div class="buttons-list" style="">
       <button onclick="updateIssuers();">Update Issuers</button>
+        <label for="use-redirect">Use redirect mode: <input type="checkbox" id="use-redirect" value="1" /></label>
+      <button onclick="clearStoredProofs();">Clear existing proofs</button>
+      <!--<label>Safe Connect proof type:
+        <select id="challenge-type">
+            <option value="signedUN">UN Challenge</option>
+            <option value="attestedAddress">Address Attestation</option>
+        </select>
+      </label>-->
     </div>
     <div id="negotiator-inline" class="overlay-tn"></div>
     <div id="ticketList"></div>

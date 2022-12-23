@@ -8,7 +8,7 @@ import _ from "lodash";
 
 //	App
 import { useStore } from 'base/state';
-import { useCurrentWallet } from 'ui/hooks';
+
 import { Logo, Link, Nav, Button, Image, Icon, Layer } from "ui/components";
 
 // Styles
@@ -19,13 +19,13 @@ import styles from "./header.module.scss";
 //	Brand Connector Demo / UI / Components / Header
 //
 
+const Header = function Header({ className }) {
 
-const Header = React.memo( function Header({ className }) {
 	const router = useRouter();
 
 	const isNegotiatorReady = useStore( s => s.isNegotiatorReady );
 	const selectedTokens = useStore( s => s.selectedTokens );
-	const [ walletAddress ] = useCurrentWallet();
+	const walletAddress = typeof window !== 'undefined' && window.connectedWallet ? window.connectedWallet.address : undefined;
 
 	var tokensFound = 0;
 	
@@ -100,7 +100,7 @@ const Header = React.memo( function Header({ className }) {
 			</div>
 		</header>
 	);
-})
+}
 
 Header.propTypes = {
 	className: PropTypes.string,

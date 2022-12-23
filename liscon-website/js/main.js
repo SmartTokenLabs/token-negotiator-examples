@@ -36,7 +36,10 @@ async function authenticate(token){
         // negotiator defined globally
         let auth = await negotiator.authenticate({
             unsignedToken: token,
-            unEndPoint: 'https://crypto-verify.herokuapp.com/use-devcon-ticket'
+            unEndPoint: 'https://crypto-verify.herokuapp.com/use-devcon-ticket',
+            options: {
+                useRedirect: true,
+            }
         });
         proof.innerHTML = "Attestation ok. Payload: " + auth.proof.useToken;
         console.log('[DEMO] auth received:');

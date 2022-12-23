@@ -5,7 +5,6 @@ import clsx from 'clsx';
 // App
 import { useStore } from 'base/state';
 import { Page } from 'ui/app';
-import { useCurrentWallet } from 'ui/hooks';
 import { Button, Headline, Link, Minter, Image, Icon, Tag } from 'ui/components';
 import { Demos } from 'ui/sections';
 
@@ -16,25 +15,17 @@ import styles from "./home-view.module.scss";
 //	Brand Connector Demo / UI / Views / Home
 //
 
-export default function HomeView() {
-	const isNegotiatorReady = useStore( s => s.isNegotiatorReady );
-	const [ walletAddress ] = useCurrentWallet();
+export default function HomeView(props) {
 
+	const isNegotiatorReady = useStore( s => s.isNegotiatorReady );
+	const walletAddress = typeof window !== 'undefined' && props.connectedWallet ? props.connectedWallet.address : undefined;
+	
 	return (
 		<Page className={ styles[ 'v-home' ] }>
 			<section className="section -ps">
 				<div className="grid -g-cols-1">
 					<div className="-g-max-8">
 						<Headline className="-mb6">Try The Product Demo</Headline>
-						{ ! walletAddress && (
-							<Button
-								className="-style-secondary"
-								isLoading={ !isNegotiatorReady }
-								onClick={ () => window?.negotiator && window.negotiator.negotiate() }
-							>
-								Connect Wallet
-							</Button>
-						) }
 					</div>
 				</div>
 			</section>

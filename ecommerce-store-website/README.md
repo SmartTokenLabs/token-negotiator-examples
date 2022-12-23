@@ -15,3 +15,4 @@ This example showcases examples of how the Token Negotiator can be used for ecom
 
 Please contact us to say hi or open an issue via github:
 <sayhi@smarttokenlabs.com>
+

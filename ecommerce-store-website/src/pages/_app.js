@@ -9,6 +9,8 @@ import { Layout as DefaultLayout, Context } from 'ui/app';
 
 import ContextRegisterThanks from 'ui/app/context/context-register-thanks';
 
+import { chainMap } from 'src/base/utils/network';
+
 //	Styles
 import 'styles/index.scss';
 import "./ui/styles/_app.scss";
@@ -74,11 +76,11 @@ export default function App({ Component, pageProps }) {
 
 	const resetIssuers = (networkId) => {
 		if(!networkId) return;
-		const normalisedNetworkId = Number(networkId.replace('0x', ''));
-		if(normalisedNetworkId === 5) { // Goerli
+		const normalisedNetworkId = chainMap[networkId] ? chainMap[networkId] : '';
+		if(normalisedNetworkId === 'Goerli') { // Goerli
 			window.negotiator.negotiate(goerliIssuers);
 		}
-		if(normalisedNetworkId === 13881) { // Mumbai
+		if(normalisedNetworkId === 'Mumbai') { // Mumbai
 			window.negotiator.negotiate(mumbaiIssuers);
 		}
 	}
@@ -106,7 +108,6 @@ export default function App({ Component, pageProps }) {
 			});
 
 			window.negotiator.on("tokens-selected", (data) => {
-				console.log('tokens', data);
 				api.setSelectedTokens({...data.selectedTokens});
 			});
 
@@ -117,12 +118,14 @@ export default function App({ Component, pageProps }) {
 				console.log( `Error: ${error}` );
 			});
 
-			if(ethereum) {
-				ethereum.on('chainChanged', function(networkId){
-					resetIssuers(networkId);
-				});
-				resetIssuers(ethereum.chainId);
-			}
+			window.negotiator.on('connected-wallet', (_connectedWallet) => {
+				window.connectedWallet = _connectedWallet;
+				resetIssuers(window.connectedWallet.chainId);
+			});
+
+			window.negotiator.on('network-change', (chain) => {
+				resetIssuers(chain);
+			});
 			
 		};
 
@@ -132,8 +135,8 @@ export default function App({ Component, pageProps }) {
 
 	return (
 		<>
-			<Layout pageProps={ pageProps }>
-				<Component { ...pageProps } />
+			<Layout pageProps={ pageProps } connectedWallet={ 'connectedWalletInstance' }>
+				<Component { ...pageProps } connectedWallet={ 'connectedWalletInstance' } />
 			</Layout>
 			<Context.Region onClose={ () => api.setContextView() } views={ CONTEXT_VIEWS } />
 			<div className="overlay-tn" />

@@ -19,7 +19,7 @@
     "target": "es2020",
     "module": "es2020",
     "allowJs": true,
-    "skipLibCheck": true,
+    // "skipLibCheck": true,
 
     
     "lib": [
