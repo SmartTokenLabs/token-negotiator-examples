@@ -1,24 +1,54 @@
 const path = require('path');
 const concurrently = require('concurrently');
-const examples = require('../examples.json');
+const exampleConfig = require('../examples.json');
 
-const command = {
+const COMMANDS = {
   clean: 'shx rm -rf build dist',
   install: 'npm i --force',
   build: 'npm run build',
-}[process.env.CMD]
+  start: 'npm start',
+  link: 'npm link ../../token-negotiator',
+  unlink: 'npm unlink ../../token-negotiator'
+};
+const GROUPS = ['onChain', 'offChain'];
 
-const allExamples = [...examples.onChain, ...examples.offChain];
+cmdArg = process.env.CMD;
+if (!COMMANDS[cmdArg]) {
+  console.log(`Wrong cmd argument: ${cmdArg}`)
+  process.exit(1);
+}
 
-const cmds = allExamples.map(example => ({
+groupArg = process.env.GROUP;
+if (groupArg && !GROUPS.includes(groupArg)) {
+  console.log(`Wrong group argument: ${groupArg}`)
+  process.exit(1);
+}
+
+examplesArg = process.env.EXAMPLES
+
+const command = COMMANDS[cmdArg];
+
+let examples;
+if (examplesArg) {
+  examples = examplesArg.split(',');
+} else if (groupArg) {
+  examples = exampleConfig[groupArg];
+} else {
+  examples = [...exampleConfig.onChain, ...exampleConfig.offChain];
+}
+
+const cmds = examples.map(example => ({
   command,
   cwd: path.resolve(__dirname, '..', example)
 }))
+
+// npm link in parallel will cause run condition
+const maxProcesses = cmdArg === 'link' ? 1 : 5;
 
 concurrently(
   cmds,
   {
     killOthers: ['failure'],
-    maxProcesses: 5,
+    maxProcesses,
   }
 );
