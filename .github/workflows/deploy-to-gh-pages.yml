@@ -43,19 +43,10 @@ jobs:
             echo "Negotiator branch $NEGOTIATOR_BRANCH requested, updating package.json files"
             scripts/use_negotiator_branch.js $NEGOTIATOR_BRANCH
           fi
-          npm run install-angular-bare-bones-demo
-          npm run install-art-gallery-medium-article-website
-          npm run install-vue-boilerplate
-          npm install
-          npm run build-angular-bare-bones-demo
-          npm run build-art-gallery-medium-article-website
-          npm run build-vue-boilerplate
-          npm run build
-          npm run install-barebones
-          npm run build-barebones
-          npm run install-ecommerce
           export BASE_PATH=/token-negotiator-examples/ecommerce-store-website
-          npm run build-ecommerce
+          npm run clean
+          npm run install
+          npm run build
           npm run copy-artifacts
           short_sha="${GITHUB_SHA:0:7}"
           build_version="${GITHUB_REF_NAME}-${short_sha}"

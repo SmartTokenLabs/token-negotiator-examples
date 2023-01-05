@@ -5,7 +5,7 @@ This example showcases examples of how the Token Negotiator can be used for ecom
 ## install & setup
 
 `npm i`
-`npm run build`
+`npm run build-without-export`
 
 ## serve 
 

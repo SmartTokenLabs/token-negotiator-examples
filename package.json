@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "start": "CMD=start node scripts/run_batch.js",
     "start-on-chain": "CMD=start GROUP=onChain node scripts/run_batch.js",
     "start-off-chain": "CMD=start GROUP=offChain node scripts/run_batch.js",
     "clean": "CMD=clean node scripts/run_batch.js",
