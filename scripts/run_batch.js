@@ -43,7 +43,7 @@ const cmds = examples.map(example => ({
 }))
 
 maxProcessesArg = Number(process.env.MAX_PROCESSES) || undefined
-// npm link in parallel will cause run condition
+// npm link in parallel will cause race condition
 // set it to `1` will make the link command run sequentially
 // otherwise, it will run all the commands in parallel
 const maxProcesses = cmdArg === 'link' ? 1 : maxProcessesArg;
