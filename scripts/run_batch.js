@@ -42,10 +42,11 @@ const cmds = examples.map(example => ({
   cwd: path.resolve(__dirname, '..', example)
 }))
 
+maxProcessesArg = Number(process.env.MAX_PROCESSES) || undefined
 // npm link in parallel will cause run condition
 // set it to `1` will make the link command run sequentially
 // otherwise, it will run all the commands in parallel
-const maxProcesses = cmdArg === 'link' ? 1 : undefined;
+const maxProcesses = cmdArg === 'link' ? 1 : maxProcessesArg;
 
 concurrently(
   cmds,

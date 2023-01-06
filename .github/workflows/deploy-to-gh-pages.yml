@@ -44,6 +44,7 @@ jobs:
             scripts/use_negotiator_branch.js $NEGOTIATOR_BRANCH
           fi
           export BASE_PATH=/token-negotiator-examples/ecommerce-store-website
+          export MAX_PROCESSES=5
           npm install
           npm run clean
           npm run build
