@@ -44,8 +44,8 @@ jobs:
             scripts/use_negotiator_branch.js $NEGOTIATOR_BRANCH
           fi
           export BASE_PATH=/token-negotiator-examples/ecommerce-store-website
+          npm install
           npm run clean
-          npm run install
           npm run build
           npm run copy-artifacts
           short_sha="${GITHUB_SHA:0:7}"
