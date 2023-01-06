@@ -1,12 +1,14 @@
 import { withCoalescedInvoke } from "next/dist/lib/coalesced-function";
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useMemo } from "react";
 import { chainMap } from "src/base/utils/network";
 
 const TokenContext = createContext({
   tokens: [],
   wallet: {},
   proof: {},
-  negotiator: {}
+  negotiator: {},
+  walletStatus: '',
+  chainId: ''
 });
 
 const mumbaiIssuers = [
@@ -58,14 +60,12 @@ const goerliIssuers = [
 ];
 
 const TokenContextProvider = (props) => {
-
   const [negotiator, setNegotiator] = useState({});
-
   const [tokens, setTokens] = useState([]);
-
   const [proof, setProof] = useState();
-
   const [wallet, setWallet] = useState();
+  const [walletStatus, setWalletStatus] = useState('');
+  const [ chainId, setChainId ] = useState('');
 
   useEffect(() => {
 
@@ -85,36 +85,38 @@ const TokenContextProvider = (props) => {
             "https://smart-token-labs-demo-server.mypinata.cloud/ipfs/"
       });
 
-      negotiator.on("tokens-selected", (tokens) => {
+      window.negotiator = negotiator;
 
+      negotiator.on("tokens-selected", (tokens) => {
         console.log("tokens", tokens);
-                
         setTokens({...tokens.selectedTokens});
-  
       });
   
       negotiator.on("token-proof", (result) => {
-        
         console.log("token proof", result.data);
-  
         setProof(result.data);
       });
   
       negotiator.on("connected-wallet", (connectedWallet) => {
-  
-        setWallet(connectedWallet);
-        resetIssuers(connectedWallet.chainId);
-  
+        console.log("connected-wallet", connectedWallet);
+        if (connectedWallet) {
+          setWallet(connectedWallet);
+          resetIssuers(connectedWallet.chainId);
+          setWalletStatus(undefined);
+        } else {
+          setWallet(null);
+          setWalletStatus('You must connect your wallet to continue.');
+        }
       });
   
       negotiator.on("network-change", (chain) => {
-  
         resetIssuers(chain);
-        
       });
   
       const resetIssuers = (networkId) => {
         if (!networkId) return;
+
+        setChainId(networkId);
   
         const normalisedNetworkId = chainMap[networkId]
           ? chainMap[networkId]
@@ -132,13 +134,13 @@ const TokenContextProvider = (props) => {
       };
 
       negotiator.negotiate();
-
     });
 
   }, []);
 
+
   return (
-    <TokenContext.Provider value={{ tokens, negotiator, wallet, proof }}>
+    <TokenContext.Provider value={{ tokens, negotiator, wallet, proof, walletStatus, chainId }}>
       {props.children}
     </TokenContext.Provider>
   );

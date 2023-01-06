@@ -5,29 +5,18 @@ import clsx from 'clsx';
 // App
 import { useStore } from 'base/state';
 import { Page } from 'ui/app';
-import { Button, Headline, Link, Minter, Image, Icon, Tag } from 'ui/components';
+import { Headline, Link, Minter, Image, Tag } from 'ui/components';
 import { Demos } from 'ui/sections';
 
 //	Styles
 import styles from "./home-view.module.scss";
-
-import { TokenContext } from "./../../../pages/TokenContextProvider";
-
-import React, { useContext, useState, useEffect } from "react";
+import React from "react";
 
 //
 //	Brand Connector Demo / UI / Views / Home
 //
 
-export default function HomeView(props) {
-
-	const isNegotiatorReady = useStore( s => s.isNegotiatorReady );
-	const walletAddress = typeof window !== 'undefined' && props.connectedWallet ? props.connectedWallet.address : undefined;
-	
-	const { tokens } = useContext(TokenContext);
-
-	console.log('....nick', tokens);
-	
+export default function HomeView(props) {		
 	return (
 		<Page className={ styles[ 'v-home' ] }>
 			<section className="section -ps">
