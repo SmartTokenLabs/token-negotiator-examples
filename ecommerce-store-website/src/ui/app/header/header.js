@@ -10,7 +10,7 @@ import _ from "lodash";
 import { useStore } from 'base/state';
 
 import { Logo, Link, Nav, Button, Image, Icon, Layer } from "ui/components";
-import { TokenContext } from "src/pages/TokenContextProvider";
+import { TokenContext } from "src/providers/TokenContextProvider";
 
 // Styles
 import styles from "./header.module.scss";

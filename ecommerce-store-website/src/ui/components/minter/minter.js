@@ -5,7 +5,7 @@ import clsx from 'clsx';
 // App
 import { safeMint } from "base/utils/interact.js";
 import { Card, Button, Headline, Image, PopUp } from 'ui/components';
-import { TokenContext } from "src/pages/TokenContextProvider";
+import { TokenContext } from "src/providers/TokenContextProvider";
 import { useStore } from 'base/state';
 import { chainMap } from 'base/utils/network';
 import nftDataStore from 'base/nft-data-store';

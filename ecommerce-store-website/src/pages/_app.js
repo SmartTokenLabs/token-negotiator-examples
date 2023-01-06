@@ -8,7 +8,7 @@ import { Layout as DefaultLayout, Context } from 'ui/app';
 
 import ContextRegisterThanks from 'ui/app/context/context-register-thanks';
 
-import { TokenContextProvider } from './TokenContextProvider';
+import { TokenContextProvider } from '../providers/TokenContextProvider';
 
 //	Styles
 import 'styles/index.scss';
