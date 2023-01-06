@@ -43,7 +43,9 @@ const cmds = examples.map(example => ({
 }))
 
 // npm link in parallel will cause run condition
-const maxProcesses = cmdArg === 'link' ? 1 : 5;
+// set it to `1` will make the link command run sequentially
+// otherwise, it will run all the commands in parallel
+const maxProcesses = cmdArg === 'link' ? 1 : undefined;
 
 concurrently(
   cmds,
