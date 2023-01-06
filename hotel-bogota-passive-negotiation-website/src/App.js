@@ -48,28 +48,32 @@ function App() {
 
   let [retryButton, setRetryButton] = useState("");
 
-  window.negotiator.on('tokens', (issuerTokens) => {
-    let tokens = [];
-    tokenIssuers.map((issuer) => {
-      tokens.push(...issuerTokens[issuer.collectionID].tokens);
-    });
-    if (tokens.length > 0) {
-      setTokens(tokens);
-      setFreeShuttle(true);
-    }
-  });
 
-  window.negotiator.on("token-proof", (result) => {
+  useEffect(() => {
 
-    setTimeout(() => {
+	  window.negotiator.on('tokens', (issuerTokens) => {
+		  let tokens = [];
+		  tokenIssuers.map((issuer) => {
+			  tokens.push(...issuerTokens[issuer.collectionID].tokens);
+		  });
+		  if (tokens.length > 0) {
+			  setTokens(tokens);
+			  setFreeShuttle(true);
+		  }
+	  });
 
-      setSelectedPendingTokenInstance(null);
-      setTokenProofData({issuer: result.issuer, proof: result.data.proof});
-      setDiscount({ value: getApplicableDiscount(), tokenInstance: selectedPendingTokenInstance });
+	  window.negotiator.on("token-proof", (result) => {
 
-    }, 0);
+		  setTimeout(() => {
 
-  });
+			  setSelectedPendingTokenInstance(null);
+			  setTokenProofData({issuer: result.issuer, proof: result.data.proof});
+			  setDiscount({ value: getApplicableDiscount(), tokenInstance: selectedPendingTokenInstance });
+
+		  }, 0);
+
+	  });
+  }, []);
 
   window.negotiator.on("error", ({error, issuer}) => {
     if (error.name === "POPUP_BLOCKED"){

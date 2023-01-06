@@ -12,7 +12,6 @@ let packages = [
 	"typescript-bare-bones-demo",
 	"angular-bare-bones-demo",
 	"vue-boilerplate",
-	
 ];
 
 const args = process.argv.slice(2);
