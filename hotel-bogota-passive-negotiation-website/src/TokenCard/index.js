@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Typography from '@material-ui/core/Typography';
 import './Card.css';
 
@@ -7,22 +7,22 @@ import './Card.css';
 
 function TokenCard({ tokenInstance, applyDiscount, discount, selectedPendingTokenInstance }) {
 
-  const isSelectedToken = (
-    discount.tokenInstance && 
-    discount.tokenInstance.ticketIdNumber === tokenInstance.ticketIdNumber &&
-    discount.tokenInstance.ticketClass === tokenInstance.ticketClass &&
-    discount.tokenInstance.devconId === tokenInstance.devconId
-  );
+  const [isSelectedToken, setIsSelectedToken] = useState(false);
 
-  let tokenClassNames = 'tokenCard';
-  if(isSelectedToken) tokenClassNames = 'tokenCard selected';
+  useEffect(() => {
 
-  let tokenDetailsClassNames = 'ticketDetails';
-  if(selectedPendingTokenInstance) tokenDetailsClassNames += ' skeleton-card';
+	  const selectedVal = discount.tokenInstance &&
+		  discount.tokenInstance.ticketIdNumber === tokenInstance.ticketIdNumber &&
+		  discount.tokenInstance.ticketClass === tokenInstance.ticketClass &&
+		  discount.tokenInstance.devconId === tokenInstance.devconId;
+
+	  setIsSelectedToken(selectedVal);
+
+  }, [discount]);
 
   return (
-    <div onClick={e => applyDiscount(isSelectedToken ? null : tokenInstance)} className={tokenClassNames}>
-      <div className={tokenDetailsClassNames}>
+    <div onClick={e => applyDiscount(isSelectedToken ? null : tokenInstance)} className={"tokenCard" + (isSelectedToken ? " selected" : "")}>
+      <div className={"ticketDetails" + (selectedPendingTokenInstance ? " skeleton-card" : "")}>
         <Typography className="ticketClass" gutterBottom variant="h5" component="h2">
           {tokenInstance.ticketClass.toString()}
         </Typography>

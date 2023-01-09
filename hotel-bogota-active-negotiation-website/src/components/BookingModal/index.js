@@ -1,4 +1,4 @@
-import React, {useReducer, useState, useContext} from "react";
+import React, {useReducer, useState, useContext, useEffect} from "react";
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -38,14 +38,19 @@ export default function BookingModal({room}) {
   
   const [loadingTokenProof, setLoadingTokenProof] = useState(false);
 
+  useEffect(() => {
+	if (proof && localStorage.getItem("booking-room-type") === room.type) {
+		setOpen(true);
+		localStorage.removeItem("booking-room-type");
+	}
+  }, [proof]);
+
   const useToken = async () => {
     try {
+	  localStorage.setItem("booking-room-type", room.type);
       await negotiator.authenticate({
         issuer: collectionID,
-        unsignedToken: tokens[0],
-        options: {
-          useRedirect: true,
-        }
+        unsignedToken: tokens[0]
       });
       setLoadingTokenProof(true);
     } catch (e) {
