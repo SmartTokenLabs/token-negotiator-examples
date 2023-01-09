@@ -15,9 +15,37 @@ See the README's inside each example for configuration and deployment.
 ## Running the examples via localhost
 
 - cd into the root of this directory
-- run `npm run install` to install all dependancies for the examples
+- run `npm install` to install all dependancies for the examples
 - run `npm run start` which will serve all examples with a single command
 - Or alternatively, serve each example seperately (see readme inside each directory for more information)
+
+there are also other batch commands supported
+
+- run `npm run link/unlink` to link/unlink local `token-negotiator` with the example, local `token-negotiator` needs to sit in the same directory as this repo
+- run `npm run build` to build all the examples
+- run `npm run start-on-chain` which will serve all on-chain examples
+- run `npm run start-off-chain` which will serve all off-chain examples
+
+all the above batch commands support specifying individual examples as the target, e.g.
+
+- run `EXAMPLES=art-gallery-medium-article-website npm run start` to start the specified example
+- run `EXAMPLES=art-gallery-medium-article-website,ecommerce-store-website npm run build` to build multiple examples at the same time (examples are comma separated)
+
+Notes:
+
+- to manage examples recognized by the batch commands, please update `examples.json` accordingly.
+- in order to make sure all the dev servers can run at the same time, you need to avoid port conflict, here are all the existing examples and the port in use, please update whenever you make a change
+  - angular-bare-bones-demo: 4200
+  - art-gallery-medium-article-website: 3003
+  - ecommerce-store-website: 3004
+  - svelte-demo: 8080
+  - typescript-bare-bones-demo: 3010
+  - vue-boilerplate: 8081
+  - vue-vite-boilerplate: 5173
+  - hotel-bogota-active-negotiation-website: 3000
+  - hotel-bogota-passive-negotiation-website: 3001
+  - ticket-issuer-url-website: 3005
+  - token-outlet-website: 3002
 
 ## Library Documentation
 

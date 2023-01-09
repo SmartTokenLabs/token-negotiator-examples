@@ -29,7 +29,6 @@ jobs:
           npm ci
           export BASE_PATH=/demo
           npm run build
-          npx next export
           short_sha="${GITHUB_SHA:0:7}"
           build_version="${GITHUB_REF_NAME}-${short_sha}"
           build_time="$(date --utc --iso-8601=seconds)"

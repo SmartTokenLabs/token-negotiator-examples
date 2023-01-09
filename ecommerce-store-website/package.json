@@ -3,9 +3,9 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
-		"build": "next build",
-		"build-static": "next build && next export",
-		"start": "next start",
+		"build-without-export": "next build",
+		"build": "next build && next export",
+		"start": "next start -p 3004",
 		"lint": "next lint"
 	},
 	"dependencies": {
