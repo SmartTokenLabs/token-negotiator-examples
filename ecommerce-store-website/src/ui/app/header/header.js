@@ -1,6 +1,6 @@
 
 //	Dependencies
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { useRouter } from "next/router";
@@ -10,6 +10,7 @@ import _ from "lodash";
 import { useStore } from 'base/state';
 
 import { Logo, Link, Nav, Button, Image, Icon, Layer } from "ui/components";
+import { TokenContext } from "src/providers/TokenContextProvider";
 
 // Styles
 import styles from "./header.module.scss";
@@ -20,12 +21,13 @@ import styles from "./header.module.scss";
 //
 
 const Header = function Header({ className }) {
-
 	const router = useRouter();
+	const { wallet } = useContext(TokenContext);
+
 
 	const isNegotiatorReady = useStore( s => s.isNegotiatorReady );
 	const selectedTokens = useStore( s => s.selectedTokens );
-	const walletAddress = typeof window !== 'undefined' && window.connectedWallet ? window.connectedWallet.address : undefined;
+	const walletAddress = wallet ? wallet.address : undefined;
 
 	var tokensFound = 0;
 	
