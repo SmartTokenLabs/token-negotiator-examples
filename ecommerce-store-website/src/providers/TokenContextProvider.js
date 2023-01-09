@@ -84,7 +84,7 @@ const TokenContextProvider = (props) => {
             "https://smart-token-labs-demo-server.mypinata.cloud/ipfs/"
       });
 
-      setNegotiator(negotiator);
+      setNegotiator(newNegotiator);
       window.negotiator = newNegotiator;
 
       newNegotiator.on("tokens-selected", (tokens) => {
