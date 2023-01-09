@@ -1,5 +1,4 @@
-import { withCoalescedInvoke } from "next/dist/lib/coalesced-function";
-import React, { createContext, useState, useEffect, useMemo } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { chainMap } from "src/base/utils/network";
 
 const TokenContext = createContext({
@@ -71,7 +70,7 @@ const TokenContextProvider = (props) => {
 
     import("@tokenscript/token-negotiator").then((negotiatorInstance) => {
       let currentIssuers = goerliIssuers;
-      negotiator = new negotiatorInstance.Client({
+      const newNegotiator = new negotiatorInstance.Client({
         type: "active",
           issuers: [...currentIssuers],
           uiOptions: {
@@ -85,19 +84,20 @@ const TokenContextProvider = (props) => {
             "https://smart-token-labs-demo-server.mypinata.cloud/ipfs/"
       });
 
-      window.negotiator = negotiator;
+      setNegotiator(newNegotiator);
+      window.negotiator = newNegotiator;
 
-      negotiator.on("tokens-selected", (tokens) => {
+      newNegotiator.on("tokens-selected", (tokens) => {
         console.log("tokens", tokens);
         setTokens({...tokens.selectedTokens});
       });
   
-      negotiator.on("token-proof", (result) => {
+      newNegotiator.on("token-proof", (result) => {
         console.log("token proof", result.data);
         setProof(result.data);
       });
   
-      negotiator.on("connected-wallet", (connectedWallet) => {
+      newNegotiator.on("connected-wallet", (connectedWallet) => {
         console.log("connected-wallet", connectedWallet);
         if (connectedWallet) {
           setWallet(connectedWallet);
@@ -109,7 +109,7 @@ const TokenContextProvider = (props) => {
         }
       });
   
-      negotiator.on("network-change", (chain) => {
+      newNegotiator.on("network-change", (chain) => {
         resetIssuers(chain);
       });
   
@@ -122,18 +122,19 @@ const TokenContextProvider = (props) => {
           ? chainMap[networkId]
           : "";
   
-        if (normalisedNetworkId === "Goerli") {
-          // Goerli
-          negotiator.negotiate(goerliIssuers);
-        }
-  
-        if (normalisedNetworkId === "Mumbai") {
-          // Mumbai
-          negotiator.negotiate(mumbaiIssuers);
+        switch (normalisedNetworkId) {
+          case "Goerli":
+            newNegotiator.negotiate(goerliIssuers);
+            break;
+          case "Mumbai":
+            newNegotiator.negotiate(mumbaiIssuers);
+            break;
+          default:
+            break;
         }
       };
 
-      negotiator.negotiate();
+      newNegotiator.negotiate();
     });
 
   }, []);

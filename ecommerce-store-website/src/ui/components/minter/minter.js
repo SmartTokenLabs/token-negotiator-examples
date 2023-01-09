@@ -21,7 +21,7 @@ import styles from './minter.module.scss';
 export default function Minter({ className }) {
 
 
-	const { wallet: walletInstance, tokens, walletStatus, chainId } = useContext(TokenContext);
+	const { wallet: walletInstance, walletStatus, chainId } = useContext(TokenContext);
 
 	const [ submissionStatus, setSubmissionStatus ] = useState( '');
 	const [ mintedNFTs, setMintedNFTs ] = useState([]);
