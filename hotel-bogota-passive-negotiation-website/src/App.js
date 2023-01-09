@@ -73,8 +73,7 @@ function App() {
 			  setSelectedPendingTokenInstance(null);
 			  setTokenProofData({issuer: result.issuer, proof: result.data.proof});
 			  setDiscount({ value: getApplicableDiscount(), tokenInstance: selectedPendingTokenInstance || JSON.parse(localStorage.getItem("token-instance")) });
-
-			  localStorage.removeItem("booking-room-type");
+			  
 			  localStorage.removeItem("token-instance");
 
 		  }, 0);
@@ -158,7 +157,9 @@ function App() {
     <div>
       <div className="header">
         <LogoCard title={"Hotel Bogota"} />
-        <TokenNotificationCard tokensNumber={tokens.length} />
+        <TokenNotificationCard tokensNumber={tokens.length} refreshTokens={() => {
+			window.negotiator.negotiate(null, false, true);
+		}} />
       </div>
       <BookingDate />
       <div className="roomCardsContainer">
