@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
-let fs = require("fs");
-const {exec} = require("child_process");
+//let fs = require("fs");
+const {execSync} = require("child_process");
 
 let packages = [
 	"art-gallery-medium-article-website",
@@ -49,5 +49,5 @@ for (let package of packages){
 		console.log("Failed to write package.json: " + e.message);
 	}*/
 
-	exec("cd " + __dirname + "/../" + package + " && npm i @tokenscript/token-negotiator@SNAPSHOT-" + branch);
+	execSync("cd " + __dirname + "/../" + package + " && npm i @tokenscript/token-negotiator@SNAPSHOT-" + branch);
 }
