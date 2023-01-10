@@ -58,7 +58,7 @@ jobs:
             sed -i "s/<head>/<head><meta name=\"build-version\" content=\"${build_version}\"><meta name=\"build-time\" content=\"${build_time}\">/"
         env:
           NEGOTIATOR_BRANCH: ${{ inputs.negotiatorBranch }}
-          NODE_AUTH_TOKEN: ${{ secrets.API_TOKEN_GITHUB }}
+          NODE_AUTH_TOKEN: ${{ github.token }}
 
       - uses: actions/upload-artifact@v3
         with:
