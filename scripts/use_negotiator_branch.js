@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
 let fs = require("fs");
+const {exec} = require("child_process");
 
 let packages = [
 	"art-gallery-medium-article-website",
@@ -20,7 +21,7 @@ const branch = args[0] ?? "staging";
 
 for (let package of packages){
 
-	const path = __dirname + "/../" + package + "/package.json";
+	/*const path = __dirname + "/../" + package + "/package.json";
 
 	if (!fs.existsSync(path)){
 		console.log("package.json does not exist");
@@ -46,6 +47,7 @@ for (let package of packages){
 		fs.writeFileSync(path, JSON.stringify(json, null, 2));
 	} catch (e){
 		console.log("Failed to write package.json: " + e.message);
-	}
+	}*/
 
+	exec("npm i @tokenscript/token-negotiator@SNAPSHOT-" + branch);
 }
