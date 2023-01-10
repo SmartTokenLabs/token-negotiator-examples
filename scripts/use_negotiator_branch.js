@@ -49,5 +49,5 @@ for (let package of packages){
 		console.log("Failed to write package.json: " + e.message);
 	}*/
 
-	exec("npm i @tokenscript/token-negotiator@SNAPSHOT-" + branch);
+	exec("cd " + __dirname + "/../" + package + " && npm i @tokenscript/token-negotiator@SNAPSHOT-" + branch);
 }
