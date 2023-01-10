@@ -50,6 +50,7 @@ jobs:
             scripts/use_negotiator_branch.js $NEGOTIATOR_BRANCH
           fi
           
+          npm run install-examples
           npm run clean
           npm run build
           npm run copy-artifacts
