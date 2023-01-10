@@ -38,6 +38,28 @@ window.negotiator = new Client({
 		{ collectionID: 'stl-bayc', onChain: true, contract: '0xc361201E5B1005cCDE47B32F223BC145DE393F62', chain: 'goerli'},
 		{ collectionID: 'stl-wow', onChain: true, contract: '0x87644E0A1287A4D96DecC29A13400a1be9759AF8', chain: 'goerli'},
 		{ collectionID: 'stl-riot-racer', onChain: true, contract: '0xae96095fF42B0Cae2DaD3d49E5EE11663280d819', chain: 'goerli'},
+        { onChain: true, collectionID: "Perion", contract: '0x96af92ae2d822a0f191455ceca4d4e7ee227668e', chain: 'mumbai', blockchain: "evm" },
+        {
+            collectionID: "stl-bayc-goerli",
+            onChain: true,
+            contract: "0xc361201E5B1005cCDE47B32F223BC145DE393F62",
+            chain: "goerli",
+            openSeaSlug: undefined,
+          },
+          {
+            collectionID: "stl-wow-goerli",
+            onChain: true,
+            contract: "0x87644E0A1287A4D96DecC29A13400a1be9759AF8",
+            chain: "goerli",
+            openSeaSlug: undefined,
+          },
+          {
+            collectionID: "stl-riot-racer-goerli",
+            onChain: true,
+            contract: "0xae96095fF42B0Cae2DaD3d49E5EE11663280d819",
+            chain: "goerli",
+            openSeaSlug: undefined,
+          },
 		devonConfig
     ],
     uiOptions: {
