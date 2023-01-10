@@ -7,7 +7,7 @@
     "start-on-chain": "CMD=start GROUP=onChain node scripts/run_batch.js",
     "start-off-chain": "CMD=start GROUP=offChain node scripts/run_batch.js",
     "clean": "CMD=clean node scripts/run_batch.js",
-    "install-examples": "CMD=install node scripts/run_batch.js",
+    "install": "CMD=install node scripts/run_batch.js",
     "build": "CMD=build node scripts/run_batch.js",
     "link": "CMD=link node scripts/run_batch.js",
     "unlink": "CMD=unlink node scripts/run_batch.js",
