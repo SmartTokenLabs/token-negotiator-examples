@@ -40,7 +40,7 @@ for (let package of packages){
 		return;
 	}
 
-	json.dependencies["@tokenscript/token-negotiator"] = "git://github.com/tokenScript/token-negotiator.git#" + branch;
+	json.dependencies["@tokenscript/token-negotiator"] = "SNAPSHOT-" + branch;
 
 	try {
 		fs.writeFileSync(path, JSON.stringify(json, null, 2));
