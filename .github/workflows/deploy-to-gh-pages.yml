@@ -37,8 +37,8 @@ jobs:
 
       - name: Build
         run: |
-          export BASE_PATH=/token-negotiator-examples/ecommerce-store-website
-          export MAX_PROCESSES=5
+          
+          npm install
           
           if [[ "${GITHUB_EVENT_NAME}" = push ]]; then
             NEGOTIATOR_BRANCH="${GITHUB_REF_NAME}"
@@ -51,7 +51,7 @@ jobs:
           export BASE_PATH=/token-negotiator-examples/ecommerce-store-website
           export MAX_PROCESSES=5
         
-          npm install
+          npm run install-examples
           npm run clean
           npm run build
           npm run copy-artifacts

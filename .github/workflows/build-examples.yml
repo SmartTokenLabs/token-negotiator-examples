@@ -39,6 +39,8 @@ jobs:
         echo "Github base ref: $GITHUB_BASE_REF"
         echo "Requested branch: $NEGOTIATOR_BRANCH"
         
+        npm install
+        
         if [[ $GITHUB_BASE_REF == "staging" ]]; then 
           echo "This is a staging branch PR, updating package.json files to use negotiator staging branch"
           scripts/use_negotiator_branch.js staging
@@ -51,7 +53,7 @@ jobs:
         export BASE_PATH=/token-negotiator-examples/ecommerce-store-website
         export MAX_PROCESSES=5
         
-        npm install
+        npm run install-examples
         npm run clean
         npm run build
         npm run copy-artifacts
