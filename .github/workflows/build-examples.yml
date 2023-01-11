@@ -51,6 +51,8 @@ jobs:
         if [[ ! -z $NEGOTIATOR_BRANCH && $NEGOTIATOR_BRANCH != "none" ]]; then 
           echo "Negotiator branch $NEGOTIATOR_BRANCH requested, updating package.json files"
           scripts/use_negotiator_branch.js $NEGOTIATOR_BRANCH
+        else
+          npm run install-examples
         fi
         
         npm run clean
@@ -59,8 +61,3 @@ jobs:
       env:
         NEGOTIATOR_BRANCH: ${{ inputs.negotiatorBranch }}
         NODE_AUTH_TOKEN: ${{ github.token }}
-
-    - uses: actions/upload-artifact@v3
-      with:
-        name: build
-        path: build
