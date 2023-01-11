@@ -20,7 +20,7 @@ const args = process.argv.slice(2);
 const branch = args[0] ?? "staging";
 
 const cmds = packages.map((pack) => ({
-	command: "npm i -f @tokenscript/token-negotiator@SNAPSHOT-" + branch,
+	command: "cd " + __dirname + "/../" + pack + " && npm i -f @tokenscript/token-negotiator@SNAPSHOT-" + branch,
 	cwd: path.resolve(__dirname, '..', pack)
 }));
 
