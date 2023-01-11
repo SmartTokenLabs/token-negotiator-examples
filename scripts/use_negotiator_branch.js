@@ -1,7 +1,8 @@
 #! /usr/bin/env node
 
-const concurrently = require('concurrently');
-const path = require('path');
+const {execSync} = require("child_process");
+//const concurrently = require('concurrently');
+//const path = require('path');
 
 let packages = [
 	"art-gallery-medium-article-website",
@@ -19,8 +20,8 @@ const args = process.argv.slice(2);
 
 const branch = args[0] ?? "staging";
 
-const cmds = packages.map((pack) => ({
-	command: "cd " + __dirname + "/../" + pack + " && npm i -f @tokenscript/token-negotiator@SNAPSHOT-" + branch,
+/*const cmds = packages.map((pack) => ({
+	command: "cd " + __dirname + "/../" + pack + " && npm i @tokenscript/token-negotiator@SNAPSHOT-" + branch,
 	cwd: path.resolve(__dirname, '..', pack)
 }));
 
@@ -30,12 +31,12 @@ concurrently(
 		killOthers: ['failure'],
 		maxProcesses: 5
 	}
-);
+);*/
 
 // This is the old method of updating the package.json version, however this doesn't work to update snapshot versions
-/*for (let package of packages){
+for (let pack of packages){
 
-	const path = __dirname + "/../" + package + "/package.json";
+	/*const path = __dirname + "/../" + package + "/package.json";
 
 	if (!fs.existsSync(path)){
 		console.log("package.json does not exist");
@@ -61,5 +62,7 @@ concurrently(
 		fs.writeFileSync(path, JSON.stringify(json, null, 2));
 	} catch (e){
 		console.log("Failed to write package.json: " + e.message);
-	}
-}*/
+	}*/
+
+	execSync("cd " + __dirname + "/../" + pack + " && npm i @tokenscript/token-negotiator@SNAPSHOT-" + branch);
+}
