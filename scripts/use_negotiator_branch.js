@@ -22,7 +22,7 @@ const branch = args[0] ?? "staging";
 const projects = args[1] ?? null;
 
 packages = packages.filter((path) => {
-	return projects.indexOf(path) > -1
+	return !projects || projects.indexOf(path) > -1
 });
 
 const cmds = packages.map((pack) => ({
