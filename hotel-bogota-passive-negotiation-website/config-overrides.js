@@ -8,9 +8,9 @@ module.exports = function override(config, env) {
 
     removeModuleScopePlugin()(config);
 
-    const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
+    //const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
-    config.plugins.push(new NodePolyfillPlugin());
+    //config.plugins.push(new NodePolyfillPlugin());
 
     return config
 };
