@@ -44,9 +44,13 @@ function App() {
         devconConfig
     ];
 
+	const params = new URLSearchParams(document.location.hash.substring(1));
+	const redirectMode = params.has("redirectMode") ? params.get("redirectMode") : undefined;
+
   window.negotiator = new Client({
     type: 'passive',
-    issuers: tokenIssuers
+    issuers: tokenIssuers,
+    offChainRedirectMode: redirectMode
   });
 
   window.negotiator.on('tokens', (issuerTokens) => {
@@ -76,9 +80,7 @@ function App() {
 
   useEffect(() => {
 
-    if(!(window.document.referrer.includes("outlet") || window.document.referrer.includes("3002"))){
-      window.negotiator.negotiate();
-    }
+  	window.negotiator.negotiate();
 
   }, []);
 
@@ -155,15 +157,15 @@ function App() {
               <b>- no ticket found -</b>
             </div>
           }
-          { retryButton &&
               <div>
-                  <h5 style={{color: "red"}}>{retryButton}</h5>
-                  <button className="makeTicket" style={{backgroundColor: "#f58b77"}} onClick={() => {
-                      setRetryButton("");
-                      negotiator.negotiate();
-                  }}>Retry</button>
+				  { retryButton &&
+					  <h5 style={{color: "red"}}>{retryButton}</h5>
+				  }
+				  <button className="makeTicket" style={{backgroundColor: "#f58b77"}} onClick={() => {
+					  setRetryButton("");
+					  window.negotiator.negotiate(null, false, true);
+				  }}>{retryButton === "" ? "Refresh" : "Retry" }</button>
               </div>
-          }
         </div>
       </div>
       <p className="flexCenter">Generate ticket:</p>
