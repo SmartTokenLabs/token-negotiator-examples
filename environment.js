@@ -7,10 +7,10 @@ export const updateTokenConfig = (config) => {
             return config;
         }
 
-        if (document.location.pathname.indexOf("token-negotiator-examples") === 1){
+        if (document.location.pathname.indexOf("token-negotiator-examples") > -1){
             // config.tokenOrigin = "https://tokenscript.github.io/token-negotiator-examples/token-outlet-website/";
             config.tokenOrigin = "https://outlet-stage.brandconnector.io/";
-        } else {
+        } else if (document.location.pathname.indexOf("token-negotiator-gh-pages") > -1){
             // config.tokenOrigin = "https://tokenscript.github.io/token-negotiator-gh-pages/token-outlet-website/";
             config.tokenOrigin = "https://outlet.brandconnector.io/";
         }

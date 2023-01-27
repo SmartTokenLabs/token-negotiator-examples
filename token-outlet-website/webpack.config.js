@@ -1,7 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const TerserPlugin = require("terser-webpack-plugin");
-const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
+//const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 const isModern = false;
 
@@ -12,7 +12,7 @@ module.exports = {
         template: path.resolve(__dirname, './src/index.html'),
         filename: 'index.html',
       }),
-      new NodePolyfillPlugin()
+      //new NodePolyfillPlugin()
   ],
   mode: 'development',
   entry: './src/index.ts',
