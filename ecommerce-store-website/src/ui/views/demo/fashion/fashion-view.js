@@ -1,9 +1,11 @@
+import { useContext } from 'react';
 
 // Depenencies
 import clsx from 'clsx';
 
 // App
 import { useStore } from "base/state";
+import { TokenContext } from 'src/providers/TokenContextProvider';
 import { checkNFTEligibility } from "base/utils";
 import { Page } from 'ui/app';
 import { Animation, ActivationBanner, Nav, Tag, Image, Headline, ProductItem } from 'ui/components';
@@ -12,11 +14,9 @@ import { DemoHeader, DemoHero, BrandsList, Demos } from 'ui/sections';
 // Styles
 import styles from "./fashion-view.module.scss";
 
-
 //
 //	Brand Connector Demo / UI / Views / Fashion
 //
-
 
 export default function Fashion() {
 	const meta = {
@@ -30,16 +30,17 @@ export default function Fashion() {
 	];
 
 	const products = [
-		{ image: { src: '/images/fashion-item-1.jpg', height: 686, width: 594 }, title: 'Statement - Lili Midi Dress', description: 'Dress like you do in your wildest dreams in the Lilly Midi Dress.', price: 119.99 },
-		{ image: { src: '/images/fashion-item-2.jpg', height: 686, width: 594 }, title: 'Real Vibes - Wrap Garden Dress', description: 'A gorgeous spring event dress, this Red Gardens Dress from Real Vibes is an event essential', price: 190.00 },
-		{ image: { src: '/images/fashion-item-3.jpg', height: 686, width: 594 }, title: 'Ask Judy - Coat', description: 'Beat the chill without sacrificing style is this Black wool blend detailed coat.', price: 139.99 },
-		{ image: { src: '/images/fashion-item-4.jpg', height: 686, width: 594 }, title: 'Lux Looks - Teal Dress', description: 'This teal modern design; delivers a simplified, well-made look for an audience who craves a relaxed coastal lifestyle.', price: 239.99 },
-		{ image: { src: '/images/fashion-item-5.jpg', height: 686, width: 594 }, title: 'Statement - Two-piece Outfit', description: 'This piece black outfit for a casual occasion or pair with heels for a more sophisticated look.', price: 179.00 },
-		{ image: { src: '/images/fashion-item-6.jpg', height: 686, width: 594 }, title: 'Surfer Girl - Straw Hat', description: 'Complete your summer style with the Sonny Hand Knotted Straw Hat by Surfer Girl.', price: 49.99 },
+		{ image: { src: '/images/fashion-item-1.jpg', height: 686, width: 594 }, title: 'Statement - Lili Midi Dress', description: 'Dress like you do in your wildest dreams in the Lilly Midi Dress.', price: 119.99, salePrice: 79.99 },
+		{ image: { src: '/images/fashion-item-2.jpg', height: 686, width: 594 }, title: 'Real Vibes - Wrap Garden Dress', description: 'A gorgeous spring event dress, this Red Gardens Dress from Real Vibes is an event essential', price: 190.00, salePrice: 119.99 },
+		{ image: { src: '/images/fashion-item-3.jpg', height: 686, width: 594 }, title: 'Ask Judy - Coat', description: 'Beat the chill without sacrificing style is this Black wool blend detailed coat.', price: 139.99, salePrice: 89.99 },
+		{ image: { src: '/images/fashion-item-4.jpg', height: 686, width: 594 }, title: 'Lux Looks - Teal Dress', description: 'This teal modern design; delivers a simplified, well-made look for an audience who craves a relaxed coastal lifestyle.', price: 239.99, salePrice: 159.99 },
+		{ image: { src: '/images/fashion-item-5.jpg', height: 686, width: 594 }, title: 'Statement - Two-piece Outfit', description: 'This piece black outfit for a casual occasion or pair with heels for a more sophisticated look.', price: 179.00, salePrice: 109.99 },
+		{ image: { src: '/images/fashion-item-6.jpg', height: 686, width: 594 }, title: 'Surfer Girl - Straw Hat', description: 'Complete your summer style with the Sonny Hand Knotted Straw Hat by Surfer Girl.', price: 49.99, salePrice: 19.99 },
 	];
 
-	const selectedTokens = useStore( s => s.selectedTokens );
-	const promotionEnabled = checkNFTEligibility( selectedTokens, [ 'stl-wow-goerli', 'stl-wow-mumbai' ] );
+	// const selectedTokens = useStore( s => s.selectedTokens );
+	const { tokens: selectedTokens } = useContext(TokenContext);
+	const promotionEnabled = checkNFTEligibility(selectedTokens, ['stl-wow-goerli', 'stl-wow-mumbai']);
 
 	return (
 		<Page className={ styles[ 'v-fashion' ] } meta={ meta }>
@@ -97,7 +98,7 @@ export default function Fashion() {
 				</div>
 				<div className="grid -g-cols-3 -g-max-10">
 					{ products && products.map( ( product, i ) => (
-						<ProductItem key={ `fashion-item-${ i }` } product={ { ...product, tag: 'new' } } />
+						<ProductItem key={ `fashion-item-${ i }` } product={ { ...product, tag: 'new' } } discountEnabled={promotionEnabled} />
 					))}
 				</div>
 			</section>

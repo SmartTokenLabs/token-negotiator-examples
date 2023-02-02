@@ -88,17 +88,14 @@ const TokenContextProvider = (props) => {
       window.negotiator = newNegotiator;
 
       newNegotiator.on("tokens-selected", (tokens) => {
-        console.log("tokens", tokens);
         setTokens({...tokens.selectedTokens});
       });
   
       newNegotiator.on("token-proof", (result) => {
-        console.log("token proof", result.data);
         setProof(result.data);
       });
   
       newNegotiator.on("connected-wallet", (connectedWallet) => {
-        console.log("connected-wallet", connectedWallet);
         if (connectedWallet) {
           setWallet(connectedWallet);
           resetIssuers(connectedWallet.chainId);
