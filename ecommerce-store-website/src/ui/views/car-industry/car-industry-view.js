@@ -5,7 +5,7 @@ import clsx from 'clsx';
 // App
 import { Page } from 'ui/app';
 import { Link, Slider, Button } from 'ui/components';
-import { useEffect, useState } from "react";
+import {useContext, useEffect, useState} from "react";
 import { useStore } from "src/base/state";
 
 //	Styles
@@ -14,6 +14,7 @@ import {updateNegotiatorIssuers} from "src/base/negotiator-client";
 
 import imgCarIndustry1 from "../../../../public/images/car-industry-1.jpg";
 import imgCarIndustry2 from "../../../../public/images/car-industry-2.jpg";
+import {TokenContext} from "src/providers/TokenContextProvider";
 
 //
 //	TokenScript / UI / Views / Car Industry
@@ -28,7 +29,7 @@ export default function CarIndustryView() {
 
 	const [ claimedVip, setClaimedVip ] = useState( false );
 	const [ claimed, setClaimed ] = useState( false );
-	const selectedTokens = useStore( s => s.selectedTokens );
+	const { tokens: selectedTokens } = useContext(TokenContext);
 
 	function isEligible(){
 

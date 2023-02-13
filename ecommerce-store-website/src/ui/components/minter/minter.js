@@ -21,12 +21,11 @@ import styles from './minter.module.scss';
 export default function Minter({ className }) {
 
 
-	const { wallet: walletInstance, walletStatus, chainId } = useContext(TokenContext);
+	const { wallet: walletInstance, walletStatus, chainId, tokens: selectedTokens } = useContext(TokenContext);
 
 	const [ submissionStatus, setSubmissionStatus ] = useState( '');
 	const [ mintedNFTs, setMintedNFTs ] = useState([]);
 	const [changeOfNetworkRequired, setChangeOfNetworkRequired] = useState(false);
-	const selectedTokens = useStore(s => s.selectedTokens);
 
 	const chain = chainMap[chainId] ? chainMap[chainId] : 'unsupported chain: ' + chainId;
 	const nftCollections = nftDataStore;
