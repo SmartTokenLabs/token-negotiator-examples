@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 import { chainMap } from "src/base/utils/network";
 
 const TokenContext = createContext({
-  tokens: [],
+  tokens: {},
   wallet: {},
   proof: {},
   negotiator: {},
@@ -88,23 +88,21 @@ const TokenContextProvider = (props) => {
       window.negotiator = newNegotiator;
 
       newNegotiator.on("tokens-selected", (tokens) => {
-        console.log("tokens", tokens);
         setTokens({...tokens.selectedTokens});
       });
   
       newNegotiator.on("token-proof", (result) => {
-        console.log("token proof", result.data);
         setProof(result.data);
       });
   
       newNegotiator.on("connected-wallet", (connectedWallet) => {
-        console.log("connected-wallet", connectedWallet);
-        if (connectedWallet) {
-          setWallet(connectedWallet);
-          resetIssuers(connectedWallet.chainId);
+        if (connectedWallet?.data) {
+          setWallet(connectedWallet.data);
+          resetIssuers(connectedWallet.data.chainId);
           setWalletStatus(undefined);
         } else {
           setWallet(null);
+		  setTokens({});
           setWalletStatus('You must connect your wallet to continue.');
         }
       });

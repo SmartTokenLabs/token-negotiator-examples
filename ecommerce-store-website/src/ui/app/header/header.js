@@ -7,14 +7,11 @@ import { useRouter } from "next/router";
 import _ from "lodash";
 
 //	App
-import { useStore } from 'base/state';
-
 import { Logo, Link, Nav, Button, Image, Icon, Layer } from "ui/components";
 import { TokenContext } from "src/providers/TokenContextProvider";
 
 // Styles
 import styles from "./header.module.scss";
-
 
 //
 //	Brand Connector Demo / UI / Components / Header
@@ -22,21 +19,18 @@ import styles from "./header.module.scss";
 
 const Header = function Header({ className }) {
 	const router = useRouter();
-	const { wallet } = useContext(TokenContext);
+	const { wallet, negotiator, tokens } = useContext(TokenContext);
 
-
-	const isNegotiatorReady = useStore( s => s.isNegotiatorReady );
-	const selectedTokens = useStore( s => s.selectedTokens );
 	const walletAddress = wallet ? wallet.address : undefined;
 
-	var tokensFound = 0;
+	let tokensFound = 0;
 	
-	if(Object.keys( selectedTokens )) {
-			tokensFound = Object.keys( selectedTokens ).map(( tokenCollection ) => {
-				return selectedTokens[tokenCollection].tokens.length;
-			})
-			if(tokensFound.length) tokensFound = tokensFound.reduce((a, b) => a + b);
-			else tokensFound = 0;
+	if(Object.keys(tokens)) {
+		tokensFound = Object.keys(tokens).map(( tokenCollection ) => {
+			return tokens[tokenCollection].tokens.length;
+		})
+		if(tokensFound.length) tokensFound = tokensFound.reduce((a, b) => a + b);
+		else tokensFound = 0;
 	}
 
 	const [ isMenuOpen, setIsMenuOpen ] = useState( false );
@@ -46,7 +40,13 @@ const Header = function Header({ className }) {
 		setIsMenuOpen( false );
 	}, [ router.pathname ]);
 
-	const isDemoRoute = [ '/demo/fashion', '/demo/music-and-events', '/demo/automotive' ].find( route => route === router.pathname );
+	const handleClickConnect = () => {
+		if (negotiator) {
+			negotiator.ui.openOverlay();
+		}
+	}
+
+	const isDemoRoute = ['/demo/fashion', '/demo/music-and-events', '/demo/automotive'].find( route => route === router.pathname );
 
 	return (
 		<header className={ clsx( styles[ 'a-header' ], className )}>
@@ -76,8 +76,8 @@ const Header = function Header({ className }) {
 							) : (
 								<Button
 									className={ clsx( styles[ 'a-header_nav-button' ], '-style-secondary' ) }
-									isLoading={ !isNegotiatorReady }
-									onClick={ () => window?.negotiator && window.negotiator.negotiate() }
+									isLoading={!negotiator}
+									onClick={handleClickConnect}
 								>
 									Connect Wallet
 								</Button>

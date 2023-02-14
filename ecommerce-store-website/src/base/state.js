@@ -16,10 +16,6 @@ export const useStore = create(subscribeWithSelector(set => ({
 	contextView: null,
 	contextProps: null,
 
-	selectedTokens: {},
-	isNegotiatorReady: false,
-	tokenNegotiatorInstance: null,
-
 	api: {
 		setImageLoaded: () => set( state => ({
 			imagesLoaded: state.imagesLoaded + 1,
