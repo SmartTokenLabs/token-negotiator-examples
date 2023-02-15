@@ -23,9 +23,10 @@ export default function Minter({ className }) {
 
 	const { wallet: walletInstance, walletStatus, chainId, tokens: selectedTokens } = useContext(TokenContext);
 
-	const [ submissionStatus, setSubmissionStatus ] = useState( '');
-	const [ mintedNFTs, setMintedNFTs ] = useState([]);
+	const [submissionStatus, setSubmissionStatus] = useState('');
+	const [mintedNFTs, setMintedNFTs ] = useState([]);
 	const [changeOfNetworkRequired, setChangeOfNetworkRequired] = useState(false);
+	const [popUpMsg, setPopUpMsg] = useState('')
 
 	const chain = chainMap[chainId] ? chainMap[chainId] : 'unsupported chain: ' + chainId;
 	const nftCollections = nftDataStore;
@@ -44,9 +45,14 @@ export default function Minter({ className }) {
 			return;
 		}
 
-		if( !nft.contracts[ chain ] ) {
+		if( !nft.contracts[chain] ) {
 			console.log("!nft.contracts[ chain ]", chainId);
 			console.log("!nft.contracts[ chain ]", chain, chainId);
+
+			chainId
+				? setPopUpMsg(`Please change your wallet's network to either Goerli or Mumbai.`)
+				: setPopUpMsg(`Please connect your wallet to continue.`) 
+			
 			setChangeOfNetworkRequired(true);
 		} else {
 			setChangeOfNetworkRequired(false);
@@ -105,7 +111,7 @@ export default function Minter({ className }) {
 					);
 				})}
 			</div>
-			<PopUp closeEvent={onClosePopUpEvent} isOpen={ changeOfNetworkRequired } />
+			<PopUp closeEvent={onClosePopUpEvent} isOpen={changeOfNetworkRequired} msg={popUpMsg} />
 		</div>
 	);
 };

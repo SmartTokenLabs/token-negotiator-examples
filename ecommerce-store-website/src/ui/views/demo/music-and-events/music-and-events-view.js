@@ -33,7 +33,7 @@ export default function MusicAndEventsView() {
 		{ image: { src: '/images/music-item-5.jpg', height: 282, width: 594 }, title: 'Coachella 2023', description: 'General Access', price: 449.00, salePrice: 430.00 },
 	];
 
-	const { tokens: selectedTokens } = useContext(TokenContext)
+	const { tokens: selectedTokens, chainId } = useContext(TokenContext)
 	const promotionEnabled = checkNFTEligibility(selectedTokens, ['stl-bayc-goerli', 'stl-bayc-mumbai']);
 
 	return (
@@ -70,7 +70,7 @@ export default function MusicAndEventsView() {
 								headline="Exclusive Choachella 2023 VIP Upgrade"
 								text="Hotel and VIP Experience"
 								selectedTokens={ selectedTokens }
-								authTokens={ [ "stl-bayc-goerli", "stl-bayc-mumbai" ] }
+								authTokens={chainId.toString() === '5' ? ["stl-bayc-goerli"] : ["stl-bayc-mumbai"]}
 							/>
 						</div>
 					</Animation.ScrollReveal>

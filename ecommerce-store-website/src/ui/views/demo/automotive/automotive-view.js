@@ -32,7 +32,7 @@ export default function AutomotiveView() {
 		{ image: { src: '/images/aston-martin-vehicle.jpg', height: 282, width: 594 } , title: 'Aston Martin', description: 'Vulcan ‘21', price: 550, salePrice: 500 },
 	]
 
-	const { tokens: selectedTokens } = useContext(TokenContext);
+	const { tokens: selectedTokens, chainId } = useContext(TokenContext);
 	const promotionEnabled = checkNFTEligibility(selectedTokens, ['stl-riot-racer-goerli', 'stl-riot-racer-mumbai']);
 
 	return (
@@ -70,7 +70,7 @@ export default function AutomotiveView() {
 								headline="Book your exclusive track day now"
 								text="Enjoy your once in a lifetime experience as a Riot Racer NFT holder!"
 								selectedTokens={selectedTokens}
-								authTokens={['stl-riot-racer-goerli', 'stl-riot-racer-mumbai']}
+								authTokens={chainId.toString() === '5' ? ['stl-riot-racer-goerli'] : ['stl-riot-racer-mumbai']}
 							/>
 						</div>
 					</Animation.ScrollReveal>
