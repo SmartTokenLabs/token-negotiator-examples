@@ -18,5 +18,8 @@ export default defineConfig({
 	  esbuildOptions: {
 		  target: ['es2020']
 	  }
-  }
+  },
+  build: {
+    target: "es2020"
+  },
 })
