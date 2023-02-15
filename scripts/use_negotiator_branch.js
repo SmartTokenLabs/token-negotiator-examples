@@ -13,7 +13,7 @@ let packages = [
 	"typescript-bare-bones-demo",
 	"angular-bare-bones-demo",
 	"vue-boilerplate",
-	"vite-vue-boilerplate"
+	"vue-vite-boilerplate"
 ];
 
 const args = process.argv.slice(2);
