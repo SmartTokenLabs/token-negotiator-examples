@@ -2,11 +2,13 @@
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import { onMounted, reactive } from 'vue'
+import { Client } from "@tokenscript/token-negotiator"
+import "@tokenscript/token-negotiator/dist/theme/style.css"
 
 const negotiatorObj = reactive({ client: undefined });
 
 onMounted(() => {
-  negotiatorObj.client = new negotiator.Client({
+  negotiatorObj.client = new Client({
     type: 'active',
     issuers: [
       {
