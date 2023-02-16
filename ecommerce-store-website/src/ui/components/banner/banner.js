@@ -24,13 +24,12 @@ export default function Banner({ className, theme, image, headline, text, overla
 	const handleOnClick = async () => {
 		// TODO: Actually pass the tokens through component
 		const issuer = authTokens[0];
+		console.log('issuer ==>', issuer);
 		try {
 			await window.negotiator.authenticate({
 				issuer,
-				unsignedToken: selectedTokens[ issuer ].tokens[0],
-				options: {
-          useRedirect: true,
-        }
+				unsignedToken: selectedTokens[issuer].tokens[0],
+				options: { useRedirect: true }
 				//unsignedToken: {name:"some token", desc: "a really cool token"}
 			});
 			setClaimed( true );
