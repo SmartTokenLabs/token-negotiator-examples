@@ -1,4 +1,5 @@
-name: Build & Deploy ecommerce examples
+name: Build & Deploy Ecommerce Production
+descriptions: Deploys the ecommerce demo to the production environment
 
 on:
   workflow_dispatch:

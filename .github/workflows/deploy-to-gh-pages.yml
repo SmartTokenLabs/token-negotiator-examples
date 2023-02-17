@@ -1,4 +1,5 @@
-name: Build & Deploy to gh-pages branch
+name: Build & Deploy Examples To Staging
+description: Deploys examples to Github pages staging environment
 
 on:
   workflow_dispatch:
