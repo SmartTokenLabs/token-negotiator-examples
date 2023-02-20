@@ -12,9 +12,9 @@ export default class BogotaPassive {
 
     btnBook = (id: number) => this.page.locator('button.bookButton').nth(id)
     btnPayNow = () => this.page.locator('button.paynow')
-    textDefaultPrice = (id: number) => this.page.locator('div.roomCard p').nth(id)
-    textOriginalPrice = (id: number) => this.page.locator('div.roomCard p:first-child').nth(id)
-    textDiscountPrice = (id: number) => this.page.locator('div.roomCard p:last-child').nth(id)
+    textDefaultPrice = (id: number) => this.page.locator('div.roomCardsContainer p').nth(id)
+    textOriginalPrice = (id: number) => this.page.locator('div.roomCardsContainer p:first-child').nth(id)
+    textDiscountPrice = (id: number) => this.page.locator('div.roomCardsContainer p:last-child').nth(id)
     textBooked = () => this.page.locator('div.modalContainer h3')
     btnLetsGo = () => this.page.locator('button.opening-btn-tn')
     btnTokenCount = () => this.page.locator('button.tokens-btn-tn')
@@ -40,7 +40,7 @@ export default class BogotaPassive {
     }
 
     async checkToggleStatus(id: number, switchOn: boolean = true) {
-        const opt = switchOn ? '3px solid rgb(136, 191, 246)' : '3px solid rgb(0, 95, 204)'
+        const opt = switchOn ? '2.66667px solid rgb(136, 191, 246)' : '2.66667px solid rgb(0, 95, 204)'
         await expect(this.labelToggle(id)).toHaveCSS('border', opt)
     }
 }

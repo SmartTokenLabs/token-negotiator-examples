@@ -4,15 +4,15 @@
   "description": "e2e test automation with playwright",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test",
+    "test": "npx playwright test tests/bogota-passive",
     "test:stage": "ENV=stage npx playwright test",
     "test:prod": "ENV=prod npx playwright test",
     "test:report": "npx playwright show-report"
   },
   "devDependencies": {
-    "@playwright/test": "^1.28.0",
-    "playwright": "^1.28.0",
-    "typescript": "^4.9.3"
+    "@playwright/test": "^1.30.0",
+    "playwright": "^1.30.0",
+    "typescript": "^4.9.5"
   },
   "dependencies": {
     "cross-env": "^7.0.3"

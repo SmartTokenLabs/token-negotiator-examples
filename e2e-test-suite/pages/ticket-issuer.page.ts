@@ -11,12 +11,13 @@ export default class TicketIssuer {
     }
 
     inputEmail = () => this.page.locator('#email')
-    btnCreateTicket = (id: number) => this.page.locator('button.makeTicket').nth(id)
+    btnCreateTicket = (id: number) => this.page.locator('div.ticketWrapper > button.makeTicket').nth(id)
     divToken = (id: number) => this.page.locator('div.ticketContainer h2').nth(id)
 
     async navHome () {
         await this.page.goto(data.urlExamples.ticketIssuer)
         await this.page.waitForLoadState()
+        // await this.page.waitForTimeout(1000)
     }
 
     async createTickets(count: number, email: string) {

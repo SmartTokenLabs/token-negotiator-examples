@@ -11,20 +11,17 @@ export default class Metamask {
         this.page = page
     }
 
-    inputKey = () => this.page.locator('div.MuiFormControl-root #import-srp__srp-word-0')
     inputKeyById = (id: number) => this.page.locator(`div.MuiFormControl-root #import-srp__srp-word-${id}`)
     inputPassword = () => this.page.locator('#password')
     inputConfirmPassword = () => this.page.locator('#confirm-password')
     ckbTerms = () => this.page.locator('#create-new-vault__terms-checkbox')
     btnSubmit = () => this.page.locator("button[type='submit']")
-    btnOk = (text: string) => this.page.locator(`button.btn-primary >> text='${text}'`)
-    btnNetwork = () => this.page.locator('div.network-display')
-    linkShowNetwork = () => this.page.locator('a.network-dropdown-content--link')
-    btnShowTestNetworks = () => this.page.locator("div[data-testid$='show-testnet-conversion']").last().locator('.toggle-button')
-    textNetwork = (network: string) => this.page.locator(`text='${network}'`)
+    btnPrimary = (text: string) => this.page.locator(`button.btn-primary >> text='${text}'`)
+    iArrowDown = () => this.page.locator('i.fa-arrow-down')
+    btnShowNetwork = () => this.page.locator('div.network-display')
 
     /** login to metamask and select a network */
-    async login(network: string) {
+    async login() {
         await this.page.goto(data.urlMeta)
         await this.page.waitForLoadState()
         const keys = metamask.key.split(' ')
@@ -35,21 +32,12 @@ export default class Metamask {
         await this.inputConfirmPassword().fill(metamask.password)
         await this.ckbTerms().click()
         await this.btnSubmit().click()
-        await this.btnOk('All Done').click()
-        // const notDefault = await this.textNetwork(network).isHidden()
-        // if (notDefault) {
-        //     await this.btnNetwork().click()
-        //     await this.linkShowNetwork().click()
-        //     await this.btnShowTestNetworks().click()
-        //     await this.btnNetwork().click()
-        //     await this.textNetwork(network).click()
-        // }
-        // await this.page.close()
+        await this.btnPrimary('All done').click()
     }
 
     async initPage() {
-        await expect.poll(async () => this.browserContext.pages().length, { timeout: 20000 }).toBe(3)
-        const page = this.browserContext.pages()[2]
+        await expect.poll(async () => this.browserContext.pages().length, { timeout: 20000 }).toBe(2)
+        const page = this.browserContext.pages()[1]
         await page.setViewportSize({
             width: 320,
             height: 600
@@ -59,13 +47,14 @@ export default class Metamask {
 
     async confirm() {
         let mm = await this.initPage()
-        await mm.btnOk('Next').click()
-        await mm.btnOk('Connect').click()
-        await expect.poll(async () => mm.browserContext.pages().length, { timeout: 10000 }).toBe(3)
-        await mm.btnOk('Sign').click()
-        .catch(async () => {
-            mm = await this.initPage()
-            await mm.btnOk('Sign').click()
-        })
+        await mm.btnPrimary('Next').click()
+        await mm.btnPrimary('Connect').click()
+        await expect.poll(async () => mm.browserContext.pages().length, { timeout: 10000 }).toBe(2)
+        await mm.iArrowDown().click({timeout: 3000}).catch(() => null)
+        await mm.btnPrimary('Sign').click()
+        // .catch(async () => {
+        //     mm = await this.initPage()
+        //     await mm.btnPrimary('Sign').click()
+        // })
     }
 }
