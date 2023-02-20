@@ -23,6 +23,10 @@ const issuersData: (OffChainTokenConfig | OnChainTokenConfig)[] = [
   { collectionID: 'TNM', onChain: true, contract: '0x3cC6c9c6DC13814c6ba4da3520d2Ae40332A831F', chain: 'goerli', fungible: true },
   { collectionID: 'Tether-USD', onChain: true, contract: '0xdac17f958d2ee523a2206206994597c13d831ec7', chain: 'eth', fungible: true },
   { collectionID: 'AdEx-Network', onChain: true, contract: '0xade00c28244d5ce17d72e40330b1c318cd12b7c3', chain: 'eth', fungible: true },
+  { collectionID: 'AAVEPool', contract: "0xb7fd3398484ea4eff33e003db4c85d4984f8d62e", fungible: true, onChain: true, chain: 'polygon' },
+  { collectionID: 'Minereum-AVAX', contract: "0xf9d922c055a3f1759299467dafafdf43be844f7a", fungible: true, onChain: true, chain: 'Avalanche' },
+  { collectionID: "Testv4", contract: "0x499d11e0b6eac7c0593d8fb292dcbbf815fb29ae", fungible: true, onChain: true, chain: 'goerli' },
+  { collectionID: 'Dummy ERC20', contract: "0xfe4f5145f6e09952a5ba9e956ed0c25e3fa4c7f1", fungible: true, onChain: true, chain: 'mumbai' },
 ];
 
 export default issuersData;
