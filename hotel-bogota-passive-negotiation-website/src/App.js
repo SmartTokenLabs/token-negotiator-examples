@@ -23,9 +23,13 @@ let tokenIssuers = [
   devonConfig
 ];
 
+const params = new URLSearchParams(document.location.hash.substring(1));
+const redirectMode = params.has("redirectMode") ? params.get("redirectMode") : undefined;
+
 window.negotiator = new Client({
   type: 'passive',
-  issuers: tokenIssuers
+  issuers: tokenIssuers,
+  offChainRedirectMode: redirectMode
 });
 
 function App() {
@@ -68,7 +72,9 @@ function App() {
 
 			  setSelectedPendingTokenInstance(null);
 			  setTokenProofData({issuer: result.issuer, proof: result.data.proof});
-			  setDiscount({ value: getApplicableDiscount(), tokenInstance: selectedPendingTokenInstance });
+			  setDiscount({ value: getApplicableDiscount(), tokenInstance: selectedPendingTokenInstance || JSON.parse(localStorage.getItem("token-instance")) });
+			  
+			  localStorage.removeItem("token-instance");
 
 		  }, 0);
 
@@ -97,7 +103,7 @@ function App() {
   }
 
   // When a ticket is present and user applies it, the discount will be shown
-  const applyDiscount = async (ticket) => {
+  const applyDiscount = async (ticket, roomType) => {
 
     // toggle room discount offer on/off
     if (!ticket || ticket === null) {
@@ -111,13 +117,13 @@ function App() {
       // ticket selected, but owner is not yet authenticated.
       setSelectedPendingTokenInstance(ticket);
 
+	  localStorage.setItem("booking-room-type", roomType);
+	  localStorage.setItem("token-instance", JSON.stringify(ticket));
+
       // authenticate ownership of token
       window.negotiator.authenticate({
         issuer: config.collectionID,
-        unsignedToken: ticket,
-        options: {
-          useRedirect: true,
-        }
+        unsignedToken: ticket
       });
     
     }
@@ -151,7 +157,9 @@ function App() {
     <div>
       <div className="header">
         <LogoCard title={"Hotel Bogota"} />
-        <TokenNotificationCard tokensNumber={tokens.length} />
+        <TokenNotificationCard tokensNumber={tokens.length} refreshTokens={() => {
+			window.negotiator.negotiate(null, false, true);
+		}} />
       </div>
       <BookingDate />
       <div className="roomCardsContainer">

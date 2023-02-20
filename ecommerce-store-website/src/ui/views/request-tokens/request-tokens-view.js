@@ -11,7 +11,6 @@ import { Icon, Link } from 'ui/components';
 import styles from "./request-tokens-view.module.scss";
 import Minter from "src/ui/views/request-tokens/minter/Minter";
 
-
 //
 //	TokenScript / UI / Views / Request Tokens View
 //

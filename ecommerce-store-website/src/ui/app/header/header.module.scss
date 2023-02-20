@@ -59,6 +59,7 @@
 		position: relative;
 		display: flex;
 		margin-right: grid-gutter(0.75);
+		margin-top: 14px;
 	}
 		&_logo {
 			@include color-set( --text, --base );

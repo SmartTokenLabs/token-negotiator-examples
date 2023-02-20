@@ -5,22 +5,16 @@ import { subscribeWithSelector } from 'zustand/middleware'
 import _debounce from 'lodash-es/debounce';
 import _isNil from 'lodash-es/isNil';
 
-
 //
 //	Brand Connector Demo / Base / State
 //
 
-
-export const useStore = create( subscribeWithSelector( set => ({
+export const useStore = create(subscribeWithSelector(set => ({
 	imagesLoaded: 0,
 
 	isContextOpen: false,
 	contextView: null,
 	contextProps: null,
-
-	selectedTokens: {},
-	isNegotiatorReady: false,
-	tokenNegotiatorInstance: null,
 
 	api: {
 		setImageLoaded: () => set( state => ({
@@ -39,4 +33,4 @@ export const useStore = create( subscribeWithSelector( set => ({
 		setSelectedTokens: ( selectedTokens ) => { set( () => ({ selectedTokens: selectedTokens }) ) },
 		setTokenNegotiatorInstance: ( tokenNegotiatorInstance ) => { set( () => ({ tokenNegotiatorInstance }) ) }
 	},
-}) ));
+})));

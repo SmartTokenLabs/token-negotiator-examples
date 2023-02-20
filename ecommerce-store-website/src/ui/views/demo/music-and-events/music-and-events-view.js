@@ -3,7 +3,7 @@
 import clsx from 'clsx';
 
 // App
-import { useStore } from "base/state";
+import { TokenContext } from 'src/providers/TokenContextProvider';
 import { checkNFTEligibility } from "base/utils";
 import { Page } from 'ui/app';
 import { Animation, ActivationBanner, Banner, Nav, Headline, ProductItem } from 'ui/components';
@@ -11,11 +11,13 @@ import { DemoHeader, DemoHero, BrandsList, Demos } from 'ui/sections';
 
 //	Styles
 import styles from "./music-and-events-view.module.scss";
+import { useContext } from 'react';
 
 
 //
 //	Brand Connector Demo / UI / Views / Music and Events View
 //
+
 
 
 export default function MusicAndEventsView() {
@@ -31,8 +33,8 @@ export default function MusicAndEventsView() {
 		{ image: { src: '/images/music-item-5.jpg', height: 282, width: 594 }, title: 'Coachella 2023', description: 'General Access', price: 449.00, salePrice: 430.00 },
 	];
 
-	const selectedTokens = useStore( s => s.selectedTokens );
-	const promotionEnabled = checkNFTEligibility( selectedTokens, [ 'stl-bayc-goerli', 'stl-bayc-mumbai' ] );
+	const { tokens: selectedTokens, chainId } = useContext(TokenContext)
+	const promotionEnabled = checkNFTEligibility(selectedTokens, ['stl-bayc-goerli', 'stl-bayc-mumbai']);
 
 	return (
 		<Page className={ styles[ 'v-events' ] } meta={ meta }>
@@ -68,7 +70,7 @@ export default function MusicAndEventsView() {
 								headline="Exclusive Choachella 2023 VIP Upgrade"
 								text="Hotel and VIP Experience"
 								selectedTokens={ selectedTokens }
-								authTokens={ [ "stl-bayc-goerli", "stl-bayc-mumbai" ] }
+								authTokens={chainId.toString() === '5' ? ["stl-bayc-goerli"] : ["stl-bayc-mumbai"]}
 							/>
 						</div>
 					</Animation.ScrollReveal>

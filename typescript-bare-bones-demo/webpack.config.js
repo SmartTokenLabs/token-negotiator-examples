@@ -12,7 +12,7 @@ module.exports = {
       template: path.resolve(__dirname, './src/index.html'),
       filename: 'index.html',
     }),
-    new NodePolyfillPlugin()  
+    new NodePolyfillPlugin()
   ],
   mode: 'development',
   entry: './src/index.ts',
@@ -52,7 +52,6 @@ module.exports = {
     },
     compress: true,
     port: 3010,
-    host: "0.0.0.0"
   },
   optimization: {
     minimize: true,

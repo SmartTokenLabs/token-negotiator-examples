@@ -1,0 +1,17 @@
+{
+  "onChain": [
+    "angular-bare-bones-demo",
+    "art-gallery-medium-article-website",
+    "ecommerce-store-website",
+    "svelte-demo",
+    "typescript-bare-bones-demo",
+    "vue-boilerplate",
+    "vue-vite-boilerplate"
+  ],
+  "offChain": [
+    "hotel-bogota-active-negotiation-website",
+    "hotel-bogota-passive-negotiation-website",
+    "ticket-issuer-url-website",
+    "token-outlet-website"
+  ]
+}

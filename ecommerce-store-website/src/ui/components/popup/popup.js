@@ -6,10 +6,7 @@
 
 import { useStore } from 'base/state';
 
-export default function PopUp({ isOpen, closeEvent }) {
-
-	const msg = typeof window !== "undefined" && window.connectedWallet ? "Please change your wallet's network to either Goerli or Mumbai." : "Please connect your wallet to continue.";
-	
+export default function PopUp({ isOpen, closeEvent, msg }) {	
 	return (
 		<div>
 			{ isOpen &&
@@ -25,7 +22,7 @@ export default function PopUp({ isOpen, closeEvent }) {
 				}}>
 					<div style={{
 						width: '330px',
-						height: '90px',
+						height: '120px',
 						background: 'linear-gradient(234.79deg, #001aff 37.73%, #4f95ff 118.69%)',
 						borderRadius: '10px',
 						padding: '20px 20px 40px 32px',

@@ -11,7 +11,7 @@ import "@tokenscript/token-negotiator/dist/theme/style.css";
 
 declare global {
     interface Window {
-        negotiator?: any;
+        negotiator?: Client;
     }
 }
 
@@ -31,6 +31,9 @@ const issuers = [
     { collectionID: 'Alone Pirate', onChain: true, contract: '0x36535ec384B94342558e37282527b5052587af6A', chain: 'Arbitrum' },
 ];
 
+const params = new URLSearchParams(document.location.hash.substring(1));
+const redirectMode = params.has("redirectMode") ? params.get("redirectMode") : undefined;
+
 // ACTIVE
 window.negotiator = new Client({
     type: 'active',
@@ -38,6 +41,7 @@ window.negotiator = new Client({
 		{ collectionID: 'stl-bayc', onChain: true, contract: '0xc361201E5B1005cCDE47B32F223BC145DE393F62', chain: 'goerli'},
 		{ collectionID: 'stl-wow', onChain: true, contract: '0x87644E0A1287A4D96DecC29A13400a1be9759AF8', chain: 'goerli'},
 		{ collectionID: 'stl-riot-racer', onChain: true, contract: '0xae96095fF42B0Cae2DaD3d49E5EE11663280d819', chain: 'goerli'},
+        { onChain: true, collectionID: "Perion", contract: '0x96af92ae2d822a0f191455ceca4d4e7ee227668e', chain: 'mumbai', blockchain: "evm" },
 		devonConfig
     ],
     uiOptions: {
@@ -49,7 +53,8 @@ window.negotiator = new Client({
         theme: "dark",
         position: "bottom-right"
     },
-    autoLoadTokens: 3,
+	offChainRedirectMode: redirectMode
+    //autoLoadTokens: 3,
     // safeConnectOptions: {
     //     url: "https://safeconnect.tokenscript.org",
     //     initialProof: false
@@ -124,10 +129,7 @@ window.authenticateToken = (elem) => {
     // authenticate ownership of token
     window.negotiator.authenticate({
         issuer: issuer,
-        unsignedToken: curTokens[issuer].tokens[index],
-		    options: {
-			    useRedirect: !!document.querySelector("#use-redirect:checked")?.value
-		    }
+        unsignedToken: curTokens[issuer].tokens[index]
     });
 };
 
@@ -150,3 +152,27 @@ window.clearStoredProofs = () => {
 };
 
 window.negotiator.readProofCallback();
+
+// This is for testing WalletConnect V2 chain switching
+window.sendTransactionOnChain = async (chain: number) => {
+
+	const wallet = await window.negotiator.getWalletProvider();
+
+	const provider = wallet.getConnectedWalletData()[0].provider;
+	const ethers = wallet.getConnectedWalletData()[0].ethers;
+
+	if (await provider.getSigner(0).getChainId() != chain)
+		try {
+			await provider.send("wallet_switchEthereumChain", [{chainId: "0x" + chain.toString(16)}]);
+		} catch (e){
+			console.error(e);
+			throw new Error("Connected to wrong chain, please switch the chain to chainId: " + chain + ", error: " + e.message);
+		}
+
+	let tx = await provider.getSigner(0).sendTransaction({
+		to: "0xcFF805b714b24b3dD30cB4a1bea3745e5C5E73ef",
+		value: ethers.utils.parseUnits("0.0001", 'ether').toHexString(),
+		//chainId: chain
+	});
+}
+

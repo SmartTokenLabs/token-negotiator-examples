@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
-let fs = require("fs");
+const concurrently = require('concurrently');
+const path = require('path');
 
 let packages = [
 	"art-gallery-medium-article-website",
@@ -12,40 +13,28 @@ let packages = [
 	"typescript-bare-bones-demo",
 	"angular-bare-bones-demo",
 	"vue-boilerplate",
+	"vue-vite-boilerplate"
 ];
 
 const args = process.argv.slice(2);
 
 const branch = args[0] ?? "staging";
 
-for (let package of packages){
+const projects = args[1] ?? null;
 
-	const path = __dirname + "/../" + package + "/package.json";
+packages = packages.filter((path) => {
+	return !projects || projects.indexOf(path) > -1
+});
 
-	if (!fs.existsSync(path)){
-		console.log("package.json does not exist");
-		return;
+const cmds = packages.map((pack) => ({
+	command: "npm i @tokenscript/token-negotiator@SNAPSHOT-" + branch,
+	cwd: path.resolve(__dirname, '..', pack)
+}));
+
+concurrently(
+	cmds,
+	{
+		killOthers: ['failure'],
+		maxProcesses: 5
 	}
-
-	let json;
-
-	try {
-
-		const fileContents = fs.readFileSync(path);
-
-		json = JSON.parse(fileContents.toString());
-
-	} catch (e){
-		console.log("package.json is invalid: " + e.message);
-		return;
-	}
-
-	json.dependencies["@tokenscript/token-negotiator"] = "git://github.com/tokenScript/token-negotiator.git#" + branch;
-
-	try {
-		fs.writeFileSync(path, JSON.stringify(json, null, 2));
-	} catch (e){
-		console.log("Failed to write package.json: " + e.message);
-	}
-
-}
+);

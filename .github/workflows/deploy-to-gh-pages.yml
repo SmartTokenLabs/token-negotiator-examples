@@ -1,4 +1,5 @@
-name: Build & Deploy to gh-pages branch
+name: Build & Deploy Examples To Staging
+description: Deploys examples to Github pages staging environment
 
 on:
   workflow_dispatch:
@@ -33,9 +34,13 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
+          registry-url: 'https://npm.pkg.github.com'
 
       - name: Build
         run: |
+          
+          npm install
+          
           if [[ "${GITHUB_EVENT_NAME}" = push ]]; then
             NEGOTIATOR_BRANCH="${GITHUB_REF_NAME}"
           fi
@@ -43,20 +48,15 @@ jobs:
             echo "Negotiator branch $NEGOTIATOR_BRANCH requested, updating package.json files"
             scripts/use_negotiator_branch.js $NEGOTIATOR_BRANCH
           fi
-          npm run install-angular-bare-bones-demo
-          npm run install-art-gallery-medium-article-website
-          npm run install-vue-boilerplate
-          npm install
-          npm run build-angular-bare-bones-demo
-          npm run build-art-gallery-medium-article-website
-          npm run build-vue-boilerplate
-          npm run build
-          npm run install-barebones
-          npm run build-barebones
-          npm run install-ecommerce
+          
           export BASE_PATH=/token-negotiator-examples/ecommerce-store-website
-          npm run build-ecommerce
+          export MAX_PROCESSES=5
+        
+          npm run install-examples
+          npm run clean
+          npm run build
           npm run copy-artifacts
+          
           short_sha="${GITHUB_SHA:0:7}"
           build_version="${GITHUB_REF_NAME}-${short_sha}"
           build_time="$(date --utc --iso-8601=seconds)"
@@ -65,6 +65,7 @@ jobs:
             sed -i "s/<head>/<head><meta name=\"build-version\" content=\"${build_version}\"><meta name=\"build-time\" content=\"${build_time}\">/"
         env:
           NEGOTIATOR_BRANCH: ${{ inputs.negotiatorBranch }}
+          NODE_AUTH_TOKEN: ${{ github.token }}
 
       - uses: actions/upload-artifact@v3
         with:

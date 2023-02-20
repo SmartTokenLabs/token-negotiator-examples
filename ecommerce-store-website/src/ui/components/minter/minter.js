@@ -1,12 +1,14 @@
 // Dependencies
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import clsx from 'clsx';
 
 // App
-import { useCurrentWallet } from 'ui/hooks';
 import { safeMint } from "base/utils/interact.js";
 import { Card, Button, Headline, Image, PopUp } from 'ui/components';
+import { TokenContext } from "src/providers/TokenContextProvider";
 import { useStore } from 'base/state';
+import { chainMap } from 'base/utils/network';
+import nftDataStore from 'base/nft-data-store';
 
 // Styles
 import styles from './minter.module.scss';
@@ -18,48 +20,51 @@ import styles from './minter.module.scss';
 
 export default function Minter({ className }) {
 
-	const [ walletAddress, nftCollections, chain, walletStatus, walletInstance ] = useCurrentWallet();
-	const [ submissionStatus, setSubmissionStatus ] = useState( '' );
-	const [ mintedNFTs, setMintedNFTs ] = useState( [] );
+
+	const { wallet: walletInstance, walletStatus, chainId, tokens: selectedTokens } = useContext(TokenContext);
+
+	const [submissionStatus, setSubmissionStatus] = useState('');
+	const [mintedNFTs, setMintedNFTs ] = useState([]);
 	const [changeOfNetworkRequired, setChangeOfNetworkRequired] = useState(false);
-	const selectedTokens = useStore( s => s.selectedTokens );
+	const [popUpMsg, setPopUpMsg] = useState('')
+
+	const chain = chainMap[chainId] ? chainMap[chainId] : 'unsupported chain: ' + chainId;
+	const nftCollections = nftDataStore;
 
 	useEffect( () => {
 		if ( submissionStatus && !walletStatus ) setSubmissionStatus( walletStatus );
 	}, [ walletStatus ] );
 
 	const onClosePopUpEvent = () => {
-		
 		setChangeOfNetworkRequired(false);
-
 	}
 
 	const onMintPressed = async ( event, nft, collectionItem ) => {
-
-		if ( !walletAddress && window?.negotiator ) window.negotiator.negotiate();
-
 		if ( walletStatus ) {
 			setSubmissionStatus( walletStatus );
 			return;
 		}
 
-		if( !nft.contracts[ chain ] ) {
+		if( !nft.contracts[chain] ) {
+			console.log("!nft.contracts[ chain ]", chainId);
+			console.log("!nft.contracts[ chain ]", chain, chainId);
 
+			chainId
+				? setPopUpMsg(`Please change your wallet's network to either Goerli or Mumbai.`)
+				: setPopUpMsg(`Please connect your wallet to continue.`) 
+			
 			setChangeOfNetworkRequired(true);
-
 		} else {
-
 			setChangeOfNetworkRequired(false);
-
 			const x = await walletInstance.provider.getNetwork();
 			// connectedWallet.provider.getNetwork
 
 			const { status, success } = await safeMint({
 				connectedWallet: walletInstance,
-				walletAddress: walletAddress,
-				sendTo: walletAddress,
-				abi: nft.contracts[ chain ].abi,
-				contract: nft.contracts[ chain ].contract,
+				walletAddress: walletInstance.address,
+				sendTo: walletInstance.address,
+				abi: nft.contracts[chain].abi,
+				contract: nft.contracts[chain].contract,
 				chain: chain,
 				name: collectionItem.name,
 				imageURI: collectionItem.ipfs,
@@ -69,8 +74,6 @@ export default function Minter({ className }) {
 			if ( success ) setMintedNFTs( [ ...mintedNFTs, collectionItem.id ] );
 			if( status ) setSubmissionStatus( status );
 		}
-
-
 	};
 
 	return (
@@ -89,7 +92,7 @@ export default function Minter({ className }) {
 					if (typeof ethereum !== "undefined") {
 						const chain = ethereum.chainId === '0x13881' ? '-mumbai' : '-goerli';
 						tokenIsSelected = (
-							selectedTokens && selectedTokens[collectionItem.ref+chain] &&
+							selectedTokens && selectedTokens[collectionItem.ref + chain] &&
 							selectedTokens[collectionItem.ref+chain].tokens.length > 0
 						);
 					}
@@ -108,7 +111,7 @@ export default function Minter({ className }) {
 					);
 				})}
 			</div>
-			<PopUp closeEvent={onClosePopUpEvent} isOpen={ changeOfNetworkRequired } />
+			<PopUp closeEvent={onClosePopUpEvent} isOpen={changeOfNetworkRequired} msg={popUpMsg} />
 		</div>
 	);
 };
@@ -117,7 +120,7 @@ function MinterButton({ className, onClick, isMinted = false }) {
 	return (
 		<Button
 			onClick={ onClick }
-			className={ clsx( className, isMinted ? '-style-primary-light' : '-style-outline' ) }
+			className={ clsx( className, false ? '-style-primary-light' : '-style-outline' ) }
 			icon={ isMinted && 'check' }
 			iconPos="before"
 		>

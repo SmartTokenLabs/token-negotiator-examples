@@ -3,7 +3,7 @@
 import clsx from 'clsx';
 
 // App
-import { useStore } from "base/state";
+import { TokenContext } from 'src/providers/TokenContextProvider';
 import { Page } from 'ui/app';
 import { checkNFTEligibility } from "base/utils";
 import { Animation, ActivationBanner, Nav, ProductItem, Button, Banner, Image, Tag, Headline } from 'ui/components';
@@ -11,13 +11,12 @@ import { DemoHeader, DemoHero, BrandsList, Demos } from 'ui/sections';
 
 //	Styles
 import styles from "./automotive-view.module.scss";
+import { useContext } from 'react';
 
 
 //
 //	Brand Connector Demo / UI / Views / Automotive
 //
-
-
 export default function AutomotiveView() {
 
 	const meta = {
@@ -33,8 +32,8 @@ export default function AutomotiveView() {
 		{ image: { src: '/images/aston-martin-vehicle.jpg', height: 282, width: 594 } , title: 'Aston Martin', description: 'Vulcan ‘21', price: 550, salePrice: 500 },
 	]
 
-	const selectedTokens = useStore( s => s.selectedTokens );
-	const promotionEnabled = checkNFTEligibility( selectedTokens, [ 'stl-riot-racer-goerli', 'stl-riot-racer-mumbai' ] );
+	const { tokens: selectedTokens, chainId } = useContext(TokenContext);
+	const promotionEnabled = checkNFTEligibility(selectedTokens, ['stl-riot-racer-goerli', 'stl-riot-racer-mumbai']);
 
 	return (
 		<Page className={ clsx( styles[ 'v-automotive' ], '-t-dark' ) } meta={ meta }>
@@ -61,7 +60,7 @@ export default function AutomotiveView() {
 			<ActivationBanner theme="light-purple" />
 
 			<section className="section -pbs">
-				{ promotionEnabled &&
+				{promotionEnabled &&
 					<Animation.ScrollReveal>
 						<div className="grid -g-cols-1 -g-max-10 -mb6">
 							<Banner
@@ -70,8 +69,8 @@ export default function AutomotiveView() {
 								overlayImage="/images/topgear-and-riot.png"
 								headline="Book your exclusive track day now"
 								text="Enjoy your once in a lifetime experience as a Riot Racer NFT holder!"
-								selectedTokens={ selectedTokens }
-								authTokens={ [ 'stl-riot-racer-goerli', 'stl-riot-racer-mumbai' ] }
+								selectedTokens={selectedTokens}
+								authTokens={chainId.toString() === '5' ? ['stl-riot-racer-goerli'] : ['stl-riot-racer-mumbai']}
 							/>
 						</div>
 					</Animation.ScrollReveal>

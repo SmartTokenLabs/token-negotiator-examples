@@ -3,10 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
+    "start": "vite",
     "build": "vite build",
     "preview": "vite preview --port 4173"
   },
   "dependencies": {
+    "@tokenscript/token-negotiator": "^2.2.0",
     "vue": "^3.2.37",
     "vue-router": "^4.1.3"
   },
