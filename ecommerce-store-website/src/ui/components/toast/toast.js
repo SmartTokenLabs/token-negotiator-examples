@@ -35,14 +35,14 @@ export default function Toast({ className, isOpen, msg }) {
 						color: 'black'
 					}}>
 						<div>
-						<button
+						{/* <button
 							onClick={ (event) => {
   							event.remove();
 							}}
 							style={{ fontSize: "14px", fontWeight: 800, color: 'black', width: '100%' }}
 						>
-							ⓧ
-						</button>
+						ⓧ
+						</button> */}
 					</div>
 					<div>{msg}</div>
 					</div>

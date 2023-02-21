@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkmy_app=self.webpackChunkmy_app||[]).push([[400],{1400:(e,o,r)=>{r.r(o),r.d(o,{getFlowProvider:()=>s});var t=r(4890);t.config({"accessNode.api":"https://rest-mainnet.onflow.org","discovery.wallet":"https://fcl-discovery.onflow.org/authn"});var s=function(){return t}}}]);
+//# sourceMappingURL=400.13149ee2.chunk.js.map

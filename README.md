@@ -1,3 +1,20 @@
+private async switchChain(chain: number){
+
+		const ethersProvider = await this.getEthersProvider();
+
+		if (chain != await this.getChain()){
+
+			console.log("Switch chain: ", chain);
+
+			try {
+				await ethersProvider.send("wallet_switchEthereumChain", [{chainId: "0x" + chain.toString(16)}]);
+			} catch (e){
+				console.error(e);
+				throw new Error("Connected to wrong chain, please switch the chain to chainId: " + chain + ", error: " + e.message);
+			}
+		}
+	}
+
 # token-negotiator-examples
 A repository to host and manage token negotiator example dapps and web apps
 
