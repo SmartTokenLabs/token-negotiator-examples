@@ -96,9 +96,9 @@ const TokenContextProvider = (props) => {
       });
   
       newNegotiator.on("connected-wallet", (connectedWallet) => {
-        if (connectedWallet?.data) {
-          setWallet(connectedWallet.data);
-          resetIssuers(connectedWallet.data.chainId);
+        if (connectedWallet) {
+          setWallet(connectedWallet);
+          resetIssuers(connectedWallet.chainId);
           setWalletStatus(undefined);
         } else {
           setWallet(null);
