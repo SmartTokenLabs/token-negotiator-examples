@@ -96,9 +96,9 @@ const TokenContextProvider = (props) => {
       });
   
       newNegotiator.on("connected-wallet", (connectedWallet) => {
-        if (connectedWallet?.data) {
-          setWallet(connectedWallet.data);
-          resetIssuers(connectedWallet.data.chainId);
+        if (connectedWallet) {
+          setWallet(connectedWallet);
+          resetIssuers(connectedWallet.chainId);
           setWalletStatus(undefined);
         } else {
           setWallet(null);
@@ -109,6 +109,10 @@ const TokenContextProvider = (props) => {
   
       newNegotiator.on("network-change", (chain) => {
         resetIssuers(chain);
+        const walletConnection = newNegotiator.web3WalletProvider.getConnectedWalletData();
+        if(walletConnection.length > 0) { 
+          setWallet(walletConnection[0]);
+        }
       });
   
       const resetIssuers = (networkId) => {

@@ -3,22 +3,43 @@
 import clsx from 'clsx';
 
 // App
-import { useStore } from 'base/state';
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { Page } from 'ui/app';
-import { Headline, Link, Minter, Image, Tag } from 'ui/components';
+import { Headline, Link, Minter, Image, Tag, Toast } from 'ui/components';
 import { Demos } from 'ui/sections';
+import { chainMap } from "./../../../../src/base/utils/network";
+import { TokenContext } from "src/providers/TokenContextProvider";
 
 //	Styles
 import styles from "./home-view.module.scss";
-import React from "react";
 
 //
 //	Brand Connector Demo / UI / Views / Home
 //
 
 export default function HomeView(props) {		
+
+	const { wallet } = useContext(TokenContext);
+
+	let showNetworkNotification = false;
+	
+	const normalisedNetworkId = wallet ? chainMap[wallet.chainId] : undefined;
+	
+	switch (normalisedNetworkId) {
+		case "Goerli":
+		case "Mumbai":
+			showNetworkNotification = false;
+			break;
+		default:
+			showNetworkNotification = true;
+			break;
+	}
+
 	return (
 		<Page className={ styles[ 'v-home' ] }>
+
+			<Toast isOpen={ showNetworkNotification } msg={ "Please connect to Goerli or Mumbai network" } />
+
 			<section className="section -ps">
 				<div className="grid -g-cols-1">
 					<div className="-g-max-8">
@@ -26,7 +47,7 @@ export default function HomeView(props) {
 					</div>
 				</div>
 			</section>
-
+			
 			<section className="section -pt0">
 				<div className="grid -g-cols-4 -mbn6">
 					<div className={ clsx( styles[ 'v-home_steps' ], '-va-center -mb6' ) }>

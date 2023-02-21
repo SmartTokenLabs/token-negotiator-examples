@@ -15,6 +15,7 @@ export { default as Layer } from './layer';
 export { default as Link } from './link';
 export { default as List } from './list';
 export { default as Logo } from './logo';
+export { default as Toast } from './toast';
 export { default as Loader } from './loader';
 export { default as Minter } from './minter';
 export { default as PopUp } from './popup';

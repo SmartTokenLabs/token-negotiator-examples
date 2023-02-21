@@ -1,0 +1,18 @@
+@use 'styles/modules' as *;
+
+
+//
+//	Brand Connector Demo / UI / Components / Toast
+//
+
+.toast {
+	animation: 2s ease 0s normal forwards 1 fadein;
+	top: -100%;
+}
+
+@keyframes fadein {
+    0%{ top: -100% }
+    60%{ top: -100% }
+    100%{ top: 0 }
+}
+
