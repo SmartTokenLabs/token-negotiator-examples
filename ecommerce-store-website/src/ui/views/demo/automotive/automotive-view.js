@@ -24,12 +24,12 @@ export default function AutomotiveView() {
 	};
 
 	const vehicles = [
-		{ image: { src: '/images/lambo-vehicle.jpg', height: 282, width: 594 }, title: 'Lamborghini', description: 'Rare Aventador LP780-4 ‘22', price: 550, salePrice: 500 },
-		{ image: { src: '/images/porsch-vehicle.jpg', height: 282, width: 594 } , title: 'Porche', description: '911 GT3 RS Limited Edition ‘20', price: 290, salePrice: 250 },
-		{ image: { src: '/images/lambo-urus-vehicle.jpg', height: 282, width: 594 } , title: 'Lamborghini Urus Esteso 19', description: 'Limited Edition Urus Esteso ‘19', price: 450, salePrice: 400 },
-		{ image: { src: '/images/mercedes-vehicle.jpg', height: 282, width: 594 } , title: 'Mercedes', description: 'AMG GT Night Edition ‘21', price: 320, salePrice: 270 },
-		{ image: { src: '/images/ferrari-vehicle.jpg', height: 282, width: 594 } , title: 'Ferrari', description: 'Vulcan ‘21', price: 310, salePrice: 260 },
-		{ image: { src: '/images/aston-martin-vehicle.jpg', height: 282, width: 594 } , title: 'Aston Martin', description: 'Vulcan ‘21', price: 550, salePrice: 500 },
+		{ image: { src: '/images/lambo-vehicle.webp', height: 282, width: 594 }, title: 'Lamborghini', description: 'Rare Aventador LP780-4 ‘22', price: 550, salePrice: 500 },
+		{ image: { src: '/images/porsch-vehicle.webp', height: 282, width: 594 } , title: 'Porche', description: '911 GT3 RS Limited Edition ‘20', price: 290, salePrice: 250 },
+		{ image: { src: '/images/lambo-urus-vehicle.webp', height: 282, width: 594 } , title: 'Lamborghini Urus Esteso 19', description: 'Limited Edition Urus Esteso ‘19', price: 450, salePrice: 400 },
+		{ image: { src: '/images/mercedes-vehicle.webp', height: 282, width: 594 } , title: 'Mercedes', description: 'AMG GT Night Edition ‘21', price: 320, salePrice: 270 },
+		{ image: { src: '/images/ferrari-vehicle.webp', height: 282, width: 594 } , title: 'Ferrari', description: 'Vulcan ‘21', price: 310, salePrice: 260 },
+		{ image: { src: '/images/aston-martin-vehicle.webp', height: 282, width: 594 } , title: 'Aston Martin', description: 'Vulcan ‘21', price: 550, salePrice: 500 },
 	]
 
 	const { tokens: selectedTokens, chainId } = useContext(TokenContext);
@@ -44,11 +44,11 @@ export default function AutomotiveView() {
 					<Nav.Item>Vehicles</Nav.Item>
 				</Nav>
 			</DemoHeader>
-			<DemoHero className={ styles[ 'v-automotive_hero' ] } image="/images/automotive-bg.jpg">
+			<DemoHero className={ styles[ 'v-automotive_hero' ] } image="/images/automotive-bg.webp">
 				<div className="grid -g-cols-1 -g-max-10">
 					<div>
 						<div className={ styles[ 'v-automotive_hero-logo' ] }>
-							<Image src="/images/topgear-and-riot.png" alt="Top Gear and Riot" height={ 72 } width={ 594 } />
+							<Image src="/images/topgear-and-riot.webp" alt="Top Gear and Riot" height={ 72 } width={ 594 } />
 						</div>
 						<div className="-g-max-6">
 							<h2 className="-mt3">Exclusive track day experience with Top Gear.</h2>
@@ -65,8 +65,8 @@ export default function AutomotiveView() {
 						<div className="grid -g-cols-1 -g-max-10 -mb6">
 							<Banner
 								className="-style-rounded -t-light-purple"
-								image="/images/automotive-bg.jpg"
-								overlayImage="/images/topgear-and-riot.png"
+								image="/images/automotive-bg.webp"
+								overlayImage="/images/topgear-and-riot.webp"
 								headline="Book your exclusive track day now"
 								text="Enjoy your once in a lifetime experience as a Riot Racer NFT holder!"
 								selectedTokens={selectedTokens}
@@ -81,11 +81,11 @@ export default function AutomotiveView() {
 				<div className="grid -g-cols-3 -g-max-10">
 					<div className={ clsx( styles[ 'v-automotive_aside' ], '-hide-s' ) }>
 						<h4 className="f7">Pickup Location</h4>
-						<Image className={ styles[ 'v-automotive_aside-image' ] } src="/images/location-input.png" alt="Input example of selected pickup location" height={ 84 } width={ 490 } />
+						<Image className={ styles[ 'v-automotive_aside-image' ] } src="/images/location-input.webp" alt="Input example of selected pickup location" height={ 84 } width={ 490 } />
 						<h4 className="f7">Drop-off Location</h4>
-						<Image className={ styles[ 'v-automotive_aside-image' ] } src="/images/location-input.png" alt="Input example of selected drop-off location" height={ 84 } width={ 490 } />
+						<Image className={ styles[ 'v-automotive_aside-image' ] } src="/images/location-input.webp" alt="Input example of selected drop-off location" height={ 84 } width={ 490 } />
 						<h4 className="f7">Select Dates</h4>
-						<Image className={ styles[ 'v-automotive_aside-image' ] } src="/images/calendar.png" alt="Calender example of selected rental dates" height={ 497 } width={ 498 } />
+						<Image className={ styles[ 'v-automotive_aside-image' ] } src="/images/calendar.webp" alt="Calender example of selected rental dates" height={ 497 } width={ 498 } />
 						<div className="-va-center">
 							<h4 className="f7">Age of primary driver</h4>
 							<Tag className={ styles[ 'v-automotive_aside-tag' ] }>32</Tag>
@@ -113,12 +113,12 @@ export default function AutomotiveView() {
 				className="-py0"
 				headline="Manufacturers"
 				logos={[
-					{ src: '/images/porsch.png', height: 154, width: 306, alt: 'Porsh', id: 'porsh' },
-					{ src: '/images/mercedes.png', height: 190, width: 196, alt: 'Mercedes', id: 'mercedes' },
-					{ src: '/images/lambo.png', height: 188, width: 164, alt: 'Lamborghini', id: 'lambo' },
-					{ src: '/images/aston-martin.jpg', height: 182, width: 340, alt: 'Aston Martin', id: 'aston-martin' },
-					{ src: '/images/ferrari.jpg', height: 186, width: 117, alt: 'Ferrari', id: 'ferrari', className: '-hide-s' },
-					{ src: '/images/range-rover.png', height: 134, width: 304, alt: 'Range Rover', id: 'range-rover', className: '-hide-s' },
+					{ src: '/images/porsch.webp', height: 154, width: 306, alt: 'Porsh', id: 'porsh' },
+					{ src: '/images/mercedes.webp', height: 190, width: 196, alt: 'Mercedes', id: 'mercedes' },
+					{ src: '/images/lambo.webp', height: 188, width: 164, alt: 'Lamborghini', id: 'lambo' },
+					{ src: '/images/aston-martin.webp', height: 182, width: 340, alt: 'Aston Martin', id: 'aston-martin' },
+					{ src: '/images/ferrari.webp', height: 186, width: 117, alt: 'Ferrari', id: 'ferrari', className: '-hide-s' },
+					{ src: '/images/range-rover.webp', height: 134, width: 304, alt: 'Range Rover', id: 'range-rover', className: '-hide-s' },
 				]}
 			/>
 			<Demos currentDemo="automotive" headline="More demo Shops" />

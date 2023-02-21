@@ -51,25 +51,25 @@ export default function HomeView(props) {
 			<section className="section -pt0">
 				<div className="grid -g-cols-4 -mbn6">
 					<div className={ clsx( styles[ 'v-home_steps' ], '-va-center -mb6' ) }>
-						<Image className={ styles[ 'v-home_steps-image' ] } src="/images/fox.png" height={ 210 } width={ 210 } />
+						<Image className={ styles[ 'v-home_steps-image' ] } src="/images/fox.webp" height={ 210 } width={ 210 } />
 						<Tag size="s" className="f8 -mxa -style-muted">1</Tag>
 						<Headline className="f5 -mb0" type="h2">Get Metamask</Headline>
 						<p>Download and setup the <Link href="https://metamask.io/download/" external={ true }>Metamask extension</Link></p>
 					</div>
 					<div className={ clsx( styles[ 'v-home_steps' ], '-va-center -mb6' ) }>
-						<Image className={ styles[ 'v-home_steps-image' ] } src="/images/test-tokens-bundle.png" height={ 226 } width={ 388 } />
+						<Image className={ styles[ 'v-home_steps-image' ] } src="/images/test-tokens-bundle.webp" height={ 226 } width={ 388 } />
 						<Tag size="s" className="f8 -mxa -style-muted">2</Tag>
 						<Headline className="f5 -mb0" type="h2">Request Test Tokens</Headline>
 						<p>Connect your wallet, switch to Goerli or Mumbai testnet and request tokens from us.</p>
 					</div>
 					<div className={ clsx( styles[ 'v-home_steps' ], '-va-center -mb6' ) }>
-						<Image className={ styles[ 'v-home_steps-image' ] } src="/images/demo-shop-bundle.png" height={ 160 } width={ 336 } />
+						<Image className={ styles[ 'v-home_steps-image' ] } src="/images/demo-shop-bundle.webp" height={ 160 } width={ 336 } />
 						<Tag size="s" className="f8 -mxa -style-muted">3</Tag>
 						<Headline className="f5 -mb0" type="h2">Try A Demo Shop</Headline>
 						<p>Select and visit one of our example shops. Each Token will let you try a different benefit.</p>
 					</div>
 					<div className={ clsx( styles[ 'v-home_steps' ], '-va-center -mb6' ) }>
-						<Image className={ styles[ 'v-home_steps-image' ] } src="/images/activate.png" height={ 244 } width={ 296 } />
+						<Image className={ styles[ 'v-home_steps-image' ] } src="/images/activate.webp" height={ 244 } width={ 296 } />
 						<Tag size="s" className="f8 -mxa -style-muted">4</Tag>
 						<Headline className="f5 -mb0" type="h2">Connect & Activate</Headline>
 						<p>Click the BrandConnector module in the bottom-right corner, connect & toggle any test tokens.</p>
