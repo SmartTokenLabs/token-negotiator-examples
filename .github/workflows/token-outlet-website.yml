@@ -1,5 +1,5 @@
 name: Build & Deploy Token Outlet Website
-description: Deploys the token outlet demo website. Deploys to test environment from staging branch and production from main.
+#description: Deploys the token outlet demo website. Deploys to test environment from staging branch and production from main.
 
 on:
   workflow_dispatch:

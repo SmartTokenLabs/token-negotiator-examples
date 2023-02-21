@@ -1,4 +1,5 @@
 name: Build examples
+#description: Build all examples
 
 on:
   pull_request:
