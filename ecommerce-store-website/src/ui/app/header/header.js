@@ -50,6 +50,7 @@ const Header = function Header({ className }) {
 
 	return (
 		<header className={ clsx( styles[ 'a-header' ], className )}>
+
 			<div className={ clsx( styles[ 'a-header_bar' ] )}>
 				<div className={ styles[ 'a-header_logo-container' ]}>
 					<Link ariaLabel="Home" href="/" className={ clsx( styles[ 'a-header_logo' ], '-style-text' ) } activeClass={ styles[ '-is-active' ]} activeClassFn={ a => a !== '/whats-on' }>

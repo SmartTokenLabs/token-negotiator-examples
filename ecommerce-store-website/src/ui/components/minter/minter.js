@@ -120,7 +120,7 @@ function MinterButton({ className, onClick, isMinted = false }) {
 	return (
 		<Button
 			onClick={ onClick }
-			className={ clsx( className, isMinted ? '-style-primary-light' : '-style-outline' ) }
+			className={ clsx( className, false ? '-style-primary-light' : '-style-outline' ) }
 			icon={ isMinted && 'check' }
 			iconPos="before"
 		>
