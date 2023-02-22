@@ -25,14 +25,12 @@ export default function HomeView(props) {
 	
 	const normalisedNetworkId = wallet ? chainMap[wallet.chainId] : undefined;
 	
-	switch (normalisedNetworkId) {
-		case "Goerli":
-		case "Mumbai":
-			showNetworkNotification = false;
-			break;
-		default:
-			showNetworkNotification = true;
-			break;
+	if(
+		normalisedNetworkId !== "Goerli" &&
+		normalisedNetworkId !== "Mumbai" &&
+		normalisedNetworkId !== undefined
+	){
+		showNetworkNotification = true;
 	}
 
 	return (
