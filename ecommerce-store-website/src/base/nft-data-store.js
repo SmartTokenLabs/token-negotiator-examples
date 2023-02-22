@@ -18,7 +18,7 @@ export default [
 				ref: "stl-bayc",
 				metaUrl: "https://gateway.pinata.cloud/ipfs/QmXdnWNa2CaRCUa4jMTirmkVJkygr2LtnccSuDY3yXrvVm/bayc_1013.json",
 				ipfs: "https://gateway.pinata.cloud/ipfs/QmWiozg1axUSpVowzdTvb5vq7pZyERvAFcTeT8qTojq6qe",
-				imagePath: "/nfts/tokens/images/BAYC_1013.png",
+				imagePath: "/nfts/tokens/images/BAYC_1013.webp",
 				name: "#1013",
 				id: "1013",
 				description: "stl demo nft"
@@ -44,7 +44,7 @@ export default [
 				ref: "stl-wow",
 				metaUrl: "https://gateway.pinata.cloud/ipfs/QmUPQTm834uSNo951vh466wJ1Wh5ofSpRBwYRhyYqKfGMW",
 				ipfs: "https://gateway.pinata.cloud/ipfs/",
-				imagePath: '/nfts/stl-wow-4636.png',
+				imagePath: '/nfts/stl-wow-4636.webp',
 				name: "WoW #4636",
 				id: "wow_4636",
 				description: "stl demo nft"
@@ -53,7 +53,7 @@ export default [
 				ref: "stl-wow",
 				metaUrl: "https://gateway.pinata.cloud/ipfs/QmQz59bHkB1U4AyZzCKhGvzAbjkWApJQ27ouZ4Bhngeb2T",
 				ipfs: "https://gateway.pinata.cloud/ipfs/",
-				imagePath: '/nfts/stl-wow-9211.png',
+				imagePath: '/nfts/stl-wow-9211.webp',
 				name: "WoW #9211",
 				id: "wow_9211",
 				description: "stl demo nft"
@@ -79,7 +79,7 @@ export default [
 				ref: "stl-riot-racer",
 				metaUrl: "https://gateway.pinata.cloud/ipfs/QmStVYUYb3CtNV2BoQp8JiHqkR8sJWWzq1KvRKPUoTVBgv",
 				ipfs: "https://gateway.pinata.cloud/ipfs/QmdFox1wfNvLSZAodKn1YKhRn3DzYjWpCKq2UncpV1fTSJ",
-				imagePath: '/nfts/stl-rr-airbender.png',
+				imagePath: '/nfts/stl-rr-airbender.webp',
 				name: "STL Airbender",
 				id: "air_bender",
 				description: "stl demo nft"
@@ -88,7 +88,7 @@ export default [
 				ref: "stl-riot-racer",
 				metaUrl: "https://gateway.pinata.cloud/ipfs/QmQpcGRAP19Q8BkQueUcmWoWxwjZ31Cvat8p7fa3Xr8213",
 				ipfs: "https://gateway.pinata.cloud/ipfs/QmQmBW5HVNw5tLzRKtrjNmbvmWVKrMduoepFfbDHWw3tS5",
-				imagePath: '/nfts/stl-rr-aurora.png',
+				imagePath: '/nfts/stl-rr-aurora.webp',
 				name: "STL Aurora",
 				id: "air_aurora",
 				description: "stl demo nft"
