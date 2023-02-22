@@ -58,6 +58,20 @@ const goerliIssuers = [
   },
 ];
 
+// TODO nick to force reload!
+// await this.client.tokenAutoLoad(
+// 			this.issuerLoading.bind(this),
+// 			(issuer: string, tokens: any[]) => {
+// 				if (!tokens?.length) {
+// 					const connectBtn = this.issuerListContainer.querySelector(`[data-issuer*="${issuer}"] .connect-btn-tn`)
+// 					if (connectBtn) connectBtn.innerText = 'Load'
+// 					return
+// 				}
+// 				this.issuerConnected(issuer, tokens, false)
+// 			},
+// 			refresh,
+// 		)
+
 const TokenContextProvider = (props) => {
   const [negotiator, setNegotiator] = useState({});
   const [tokens, setTokens] = useState([]);
