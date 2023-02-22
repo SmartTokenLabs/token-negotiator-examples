@@ -31,6 +31,8 @@ export default function Minter({ className }) {
 	const chain = chainMap[chainId] ? chainMap[chainId] : 'unsupported chain: ' + chainId;
 	const nftCollections = nftDataStore;
 
+	const [mintButonState, setMintButonState] = useState(nftDataStore.map(()=>false));
+
 	useEffect( () => {
 		if ( submissionStatus && !walletStatus ) setSubmissionStatus( walletStatus );
 	}, [ walletStatus ] );
@@ -88,6 +90,8 @@ export default function Minter({ className }) {
 					const { title, description, list } = nft;
 					const collectionItem = list[ 0 ];
 
+					let current = i;
+
 					let tokenIsSelected = false;
 					if (typeof ethereum !== "undefined") {
 						const chain = ethereum.chainId === '0x13881' ? '-mumbai' : '-goerli';
@@ -96,6 +100,8 @@ export default function Minter({ className }) {
 							selectedTokens[collectionItem.ref+chain].tokens.length > 0
 						);
 					}
+
+					let isMinted = mintedNFTs.indexOf( collectionItem.id ) > -1 || tokenIsSelected;
 						
 					return (
 						<Card key={ i } className="-style-outline -mb6">
@@ -103,9 +109,24 @@ export default function Minter({ className }) {
 							<Headline className="f5 -mt3 -mb1" type="h2">{ title }</Headline>
 								<p className="f7 -mb3">{ description }</p>
 							<MinterButton
-								className={ clsx( styles[ 'c-minter_button' ], '-mta' ) }
-								onClick={ event => onMintPressed( event, nft, collectionItem ) }
-								isMinted={ mintedNFTs.indexOf( collectionItem.id ) > -1 || tokenIsSelected }
+								className={ clsx( styles[ 'c-minter_button' ], '-mta' , mintButonState[i] && "is_running") }
+								onClick={ async event => {
+									if (mintButonState[current]) return;
+
+									let state = [...mintButonState];
+									state[current] = true;
+									setMintButonState(state);
+
+									await onMintPressed( event, nft, collectionItem );
+
+									state = [...mintButonState];
+									state[current] = false;
+									setMintButonState(state);
+
+								} }
+								isMinted={ isMinted }
+								mintMessage = { isMinted ? "" : (mintButonState[current] ? "Minting Your NFT" : "Mint Demo NFT") }
+
 							/>
 						</Card>
 					);
@@ -116,7 +137,7 @@ export default function Minter({ className }) {
 	);
 };
 
-function MinterButton({ className, onClick, isMinted = false }) {
+function MinterButton({ className, onClick, isMinted = false, mintMessage = "" }) {
 	return (
 		<Button
 			onClick={ onClick }
@@ -124,7 +145,7 @@ function MinterButton({ className, onClick, isMinted = false }) {
 			icon={ isMinted && 'check' }
 			iconPos="before"
 		>
-			{ isMinted ? ( 'NFT Minted' ) : ( 'Mint Demo NFT' )}
+			{ isMinted ? ( 'NFT Minted' ) : mintMessage }
 		</Button>
 	);
 }
