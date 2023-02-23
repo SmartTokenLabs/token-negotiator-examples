@@ -4,7 +4,8 @@ import config from '../../tokenConfig.json';
 import {updateTokenConfig} from '../../environment';
 
 const TokenContext = createContext({ 
-  tokens: []
+  tokens: [],
+  proof: null
 });
 
 export const collectionID = config.collectionID;
@@ -19,7 +20,7 @@ const TokenContextProvider = (props) => {
 
   const [tokens, setTokens] = useState([]);
 
-  const [proof, setProof] = useState();
+  const [proof, setProof] = useState(null);
   
   useEffect(() => {
     
@@ -43,9 +44,15 @@ const TokenContextProvider = (props) => {
 
     window.negotiator.on("token-proof", (result) => {
 
-      console.log('token proof', result.data);
+      console.log('token proof', result);
+
+	  if (result.error){
+		  return;
+	  }
           
       setProof(result.data);
+
+	  window.negotiator.getUi().closeOverlay();
 
     });
 
@@ -77,6 +84,9 @@ class TokenNegotiatorInstance extends React.Component {
 
     devconConfig = updateTokenConfig(devconConfig);
 
+	const params = new URLSearchParams(document.location.hash.substring(1));
+	const redirectMode = params.has("redirectMode") ? params.get("redirectMode") : undefined;
+
     window.negotiator = new Client({
       type: 'active',
       issuers: [
@@ -88,10 +98,12 @@ class TokenNegotiatorInstance extends React.Component {
         repeatAction: "try again",
         theme: "light",
         position: "bottom-right"
-      }
+      },
+	  offChainRedirectMode: redirectMode
     });
     
   }
+
   render() {
     return this.props.render({ negotiator: window.negotiator })
   };

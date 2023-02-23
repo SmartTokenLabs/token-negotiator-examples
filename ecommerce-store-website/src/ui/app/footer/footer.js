@@ -1,6 +1,6 @@
 
 //	Dependencies
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Formik, Form as FormikForm } from 'formik';
 import clsx from 'clsx';
@@ -8,24 +8,22 @@ import * as yup from 'yup';
 
 //	App
 import { useStore } from 'base/state';
+import { TokenContext } from 'src/providers/TokenContextProvider';
 import { Logo, Link, Button, Form, Icon } from 'ui/components';
 
 // Styles
 import styles from "./footer.module.scss";
 
-
 //
 //	Brand Connector Demo / UI / Components / Footer
 //
-
-
 const subscribeSchema = yup.object().shape({
 	'email': yup.string().email( 'Please enter a valid email' ).required( 'Please enter a value' ),
 });
 
 const Footer = React.memo( function Footer({ className }) {
 	const api = useStore( s => s.api );
-	const isNegotiatorReady = useStore( s => s.isNegotiatorReady );
+	const { negotiator } = useContext(TokenContext);
 	const [ isPending, setIsPending ] = useState( false );
 
 	const _handleSubmit = useCallback( async ( values, { setStatus }) => {
@@ -136,10 +134,13 @@ const Footer = React.memo( function Footer({ className }) {
 				<p className="f7">&copy; 2022 All Rights Reserved | Smart Token Labs</p>
 			</div>
 
-			{ isNegotiatorReady && (
+			{ negotiator && (
 				<div className={ clsx( styles[ 'a-footer_activation' ], '-mt3' ) }>
 					<div>
-						<p className="f7 -va-center -mla">Click to activate discounts <Icon className={ clsx( styles[ 'a-footer_activation_icon' ], '-ml1' ) } type="curved-up-arrow" /></p>
+						<p className="f7 -va-center -mla">
+							Click to activate discounts&nbsp;
+							<Icon className={ clsx( styles[ 'a-footer_activation_icon' ], '-ml1' ) } type="curved-up-arrow" />
+						</p>
 					</div>
 				</div>
 			)}

@@ -1,5 +1,5 @@
 
-import React, { useReducer } from "react";
+import React, {useEffect, useReducer} from "react";
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -50,6 +50,7 @@ export default function BookingModal({ roomType, applyDiscount, discount, price,
 
   // Close Modal
   const handleClose = () => {
+    localStorage.removeItem("booking-room-type");
     setOpen(false);
   };
   
@@ -57,6 +58,13 @@ export default function BookingModal({ roomType, applyDiscount, discount, price,
   const discountPerc = discount.value ? discount.value : 0;
   const discountOfferValue = (discountPerc / 100) * price;
   const viewPrice = price - discountOfferValue;
+
+  useEffect(() => {
+	  if (discount && localStorage.getItem("booking-room-type") === roomType) {
+		  localStorage.removeItem("booking-room-type");
+		  setOpen(true);
+	  }
+  }, [discount]);
 
   return (
     <div>
@@ -104,7 +112,9 @@ export default function BookingModal({ roomType, applyDiscount, discount, price,
                   .map((token, index) => (
                     <div key={index}>
                       <TokenCard
-                        applyDiscount={applyDiscount}
+                        applyDiscount={(token) => {
+							applyDiscount(token, roomType);
+						}}
                         tokenInstance={token}
                         discount={discount}
                         selectedPendingTokenInstance={selectedPendingTokenInstance}

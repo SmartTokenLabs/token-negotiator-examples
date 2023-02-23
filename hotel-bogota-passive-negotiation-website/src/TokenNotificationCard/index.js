@@ -10,34 +10,39 @@ import './TokenNotificationCard.css';
 // - manages the user selection if they will accept Devcon to connect with this page
 
 // When Access is granted this view will show
-function TokenView({tokensNumber}) {
+function TokenView({tokensNumber, refreshTokens}) {
     return (
       <Card className="tokenNotificationCard">
-        <CardContent>
-          <Typography
-            gutterBottom
-            variant="h1"
-            component="h1"
-          >
-            {tokensNumber} Devcon Tickets
-          </Typography>
-          <Typography
-            gutterBottom
-            variant="body1"
-            component="p"
-          >
-            booking discounts available
-          </Typography>
-        </CardContent>
-        <div className="cardBottomLip"></div>
+	    <div style={{position: "relative"}}>
+			<CardContent>
+			  <Typography
+				gutterBottom
+				variant="h1"
+				component="h1"
+			  >
+				{tokensNumber} Devcon Tickets
+			  </Typography>
+			  <Typography
+				gutterBottom
+				variant="body1"
+				component="p"
+			  >
+				booking discounts available
+			  </Typography>
+			</CardContent>
+			<div className="cardBottomLip"></div>
+			<button style={{ position: "absolute", top: "5px", right: "5px" }} onClick={refreshTokens} title="Refresh tokens">
+				⟳
+			</button>
+		</div>
       </Card>
   );
 };
 
-function TokenNotificationCard({ tokensNumber }) {
+function TokenNotificationCard({ tokensNumber, refreshTokens }) {
   return (
     <Zoom in={true} style={{ transitionDelay: true ? '500ms' : '0ms' }}>
-      <TokenView tokensNumber={tokensNumber}></TokenView> 
+      <TokenView tokensNumber={tokensNumber} refreshTokens={refreshTokens}></TokenView>
     </Zoom>
   );
 }

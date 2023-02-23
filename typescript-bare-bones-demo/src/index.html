@@ -10,11 +10,12 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
     <style>
         .buttons-list {
-            position: absolute;
-            float: left;
-            bottom: 10px;
+            position: fixed;
+            bottom: 20px;
+            left: 12px;
             display: flex;
             flex-direction: column;
+            z-index: 999;
         }
         .buttons-list > * {
             margin: 5px;
@@ -25,7 +26,6 @@
   <body>
     <div class="buttons-list" style="">
       <button onclick="updateIssuers();">Update Issuers</button>
-        <label for="use-redirect">Use redirect mode: <input type="checkbox" id="use-redirect" value="1" /></label>
       <button onclick="clearStoredProofs();">Clear existing proofs</button>
       <!--<label>Safe Connect proof type:
         <select id="challenge-type">
@@ -33,6 +33,8 @@
             <option value="attestedAddress">Address Attestation</option>
         </select>
       </label>-->
+        <button onclick="sendTransactionOnChain(5);">Send Goerli</button>
+        <button onclick="sendTransactionOnChain(80001);">Send Mumbai</button>
     </div>
     <div id="negotiator-inline" class="overlay-tn"></div>
     <div id="ticketList"></div>
