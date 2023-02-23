@@ -6,7 +6,7 @@
     "@babel/core": "^7.15.8",
     "@material-ui/core": "^4.11.2",
     "@tokenscript/attestation": "0.4.1-mw",
-    "@tokenscript/token-negotiator": "^2.2.0",
+    "@tokenscript/token-negotiator": "^2.3.0",
     "node-polyfill-webpack-plugin": "^1.1.4",
     "npm-check-updates": "^11.8.5",
     "react": "^17.0.2",
