@@ -1,1 +1,0 @@
-(self.webpackChunkmy_app=self.webpackChunkmy_app||[]).push([[946],{71156:()=>{},52361:()=>{},94616:()=>{},50522:()=>{},66882:()=>{}}]);
