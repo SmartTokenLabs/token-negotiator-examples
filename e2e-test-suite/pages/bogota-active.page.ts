@@ -16,10 +16,8 @@ export default class BogotaPassive {
     textOriginalPrice = (id: number) => this.page.locator('div.roomCardsContainer p:first-child').nth(id)
     textDiscountPrice = (id: number) => this.page.locator('div.roomCardsContainer p:last-child').nth(id)
     textBooked = () => this.page.locator('div.modalContainer h3')
-    btnLetsGo = () => this.page.locator('button.opening-btn-tn')
     btnTokenCount = () => this.page.locator('button.tokens-btn-tn')
     labelToggle = (id: number) => this.page.locator('div.toggle-tn > label').nth(id)
-    btnMetamask = () => this.page.locator("button[data-wallet='MetaMask']", { hasText: 'MetaMask' })
 
     async navHome () {
         await this.page.goto(data.urlExamples.bogotaActive)

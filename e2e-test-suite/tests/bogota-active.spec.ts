@@ -4,7 +4,6 @@ import data from '../fixtures/data.json'
 test.describe('Test Suite - Bogota Active', async () => {
     test.afterEach(async ({page}) => {
         await page.close()
-        // await page2.close()
     })
     test('Test - Apply no discount ticket', async ({bogotaActive}) => {
         /** verify ticket price and Pay Now button text when no discount ticket applied */
@@ -19,15 +18,12 @@ test.describe('Test Suite - Bogota Active', async () => {
     test('Test - Apply no discount ticket by switching toggle off', async ({ticketIssuer, accessPopup, emailApi, bogotaActive}) => {
         /** create a ticket in ticket issuer page */
         await ticketIssuer.navHome()
-        // await expect.poll(async () => accessPopup.btnAccept()).toBeDefined()
         await accessPopup.btnAccept().click()
         const email = await emailApi.genRandomEmail()
         await ticketIssuer.createTickets(1, email)
 
         /** verify ticket price after discount*/
         await bogotaActive.navHome()
-        // await bogotaActive.btnLetsGo().click()
-        // await expect.poll(async () => bogotaActive.textOriginalPrice(0)).toBeDefined()
         await bogotaActive.checkPriceAfterDiscount()
 
         /** verify discount ticket count = 1*/
@@ -50,7 +46,6 @@ test.describe('Test Suite - Bogota Active', async () => {
     test('Test - Apply discount ticket', async ({ticketIssuer, emailApi, accessPopup, bogotaActive, metamask, attestation}) => {
         /** create a ticket in ticket issuer page */
         await ticketIssuer.navHome()
-        // await expect.poll(async () => accessPopup.btnAccept()).toBeDefined()
         await accessPopup.btnAccept().click()
         const email = await emailApi.genRandomEmail()
         await ticketIssuer.createTickets(1, email)
@@ -60,8 +55,6 @@ test.describe('Test Suite - Bogota Active', async () => {
 
         /** verify ticket price after discount */
         await bogotaActive.navHome()
-        // await bogotaActive.btnLetsGo().click()
-        // await expect.poll(async () => bogotaActive.textOriginalPrice(0)).toBeDefined()
         await bogotaActive.checkPriceAfterDiscount()
 
         /** verify discount ticket count = 1 and toggle status = on */
@@ -91,7 +84,6 @@ test.describe('Test Suite - Bogota Active', async () => {
     test('Test - Apply discount ticket by switching toggle on', async ({ticketIssuer, accessPopup, bogotaActive, metamask, attestation, emailApi}) => {
         /** create a ticket in ticket issuer page */
         await ticketIssuer.navHome()
-        // await expect.poll(async () => accessPopup.btnAccept()).toBeDefined()
         await accessPopup.btnAccept().click()
         const email = await emailApi.genRandomEmail()
         await ticketIssuer.createTickets(1, email)
@@ -101,8 +93,6 @@ test.describe('Test Suite - Bogota Active', async () => {
 
         /** verify ticket price after discount */
         await bogotaActive.navHome()
-        // await bogotaActive.btnLetsGo().click()
-        // await expect.poll(async () => bogotaActive.textOriginalPrice(0)).toBeDefined()
         await bogotaActive.checkPriceAfterDiscount()
 
         /** verify discount ticket count = 1 and toggle status = on */
@@ -113,12 +103,10 @@ test.describe('Test Suite - Bogota Active', async () => {
         /** toggle off discount ticket, verify its status = on and ticket price before discount */
         await bogotaActive.labelToggle(0).click()
         await bogotaActive.checkToggleStatus(0, false)
-        // await expect.poll(async () => bogotaActive.textDefaultPrice(0)).toBeDefined()
         await bogotaActive.checkPriceBeforeDiscount()
 
         /** toggle on discount ticket and verify ticket price after discount */
         await bogotaActive.labelToggle(0).click()
-        // await expect.poll(async () => bogotaActive.textOriginalPrice(0)).toBeDefined()
         await bogotaActive.checkPriceAfterDiscount()
 
         /** book and verify Pay Now button text when discount ticket applied */

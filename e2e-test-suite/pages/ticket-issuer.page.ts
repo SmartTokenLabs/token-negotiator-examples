@@ -17,7 +17,6 @@ export default class TicketIssuer {
     async navHome () {
         await this.page.goto(data.urlExamples.ticketIssuer)
         await this.page.waitForLoadState()
-        // await this.page.waitForTimeout(1000)
     }
 
     async createTickets(count: number, email: string) {

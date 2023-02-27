@@ -1,5 +1,5 @@
 {
-    "extMeta": "../extensions/meta-10.24.1",
+    "extMeta": "../extensions/meta-10.25.0",
     "urlMeta": "chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/home.html#initialize/create-password/import-with-seed-phrase",
     "network": {
         "ethereum": "Ethereum Mainnet",

@@ -18,7 +18,6 @@ export default class Metamask {
     btnSubmit = () => this.page.locator("button[type='submit']")
     btnPrimary = (text: string) => this.page.locator(`button.btn-primary >> text='${text}'`)
     iArrowDown = () => this.page.locator('i.fa-arrow-down')
-    btnShowNetwork = () => this.page.locator('div.network-display')
 
     /** login to metamask and select a network */
     async login() {
@@ -52,9 +51,5 @@ export default class Metamask {
         await expect.poll(async () => mm.browserContext.pages().length, { timeout: 10000 }).toBe(2)
         await mm.iArrowDown().click({timeout: 3000}).catch(() => null)
         await mm.btnPrimary('Sign').click()
-        // .catch(async () => {
-        //     mm = await this.initPage()
-        //     await mm.btnPrimary('Sign').click()
-        // })
     }
 }

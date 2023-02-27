@@ -4,12 +4,10 @@ import data from '../fixtures/data.json'
 test.describe('Test Suite - Bogota Passive', async () => {
     test.afterEach(async ({page}) => {
         await page.close()
-        // await page2.close()
     })
     test('Test - No discount ticket applied', async ({bogotaPassive, accessPopup}) => {
         /** verify ticket count and discount message when no discount ticket applied */
         await bogotaPassive.navHome()
-        // await expect.poll(async () => accessPopup.btnAccept()).toBeDefined()
         await accessPopup.btnAccept().click()
         await expect.poll(async () => await bogotaPassive.textTicketCount().innerText()).toContain('0')
         await bogotaPassive.btnBook(0).click()
@@ -17,10 +15,9 @@ test.describe('Test Suite - Bogota Passive', async () => {
         await bogotaPassive.btnPayNow().click()
         bogotaPassive.checkPopupMessage(data.dialogMessage.noToken)
     })
-    test('Test - With discount ticket applied', async ({ticketIssuer, accessPopup, emailApi, metamask, bogotaPassive, attestation}) => {
+    test('Test - With discount ticket applied', async ({page, ticketIssuer, accessPopup, emailApi, metamask, bogotaPassive, attestation}) => {
         /** create a ticket in ticket issuer page */
         await ticketIssuer.navHome()
-        // await expect(async () => await accessPopup.btnAccept().isVisible() === true).toPass()
         await accessPopup.btnAccept().click()
         const email = await emailApi.genRandomEmail()
         await ticketIssuer.createTickets(1, email)
@@ -33,10 +30,10 @@ test.describe('Test Suite - Bogota Passive', async () => {
         await bogotaPassive.btnRefreshToken().click()
         await expect.poll(async () => await bogotaPassive.textTicketCount().innerText()).toContain('1')
         await bogotaPassive.btnBook(0).click()
+        await page.waitForLoadState('networkidle')
         await bogotaPassive.divToken(0).click()
 
         /** get and enter attestation otp */
-        await attestation.textCode(0).waitFor()
         const otp = await emailApi.getAttestation()
         await attestation.enterAttestationCode(otp)
 
