@@ -57,7 +57,7 @@ function App() {
 
 	  window.negotiator.on('tokens', (issuerTokens) => {
 		  let tokens = [];
-		  tokenIssuers.map((issuer) => {
+		  tokenIssuers.forEach((issuer) => {
 			  tokens.push(...issuerTokens[issuer.collectionID].tokens);
 		  });
 		  if (tokens.length > 0) {

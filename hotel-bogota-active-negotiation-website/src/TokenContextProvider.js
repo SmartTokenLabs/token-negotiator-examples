@@ -30,7 +30,7 @@ const TokenContextProvider = (props) => {
 
       const { selectedTokens } = tokens;
 
-      tokenKeys.map((token) => {
+      tokenKeys.forEach((token) => {
 
         selectedTokensState.push(...tokens.selectedTokens[token].tokens);
         

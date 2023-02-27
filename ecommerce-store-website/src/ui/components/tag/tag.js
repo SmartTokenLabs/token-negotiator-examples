@@ -17,7 +17,7 @@ export default function Tag({ className, children, size }) {
 
 	return (
 		<span className={ clsx( styles[ 'c-tag' ], className, { [ styles[ `-size-${ size }` ] ]:size } ) }>
-			{ children && children }
+			{ children }
 		</span>
 	);
 }

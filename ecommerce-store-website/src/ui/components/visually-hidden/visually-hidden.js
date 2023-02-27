@@ -18,7 +18,7 @@ export default function VisuallyHidden({ className, children }) {
 
 	return (
 		<span className={ clsx( styles[ 'c-visually-hidden' ], className ) }>
-			{ children && children }
+			{ children }
 		</span>
 	);
 }

@@ -32,7 +32,7 @@ export default function FieldInput( props ) {
 	} else {
 		fieldProps = {
 			value,
-			...props?.onChange && { onChange: props.onChange },
+			...props.onChange && { onChange: props.onChange },
 		};
 		fieldMeta = {
 			error,
