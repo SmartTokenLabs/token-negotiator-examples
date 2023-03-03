@@ -19,24 +19,31 @@ import styles from "./home-view.module.scss";
 
 export default function HomeView(props) {		
 
-	const { wallet } = useContext(TokenContext);
+	const { wallet, switchChain, chainId } = useContext(TokenContext);
+	const [showNetworkNotification, setShowNetworkNotification] = useState(false);
 
-	let showNetworkNotification = false;
-	
-	const normalisedNetworkId = wallet ? chainMap[wallet.chainId] : undefined;
-	
-	if(
-		wallet &&
-		normalisedNetworkId !== "Goerli" &&
-		normalisedNetworkId !== "Mumbai"
-	){
-		showNetworkNotification = true;
-	}
+	useEffect(() => {
+		const normalisedNetworkId = wallet ? chainMap[chainId] : undefined;
+
+		if(
+			wallet &&
+			normalisedNetworkId !== "Goerli" &&
+			normalisedNetworkId !== "Mumbai"
+		){
+			setShowNetworkNotification(true);
+		} else {
+			setShowNetworkNotification(false);
+		}
+	}, [wallet, chainId]);
 
 	return (
 		<Page className={ styles[ 'v-home' ] }>
 
-			<Toast isOpen={ showNetworkNotification } msg={ "Please connect to Goerli or Mumbai network" } />
+			<Toast isOpen={ showNetworkNotification }
+				   msg={ <span>Click to connect to&nbsp;
+					   <a style={{cursor: "pointer", color: "#001AFF"}} onClick={() => switchChain(5)}>Goerli</a>&nbsp;
+					   or <a style={{cursor: "pointer", color: "#001AFF"}} onClick={() => switchChain(80001)}>Mumbai</a> network</span> }
+			/>
 
 			<section className="section -ps">
 				<div className="grid -g-cols-1">
