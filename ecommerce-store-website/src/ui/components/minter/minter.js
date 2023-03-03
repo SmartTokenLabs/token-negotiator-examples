@@ -50,6 +50,8 @@ export default function Minter({ className }) {
 			return;
 		}
 
+		let curChain = chain;
+
 		if( !nft.contracts[chain] ) {
 			try {
 				// Try automatically switching to Goerli
@@ -58,9 +60,11 @@ export default function Minter({ className }) {
 				if ((await walletInstance.provider.getNetwork()).chainId !== 5)
 					throw new Error("Chain switch failed");
 
+				curChain = "Goerli";
+
 			} catch (e) {
 				console.log("!nft.contracts[ chain ]", chainId);
-				console.log("!nft.contracts[ chain ]", chain, chainId);
+				console.log("!nft.contracts[ chain ]", curChain, chainId);
 
 				chainId
 					? setPopUpMsg(`Please change your wallet's network to either Goerli or Mumbai.`)
@@ -79,9 +83,9 @@ export default function Minter({ className }) {
 			connectedWallet: walletInstance,
 			walletAddress: walletInstance.address,
 			sendTo: walletInstance.address,
-			abi: nft.contracts[chain].abi,
-			contract: nft.contracts[chain].contract,
-			chain: chain,
+			abi: nft.contracts[curChain].abi,
+			contract: nft.contracts[curChain].contract,
+			chain: curChain,
 			name: collectionItem.name,
 			imageURI: collectionItem.ipfs,
 			description: collectionItem.description,
