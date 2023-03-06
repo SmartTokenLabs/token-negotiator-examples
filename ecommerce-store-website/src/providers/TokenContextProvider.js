@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, {createContext, useState, useEffect, useMemo} from "react";
 import { chainMap } from "src/base/utils/network";
 
 const TokenContext = createContext({
@@ -7,7 +7,8 @@ const TokenContext = createContext({
   proof: {},
   negotiator: {},
   walletStatus: '',
-  chainId: ''
+  chainId: '',
+  switchChain: undefined
 });
 
 const mumbaiIssuers = [
@@ -81,7 +82,12 @@ const TokenContextProvider = (props) => {
             position: "bottom-right",
           },
           ipfsBaseUrl:
-            "https://smart-token-labs-demo-server.mypinata.cloud/ipfs/"
+            "https://smart-token-labs-demo-server.mypinata.cloud/ipfs/",
+		  walletOptions: {
+			walletConnectV2: {
+				chains: ["eip155:5", "eip155:80001"]
+			}
+		  }
       });
 
       setNegotiator(newNegotiator);
@@ -114,36 +120,51 @@ const TokenContextProvider = (props) => {
           setWallet(walletConnection[0]);
         }
       });
-  
-      const resetIssuers = (networkId) => {
-        if (!networkId) return;
-
-        setChainId(networkId);
-  
-        const normalisedNetworkId = chainMap[networkId]
-          ? chainMap[networkId]
-          : "";
-  
-        switch (normalisedNetworkId) {
-          case "Goerli":
-            newNegotiator.negotiate(goerliIssuers);
-            break;
-          case "Mumbai":
-            newNegotiator.negotiate(mumbaiIssuers);
-            break;
-          default:
-            break;
-        }
-      };
 
       newNegotiator.negotiate();
     });
 
   }, []);
 
+  const resetIssuers = (networkId) => {
+	  if (!networkId) return;
+
+	  if (typeof networkId === "string")
+		  networkId = parseInt(networkId, 16);
+
+	  console.log("New chain ID: ", networkId);
+
+	  setChainId(networkId);
+
+	  const normalisedNetworkId = chainMap[networkId]
+		  ? chainMap[networkId]
+		  : "";
+
+	  switch (normalisedNetworkId) {
+		  case "Goerli":
+			  window.negotiator.negotiate(goerliIssuers);
+			  break;
+		  case "Mumbai":
+			  window.negotiator.negotiate(mumbaiIssuers);
+			  break;
+		  default:
+			  break;
+	  }
+  };
+
+  async function switchChain(nChainId){
+    // Try automatically switching to Goerli
+    await wallet.provider.send("wallet_switchEthereumChain", [{chainId: "0x" + Number(nChainId).toString(16)}]);
+	resetIssuers(nChainId);
+  }
+
+  const tokenContextProviderValue = useMemo(
+	  () => ({ tokens, negotiator, wallet, proof, walletStatus, chainId, switchChain }),
+	  [tokens, negotiator, wallet, proof, walletStatus, chainId, switchChain]
+  );
 
   return (
-    <TokenContext.Provider value={{ tokens, negotiator, wallet, proof, walletStatus, chainId }}>
+    <TokenContext.Provider value={tokenContextProviderValue}>
       {props.children}
     </TokenContext.Provider>
   );
