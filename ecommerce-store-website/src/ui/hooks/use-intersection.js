@@ -2,8 +2,6 @@
 
 //	Dependencies
 import { useState, useRef, useEffect } from 'react';
-import _ from 'lodash-es';
-
 
 //
 //	Brand Connector Demo / UI / App / Hooks / Intersection

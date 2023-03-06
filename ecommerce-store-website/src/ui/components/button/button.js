@@ -46,7 +46,7 @@ export default function Button( props ) {
 function ButtonGroup({ children, className }) {
 	return (
 		<div className={ clsx( styles[ 'c-button-group' ], className )}>
-			{ children && children }
+			{ children }
 		</div>
 	);
 }

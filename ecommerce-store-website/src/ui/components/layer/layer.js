@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { useTransition, animated as a } from '@react-spring/web';
 import clsx from 'clsx';
-import _ from 'lodash-es';
 
 // Styles
 import styles from './layer.module.scss';

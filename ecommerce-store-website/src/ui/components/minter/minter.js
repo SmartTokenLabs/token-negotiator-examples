@@ -6,7 +6,6 @@ import clsx from 'clsx';
 import { safeMint } from "base/utils/interact.js";
 import { Card, Button, Headline, Image, PopUp } from 'ui/components';
 import { TokenContext } from "src/providers/TokenContextProvider";
-import { useStore } from 'base/state';
 import { chainMap } from 'base/utils/network';
 import nftDataStore from 'base/nft-data-store';
 
@@ -58,8 +57,6 @@ export default function Minter({ className }) {
 			setChangeOfNetworkRequired(true);
 		} else {
 			setChangeOfNetworkRequired(false);
-			const x = await walletInstance.provider.getNetwork();
-			// connectedWallet.provider.getNetwork
 
 			const { status, success } = await safeMint({
 				connectedWallet: walletInstance,
@@ -104,7 +101,10 @@ export default function Minter({ className }) {
 					let isMinted = mintedNFTs.indexOf( collectionItem.id ) > -1 || tokenIsSelected;
 						
 					return (
-						<Card key={ i } className="-style-outline -mb6">
+						<Card Card key = {
+							collectionItem.id  + i
+						}
+						className = "-style-outline -mb6" >
 							<Image className={ styles[ 'c-minter_image' ] } src={ collectionItem.imagePath } />
 							<Headline className="f5 -mt3 -mb1" type="h2">{ title }</Headline>
 								<p className="f7 -mb3">{ description }</p>

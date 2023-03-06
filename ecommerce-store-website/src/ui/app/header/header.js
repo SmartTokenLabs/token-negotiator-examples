@@ -4,10 +4,9 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { useRouter } from "next/router";
-import _ from "lodash";
 
 //	App
-import { Logo, Link, Nav, Button, Image, Icon, Layer } from "ui/components";
+import { Logo, Link, Nav, Button, Icon, Layer } from "ui/components";
 import { TokenContext } from "src/providers/TokenContextProvider";
 
 // Styles

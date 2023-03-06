@@ -15,12 +15,6 @@
 	//	Elements ----------------
 
 	input[type] {
-		&:focus {
-			outline: 0;
-		}
-	}
-
-	input[type] {
 		@include type-size( 'f6', $margin: 0 );
 		height: grid-baseline(8);
 		border-radius: grid-baseline(1);
@@ -36,6 +30,10 @@
 
 		&::placeholder {
 			color: color-get( --field-text );
+		}
+
+		&:focus {
+			outline: 0;
 		}
 	}
 
