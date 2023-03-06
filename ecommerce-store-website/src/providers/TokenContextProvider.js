@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, {createContext, useState, useEffect, useMemo} from "react";
 import { chainMap } from "src/base/utils/network";
 
 const TokenContext = createContext({
@@ -8,7 +8,7 @@ const TokenContext = createContext({
   negotiator: {},
   walletStatus: '',
   chainId: '',
-  switchChain: () => {}
+  switchChain: undefined
 });
 
 const mumbaiIssuers = [
@@ -158,8 +158,13 @@ const TokenContextProvider = (props) => {
 	resetIssuers(nChainId);
   }
 
+  const tokenContextProviderValue = useMemo(
+	  () => ({ tokens, negotiator, wallet, proof, walletStatus, chainId, switchChain }),
+	  [tokens, negotiator, wallet, proof, walletStatus, chainId, switchChain]
+  );
+
   return (
-    <TokenContext.Provider value={{ tokens, negotiator, wallet, proof, walletStatus, chainId, switchChain }}>
+    <TokenContext.Provider value={tokenContextProviderValue}>
       {props.children}
     </TokenContext.Provider>
   );
