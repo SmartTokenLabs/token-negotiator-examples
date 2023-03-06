@@ -10,6 +10,8 @@ module.exports = function override(config) {
     os: require.resolve("os-browserify"),
     url: require.resolve("url"),
   });
+  config.resolve.alias = config.resolve.alias || {};
+  config.resolve.alias.process = "process/browser";
   config.resolve.fallback = fallback;
   config.plugins = (config.plugins || []).concat([
     new webpack.ProvidePlugin({
