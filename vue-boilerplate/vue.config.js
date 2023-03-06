@@ -3,6 +3,11 @@ const NodePolyfillPlugin = require("node-polyfill-webpack-plugin")
 module.exports = defineConfig({
   transpileDependencies: true,
   configureWebpack: {
+    resolve: {
+      alias: {
+        process: "process/browser"
+      }
+    },
     plugins: [
       new NodePolyfillPlugin()
     ]
