@@ -125,7 +125,6 @@ export default function BookingModal({room}) {
             disableEnforceFocus={true}
             open={open}
             onClose={handleClose}
-            disableEnforceFocus={true}
             aria-labelledby="form-dialog-title">
           {
             bookingDone &&
@@ -253,7 +252,6 @@ export default function BookingModal({room}) {
                         className="paynow"
                         variant="contained"
                         onClick={useToken}
-                        color="primary"
                     >
                       Use Token
                     </Button>
@@ -265,7 +263,6 @@ export default function BookingModal({room}) {
                         className="paynow"
                         variant="contained"
                         onClick={useToken}
-                        color="primary"
                     >
                       <div className="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
                     </Button>
@@ -277,7 +274,6 @@ export default function BookingModal({room}) {
                         className="paynow"
                         variant="contained"
                         onClick={handleSubmit}
-                        color="primary"
                     >
                       Pay Now
                     </Button>
@@ -289,7 +285,6 @@ export default function BookingModal({room}) {
                         className="paynow"
                         variant="contained"
                         onClick={handleSubmit}
-                        color="primary"
                     >
                       Pay Now (no discount)
                     </Button>

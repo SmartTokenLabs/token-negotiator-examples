@@ -20,14 +20,13 @@ import styles from './minter.module.scss';
 export default function Minter({ className }) {
 
 
-	const { wallet: walletInstance, walletStatus, chainId, tokens: selectedTokens } = useContext(TokenContext);
+	const { wallet: walletInstance, walletStatus, chainId, tokens: selectedTokens, switchChain } = useContext(TokenContext);
 
 	const [submissionStatus, setSubmissionStatus] = useState('');
 	const [mintedNFTs, setMintedNFTs ] = useState([]);
 	const [changeOfNetworkRequired, setChangeOfNetworkRequired] = useState(false);
 	const [popUpMsg, setPopUpMsg] = useState('')
-
-	const chain = chainMap[chainId] ? chainMap[chainId] : 'unsupported chain: ' + chainId;
+	const [chain, setChain] = useState();
 	const nftCollections = nftDataStore;
 
 	const [mintButonState, setMintButonState] = useState(nftDataStore.map(()=>false));
@@ -35,6 +34,10 @@ export default function Minter({ className }) {
 	useEffect( () => {
 		if ( submissionStatus && !walletStatus ) setSubmissionStatus( walletStatus );
 	}, [ walletStatus ] );
+
+	useEffect(() => {
+		setChain(chainMap[chainId] ? chainMap[chainId] : 'unsupported chain: ' + chainId);
+	}, [chainId]);
 
 	const onClosePopUpEvent = () => {
 		setChangeOfNetworkRequired(false);
@@ -46,33 +49,49 @@ export default function Minter({ className }) {
 			return;
 		}
 
+		let curChain = chain;
+
 		if( !nft.contracts[chain] ) {
-			console.log("!nft.contracts[ chain ]", chainId);
-			console.log("!nft.contracts[ chain ]", chain, chainId);
+			try {
+				// Try automatically switching to Goerli
+				await switchChain(5);
 
-			chainId
-				? setPopUpMsg(`Please change your wallet's network to either Goerli or Mumbai.`)
-				: setPopUpMsg(`Please connect your wallet to continue.`) 
-			
-			setChangeOfNetworkRequired(true);
-		} else {
-			setChangeOfNetworkRequired(false);
+				if ((await walletInstance.provider.getNetwork()).chainId !== 5)
+					throw new Error("Chain switch failed");
 
-			const { status, success } = await safeMint({
-				connectedWallet: walletInstance,
-				walletAddress: walletInstance.address,
-				sendTo: walletInstance.address,
-				abi: nft.contracts[chain].abi,
-				contract: nft.contracts[chain].contract,
-				chain: chain,
-				name: collectionItem.name,
-				imageURI: collectionItem.ipfs,
-				description: collectionItem.description,
-				tokenUri: collectionItem.metaUrl
-			});
-			if ( success ) setMintedNFTs( [ ...mintedNFTs, collectionItem.id ] );
-			if( status ) setSubmissionStatus( status );
+				curChain = "Goerli";
+
+			} catch (e) {
+				console.log("!nft.contracts[ chain ]", chainId);
+				console.log("!nft.contracts[ chain ]", curChain, chainId);
+
+				chainId
+					? setPopUpMsg(`Please change your wallet's network to either Goerli or Mumbai.`)
+					: setPopUpMsg(`Please connect your wallet to continue.`)
+
+				setChangeOfNetworkRequired(true);
+				return;
+			}
 		}
+
+		setChangeOfNetworkRequired(false);
+
+		// connectedWallet.provider.getNetwork
+
+		const { status, success } = await safeMint({
+			connectedWallet: walletInstance,
+			walletAddress: walletInstance.address,
+			sendTo: walletInstance.address,
+			abi: nft.contracts[curChain].abi,
+			contract: nft.contracts[curChain].contract,
+			chain: curChain,
+			name: collectionItem.name,
+			imageURI: collectionItem.ipfs,
+			description: collectionItem.description,
+			tokenUri: collectionItem.metaUrl
+		});
+		if ( success ) setMintedNFTs( [ ...mintedNFTs, collectionItem.id ] );
+		if( status ) setSubmissionStatus( status );
 	};
 
 	return (
@@ -89,14 +108,11 @@ export default function Minter({ className }) {
 
 					let current = i;
 
-					let tokenIsSelected = false;
-					if (typeof ethereum !== "undefined") {
-						const chain = ethereum.chainId === '0x13881' ? '-mumbai' : '-goerli';
-						tokenIsSelected = (
-							selectedTokens && selectedTokens[collectionItem.ref + chain] &&
-							selectedTokens[collectionItem.ref+chain].tokens.length > 0
-						);
-					}
+					const chain = chainId === 80001 ? '-mumbai' : '-goerli';
+					const tokenIsSelected = (
+						selectedTokens && selectedTokens[collectionItem.ref + chain] &&
+						selectedTokens[collectionItem.ref+chain].tokens.length > 0
+					);
 
 					let isMinted = mintedNFTs.indexOf( collectionItem.id ) > -1 || tokenIsSelected;
 						
@@ -112,6 +128,11 @@ export default function Minter({ className }) {
 								className={ clsx( styles[ 'c-minter_button' ], '-mta' , mintButonState[i] && "is_running") }
 								onClick={ async event => {
 									if (mintButonState[current]) return;
+
+									if (!walletInstance){
+										negotiator.ui.openOverlay();
+										return;
+									}
 
 									let state = [...mintButonState];
 									state[current] = true;
@@ -131,6 +152,10 @@ export default function Minter({ className }) {
 						</Card>
 					);
 				})}
+				{ walletInstance ?
+				<a style={{cursor: "pointer"}} onClick={async () => { try { await switchChain(chainId !== 5 ? 5 : 80001); } catch (e) {/* no-op */}}}>
+					Switch to {chainId !== 5 ? "Goerli" : "Mumbai"}
+				</a> : ''}
 			</div>
 			<PopUp closeEvent={onClosePopUpEvent} isOpen={changeOfNetworkRequired} msg={popUpMsg} />
 		</div>
