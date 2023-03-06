@@ -57,7 +57,7 @@ function App() {
 
     let tokens = [];
     
-    tokenIssuers.map((issuer) => {
+    tokenIssuers.forEach((issuer) => {
 
       tokens.push(...issuerTokens[issuer.collectionID].tokens);
 

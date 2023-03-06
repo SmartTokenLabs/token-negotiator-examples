@@ -47,7 +47,7 @@ const Context = React.forwardRef( ( props, ref ) => {
 					</div>
 				</div>
 			</header>
-			{ children && children }
+			{ children }
 		</a.div>
 	);
 });

@@ -19,7 +19,7 @@ import styles from "./demo-hero.module.scss";
 export default function DemoHero({ children, className, ...rest }) {
 	return (
 		<Hero className={ clsx( styles[ 's-demo-hero' ], className ) } { ...rest }>
-			{ children && children }
+			{ children }
 		</Hero>
 	)
 }

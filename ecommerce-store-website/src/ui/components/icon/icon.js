@@ -63,7 +63,7 @@ export default function Icon( props ) {
 				<span className="c-icon_tag">{ tag }</span>
 			)}
 			<svg xmlns="http://www.w3.org/2000/svg" fill={ colour } stroke="none" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" preserveAspectRatio="xMidYMid meet">
-				{ iconPath && iconPath }
+				{ iconPath }
 			</svg>
 		</span>
 	);

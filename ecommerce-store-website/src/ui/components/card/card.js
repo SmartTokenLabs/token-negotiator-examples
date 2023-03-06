@@ -46,7 +46,7 @@ const Card = React.memo( function Card( props ) {
 				<div className={ styles[ 'c-card_image' ] } role='img' style={ bgImgStyles } />
 			)}
 			<div className={ styles[ 'c-card_wrapper' ]}>
-				{ children && children }
+				{ children }
 			</div>
 		</>
 	);
