@@ -32,7 +32,7 @@ export const safeMint = async ({
 
 		window.negotiator.ui.dismissLoader()
 
-		// Automatically refresh tokens after 30 seconds
+		// Automatically refresh tokens after 20 seconds
 		window.negotiator.getTokenStore().clearCachedTokens();
 		setTimeout(() => {
 			window.negotiator.negotiate();
