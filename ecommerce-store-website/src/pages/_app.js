@@ -41,7 +41,7 @@ export default function App({ Component, pageProps }) {
 			</Layout>
 			<Context.Region onClose={ () => api.setContextView() } views={ CONTEXT_VIEWS } />
 			<div className="overlay-tn" />
-			{isMounted &&<div
+			{isMounted && <div
 			dangerouslySetInnerHTML={{
 				__html: `<link rel='preload' href='/css/tn_style.css' as='style' onload="this.onload=null;this.rel='stylesheet'"/>`,
 			}}
