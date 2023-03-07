@@ -2,8 +2,13 @@ name: Build examples
 #description: Build all examples
 
 on:
+  push:
+    branches:
+      - main
+      - staging
   pull_request:
-    branches: [ main, staging ]
+    branches:
+      - "*"
   workflow_dispatch:
     inputs:
       negotiatorBranch:
@@ -23,41 +28,56 @@ jobs:
     strategy:
       matrix:
         node-version: [16.x]
-    
+
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-        cache-dependency-path: '**/package-lock.json'
-        registry-url: 'https://npm.pkg.github.com'
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+          registry-url: "https://npm.pkg.github.com"
 
-    - name: Build
-      run: |
-        echo "Github base ref: $GITHUB_BASE_REF"
-        echo "Requested branch: $NEGOTIATOR_BRANCH"
-        
-        npm install
-        
-        if [[ $GITHUB_BASE_REF == "staging" ]]; then 
-          echo "This is a staging branch PR, updating package.json files to use negotiator staging branch"
-          scripts/use_negotiator_branch.js staging
-        fi
-        if [[ ! -z $NEGOTIATOR_BRANCH && $NEGOTIATOR_BRANCH != "none" ]]; then 
-          echo "Negotiator branch $NEGOTIATOR_BRANCH requested, updating package.json files"
-          scripts/use_negotiator_branch.js $NEGOTIATOR_BRANCH
-        fi
-        
-        export BASE_PATH=/token-negotiator-examples/ecommerce-store-website
-        export MAX_PROCESSES=5
-        
-        npm run install-examples
-        npm run clean
-        npm run build
-        npm run copy-artifacts
-      env:
-        NEGOTIATOR_BRANCH: ${{ inputs.negotiatorBranch }}
-        NODE_AUTH_TOKEN: ${{ github.token }}
+      - name: Build
+        run: |
+          echo "Github base ref: $GITHUB_BASE_REF"
+          echo "Requested branch: $NEGOTIATOR_BRANCH"
+
+          npm install
+
+          if [[ $GITHUB_BASE_REF == "staging" ]]; then 
+            echo "This is a staging branch PR, updating package.json files to use negotiator staging branch"
+            scripts/use_negotiator_branch.js staging
+          fi
+          if [[ ! -z $NEGOTIATOR_BRANCH && $NEGOTIATOR_BRANCH != "none" ]]; then
+            echo "Negotiator branch $NEGOTIATOR_BRANCH requested, updating package.json files"
+            scripts/use_negotiator_branch.js $NEGOTIATOR_BRANCH
+          fi
+
+          export BASE_PATH=/token-negotiator-examples/ecommerce-store-website
+          export MAX_PROCESSES=5
+
+          npm run install-examples
+          npm run clean
+          npm run build
+          npm run copy-artifacts
+        env:
+          NEGOTIATOR_BRANCH: ${{ inputs.negotiatorBranch }}
+          NODE_AUTH_TOKEN: ${{ github.token }}
+
+  sonarcloud:
+    needs:
+      - build
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
