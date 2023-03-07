@@ -10,7 +10,7 @@ import _ from 'lodash-es';
 
 
 function formatPropertyValue( pv ) {
-	return pv.trim().replace( /^"|"$/g, '' );
+	return pv.trim().replace("/^"|"$/g","");
 }
 
 export function getPropertyValue( propertyValue ) {
