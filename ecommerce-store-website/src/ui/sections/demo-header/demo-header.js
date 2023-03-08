@@ -21,7 +21,7 @@ export default function DemoHeader({ className, headline, children }) {
 				<h1 className="-mt0">{ headline }</h1>
 			</div>
 			<div className="grid -g-cols-1 -hide-s">
-				{ children && children }
+				{ children }
 			</div>
 		</section>
 	);

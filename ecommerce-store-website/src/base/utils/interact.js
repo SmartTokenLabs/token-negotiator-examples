@@ -20,18 +20,27 @@ export const safeMint = async ({
 	try {
 
 		window.contract = new _ethers.Contract(contract, abi, connectedWallet.provider.getSigner());
-		const txHash = await window.contract.safeMint(sendTo, tokenUri);
-
+		const tx = await window.contract.safeMint(sendTo, tokenUri);
+		
 		window.negotiator.ui.showLoaderDelayed([ 
 			"<h4>Minting...</h4>",
 			"<small>Transaction in progress</small>"
 		], 0, true);
 
-		setTimeout(() => { window.negotiator.ui.dismissLoader() }, 5000);
-		
+		await tx.wait();
+		// ... now TX is succesfully minted
+
+		window.negotiator.ui.dismissLoader()
+
+		// Automatically refresh tokens after 20 seconds
+		window.negotiator.getTokenStore().clearCachedTokens();
+		setTimeout(() => {
+			window.negotiator.negotiate();
+		}, 20000);
+
 		return {
 			success: true,
-			status: "✅ Check out your transaction: " + chain + " " + txHash?.hash
+			status: "✅ Check out your transaction: " + chain + " " + tx?.hash
 		}
 
 	} catch (error) {

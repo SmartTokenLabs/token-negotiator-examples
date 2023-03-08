@@ -18,7 +18,7 @@ export default function Layout({ className, children }) {
 		<div className={ clsx( 'a-layout', className ) }>
 			<Header />
 			<main>
-				{ children && children }
+				{ children }
 				<LabsBanner />
 				<Footer />
 			</main>

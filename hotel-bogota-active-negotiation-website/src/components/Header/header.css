@@ -13,7 +13,7 @@ header {
   margin: 0;
   padding-top: 21px;
   height: 32px;
-  font-family: SerifGothicStd;
+  font-family: SerifGothicStd, Arial, Helvetica, sans-serif;
   font-size: 29px;
   font-weight: bold;
   font-stretch: normal;
@@ -25,12 +25,11 @@ header {
 
 .logo h2 {
   -webkit-font-smoothing: antialiased;
-  margin: 0;
   padding-top: 0;
   width: 118px;
   height: 12px;
   margin: 2px 36px 0;
-  font-family: SerifGothicStd;
+  font-family: SerifGothicStd, Arial, Helvetica, sans-serif;
   font-size: 10px;
   font-weight: bold;
   font-stretch: normal;

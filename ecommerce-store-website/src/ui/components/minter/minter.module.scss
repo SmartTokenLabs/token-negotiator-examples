@@ -27,6 +27,11 @@
 	}
 
 	&_button {
+		&:global(.is_running) {
+			border-color: rgba(var(--color-text), 0.4);
+			background: transparent;
+		    box-shadow: none;
+		}
 
 		&:global(.-style-primary-light) {
 			pointer-events: none;
