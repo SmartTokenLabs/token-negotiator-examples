@@ -1,16 +1,11 @@
 <script>
-  import { onMount } from "svelte";
-    import BrandConnector from "./components/BrandConnector.svelte";
-
-
-  export let name;
-
+  import BrandConnector from "./components/BrandConnector.svelte";
   // onMount
 </script>
 
 <main>
-  <h1>Hello {name}!</h1>
-  <p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+  <h1>Hello Svelte!</h1>
+  <p>This is a Svelte demo for Token-Negotiator. Click on the Token-Negotiator Icon to get started </p>
 </main>
 
 <BrandConnector />
