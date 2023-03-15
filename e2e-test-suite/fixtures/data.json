@@ -1,0 +1,22 @@
+{
+    "extMeta": "../extensions/meta-10.25.0",
+    "urlMeta": "chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/home.html#initialize/create-password/import-with-seed-phrase",
+    "network": {
+        "ethereum": "Ethereum Mainnet",
+        "goerli": "Goerli test network"
+    },
+    "urlEnv": {
+        "prod": "https://tokenscript.github.io/token-negotiator-gh-pages/",
+        "stage": "https://tokenscript.github.io/token-negotiator-examples/"
+    },
+    "urlExamples": {
+        "ticketIssuer": "ticket-issuer-url-website",
+        "bogotaPassive": "hotel-bogota-passive-negotiation-website",
+        "bogotaActive": "hotel-bogota-active-negotiation-website"
+    },
+    "dialogMessage": {
+        "noToken": "Transaction Complete with no discount, we look forward to your stay with us!",
+        "withToken": "Transaction Complete with token discount, we look forward to your stay with us!"
+    },
+    "urlEmailApi": "https://www.1secmail.com/api/v1/"
+}
