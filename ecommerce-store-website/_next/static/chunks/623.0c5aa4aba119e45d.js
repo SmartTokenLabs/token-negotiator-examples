@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[623],{39623:function(e,o,t){t.r(o),t.d(o,{getFlowProvider:function(){return s}});var n=t(2817);n.config({"accessNode.api":"https://rest-mainnet.onflow.org","discovery.wallet":"https://fcl-discovery.onflow.org/authn"});const s=()=>n}}]);
