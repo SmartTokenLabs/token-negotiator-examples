@@ -9,9 +9,9 @@ export default class BogotaPassive {
         this.browserContext = browserContext
         this.page = page
     }
-
+    
+    btnRefreshToken = () => this.page.locator('button[title="Refresh tokens"]')
     textTicketCount = () => this.page.locator('div[class=MuiCardContent-root] > h1')
-    textFreeShuttle = () => this.page.locator('p.applyDiscountCopyContainer')
     btnBook = (id: number) => this.page.locator('button.MuiButton-root').nth(id)
     textDiscount = () => this.page.locator('div.subTitle')
     divToken = (id: number) => this.page.locator('div.tokenCard').nth(id)

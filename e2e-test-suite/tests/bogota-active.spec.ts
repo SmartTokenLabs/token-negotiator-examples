@@ -1,10 +1,9 @@
 import test, { expect } from '../fixtures/modules'
 import data from '../fixtures/data.json'
 
-test.describe.fixme('Test Suite - Bogota Active', async () => {
-    test.afterEach(async ({page, page2}) => {
+test.describe('Test Suite - Bogota Active', async () => {
+    test.afterEach(async ({page}) => {
         await page.close()
-        await page2.close()
     })
     test('Test - Apply no discount ticket', async ({bogotaActive}) => {
         /** verify ticket price and Pay Now button text when no discount ticket applied */
@@ -25,8 +24,6 @@ test.describe.fixme('Test Suite - Bogota Active', async () => {
 
         /** verify ticket price after discount*/
         await bogotaActive.navHome()
-        await bogotaActive.btnLetsGo().click()
-        await bogotaActive.page.waitForTimeout(1000)
         await bogotaActive.checkPriceAfterDiscount()
 
         /** verify discount ticket count = 1*/
@@ -54,12 +51,10 @@ test.describe.fixme('Test Suite - Bogota Active', async () => {
         await ticketIssuer.createTickets(1, email)
 
         /** login to metamask account */
-        await metamask.login(data.network.goerli)
+        await metamask.login()
 
         /** verify ticket price after discount */
         await bogotaActive.navHome()
-        await bogotaActive.btnLetsGo().click()
-        await bogotaActive.page.waitForTimeout(1000)
         await bogotaActive.checkPriceAfterDiscount()
 
         /** verify discount ticket count = 1 and toggle status = on */
@@ -71,19 +66,6 @@ test.describe.fixme('Test Suite - Bogota Active', async () => {
         await bogotaActive.btnBook(0).click()
         await expect(bogotaActive.btnPayNow()).toHaveText('Use Token')
         await bogotaActive.btnPayNow().click()
-
-        // /** clear any existing emails in inbox */
-        // await gmailApi.getAccessToken()
-        // await gmailApi.clearInbox()
-
-        /** verify metamask transaction */
-        await bogotaActive.btnMetamask().click()
-        await metamask.confirm()
-
-        // /** get and enter attestation code */
-        // await attestation.textCode(0).waitFor()
-        // const code = await gmailApi.getAttestationWithRetry(5)
-        // await attestation.enterAttestationCode(code)
 
         /** get and enter attestation otp */
         await attestation.textCode(0).waitFor()
@@ -107,12 +89,10 @@ test.describe.fixme('Test Suite - Bogota Active', async () => {
         await ticketIssuer.createTickets(1, email)
 
         /** login to metamask account */
-        await metamask.login(data.network.goerli)
+        await metamask.login()
 
         /** verify ticket price after discount */
         await bogotaActive.navHome()
-        await bogotaActive.btnLetsGo().click()
-        await bogotaActive.page.waitForTimeout(1000)
         await bogotaActive.checkPriceAfterDiscount()
 
         /** verify discount ticket count = 1 and toggle status = on */
@@ -133,19 +113,6 @@ test.describe.fixme('Test Suite - Bogota Active', async () => {
         await bogotaActive.btnBook(0).click()
         await expect(bogotaActive.btnPayNow()).toHaveText('Use Token')
         await bogotaActive.btnPayNow().click()
-
-        // /** clear any existing emails in inbox */
-        // await gmailApi.getAccessToken()
-        // await gmailApi.clearInbox()
-
-        /** confirm metamask transaction */        
-        await bogotaActive.btnMetamask().click()
-        await metamask.confirm()
-
-        // /** get and enter attestation code */        
-        // await attestation.textCode(0).waitFor()
-        // const code = await gmailApi.getAttestationWithRetry(5)
-        // await attestation.enterAttestationCode(code)
 
         /** get and enter attestation otp */
         await attestation.textCode(0).waitFor()
