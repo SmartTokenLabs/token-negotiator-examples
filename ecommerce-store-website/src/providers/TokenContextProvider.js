@@ -69,10 +69,12 @@ const TokenContextProvider = (props) => {
 
   useEffect(() => {
 
-    import("@tokenscript/token-negotiator").then((negotiatorInstance) => {
-      let currentIssuers = goerliIssuers;
-      const newNegotiator = new negotiatorInstance.Client({
-        type: "active",
+
+    setTimeout(()=>{
+      import("@tokenscript/token-negotiator").then((negotiatorInstance) => {
+        let currentIssuers = goerliIssuers;
+        const newNegotiator = new negotiatorInstance.Client({
+          type: "active",
           issuers: [...currentIssuers],
           uiOptions: {
             openingHeading:
@@ -81,76 +83,75 @@ const TokenContextProvider = (props) => {
             repeatAction: "try again",
             position: "bottom-right",
           },
-          ipfsBaseUrl:
-            "https://smart-token-labs-demo-server.mypinata.cloud/ipfs/",
-		  walletOptions: {
-			walletConnectV2: {
-				chains: ["eip155:5", "eip155:80001"]
-			}
-		  }
-      });
-
-      setNegotiator(newNegotiator);
-      window.negotiator = newNegotiator;
-
-      newNegotiator.on("tokens-selected", (tokens) => {
-        setTokens({...tokens.selectedTokens});
-      });
+          ipfsBaseUrl: "https://smart-token-labs-demo-server.mypinata.cloud/ipfs/",
+          walletOptions: {
+            walletConnectV2: {
+              chains: ["eip155:5", "eip155:80001"]
+            }
+          }
+        });
   
-      newNegotiator.on("token-proof", (result) => {
-        setProof(result.data);
-      });
+        setNegotiator(newNegotiator);
+        window.negotiator = newNegotiator;
   
-      newNegotiator.on("connected-wallet", (connectedWallet) => {
-        if (connectedWallet) {
-          setWallet(connectedWallet);
-          resetIssuers(connectedWallet.chainId);
-          setWalletStatus(undefined);
-        } else {
-          setWallet(null);
-		  setTokens({});
-          setWalletStatus('You must connect your wallet to continue.');
-        }
-      });
+        newNegotiator.on("tokens-selected", (tokens) => {
+          setTokens({...tokens.selectedTokens});
+        });
+    
+        newNegotiator.on("token-proof", (result) => {
+          setProof(result.data);
+        });
+    
+        newNegotiator.on("connected-wallet", (connectedWallet) => {
+          if (connectedWallet) {
+            setWallet(connectedWallet);
+            resetIssuers(connectedWallet.chainId);
+            setWalletStatus(undefined);
+          } else {
+            setWallet(null);
+        setTokens({});
+            setWalletStatus('You must connect your wallet to continue.');
+          }
+        });
+
+        const resetIssuers = (networkId) => {
+          if (!networkId) return;
+      
+          if (typeof networkId === "string")
+            networkId = parseInt(networkId, 16);
+      
+          console.log("New chain ID: ", networkId);
+      
+          setChainId(networkId);
+      
+          const normalisedNetworkId = chainMap[networkId]
+            ? chainMap[networkId]
+            : "";
+      
+          switch (normalisedNetworkId) {
+            case "Goerli":
+              window.negotiator.negotiate(goerliIssuers);
+              break;
+            case "Mumbai":
+              window.negotiator.negotiate(mumbaiIssuers);
+              break;
+            default:
+              break;
+          }
+        };
+    
+        newNegotiator.on("network-change", (chain) => {
+          resetIssuers(chain);
+          const walletConnection = newNegotiator.web3WalletProvider.getConnectedWalletData();
+          if(walletConnection.length > 0) { 
+            setWallet(walletConnection[0]);
+          }
+        });
   
-      newNegotiator.on("network-change", (chain) => {
-        resetIssuers(chain);
-        const walletConnection = newNegotiator.web3WalletProvider.getConnectedWalletData();
-        if(walletConnection.length > 0) { 
-          setWallet(walletConnection[0]);
-        }
+        newNegotiator.negotiate();
       });
-
-      newNegotiator.negotiate();
-    });
-
+    }, 3000)
   }, []);
-
-  const resetIssuers = (networkId) => {
-	  if (!networkId) return;
-
-	  if (typeof networkId === "string")
-		  networkId = parseInt(networkId, 16);
-
-	  console.log("New chain ID: ", networkId);
-
-	  setChainId(networkId);
-
-	  const normalisedNetworkId = chainMap[networkId]
-		  ? chainMap[networkId]
-		  : "";
-
-	  switch (normalisedNetworkId) {
-		  case "Goerli":
-			  window.negotiator.negotiate(goerliIssuers);
-			  break;
-		  case "Mumbai":
-			  window.negotiator.negotiate(mumbaiIssuers);
-			  break;
-		  default:
-			  break;
-	  }
-  };
 
   async function switchChain(nChainId){
     // Try automatically switching to Goerli
