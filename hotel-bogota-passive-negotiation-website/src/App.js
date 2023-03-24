@@ -56,11 +56,11 @@ function App() {
   useEffect(() => {
 
 	  window.negotiator.on('tokens', (issuerTokens) => {
-		  let tokens = [];
+      let tokens = [];
 		  tokenIssuers.forEach((issuer) => {
 			  tokens.push(...issuerTokens[issuer.collectionID].tokens);
-		  });
-		  if (tokens.length > 0) {
+      });
+      if (tokens.length > 0) {
 			  setTokens(tokens);
 			  setFreeShuttle(true);
 		  }
@@ -157,8 +157,7 @@ function App() {
     <div>
       <div className="header">
         <LogoCard title={"Hotel Bogota"} />
-        <TokenNotificationCard tokensNumber={tokens.length} refreshTokens={() => {
-			window.negotiator.negotiate(null, false, true);
+        <TokenNotificationCard tokensNumber={tokens.length} refreshTokens={() => {window.negotiator.negotiate(null, false, true);
 		}} />
       </div>
       <BookingDate />
