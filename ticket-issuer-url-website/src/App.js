@@ -148,12 +148,12 @@ function App() {
       <div className="flexCenter">
         <div className="tokensWrapper">
           {
-            tokens && tokens.length > 0 && tokens.map((tokenInstance, index) => {
+            tokens && tokens?.length > 0 && tokens.map((tokenInstance, index) => {
               return <Token key={index} tokenInstance={tokenInstance} />
             })
           }
           {
-            !tokens.length && <div>
+            !tokens?.length && <div>
               <b>- no ticket found -</b>
             </div>
           }
