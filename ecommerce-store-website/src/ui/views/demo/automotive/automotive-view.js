@@ -24,12 +24,12 @@ export default function AutomotiveView() {
 	};
 
 	const vehicles = [
-		{ image: { src: '/images/lambo-vehicle.webp', height: 282, width: 594 }, title: 'Lamborghini', description: 'Rare Aventador LP780-4 ‘22', price: 550, salePrice: 500 },
-		{ image: { src: '/images/porsch-vehicle.webp', height: 282, width: 594 } , title: 'Porche', description: '911 GT3 RS Limited Edition ‘20', price: 290, salePrice: 250 },
-		{ image: { src: '/images/lambo-urus-vehicle.webp', height: 282, width: 594 } , title: 'Lamborghini Urus Esteso 19', description: 'Limited Edition Urus Esteso ‘19', price: 450, salePrice: 400 },
-		{ image: { src: '/images/mercedes-vehicle.webp', height: 282, width: 594 } , title: 'Mercedes', description: 'AMG GT Night Edition ‘21', price: 320, salePrice: 270 },
-		{ image: { src: '/images/ferrari-vehicle.webp', height: 282, width: 594 } , title: 'Ferrari', description: 'Vulcan ‘21', price: 310, salePrice: 260 },
-		{ image: { src: '/images/aston-martin-vehicle.webp', height: 282, width: 594 } , title: 'Aston Martin', description: 'Vulcan ‘21', price: 550, salePrice: 500 },
+		{ id: 1, image: { src: '/images/lambo-vehicle.webp', height: 282, width: 594 }, title: 'Lamborghini', description: 'Rare Aventador LP780-4 ‘22', price: 550, salePrice: 500 },
+		{ id: 2, image: { src: '/images/porsch-vehicle.webp', height: 282, width: 594 } , title: 'Porche', description: '911 GT3 RS Limited Edition ‘20', price: 290, salePrice: 250 },
+		{ id: 3, image: { src: '/images/lambo-urus-vehicle.webp', height: 282, width: 594 } , title: 'Lamborghini Urus Esteso 19', description: 'Limited Edition Urus Esteso ‘19', price: 450, salePrice: 400 },
+		{ id: 4, image: { src: '/images/mercedes-vehicle.webp', height: 282, width: 594 } , title: 'Mercedes', description: 'AMG GT Night Edition ‘21', price: 320, salePrice: 270 },
+		{ id: 5, image: { src: '/images/ferrari-vehicle.webp', height: 282, width: 594 } , title: 'Ferrari', description: 'Vulcan ‘21', price: 310, salePrice: 260 },
+		{ id: 6, image: { src: '/images/aston-martin-vehicle.webp', height: 282, width: 594 } , title: 'Aston Martin', description: 'Vulcan ‘21', price: 550, salePrice: 500 },
 	]
 
 	const { tokens: selectedTokens, chainId } = useContext(TokenContext);
@@ -98,7 +98,7 @@ export default function AutomotiveView() {
 							{ vehicles && vehicles.map( ( vehicle, i ) => (
 								<ProductItem 
 									className="-t-dark"
-									key={ `vehicle-${ i }` }
+									key={ `vehicle-${ vehicle.id }` }
 									product={{ ...vehicle, priceTag: 'day' }}
 									discountEnabled={ promotionEnabled }
 									selectedTokens={ selectedTokens }

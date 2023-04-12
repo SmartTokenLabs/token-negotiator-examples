@@ -4,7 +4,6 @@ import { useContext } from 'react';
 import clsx from 'clsx';
 
 // App
-import { useStore } from "base/state";
 import { TokenContext } from 'src/providers/TokenContextProvider';
 import { checkNFTEligibility } from "base/utils";
 import { Page } from 'ui/app';
@@ -24,9 +23,9 @@ export default function Fashion() {
 	};
 
 	const exclusiveProducts = [
-		{ image: { src: '/images/fashion-exclusive-1.webp', height: 686, width: 594 }, title: 'Jimmy Choo Mugler Knee Sandal', description: 'Gold Liquid Metal Leather Sandals with Gold Chain Fringes', price: 3700.00 },
-		{ image: { src: '/images/fashion-exclusive-2.webp', height: 686, width: 594 }, title: 'Jimmy Choo Micro Bon Bon', description: 'Black Smooth Nappa Mini Bag', price: 1149.99 },
-		{ image: { src: '/images/fashion-exclusive-3.webp', height: 686, width: 594 }, title: 'Jimmy Choo Azia 95', description: 'Malibu Liquid Metal Leather Sandals', price: 1295.00 },
+		{ id: 1, image: { src: '/images/fashion-exclusive-1.webp', height: 686, width: 594 }, title: 'Jimmy Choo Mugler Knee Sandal', description: 'Gold Liquid Metal Leather Sandals with Gold Chain Fringes', price: 3700.00 },
+		{ id: 2, image: { src: '/images/fashion-exclusive-2.webp', height: 686, width: 594 }, title: 'Jimmy Choo Micro Bon Bon', description: 'Black Smooth Nappa Mini Bag', price: 1149.99 },
+		{ id: 3, image: { src: '/images/fashion-exclusive-3.webp', height: 686, width: 594 }, title: 'Jimmy Choo Azia 95', description: 'Malibu Liquid Metal Leather Sandals', price: 1295.00 },
 	];
 
 	const products = [
@@ -38,7 +37,6 @@ export default function Fashion() {
 		{ image: { src: '/images/fashion-item-6.webp', height: 686, width: 594 }, title: 'Surfer Girl - Straw Hat', description: 'Complete your summer style with the Sonny Hand Knotted Straw Hat by Surfer Girl.', price: 49.99, salePrice: 19.99 },
 	];
 
-	// const selectedTokens = useStore( s => s.selectedTokens );
 	const { tokens: selectedTokens } = useContext(TokenContext);
 	const promotionEnabled = checkNFTEligibility(selectedTokens, ['stl-wow-goerli', 'stl-wow-mumbai']);
 
@@ -84,8 +82,8 @@ export default function Fashion() {
 							<Image className={ styles[ 'v-fashion_promotion-image' ] } src="/images/wow.webp" alt="World of Women" height={ 260 } width={ 696 } />
 						</div>
 						<div className="grid -g-cols-3 -g-max-10">
-							{ exclusiveProducts && exclusiveProducts.map( ( product, i ) => (
-								<ProductItem key={ `exclusive-item-${ i }` } product={ { ...product, tag: 'exclusive' } } />
+							{ exclusiveProducts && exclusiveProducts.map( ( product ) => (
+								<ProductItem key={ `exclusive-item-${ product.id }` } product={ { ...product, tag: 'exclusive' } } />
 							))}
 						</div>
 					</section>
@@ -98,7 +96,7 @@ export default function Fashion() {
 				</div>
 				<div className="grid -g-cols-3 -g-max-10">
 					{ products && products.map( ( product, i ) => (
-						<ProductItem key={ `fashion-item-${ i }` } product={ { ...product, tag: 'new' } } discountEnabled={promotionEnabled} />
+						<ProductItem key={ `fashion-item-${ product.id }` } product={ { ...product, tag: 'new' } } discountEnabled={promotionEnabled} />
 					))}
 				</div>
 			</section>

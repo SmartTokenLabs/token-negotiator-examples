@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Client } from '@tokenscript/token-negotiator';
 import { Issuer } from '@tokenscript/token-negotiator/dist/client/interface';
 
-import issuersData from './issues';
+import issuersData from './issuers';
 
 
 
@@ -30,10 +30,6 @@ export class AppComponent implements OnInit {
           position: "bottom-right"
       },
       autoLoadTokens: 3,
-      // safeConnectOptions: {
-      //     url: "https://safeconnect.tokenscript.org",
-      //     initialProof: false
-      // }
     })
   }
 

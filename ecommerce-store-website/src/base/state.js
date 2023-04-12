@@ -1,8 +1,7 @@
 
 //	Dependencies
 import create from 'zustand';
-import { subscribeWithSelector } from 'zustand/middleware'
-import _debounce from 'lodash-es/debounce';
+import { subscribeWithSelector } from 'zustand/middleware';
 import _isNil from 'lodash-es/isNil';
 
 //
