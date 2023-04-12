@@ -27,6 +27,9 @@
 				{ collectionID: 'Minereum-AVAX', contract: "0xf9d922c055a3f1759299467dafafdf43be844f7a", fungible: true, onChain: true, chain: 'Avalanche' },
 				{ collectionID: "Testv4", contract: "0x499d11e0b6eac7c0593d8fb292dcbbf815fb29ae", fungible: true, onChain: true, chain: 'goerli' },
 				{ collectionID: 'Dummy ERC20', contract: "0xfe4f5145f6e09952a5ba9e956ed0c25e3fa4c7f1", fungible: true, onChain: true, chain: 'mumbai' },
+				{ collectionID: 'Domains', onChain: true, contract: 'A.233eb012d34b0070.Domains', chain: 'mainnet', blockchain: 'flow' },
+        		{ collectionID: 'AllDay', onChain: true, contract: 'A.e4cf4bdc1751c65d.AllDay', chain: 'mainnet', blockchain: 'flow' },
+        		{ collectionID: "NBA", onChain: true, contract: "A.0b2a3299cc857e29.TopShot", chain: "mainnet", blockchain: "flow"},
 			],
 			uiOptions: {
 				openingHeading: "Open a new world of discounts available with your tokens.",

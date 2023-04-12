@@ -86,8 +86,6 @@ function updateTokens(tokens: any[]){
 
 	let html = "";
 
-	console.log(tokens);
-
 	for (let issuer in tokens){
 
 		for (let i=0; i < tokens[issuer].tokens.length; i++){
