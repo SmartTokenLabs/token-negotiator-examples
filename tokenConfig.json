@@ -2,6 +2,7 @@
    "collectionID": "devcon",
    "onChain": false,
    "title": "Devcon",
+   "tokenIdName": "id",
    "image": "https://raw.githubusercontent.com/TokenScript/token-negotiator/main/mock-images/devcon.svg",
    "tokenOrigin": "http://localhost:3002/",
    "attestationOrigin": "https://test.attestation.id/",

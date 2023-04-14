@@ -10,7 +10,7 @@ let devconConfig = updateTokenConfig(config);
 //if (document.referrer && (document.referrer.indexOf("3010") > -1 || document.referrer.indexOf("bare-bones") > -1))
 //devconConfig.attestationOrigin = "https://test.attestation.id/";
 
-//devconConfig.attestationInTab = true;
+
 devconConfig.tokenOrigin = document.location.href;
 
 devconConfig.whitelistDialogRenderer = (permissionTxt: string, acceptBtn: string, denyBtn: string) => {
@@ -32,8 +32,6 @@ window.addEventListener("auth-callback", (e: CustomEvent) => {
 	console.log("AUTH-CALLBACK: ")
 	console.log(e.detail);
 });
-
-//negotiate(false);
 
 new Outlet(devconConfig);
 
@@ -87,8 +85,6 @@ function updateTokens(tokens: any[]){
 	let tokensCtn = document.getElementById("ticketList");
 
 	let html = "";
-
-	console.log(tokens);
 
 	for (let issuer in tokens){
 

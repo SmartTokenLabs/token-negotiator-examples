@@ -6,10 +6,11 @@ module.exports = function override(config, env) {
         config.plugins = [];
     }
 
-    removeModuleScopePlugin()(config);
+    config.ignoreWarnings = (config.ignoreWarnings || []).concat({
+        message: /source-map-loader/
+    })
 
-    //const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
-    //config.plugins.push(new NodePolyfillPlugin());
+    removeModuleScopePlugin()(config);
 
     return config
 };

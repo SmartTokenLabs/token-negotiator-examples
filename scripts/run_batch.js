@@ -12,19 +12,19 @@ const COMMANDS = {
 };
 const GROUPS = ['onChain', 'offChain'];
 
-cmdArg = process.env.CMD;
+const cmdArg = process.env.CMD;
 if (!COMMANDS[cmdArg]) {
   console.log(`Wrong cmd argument: ${cmdArg}`)
   process.exit(1);
 }
 
-groupArg = process.env.GROUP;
+const groupArg = process.env.GROUP;
 if (groupArg && !GROUPS.includes(groupArg)) {
   console.log(`Wrong group argument: ${groupArg}`)
   process.exit(1);
 }
 
-examplesArg = process.env.EXAMPLES
+const examplesArg = process.env.EXAMPLES
 
 const command = COMMANDS[cmdArg];
 
@@ -42,7 +42,7 @@ const cmds = examples.map(example => ({
   cwd: path.resolve(__dirname, '..', example)
 }))
 
-maxProcessesArg = Number(process.env.MAX_PROCESSES) || undefined
+const maxProcessesArg = Number(process.env.MAX_PROCESSES) || undefined
 // npm link in parallel will cause race condition
 // set it to `1` will make the link command run sequentially
 // otherwise, it will run all the commands in parallel
