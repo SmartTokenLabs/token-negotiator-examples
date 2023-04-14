@@ -22,7 +22,9 @@ export default function Banner({ className, theme, image, headline, text, overla
 	const [ imageW, imageH ] = imageDimensions;
 
 	const handleOnClick = async () => {
+		// TODO: Actually pass the tokens through component
 		const issuer = authTokens[0];
+		console.log('issuer ==>', issuer);
 		try {
 			await window.negotiator.authenticate({
 				issuer,

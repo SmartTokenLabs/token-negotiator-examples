@@ -3,6 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import NextImage from 'next/image';
+import _ from 'lodash';
 import clsx from 'clsx';
 
 //	Styles
