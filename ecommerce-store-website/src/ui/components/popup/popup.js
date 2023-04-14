@@ -4,6 +4,7 @@
 //	Brand Connector Demo / UI / Components / PopUp
 //
 
+import { useStore } from 'base/state';
 
 export default function PopUp({ isOpen, closeEvent, msg }) {	
 	return (

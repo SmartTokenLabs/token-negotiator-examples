@@ -1,3 +1,7 @@
+
+//	Dependencies
+import _ from 'lodash-es';
+
 // App
 import { usePropertyValues } from './';
 

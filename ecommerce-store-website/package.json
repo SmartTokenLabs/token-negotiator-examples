@@ -2,16 +2,15 @@
 	"name": "stl-token-negotiator-web",
 	"private": true,
 	"scripts": {
-		"dev": "npm run css && next dev",
-		"build-without-export": "npm run css && next build",
-		"build": "npm run css && next build && next export",
-		"start": "npm run css && next start -p 3004",
-		"lint": "next lint",
-		"css": "node scripts/copy_tn_css.js"
+		"dev": "next dev",
+		"build-without-export": "next build",
+		"build": "next build && next export",
+		"start": "next start -p 3004",
+		"lint": "next lint"
 	},
 	"dependencies": {
 		"@react-spring/web": "^9.3.1",
-		"@tokenscript/token-negotiator": "^2.5.0",
+		"@tokenscript/token-negotiator": "^2.4.0",
 		"@use-gesture/react": "^10.1.6",
 		"body-scroll-lock": "^4.0.0-beta.0",
 		"clsx": "^1.1.1",

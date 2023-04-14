@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { Page } from 'ui/app';
 import { Link, Slider, Button } from 'ui/components';
 import {useContext, useEffect, useState} from "react";
+import { useStore } from "src/base/state";
 
 //	Styles
 import styles from "./car-industry-view.module.scss";

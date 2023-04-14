@@ -2,8 +2,6 @@
 //	Dependencies
 import PropTypes from 'prop-types';
 
-import { useEffect, useState } from 'react';
-
 //	App
 import { useStore } from 'base/state';
 import { Layout as DefaultLayout, Context } from 'ui/app';
@@ -15,7 +13,7 @@ import { TokenContextProvider } from '../providers/TokenContextProvider';
 //	Styles
 import 'styles/index.scss';
 import "./ui/styles/_app.scss";
-// import "@tokenscript/token-negotiator/dist/theme/style.css";
+import "@tokenscript/token-negotiator/dist/theme/style.css";
 
 const CONTEXT_VIEWS = {
 	'register-thanks': {
@@ -27,12 +25,6 @@ export default function App({ Component, pageProps }) {
 	
 	const Layout = Component.Layout ?? DefaultLayout;
 	const api = useStore( s => s.api );
-
-	const [isMounted,setIsMounted] = useState(false); // Need this for the react-tooltip
-
-	useEffect(() => {
-		setIsMounted(true);
-	},[]);
 	
 	return (
 		<TokenContextProvider>
@@ -41,11 +33,6 @@ export default function App({ Component, pageProps }) {
 			</Layout>
 			<Context.Region onClose={ () => api.setContextView() } views={ CONTEXT_VIEWS } />
 			<div className="overlay-tn" />
-			{isMounted && <div
-			dangerouslySetInnerHTML={{
-				__html: `<link rel='preload' href='/css/tn_style.css' as='style' onload="this.onload=null;this.rel='stylesheet'"/>`,
-			}}
-			></div>}
 		</TokenContextProvider>
 	);
 };
