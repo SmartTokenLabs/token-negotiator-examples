@@ -3,8 +3,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import _ from 'lodash-es';
-
 // Styles
 import styles from './headline.module.scss';
 
