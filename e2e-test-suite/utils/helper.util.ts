@@ -10,7 +10,7 @@ export default class Helper {
             case 'stage':
                 return data.urlEnv.stage
             default:
-                return data.urlEnv.stage
+                return data.urlEnv.test
         }
     }
 }
