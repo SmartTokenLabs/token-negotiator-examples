@@ -25,6 +25,7 @@
   "homepage": "https://github.com/TokenScript/token-negotiator-examples#readme",
   "devDependencies": {
     "concurrently": "^6.3.0",
+    "cross-env": "^7.0.3",
     "shelljs": "^0.8.5",
     "shx": "^0.3.3"
   }
