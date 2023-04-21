@@ -4,9 +4,9 @@
   "description": "outlet for tokens.",
   "main": "index.js",
   "dependencies": {
+    "@tokenscript/token-negotiator": "^2.5.0",
     "asn1js": "^2.0.26",
-    "pvutils": "^1.0.17",
-    "@tokenscript/token-negotiator": "^2.5.0"
+    "pvutils": "^1.0.17"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
@@ -22,6 +22,7 @@
     "html-webpack-plugin": "^5.3.2",
     "mini-css-extract-plugin": "^2.4.1",
     "node-polyfill-webpack-plugin": "^1.1.4",
+    "rimraf": "^5.0.0",
     "style-loader": "^3.3.0",
     "terser-webpack-plugin": "^5.2.4",
     "ts-loader": "^9.2.6",
@@ -32,7 +33,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rm -rf build",
+    "clean": "rimraf build",
     "build": "npm run clean && webpack --mode=production && cp -R public/* build/",
     "start": "webpack serve --open"
   },
