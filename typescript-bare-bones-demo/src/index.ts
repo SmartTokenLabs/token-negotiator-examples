@@ -70,6 +70,11 @@ window.negotiator = new Client({
 
 const curTokens = [];
 
+window.negotiator.on("connected-wallet", (wallet) => {
+    console.log("connected wallet ==>", wallet);
+    window.negotiator.ui.openOverlay();
+});
+
 window.negotiator.on("tokens-selected", (tokens:any) => {
 
     let tokensCtn = document.getElementById("ticketList");
