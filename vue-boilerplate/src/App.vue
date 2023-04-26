@@ -88,6 +88,11 @@
     // }
   });
 
+  negotiatorObj.client.on("connected-wallet", (wallet) => {
+    console.log("connected wallet ==>", wallet);
+    negotiatorObj.client.ui.openOverlay();
+  });
+
   negotiatorObj.client.on("tokens-selected", (tokens) => {
     console.log(tokens);
   });
