@@ -1,6 +1,7 @@
-import React, {createContext, useState, useEffect, useMemo} from "react";
+import createAggregator from "lodash-es/_createAggregator";
+import React, {createContext, useState, useEffect, useMemo, useRef} from "react";
 import { chainMap } from "src/base/utils/network";
-import {sendTokensSelectedEvent, sendTokenProofEvent, sendWalletConnectedEvent} from "src/base/utils/stats";
+import {sendTokensSelectedEvent, sendTokenProofEvent, sendWalletConnectedEvent, loadAgreeToStats, storeAgreeToStats} from "src/base/utils/stats";
 
 const TokenContext = createContext({
   tokens: {},
@@ -67,6 +68,12 @@ const TokenContextProvider = (props) => {
   const [wallet, setWallet] = useState();
   const [walletStatus, setWalletStatus] = useState('');
   const [ chainId, setChainId ] = useState('');
+  const [ agreeToStats, setAgreeToStats ] = useState(false);
+  const agreeToStatsValue = useRef();
+  agreeToStatsValue.current = agreeToStats;
+
+  useEffect(() => { setAgreeToStats(loadAgreeToStats()) }, []);
+  useEffect(() => { storeAgreeToStats(agreeToStats) }, [agreeToStats]);
 
   useEffect(() => {
 
@@ -95,18 +102,18 @@ const TokenContextProvider = (props) => {
       window.negotiator = newNegotiator;
 
       newNegotiator.on("tokens-selected", (tokens) => {
-        sendTokensSelectedEvent(tokens);
+        if (agreeToStatsValue.current) sendTokensSelectedEvent(tokens);
         setTokens({...tokens.selectedTokens});
       });
   
       newNegotiator.on("token-proof", (result) => {
-        sendTokenProofEvent(result);
+        if (agreeToStatsValue.current) sendTokenProofEvent(result);
         setProof(result.data);
       });
   
       newNegotiator.on("connected-wallet", (connectedWallet) => {
         if (connectedWallet) {
-          sendWalletConnectedEvent(connectedWallet)
+          if (agreeToStatsValue.current) sendWalletConnectedEvent(connectedWallet)
           setWallet(connectedWallet);
           resetIssuers(connectedWallet.chainId);
           setWalletStatus(undefined);
@@ -163,8 +170,8 @@ const TokenContextProvider = (props) => {
   }
 
   const tokenContextProviderValue = useMemo(
-	  () => ({ tokens, negotiator, wallet, proof, walletStatus, chainId, switchChain }),
-	  [tokens, negotiator, wallet, proof, walletStatus, chainId, switchChain]
+	  () => ({ tokens, negotiator, wallet, proof, walletStatus, chainId, agreeToStats, setAgreeToStats, switchChain }),
+	  [tokens, negotiator, wallet, proof, walletStatus, chainId, agreeToStats, switchChain]
   );
 
   return (

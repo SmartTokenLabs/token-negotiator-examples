@@ -53,3 +53,13 @@ export function sendTokenProofEvent({
     eventProperties,
   });
 }
+
+const AGREE_TO_STATS_KEY = 'bc-agree-stats';
+
+export function loadAgreeToStats() {
+  return localStorage.getItem(AGREE_TO_STATS_KEY) === 'true';
+}
+
+export function storeAgreeToStats(value) {
+  localStorage.setItem(AGREE_TO_STATS_KEY, value);
+}

@@ -23,16 +23,8 @@ const subscribeSchema = yup.object().shape({
 
 const Footer = React.memo( function Footer({ className }) {
 	const api = useStore( s => s.api );
-	const { negotiator } = useContext(TokenContext);
+	const { negotiator, agreeToStats, setAgreeToStats } = useContext(TokenContext);
 	const [ isPending, setIsPending ] = useState( false );
-	const [ agreeToStats, setAgreeToStats ] = useState(false);
-
-  useEffect(() => {
-    setAgreeToStats(localStorage.getItem('bc-agree-stats') === 'true');
-  }, []);
-  useEffect(() => {
-    localStorage.setItem('bc-agree-stats', agreeToStats);
-  }, [agreeToStats]);
 
   const handleOnClick = () => {
     setAgreeToStats(true);
