@@ -1,4 +1,3 @@
-import createAggregator from "lodash-es/_createAggregator";
 import React, {createContext, useState, useEffect, useMemo, useRef} from "react";
 import { chainMap } from "src/base/utils/network";
 import {sendTokensSelectedEvent, sendTokenProofEvent, sendWalletConnectedEvent, loadAgreeToStats, storeAgreeToStats} from "src/base/utils/stats";
