@@ -1,6 +1,6 @@
 
 //	Dependencies
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useCallback, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Formik, Form as FormikForm } from 'formik';
 import clsx from 'clsx';
@@ -25,6 +25,18 @@ const Footer = React.memo( function Footer({ className }) {
 	const api = useStore( s => s.api );
 	const { negotiator } = useContext(TokenContext);
 	const [ isPending, setIsPending ] = useState( false );
+	const [ agreeToStats, setAgreeToStats ] = useState(false);
+
+  useEffect(() => {
+    setAgreeToStats(localStorage.getItem('bc-agree-stats') === 'true');
+  }, []);
+  useEffect(() => {
+    localStorage.setItem('bc-agree-stats', agreeToStats);
+  }, [agreeToStats]);
+
+  const handleOnClick = () => {
+    setAgreeToStats(true);
+  };
 
 	const _handleSubmit = useCallback( async ( values, { setStatus }) => {
 		try {
@@ -137,6 +149,18 @@ const Footer = React.memo( function Footer({ className }) {
 			{ negotiator && (
 				<div className={ clsx( styles[ 'a-footer_activation' ], '-mt3' ) }>
 					<div>
+						{!agreeToStats && (
+							<div className={ styles[ 'a-footer_disclaimer' ] }>
+								<span className={ clsx( styles[ 'a-footer_disclaimer_desc' ], 'f7' ) }>
+									This page collect data for analytics purposes.
+								</span>
+								<Button
+									className={ clsx( styles[ 'a-footer_disclaimer_button' ], '-style-secondary' ) }
+									onClick={handleOnClick}>
+										Agree
+								</Button>
+							</div>
+						)}
 						<p className="f7 -va-center -mla">
 							Click to activate discounts&nbsp;
 							<Icon className={ clsx( styles[ 'a-footer_activation_icon' ], '-ml1' ) } type="curved-up-arrow" />
