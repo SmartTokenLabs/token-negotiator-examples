@@ -5,6 +5,8 @@ const jwtToken = process.env.ANALYTICS_JWT;
 
 const analyticsClient = new Analytics(analyticsUrl, jwtToken).client;
 
+// TODO: all the following event reporting functions can be replaced
+// with `Analytics.connectTokenNegotiator` once TN supports multiple event hooks
 export function sendWalletConnectedEvent({
   providerType,
   blockchain,
