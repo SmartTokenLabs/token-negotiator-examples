@@ -1,8 +1,7 @@
 import Analytics from '@tokenscript/analytics-client';
 
-const analyticsUrl = 'https://analytics-api-stage.smarttokenlabs.com';
-const jwtToken =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJicmFuZCI6IkJyYW5kIENvbm5lY3RvciIsImNhbXBhaWduIjoiRGVtbyIsImNsaWVudF9pZCI6IlNUTCIsImlhdCI6MTY4MzE3MDk5Nn0.HhW_sUtU0LKLpK2_puK7pj63CkaXmFa5sJ_wfx1ASR8';
+const analyticsUrl = process.env.ANALYTICS_URL;
+const jwtToken = process.env.ANALYTICS_JWT;
 
 const analyticsClient = new Analytics(analyticsUrl, jwtToken).client;
 

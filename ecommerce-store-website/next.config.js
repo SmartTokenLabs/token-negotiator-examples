@@ -25,6 +25,8 @@ module.exports = phase => {
 		APP_VERSION: PKG.version,
 		APP_HOST: process.env.APP_HOST ?? process.env.VERCEL_URL,
 		BASE_PATH: process.env.BASE_PATH,
+		ANALYTICS_URL: process.env.ANALYTICS_URL,
+		ANALYTICS_JWT: process.env.ANALYTICS_JWT,
 	};
 
 	const basePath = process.env.BASE_PATH ?? "";
