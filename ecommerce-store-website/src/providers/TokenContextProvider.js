@@ -1,5 +1,6 @@
 import React, {createContext, useState, useEffect, useMemo} from "react";
 import { chainMap } from "src/base/utils/network";
+import {sendTokensSelectedEvent, sendTokenProofEvent, sendWalletConnectedEvent} from "src/base/utils/stats";
 
 const TokenContext = createContext({
   tokens: {},
@@ -94,15 +95,18 @@ const TokenContextProvider = (props) => {
       window.negotiator = newNegotiator;
 
       newNegotiator.on("tokens-selected", (tokens) => {
+        sendTokensSelectedEvent(tokens);
         setTokens({...tokens.selectedTokens});
       });
   
       newNegotiator.on("token-proof", (result) => {
+        sendTokenProofEvent(result);
         setProof(result.data);
       });
   
       newNegotiator.on("connected-wallet", (connectedWallet) => {
         if (connectedWallet) {
+          sendWalletConnectedEvent(connectedWallet)
           setWallet(connectedWallet);
           resetIssuers(connectedWallet.chainId);
           setWalletStatus(undefined);
