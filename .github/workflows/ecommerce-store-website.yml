@@ -29,6 +29,8 @@ jobs:
           cd ecommerce-store-website
           npm ci
           export BASE_PATH=/demo
+          export ANALYTICS_URL=https://analytics-api-stage.smarttokenlabs.com
+          export ANALYTICS_JWT=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJicmFuZCI6IkJyYW5kIENvbm5lY3RvciIsImNhbXBhaWduIjoiRGVtbyIsImNsaWVudF9pZCI6IlNUTCIsImlhdCI6MTY4MzE3MDk5Nn0.HhW_sUtU0LKLpK2_puK7pj63CkaXmFa5sJ_wfx1ASR8
           npm run build
           short_sha="${GITHUB_SHA:0:7}"
           build_version="${GITHUB_REF_NAME}-${short_sha}"
