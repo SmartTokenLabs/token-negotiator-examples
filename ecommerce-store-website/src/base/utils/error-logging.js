@@ -11,7 +11,7 @@ datadogRum.init({
   env: NODE_ENV, // optional, provide this if your app is deployed in multiple envs
   version: "1.0.0", // optional, provide this if you want to understand which release does the RUM data originated from
   sessionSampleRate: 100, // no sampling, all sessions will be monitored
-  sessionReplaySampleRate: 100, // no sampling, all sessions will be recorded
+  sessionReplaySampleRate: 30, // no sampling, all sessions will be recorded
   trackUserInteractions: true,
   trackFrustrations: true,
   trackResources: true,
