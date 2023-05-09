@@ -9,6 +9,8 @@
 		"lint": "next lint"
 	},
 	"dependencies": {
+		"@datadog/browser-logs": "^4.42.0",
+		"@datadog/browser-rum": "^4.42.0",
 		"@react-spring/web": "^9.3.1",
 		"@tokenscript/token-negotiator": "2.5.0",
 		"@use-gesture/react": "^10.1.6",
