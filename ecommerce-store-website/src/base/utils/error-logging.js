@@ -6,8 +6,8 @@ const {NODE_ENV} = process.env;
 const isTestMode = () => {
   const isTestMode = false;
   if (typeof window !== "undefined") {
-    isTestMode = window.localStorage
-      ? window.localStorage.getItem("testmode") === "true"
+    isTestMode = window.sessionStorage
+      ? window.sessionStorage.getItem("testmode") === "true"
       : false;
   }
   return isTestMode;
