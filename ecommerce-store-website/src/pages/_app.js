@@ -9,11 +9,12 @@ import ContextRegisterThanks from "ui/app/context/context-register-thanks";
 
 import {TokenContextProvider} from "../providers/TokenContextProvider";
 
+import {initErrorLogging} from "./../base/utils/error-logging";
+
 //	Styles
 import "styles/index.scss";
 import "./ui/styles/_app.scss";
 import "@tokenscript/token-negotiator/dist/theme/style.css";
-import "./../base/utils/error-logging";
 
 const CONTEXT_VIEWS = {
   "register-thanks": {
@@ -24,6 +25,7 @@ const CONTEXT_VIEWS = {
 export default function App({Component, pageProps}) {
   const Layout = Component.Layout ?? DefaultLayout;
   const api = useStore((s) => s.api);
+  initErrorLogging();
 
   return (
     <TokenContextProvider>
