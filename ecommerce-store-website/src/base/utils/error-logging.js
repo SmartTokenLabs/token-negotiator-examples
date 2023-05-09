@@ -4,7 +4,7 @@ import {datadogLogs} from "@datadog/browser-logs";
 const {NODE_ENV} = process.env;
 
 const isTestMode = () => {
-  const isTestMode = false;
+  let isTestMode = false;
   if (typeof window !== "undefined") {
     isTestMode = window.sessionStorage
       ? window.sessionStorage.getItem("testmode") === "true"
