@@ -28,7 +28,8 @@ export const initErrorLogging = () => {
       trackFrustrations: true,
       trackResources: true,
       trackLongTasks: true,
-      defaultPrivacyLevel: "mask-user-input"
+      defaultPrivacyLevel: "mask-user-input",
+      proxy: 'https://dd-wormhole.smarttokenlabs.com' // self-managed proxy to bypass ad blocker
     });
     datadogRum.startSessionReplayRecording();
     datadogLogs.init({
@@ -37,7 +38,8 @@ export const initErrorLogging = () => {
       service: "brand_connector_demo_site",
       env: NODE_ENV,
       forwardErrorsToLogs: true,
-      sessionSampleRate: 100 // no sampling, all sessions will have logs collected
+      sessionSampleRate: 100, // no sampling, all sessions will have logs collected
+      proxy: 'https://dd-wormhole.smarttokenlabs.com' // self-managed proxy to bypass ad blocker
     });
   }
 };
