@@ -60,8 +60,8 @@ function App() {
 		  tokenIssuers.forEach((issuer) => {
 			  tokens.push(...issuerTokens[issuer.collectionID].tokens);
       });
+      setTokens(tokens);
       if (tokens.length > 0) {
-			  setTokens(tokens);
 			  setFreeShuttle(true);
 		  }
 	  });
