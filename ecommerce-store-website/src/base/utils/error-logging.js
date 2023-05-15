@@ -14,7 +14,10 @@ const isTestMode = () => {
 };
 
 export const initErrorLogging = () => {
-  if (NODE_ENV === "production" || isTestMode()) {
+  if (
+    document.location.origin === "https://brandconnector.io" ||
+    isTestMode()
+  ) {
     datadogRum.init({
       applicationId: "8b49b4e2-5fd3-4f68-b373-c3a671d293c8",
       clientToken: "pub8a135de245b7696722041d745abc6636",
@@ -29,7 +32,7 @@ export const initErrorLogging = () => {
       trackResources: true,
       trackLongTasks: true,
       defaultPrivacyLevel: "mask-user-input",
-      proxy: 'https://dd-wormhole.smarttokenlabs.com' // self-managed proxy to bypass ad blocker
+      proxy: "https://dd-wormhole.smarttokenlabs.com" // self-managed proxy to bypass ad blocker
     });
     datadogRum.startSessionReplayRecording();
     datadogLogs.init({
@@ -39,7 +42,7 @@ export const initErrorLogging = () => {
       env: NODE_ENV,
       forwardErrorsToLogs: true,
       sessionSampleRate: 100, // no sampling, all sessions will have logs collected
-      proxy: 'https://dd-wormhole.smarttokenlabs.com' // self-managed proxy to bypass ad blocker
+      proxy: "https://dd-wormhole.smarttokenlabs.com" // self-managed proxy to bypass ad blocker
     });
   }
 };
