@@ -15,7 +15,7 @@ const isTestMode = () => {
 
 // TODO node env is not configured for development, staging and production
 // to enable us to correclty use this as a flag for env dectection.
-isProduction = () => {
+const isProduction = () => {
   let isProduction = false;
   if (
     typeof window !== "undefined" &&
