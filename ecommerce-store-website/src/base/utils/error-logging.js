@@ -13,11 +13,21 @@ const isTestMode = () => {
   return isTestMode;
 };
 
-export const initErrorLogging = () => {
+// TODO node env is not configured for development, staging and production
+// to enable us to correclty use this as a flag for env dectection.
+isProduction = () => {
+  let isProduction = false;
   if (
-    document.location.origin === "https://brandconnector.io" ||
-    isTestMode()
+    typeof window !== "undefined" &&
+    document.location.origin === "https://brandconnector.io"
   ) {
+    isProduction = true;
+  }
+  return isProduction;
+};
+
+export const initErrorLogging = () => {
+  if (isProduction() || isTestMode()) {
     datadogRum.init({
       applicationId: "8b49b4e2-5fd3-4f68-b373-c3a671d293c8",
       clientToken: "pub8a135de245b7696722041d745abc6636",
