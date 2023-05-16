@@ -50,8 +50,8 @@ export const EAS_CONFIG = {
 const EAS_TICKET_SCHEMA = {
     fields: [
         { name: "devconId", type: "string" },
+        { name: "ticketIdString", type: "string" },
         { name: "ticketClass", type: "uint8",  },
-        { name: "ticketId", type: "string" },
         { name: "commitment", type: "bytes", isCommitment: true },
     ]
 };
@@ -125,7 +125,7 @@ function App() {
 
           await attestationManager.createEasAttestation( {
               devconId: "6",
-              ticketId: ticketId,
+              ticketIdString: ticketId,
               ticketClass: ticketClass,
               commitment: email
           }, null);
