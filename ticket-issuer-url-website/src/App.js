@@ -6,8 +6,15 @@ import config from "../../tokenConfig.json";
 import {updateTokenConfig} from "../../environment";
 import {Ticket} from "@tokenscript/attestation/dist/Ticket";
 import {KeyPair} from "@tokenscript/attestation/dist/libs/KeyPair";
-import {hexStringToBase64Url} from "@tokenscript/attestation/dist/libs/utils";
-import {TextField} from "@material-ui/core";
+import {
+    base64toBase64Url,
+    base64ToUint8array,
+    hexStringToBase64Url,
+    uint8tohex
+} from "@tokenscript/attestation/dist/libs/utils";
+import {MenuItem, Select, TextField} from "@material-ui/core";
+import {ethers} from "ethers";
+import {EasTicketAttestation} from "@tokenscript/attestation/dist/eas/EasTicketAttestation";
 
 const mockTicketData = [
   {
@@ -30,10 +37,31 @@ const mockTicketData = [
 
 const secret = 45845870684n;
 
+const EASContractAddress = "0xC2679fBD37d54388Ce493F1DB75320D236e1815e"; // Sepolia v0.26
+
+const SEPOLIA_RPC = "https://rpc.sepolia.org/";
+
+export const EAS_CONFIG = {
+    address: EASContractAddress,
+    version: "0.26",
+    chainId: 11155111,
+};
+
+const EAS_TICKET_SCHEMA = {
+    fields: [
+        { name: "devconId", type: "string" },
+        { name: "ticketClass", type: "uint8",  },
+        { name: "ticketId", type: "string" },
+        { name: "commitment", type: "bytes", isCommitment: true },
+    ]
+};
+
 function App() {
   let [tokens, setTokens] = useState([]);
 
   let [retryButton, setRetryButton] = useState("");
+
+  let [ticketType, setTicketType] = useState("asn");
 
   let devconConfig = updateTokenConfig(config);
 
@@ -74,34 +102,57 @@ function App() {
     }
   });
 
-  const generateTicket = (email, ticketId, ticketClass) => {
-    let ticket = Ticket.createWithMail(
-      email,
-      "6",
-      ticketId,
-      ticketClass,
-      {
-        6: KeyPair.privateFromPEM(devconConfig.ticketIssuesUrlWebsitePrivateKey)
-      },
-      secret
-    );
+  useEffect(() => {
 
-    if (!ticket.checkValidity()) {
-      throw new Error("Ticket validity check failed");
-    }
+  	window.negotiator.negotiate();
 
-    if (!ticket.verify()) {
-      throw new Error("Ticket verify failed");
-    }
+  }, []);
 
-    let ticketInUrl = hexStringToBase64Url(ticket.getDerEncoding());
+  const generateTicket = async (email, ticketId, ticketClass) => {
 
-    return {
-      ticket: ticketInUrl,
-      secret: secret.toString(),
-      id: email
-    };
-  };
+      let ticketInUrl;
+
+      if (ticketType === "eas"){
+
+          const provider = new ethers.providers.JsonRpcProvider(SEPOLIA_RPC);
+          const wallet = new ethers.Wallet(KeyPair.privateFromPEM(devconConfig.ticketIssuesUrlWebsitePrivateKey).getPrivateAsHexString(), provider);
+
+          const attestationManager = new EasTicketAttestation(
+              EAS_TICKET_SCHEMA,
+              EAS_CONFIG,
+              wallet
+          );
+
+          await attestationManager.createEasAttestation( {
+              devconId: "6",
+              ticketId: ticketId,
+              ticketClass: ticketClass,
+              commitment: email
+          }, null);
+
+          ticketInUrl = base64toBase64Url(attestationManager.getEncoded());
+
+      } else {
+          let ticket = Ticket.createWithMail(email, "6", ticketId, ticketClass, {"6": KeyPair.privateFromPEM(devconConfig.ticketIssuesUrlWebsitePrivateKey)}, secret);
+
+          if (!ticket.checkValidity()){
+              throw new Error("Ticket validity check failed");
+          }
+
+          if (!ticket.verify()){
+              throw new Error("Ticket verify failed");
+          }
+
+          ticketInUrl = hexStringToBase64Url(ticket.getDerEncoding());
+      }
+
+      return {
+          type: ticketType,
+          ticket: ticketInUrl,
+          secret: secret.toString(),
+          id: email
+      };
+  }
 
   const openTicketInIframe = async ({event, ticketId, ticketClass}) => {
     event.preventDefault();
@@ -111,13 +162,9 @@ function App() {
       return;
     }
 
-    let genTicket = generateTicket(
-      document.getElementById("email").value,
-      ticketId,
-      ticketClass
-    );
+    let genTicket = await generateTicket(document.getElementById("email").value, ticketId, ticketClass);
 
-    const magicLink = `${config.tokenOrigin}?ticket=${genTicket.ticket}&secret=${genTicket.secret}&id=${genTicket.id}`;
+    const magicLink = `${config.tokenOrigin}?type=${genTicket.type}&ticket=${genTicket.ticket}&secret=${genTicket.secret}&mail=${genTicket.id}`;
 
     try {
       let tokens = await negotiator.addTokenViaMagicLink(magicLink);
@@ -179,35 +226,31 @@ function App() {
       </div>
       <p className="flexCenter">Generate ticket:</p>
       <form id={"form"}>
-        <div className="flexCenter" style={{margin: "20px"}}>
-          <TextField
-            label={"Email:"}
-            id={"email"}
-            style={{display: "block"}}
-            required={true}
-          />
-        </div>
-        <div className="flexCenter">
-          <div className="ticketWrapper">
-            {mockTicketData.map((mockTicket, index) => {
-              return (
-                <button
-                  key={index}
-                  className="makeTicket"
-                  onClick={(event) =>
-                    openTicketInIframe({
+          <div className="flexCenter" style={{margin: "20px"}}>
+              <Select label={"Format:"} id={"type"} style={{"display": "block"}} required={true} value={ticketType}
+                      onChange={(evt) => setTicketType(evt.target.value)} style={{width: "200px"}}>
+                  <MenuItem value={"asn"}>ASN</MenuItem>
+                  <MenuItem value={"eas"}>EAS</MenuItem>
+              </Select>
+          </div>
+          <div className="flexCenter" style={{margin: "20px"}}>
+            <TextField label={"Email:"} id={"email"} style={{"display": "block"}} required={true} />
+          </div>
+          <div className="flexCenter">
+            <div className="ticketWrapper">
+              {
+                mockTicketData.map((mockTicket, index) => {
+                  return (
+                    <button key={index} className="makeTicket" onClick={event => openTicketInIframe({
                       event,
                       ticketId: mockTicket.ticketId,
                       ticketClass: mockTicket.ticketClass
-                    })
-                  }
-                >
-                  Create Ticket
-                </button>
-              );
-            })}
+                    })}>Create Ticket</button>
+                  )
+                })
+              }
+            </div>
           </div>
-        </div>
       </form>
     </main>
   );

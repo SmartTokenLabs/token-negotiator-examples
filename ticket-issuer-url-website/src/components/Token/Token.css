@@ -4,3 +4,4 @@
 .ticketId { position: absolute; top: 52px; right: 34px; }
 .devconId { position: absolute; top: 75px; right: 34px; font-size: 12px; }
 .ticketImg { width: 300px; text-align: right; }
+.ticketType { position: absolute; top: 10px; left: 10px; font-weight: bold !important; color: #000 !important; }
