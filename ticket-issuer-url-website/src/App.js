@@ -8,13 +8,12 @@ import {Ticket} from "@tokenscript/attestation/dist/Ticket";
 import {KeyPair} from "@tokenscript/attestation/dist/libs/KeyPair";
 import {
     base64toBase64Url,
-    base64ToUint8array,
     hexStringToBase64Url,
-    uint8tohex
 } from "@tokenscript/attestation/dist/libs/utils";
 import {MenuItem, Select, TextField} from "@material-ui/core";
 import {ethers} from "ethers";
 import {EasTicketAttestation} from "@tokenscript/attestation/dist/eas/EasTicketAttestation";
+import {AttestationCrypto} from "@tokenscript/attestation";
 
 const mockTicketData = [
   {
@@ -35,7 +34,7 @@ const mockTicketData = [
   }
 ];
 
-const secret = 45845870684n;
+// const defaultSecret = 45845870684n;
 
 const EASContractAddress = "0xC2679fBD37d54388Ce493F1DB75320D236e1815e"; // Sepolia v0.26
 
@@ -110,7 +109,7 @@ function App() {
 
   const generateTicket = async (email, ticketId, ticketClass) => {
 
-      let ticketInUrl;
+      let ticketInUrl, ticketSecret;
 
       if (ticketType === "eas"){
 
@@ -130,10 +129,15 @@ function App() {
               commitment: email
           }, null);
 
+          ticketSecret = attestationManager.getEasJson().secret;
+
           ticketInUrl = base64toBase64Url(attestationManager.getEncoded());
 
       } else {
-          let ticket = Ticket.createWithMail(email, "6", ticketId, ticketClass, {"6": KeyPair.privateFromPEM(devconConfig.ticketIssuesUrlWebsitePrivateKey)}, secret);
+
+          ticketSecret = new AttestationCrypto().makeSecret();
+
+          let ticket = Ticket.createWithMail(email, "6", ticketId, ticketClass, {"6": KeyPair.privateFromPEM(devconConfig.ticketIssuesUrlWebsitePrivateKey)}, ticketSecret);
 
           if (!ticket.checkValidity()){
               throw new Error("Ticket validity check failed");
@@ -149,7 +153,7 @@ function App() {
       return {
           type: ticketType,
           ticket: ticketInUrl,
-          secret: secret.toString(),
+          secret: ticketSecret.toString(),
           id: email
       };
   }
@@ -164,7 +168,7 @@ function App() {
 
     let genTicket = await generateTicket(document.getElementById("email").value, ticketId, ticketClass);
 
-    const magicLink = `${config.tokenOrigin}?type=${genTicket.type}&ticket=${genTicket.ticket}&secret=${genTicket.secret}&mail=${genTicket.id}`;
+    const magicLink = `${config.tokenOrigin}?type=${genTicket.type}&ticket=${genTicket.ticket}&secret=${genTicket.secret}&id=${genTicket.id}`;
 
     try {
       let tokens = await negotiator.addTokenViaMagicLink(magicLink);
