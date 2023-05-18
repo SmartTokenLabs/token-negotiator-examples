@@ -231,14 +231,14 @@ function App() {
       <p className="flexCenter">Generate ticket:</p>
       <form id={"form"}>
           <div className="flexCenter" style={{margin: "20px"}}>
-              <Select label={"Format:"} id={"type"} style={{"display": "block"}} required={true} value={ticketType}
-                      onChange={(evt) => setTicketType(evt.target.value)} style={{width: "200px"}}>
+              <Select label={"Format:"} id={"type"} style={{display: "block", width: "200px"}} required={true} value={ticketType}
+                      onChange={(evt) => setTicketType(evt.target.value)}>
                   <MenuItem value={"asn"}>ASN</MenuItem>
                   <MenuItem value={"eas"}>EAS</MenuItem>
               </Select>
           </div>
           <div className="flexCenter" style={{margin: "20px"}}>
-            <TextField label={"Email:"} id={"email"} style={{"display": "block"}} required={true} />
+            <TextField label={"Email:"} id={"email"} style={{display: "block"}} required={true} />
           </div>
           <div className="flexCenter">
             <div className="ticketWrapper">
