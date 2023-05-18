@@ -36,6 +36,11 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.negotiator.negotiate();
 
+    this.negotiator.on('connected-wallet', (wallet: any) => {
+      console.log('connected wallet ==>', wallet);
+      this.negotiator.getUi().openOverlay();
+    });
+
     this.negotiator.on('tokens-selected', (issuerTokens: any) => {
       console.log('Got tokens...', issuerTokens);
     });

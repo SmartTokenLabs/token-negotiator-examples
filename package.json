@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "CMD=start node scripts/run_batch.js",
-    "start-on-chain": "CMD=start GROUP=onChain node scripts/run_batch.js",
-    "start-off-chain": "CMD=start GROUP=offChain node scripts/run_batch.js",
-    "clean": "CMD=clean node scripts/run_batch.js",
-    "install-examples": "CMD=install node scripts/run_batch.js",
-    "build": "CMD=build node scripts/run_batch.js",
-    "link": "CMD=link node scripts/run_batch.js",
-    "unlink": "CMD=unlink node scripts/run_batch.js",
+    "start": "cross-env CMD=start node scripts/run_batch.js",
+    "start-on-chain": "cross-env CMD=start GROUP=onChain node scripts/run_batch.js",
+    "start-off-chain": "cross-env CMD=start GROUP=offChain node scripts/run_batch.js",
+    "clean": "cross-env CMD=clean node scripts/run_batch.js",
+    "install-examples": "cross-env CMD=install node scripts/run_batch.js",
+    "build": "cross-env CMD=build node scripts/run_batch.js",
+    "link": "cross-env CMD=link node scripts/run_batch.js",
+    "unlink": "cross-env CMD=unlink node scripts/run_batch.js",
     "copy-artifacts": "sh ./scripts/copy_gh_artifacts.sh"
   },
   "repository": {
@@ -25,6 +25,7 @@
   "homepage": "https://github.com/TokenScript/token-negotiator-examples#readme",
   "devDependencies": {
     "concurrently": "^6.3.0",
+    "cross-env": "^7.0.3",
     "shelljs": "^0.8.5",
     "shx": "^0.3.3"
   }

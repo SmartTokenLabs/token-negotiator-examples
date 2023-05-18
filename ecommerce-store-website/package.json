@@ -11,7 +11,7 @@
 	"dependencies": {
 		"@react-spring/web": "^9.3.1",
 		"@tokenscript/analytics-client": "^0.4.0",
-		"@tokenscript/token-negotiator": "2.5.0",
+		"@tokenscript/token-negotiator": "2.6.0",
 		"@use-gesture/react": "^10.1.6",
 		"body-scroll-lock": "^4.0.0-beta.0",
 		"clsx": "^1.1.1",
@@ -24,7 +24,9 @@
 		"web3": "^1.7.3",
 		"web3-eth-abi": "^1.7.3",
 		"yup": "^0.32.11",
-		"zustand": "^3.6.5"
+		"zustand": "^3.6.5",
+		"@datadog/browser-logs": "^4.42.2",
+		"@datadog/browser-rum": "^4.42.2"
 	},
 	"devDependencies": {
 		"dotenv": "^16.0.0",
