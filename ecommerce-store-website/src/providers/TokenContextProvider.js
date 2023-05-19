@@ -1,5 +1,18 @@
-import React, {createContext, useState, useEffect, useMemo} from "react";
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useMemo,
+  useRef
+} from "react";
 import {chainMap} from "src/base/utils/network";
+import {
+  sendTokensSelectedEvent,
+  sendTokenProofEvent,
+  sendWalletConnectedEvent,
+  loadAgreeToStats,
+  storeAgreeToStats
+} from "src/base/utils/stats";
 
 const TokenContext = createContext({
   tokens: {},
@@ -66,6 +79,16 @@ const TokenContextProvider = (props) => {
   const [wallet, setWallet] = useState();
   const [walletStatus, setWalletStatus] = useState("");
   const [chainId, setChainId] = useState("");
+  const [agreeToStats, setAgreeToStats] = useState(false);
+  const agreeToStatsValue = useRef();
+  agreeToStatsValue.current = agreeToStats;
+
+  useEffect(() => {
+    setAgreeToStats(loadAgreeToStats());
+  }, []);
+  useEffect(() => {
+    storeAgreeToStats(agreeToStats);
+  }, [agreeToStats]);
 
   useEffect(() => {
     import("@tokenscript/token-negotiator").then((negotiatorInstance) => {
@@ -93,15 +116,19 @@ const TokenContextProvider = (props) => {
       window.negotiator = newNegotiator;
 
       newNegotiator.on("tokens-selected", (tokens) => {
+        if (agreeToStatsValue.current) sendTokensSelectedEvent(tokens);
         setTokens({...tokens.selectedTokens});
       });
 
       newNegotiator.on("token-proof", (result) => {
+        if (agreeToStatsValue.current) sendTokenProofEvent(result);
         setProof(result.data);
       });
 
       newNegotiator.on("connected-wallet", (connectedWallet) => {
         if (connectedWallet) {
+          if (agreeToStatsValue.current)
+            sendWalletConnectedEvent(connectedWallet);
           setWallet(connectedWallet);
           resetIssuers(connectedWallet.chainId);
           setWalletStatus(undefined);
@@ -164,9 +191,20 @@ const TokenContextProvider = (props) => {
       proof,
       walletStatus,
       chainId,
+      agreeToStats,
+      setAgreeToStats,
       switchChain
     }),
-    [tokens, negotiator, wallet, proof, walletStatus, chainId, switchChain]
+    [
+      tokens,
+      negotiator,
+      wallet,
+      proof,
+      walletStatus,
+      chainId,
+      agreeToStats,
+      switchChain
+    ]
   );
 
   return (

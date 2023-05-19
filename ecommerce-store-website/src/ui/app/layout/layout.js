@@ -7,6 +7,7 @@ import clsx from 'clsx';
 //	App
 import { Footer, Header } from 'ui/app';
 import { LabsBanner } from 'ui/sections';
+import { StatsDisclaimer } from 'ui/sections';
 
 
 //
@@ -16,6 +17,7 @@ import { LabsBanner } from 'ui/sections';
 export default function Layout({ className, children }) {
 	return (
 		<div className={ clsx( 'a-layout', className ) }>
+			<StatsDisclaimer />
 			<Header />
 			<main>
 				{ children }

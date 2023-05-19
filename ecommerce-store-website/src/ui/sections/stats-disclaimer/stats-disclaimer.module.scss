@@ -1,0 +1,52 @@
+@use 'styles/modules' as *;
+
+
+//
+//	Brand Connector Demo / UI / Sections / Stats Disclamer
+//
+
+
+.s-stats-disclaimer {
+	$s: &;
+
+	position: fixed;
+	right: 0; top: 0; left: 0;
+	z-index: 20;
+	width: 100%;
+	margin: 0 auto; padding: 0 calc( var(--grid-gutter-width) / 2 ); box-sizing: border-box;
+	display: flex; flex-flow: row nowrap; justify-content: center;
+	background-color: color-get( base-100 );
+
+	&_desc {
+		opacity: 0.4;
+		font-size: 0.8rem;
+    line-height: 34px
+	}
+
+	&_button {
+		margin-left: 1rem;
+		margin-top: auto;
+		margin-bottom: auto;
+		height: 24px;
+		font-size: 0.8rem;
+    padding: 0px;
+	}
+}
+
+/**
+ * 	Media Queries
+ *	--------------------------------------------------
+ */
+
+/** Breakpoint:	Small ----------------------- */
+
+@include breakpoint-for( small ) using ( $bp ) {
+
+	.s-stats-disclaimer {
+		$s: &;
+
+		&_button {
+			width: auto;
+		}
+	}
+}
