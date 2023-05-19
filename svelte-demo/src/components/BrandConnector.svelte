@@ -32,7 +32,7 @@
         		{ collectionID: "NBA", onChain: true, contract: "A.0b2a3299cc857e29.TopShot", chain: "mainnet", blockchain: "flow"},
 			],
 			uiOptions: {
-				openingHeading: "Open a new world of discounts available with your tokens.",
+				openingHeading: "Open a new world of perks, benefits and opportunities with your attestation, collectible or token.",
 				issuerHeading: "Get discount with Ticket",
 				repeatAction: "try again",
 				theme: 'dark',

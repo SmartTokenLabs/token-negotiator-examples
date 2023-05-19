@@ -4,33 +4,29 @@ import { Issuer } from '@tokenscript/token-negotiator/dist/client/interface';
 
 import issuersData from './issuers';
 
-
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
- 
-
 export class AppComponent implements OnInit {
-  
   public issuers: Issuer[] = issuersData;
   public negotiator: Client;
 
-  constructor() { 
+  constructor() {
     this.negotiator = new Client({
       type: 'active',
       issuers: this.issuers,
       uiOptions: {
-          openingHeading: "Open a new world of discounts available with your tokens.",
-          issuerHeading: "Get discount with Ticket",
-          repeatAction: "try again",
-          theme: "light",
-          position: "bottom-right"
+        openingHeading:
+          'Open a new world of perks, benefits and opportunities with your attestation, collectible or token.',
+        issuerHeading: 'Get discount with Ticket',
+        repeatAction: 'try again',
+        theme: 'light',
+        position: 'bottom-right',
       },
       autoLoadTokens: 3,
-    })
+    });
   }
 
   ngOnInit(): void {
@@ -44,6 +40,5 @@ export class AppComponent implements OnInit {
     this.negotiator.on('tokens-selected', (issuerTokens: any) => {
       console.log('Got tokens...', issuerTokens);
     });
-
   }
 }
