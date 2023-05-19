@@ -101,12 +101,6 @@ function App() {
     }
   });
 
-  useEffect(() => {
-
-  	window.negotiator.negotiate();
-
-  }, []);
-
   const generateTicket = async (email, ticketId, ticketClass) => {
 
       let ticketInUrl, ticketSecret;
