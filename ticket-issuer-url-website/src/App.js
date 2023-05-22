@@ -34,8 +34,6 @@ const mockTicketData = [
   }
 ];
 
-// const defaultSecret = 45845870684n;
-
 const EASContractAddress = "0xC2679fBD37d54388Ce493F1DB75320D236e1815e"; // Sepolia v0.26
 
 const SEPOLIA_RPC = "https://rpc.sepolia.org/";
@@ -237,9 +235,9 @@ function App() {
           <div className="flexCenter">
             <div className="ticketWrapper">
               {
-                mockTicketData.map((mockTicket, index) => {
+                mockTicketData.map((mockTicket) => {
                   return (
-                    <button key={index} className="makeTicket" onClick={event => openTicketInIframe({
+                    <button key={mockTicket.ticketId} className="makeTicket" onClick={event => openTicketInIframe({
                       event,
                       ticketId: mockTicket.ticketId,
                       ticketClass: mockTicket.ticketClass
