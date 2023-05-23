@@ -23,6 +23,7 @@
     "mini-css-extract-plugin": "^2.4.1",
     "node-polyfill-webpack-plugin": "^1.1.4",
     "shx": "^0.3.4",
+    "source-map-loader": "^4.0.1",
     "style-loader": "^3.3.0",
     "terser-webpack-plugin": "^5.2.4",
     "ts-loader": "^9.2.6",
@@ -38,5 +39,12 @@
     "start": "webpack serve --open"
   },
   "author": "alphawallet",
-  "license": "ISC"
+  "license": "ISC",
+  "browserslist": [
+    "chrome >= 67",
+    "edge >= 79",
+    "firefox >= 68",
+    "opera >= 54",
+    "safari >= 14"
+  ]
 }
