@@ -15,7 +15,7 @@ module.exports = {
   ],
   mode: 'development',
   entry: './src/index.ts',
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -40,9 +40,11 @@ module.exports = {
             presets: ['@babel/preset-env']
           }
         }
-      }
+      },
+      {test: /\.js?$/, loader: 'source-map-loader', exclude: /react-hot-loader/}
     ],
   },
+  ignoreWarnings: [/Failed to parse source map/],
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },

@@ -1,112 +1,98 @@
-import React, { createContext, useState, useEffect } from 'react';
-import { Client } from '@tokenscript/token-negotiator';
-import config from '../../tokenConfig.json';
-import {updateTokenConfig} from '../../environment';
+import React, {createContext, useState, useEffect} from "react";
+import {Client} from "@tokenscript/token-negotiator";
+import config from "../../tokenConfig.json";
+import {updateTokenConfig} from "../../environment";
 
-const TokenContext = createContext({ 
+const TokenContext = createContext({
   tokens: [],
   proof: null
 });
 
 export const collectionID = config.collectionID;
 
-const tokenKeys = [
-  collectionID
-];
+const tokenKeys = [collectionID];
 
 window.negotiator = null;
 
 const TokenContextProvider = (props) => {
-
   const [tokens, setTokens] = useState([]);
 
   const [proof, setProof] = useState(null);
-  
+
   useEffect(() => {
-    
-    window.negotiator.on("tokens-selected", (tokens) => { 
-    
+    window.negotiator.on("tokens-selected", (tokens) => {
       let selectedTokensState = [];
 
-      const { selectedTokens } = tokens;
+      const {selectedTokens} = tokens;
 
       tokenKeys.forEach((token) => {
-
         selectedTokensState.push(...tokens.selectedTokens[token].tokens);
-        
       });
 
-      console.log('selected tokens', selectedTokens);
+      console.log("selected tokens", selectedTokens);
 
       setTokens(selectedTokensState);
-
     });
 
     window.negotiator.on("token-proof", (result) => {
+      console.log("token proof", result);
 
-      console.log('token proof', result);
+      if (result.error) {
+        return;
+      }
 
-	  if (result.error){
-		  return;
-	  }
-          
       setProof(result.data);
 
-	  window.negotiator.getUi().closeOverlay();
-
+      window.negotiator.getUi().closeOverlay();
     });
 
     window.negotiator.negotiate();
-    
   }, []);
 
   return (
-
-    <TokenNegotiatorInstance render={({ negotiator }) => (
-
-      <TokenContext.Provider props={negotiator} value={{ tokens, proof, negotiator }}>
-
-        {props.children}
-
-      </TokenContext.Provider>
-
-    )} />
-
-  )
-}
+    <TokenNegotiatorInstance
+      render={({negotiator}) => (
+        <TokenContext.Provider
+          props={negotiator}
+          value={{tokens, proof, negotiator}}
+        >
+          {props.children}
+        </TokenContext.Provider>
+      )}
+    />
+  );
+};
 class TokenNegotiatorInstance extends React.Component {
-  
   constructor(props) {
-    
     super(props);
 
     let devconConfig = config;
 
     devconConfig = updateTokenConfig(devconConfig);
 
-	const params = new URLSearchParams(document.location.hash.substring(1));
-	const redirectMode = params.has("redirectMode") ? params.get("redirectMode") : undefined;
+    const params = new URLSearchParams(document.location.hash.substring(1));
+    const redirectMode = params.has("redirectMode")
+      ? params.get("redirectMode")
+      : undefined;
 
     window.negotiator = new Client({
-      type: 'active',
-      issuers: [
-        devconConfig
-      ],
+      type: "active",
+      issuers: [devconConfig],
       uiOptions: {
-        openingHeading: "Open a new world of discounts available with your tokens.",
+        openingHeading:
+          "Open a new world of perks, benefits and opportunities with your attestation, collectible or token.",
         issuerHeading: "Get discount with Ticket",
         repeatAction: "try again",
         theme: "light",
         position: "bottom-right"
       },
-	  offChainRedirectMode: redirectMode
+      offChainRedirectMode: redirectMode
     });
-    
   }
 
   render() {
-    return this.props.render({ negotiator: window.negotiator })
-  };
+    return this.props.render({negotiator: window.negotiator});
+  }
 }
 
-export { TokenContext, TokenContextProvider }
+export {TokenContext, TokenContextProvider};
