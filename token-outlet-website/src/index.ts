@@ -1,13 +1,10 @@
-import {Client} from '@tokenscript/token-negotiator';
+import {Client, Outlet} from '@tokenscript/token-negotiator';
 import "@tokenscript/token-negotiator/dist/theme/style.css";
 import {updateTokenConfig} from "../../environment";
 // @ts-ignore
 import configs from '../../multiTokenConfig.json';
-import {
-	MultiOutlet,
-	MultiOutletInterface, OutletIssuerInterface,
-} from "@tokenscript/token-negotiator/dist/outlet/multioutlet";
 import {Issuer} from "@tokenscript/token-negotiator/dist/client/interface";
+import {OutletInterface, OutletIssuerInterface} from '@tokenscript/token-negotiator/dist/outlet';
 
 const issuerConfigs: OutletIssuerInterface[] = []
 
@@ -22,7 +19,7 @@ window.addEventListener("auth-callback", (e: CustomEvent) => {
 	console.log(e.detail);
 });
 
-const outletConfig: MultiOutletInterface = {
+const outletConfig: OutletInterface = {
 	issuers: issuerConfigs,
 	whitelistDialogRenderer: (permissionTxt: string, acceptBtn: string, denyBtn: string) => {
 		return `
@@ -40,7 +37,7 @@ const outletConfig: MultiOutletInterface = {
 	}
 }
 
-new MultiOutlet(outletConfig);
+new Outlet(outletConfig);
 
 declare global {
 	interface Window {
