@@ -1,39 +1,46 @@
-import {Client, Outlet} from '@tokenscript/token-negotiator';
+import {Client} from '@tokenscript/token-negotiator';
 import "@tokenscript/token-negotiator/dist/theme/style.css";
 import {updateTokenConfig} from "../../environment";
 // @ts-ignore
-import config from '../../tokenConfig.json';
+import configs from '../../multiTokenConfig.json';
+import {
+	MultiOutlet,
+	MultiOutletInterface, OutletIssuerInterface,
+} from "@tokenscript/token-negotiator/dist/outlet/multioutlet";
+import {Issuer} from "@tokenscript/token-negotiator/dist/client/interface";
 
-let devconConfig = updateTokenConfig(config);
+const issuerConfigs: OutletIssuerInterface[] = []
 
-// Enable test.attestation.id but only for bare-bones demo
-//if (document.referrer && (document.referrer.indexOf("3010") > -1 || document.referrer.indexOf("bare-bones") > -1))
-//devconConfig.attestationOrigin = "https://test.attestation.id/";
-
-
-devconConfig.tokenOrigin = document.location.href;
-
-devconConfig.whitelistDialogRenderer = (permissionTxt: string, acceptBtn: string, denyBtn: string) => {
-	return `
-		<div class="tn-auth-box">
-			<div class="tn-auth-heading">
-				<img alt="devcon" src="devcon_logo.svg" style="width: 150px;" />
-			</div>
-			<div class="tn-auth-content">
-				<p>${permissionTxt}</p>
-				${acceptBtn}
-				${denyBtn}
-			</div>
-		</div>
-	`;
-};
+for (let config of configs){
+	config = updateTokenConfig(config);
+	config.tokenOrigin = document.location.href;
+	issuerConfigs.push(config);
+}
 
 window.addEventListener("auth-callback", (e: CustomEvent) => {
 	console.log("AUTH-CALLBACK: ")
 	console.log(e.detail);
 });
 
-new Outlet(devconConfig);
+const outletConfig: MultiOutletInterface = {
+	issuers: issuerConfigs,
+	whitelistDialogRenderer: (permissionTxt: string, acceptBtn: string, denyBtn: string) => {
+		return `
+			<div class="tn-auth-box">
+				<div class="tn-auth-heading">
+					<img alt="devcon" src="devcon_logo.svg" style="width: 150px;" />
+				</div>
+				<div class="tn-auth-content">
+					<p>${permissionTxt}</p>
+					${acceptBtn}
+					${denyBtn}
+				</div>
+			</div>
+		`;
+	}
+}
+
+new MultiOutlet(outletConfig);
 
 declare global {
 	interface Window {
@@ -44,7 +51,7 @@ declare global {
 function negotiate(active: boolean){
 	const client = new Client({
 		type: active ? "active" : "passive",
-		issuers: [devconConfig]
+		issuers: issuerConfigs as unknown as Issuer[]
 	});
 
 	client.on("token-proof", (data:any) => {
