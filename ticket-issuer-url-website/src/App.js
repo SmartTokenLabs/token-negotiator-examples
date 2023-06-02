@@ -110,8 +110,10 @@ function App() {
 
           const attestationManager = new EasTicketAttestation(
               EAS_TICKET_SCHEMA,
-              EAS_CONFIG,
-              wallet
+              {
+                  EASconfig: EAS_CONFIG,
+                  signer: wallet
+              }
           );
 
           await attestationManager.createEasAttestation( {
