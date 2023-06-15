@@ -33,7 +33,9 @@ window.addEventListener("auth-callback", (e: CustomEvent) => {
 	console.log(e.detail);
 });
 
-new Outlet(devconConfig);
+new Outlet({
+	issuers:[devconConfig]
+});
 
 declare global {
 	interface Window {
