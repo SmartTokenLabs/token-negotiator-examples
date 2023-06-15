@@ -55,6 +55,7 @@ declare global {
 function negotiate(active: boolean) {
   const client = new Client({
     type: active ? "active" : "passive",
+    // type: true ? "active" : "passive",
     issuers: issuerConfigs as unknown as Issuer[]
   });
 

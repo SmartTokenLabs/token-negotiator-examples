@@ -33,8 +33,8 @@ const mockRoomData = [
   }
 ];
 
-// mock discount of 10% applied to any ticket selected. In a real world scenario, this maybe different per ticket type and retrieved from a backend service.
-const mockRoomDiscountData = 10;
+// mock discount of 5% * ticket num applied to tickets selected. In a real world scenario, this maybe different per ticket type and retrieved from a backend service.
+const mockRoomDiscountData = 5;
 
 let devonConfig = updateTokenConfig(config);
 
@@ -56,7 +56,6 @@ function App() {
   let [tokens, setTokens] = useState([]);
 
   let [tokenProofData, setTokenProofData] = useState({
-    issuer: null,
     proof: null
   });
 
@@ -90,10 +89,13 @@ function App() {
     });
 
     window.negotiator.on("token-proof", (result) => {
-      setTokenProofData({issuer: result.issuer, proof: result.data.proof});
-      if (selectedPendingTokenInstances.length > 0) {
+      if (result.issuersValidated && result.issuers) {
+        setTokenProofData({
+          proof: result.issuers,
+          issuersValidated: result.issuersValidated
+        });
         setDiscount({
-          value: getApplicableDiscount(),
+          value: getApplicableDiscount(result.issuersValidated),
           tokenInstance: selectedPendingTokenInstances
         });
         localStorage.removeItem("token-instances");
@@ -118,8 +120,8 @@ function App() {
   };
 
   // example to return a discount
-  const getApplicableDiscount = () => {
-    return mockRoomDiscountData;
+  const getApplicableDiscount = (ticketNum) => {
+    return mockRoomDiscountData * ticketNum;
   };
 
   // When a ticket is present and user applies it, the discount will be shown
@@ -151,10 +153,21 @@ function App() {
       JSON.stringify(selectedPendingTokenInstances)
     );
     if (selectedPendingTokenInstances && selectedPendingTokenInstances.length) {
-      window.negotiator.authenticate({
-        issuer: config.collectionID,
-        unsignedToken: selectedPendingTokenInstances[0]
+      // window.negotiator.authenticate({
+      //   issuer: config.collectionID,
+      //   unsignedToken: null
+      // });
+      // WORKAROUND before team confirmation on this::
+      const multiInput = selectedPendingTokenInstances.map((unsignedToken) => {
+        return {
+          issuer: config.collectionID,
+          unsignedToken
+        };
       });
+      // IDEA to simplifiy this: We include the collection Identifier inside each attestation.
+      // otherwise the end developer will have to manually edit each token instance
+      // to prepare the input as shown above.
+      window.negotiator.authenticate(multiInput);
     } else {
       setDiscount({
         value: undefined,
@@ -172,7 +185,10 @@ function App() {
       bookingData: {formData}
     };
     fetch(checkoutEndPoint + new URLSearchParams(params)).then((_data) => {
-      if (tokenProofData && tokenProofData.proof) {
+      if (
+        tokenProofData &&
+        (tokenProofData.proof || tokenProofData.issuersValidated)
+      ) {
         alert(
           "Transaction Complete with token discount, we look forward to your stay with us!"
         );

@@ -8,7 +8,6 @@ import "./Card.css";
 function TokenCard({
   tokenInstance,
   applyDiscount,
-  discount,
   selectedPendingTokenInstances
 }) {
   let tokenSelected = false;
@@ -18,8 +17,6 @@ function TokenCard({
       tokenSelected = true;
     }
   });
-
-  console.log("tokenSelected", selectedPendingTokenInstances);
 
   return (
     <div
