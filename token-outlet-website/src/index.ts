@@ -4,12 +4,9 @@ import {updateTokenConfig} from "../../environment";
 // @ts-ignore
 import configs from "../../multiTokenConfig.json";
 import {Issuer} from "@tokenscript/token-negotiator/dist/client/interface";
-import {
-  OutletInterface,
-  OutletIssuerInterface
-} from "@tokenscript/token-negotiator/dist/outlet";
+import {OutletInterface} from "@tokenscript/token-negotiator/dist/outlet";
 
-const issuerConfigs: OutletIssuerInterface[] = [];
+const issuerConfigs: any[] = [];
 
 for (let config of configs) {
   config = updateTokenConfig(config);
@@ -55,12 +52,12 @@ declare global {
 function negotiate(active: boolean) {
   const client = new Client({
     type: active ? "active" : "passive",
-    // type: true ? "active" : "passive",
     issuers: issuerConfigs as unknown as Issuer[]
   });
 
   client.on("token-proof", (data: any) => {
     console.log(data);
+    console.log("token-proof", data);
   });
 
   client.on("tokens-selected", (tokens: any) => {
