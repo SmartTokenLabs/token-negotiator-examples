@@ -4,9 +4,9 @@ import {updateTokenConfig} from "../../environment";
 // @ts-ignore
 import configs from "../../multiTokenConfig.json";
 import {Issuer} from "@tokenscript/token-negotiator/dist/client/interface";
-import {OutletInterface} from "@tokenscript/token-negotiator/dist/outlet";
+import {OutletInterface, OutletIssuerInterface} from "@tokenscript/token-negotiator/dist/outlet";
 
-const issuerConfigs: any[] = [];
+const issuerConfigs: OutletIssuerInterface[] = [];
 
 for (let config of configs) {
   config = updateTokenConfig(config);
