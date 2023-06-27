@@ -1,12 +1,18 @@
+// @ts-nocheck
 import {Client, Outlet} from "@tokenscript/token-negotiator";
 import "@tokenscript/token-negotiator/dist/theme/style.css";
 import {updateTokenConfig} from "../../environment";
 // @ts-ignore
 import configs from "../../multiTokenConfig.json";
 import {Issuer} from "@tokenscript/token-negotiator/dist/client/interface";
-import {OutletInterface, OutletIssuerInterface} from "@tokenscript/token-negotiator/dist/outlet";
+import {
+  OutletInterface,
+  OutletIssuerInterface
+} from "@tokenscript/token-negotiator/dist/outlet";
 
 const issuerConfigs: OutletIssuerInterface[] = [];
+
+const tokens = [];
 
 for (let config of configs) {
   config = updateTokenConfig(config);
@@ -56,7 +62,7 @@ function negotiate(active: boolean) {
   });
 
   client.on("token-proof", (data: any) => {
-    console.log(data);
+    console.log("....PROOF", data);
   });
 
   client.on("tokens-selected", (tokens: any) => {
@@ -73,14 +79,27 @@ function negotiate(active: boolean) {
     let issuer = elem.dataset.issuer;
     let index = elem.dataset.index;
 
-    // authenticate ownership of token
-    client.authenticate({
-      issuer: issuer,
-      unsignedToken: curTokens[issuer].tokens[index],
-      options: {
-        useRedirect: !!document.querySelector("#use-redirect:checked")
+    if (!!document.querySelector("#use-multi-select:checked")) {
+      tokens.push({
+        issuer: issuer,
+        unsignedToken: curTokens[issuer].tokens[index],
+        options: {
+          useRedirect: !!document.querySelector("#use-redirect:checked")
+        }
+      });
+      if (tokens.length > 1) {
+        // authenticate ownership of token
+        client.authenticate(tokens);
       }
-    });
+    } else {
+      client.authenticate({
+        issuer: issuer,
+        unsignedToken: curTokens[issuer].tokens[index],
+        options: {
+          useRedirect: !!document.querySelector("#use-redirect:checked")
+        }
+      });
+    }
   };
 
   client.negotiate(undefined, true);
