@@ -145,8 +145,10 @@ function updateTokens(tokens: any[]) {
   curTokens = tokens;
 }
 
-// To test the multi token selection feature (with re-direct mode from other sources using this as the issuer outlet)
-if (this.getDataFromQuery("multi-token") === "true") negotiate(true);
+// To test the multi token selection feature
+// (with re-direct mode from other sources using this as the issuer outlet)
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get("multi-token") === "true") negotiate(true);
 
 // For multi-direct
 document.getElementById("tn-active-btn").addEventListener("click", () => {
