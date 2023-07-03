@@ -35,13 +35,19 @@ const TokenContextProvider = (props) => {
     });
 
     window.negotiator.on("token-proof", (result) => {
+      
       console.log("token proof", result);
 
       if (result.error) {
         return;
       }
 
-      setProof(result.data);
+      if(result.issuers) {
+        setProof(result);  
+      } else {
+        // legacy version output.
+        setProof(result.data);
+      }
 
       window.negotiator.getUi().closeOverlay();
     });
