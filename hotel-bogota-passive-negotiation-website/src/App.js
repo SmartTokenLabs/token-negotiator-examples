@@ -79,16 +79,18 @@ function App() {
   useEffect(() => {
     window.negotiator.on("tokens", (issuerTokens) => {
       let tokens = [];
-      tokenIssuers.forEach((issuer) => {
-        tokens.push(...issuerTokens[issuer.collectionID].tokens);
-      });
+      if (issuerTokens) {
+        tokenIssuers.forEach((issuer) => {
+          tokens.push(...issuerTokens[issuer.collectionID].tokens);
+        });
+      }
       setTokens(tokens);
       if (tokens.length > 0) {
         setFreeShuttle(true);
       }
     });
-
     window.negotiator.on("token-proof", (result) => {
+      console.log("token-proof: ", result);
       if (result.issuersValidated && result.issuers) {
         setTokenProofData({
           proof: result.issuers,
@@ -153,21 +155,22 @@ function App() {
       JSON.stringify(selectedPendingTokenInstances)
     );
     if (selectedPendingTokenInstances && selectedPendingTokenInstances.length) {
-      // window.negotiator.authenticate({
-      //   issuer: config.collectionID,
-      //   unsignedToken: null
-      // });
-      // WORKAROUND before team confirmation on this::
-      const multiInput = selectedPendingTokenInstances.map((unsignedToken) => {
-        return {
+      if (selectedPendingTokenInstances.length === 1) {
+        window.negotiator.authenticate({
           issuer: config.collectionID,
-          unsignedToken
-        };
-      });
-      // IDEA to simplifiy this: We include the collection Identifier inside each attestation.
-      // otherwise the end developer will have to manually edit each token instance
-      // to prepare the input as shown above.
-      window.negotiator.authenticate(multiInput);
+          unsignedToken: selectedPendingTokenInstances[0]
+        });
+      } else {
+        const multiInput = selectedPendingTokenInstances.map(
+          (unsignedToken) => {
+            return {
+              issuer: config.collectionID,
+              unsignedToken
+            };
+          }
+        );
+        window.negotiator.authenticate(multiInput);
+      }
     } else {
       setDiscount({
         value: undefined,
