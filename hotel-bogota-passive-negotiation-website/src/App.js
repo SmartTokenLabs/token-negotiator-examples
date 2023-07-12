@@ -90,17 +90,16 @@ function App() {
       }
     });
     window.negotiator.on("token-proof", (result) => {
-      console.log("token-proof: ", result);
-      if (result.issuersValidated && result.issuers) {
+      console.log("token proof", result);
+      if (result.error) return;
+      if (result.issuers) {
+        // setProof(result);
         setTokenProofData({
-          proof: result.issuers,
-          issuersValidated: result.issuersValidated
+          proof: result.issuers
         });
-        setDiscount({
-          value: getApplicableDiscount(result.issuersValidated),
-          tokenInstance: selectedPendingTokenInstances
-        });
-        localStorage.removeItem("token-instances");
+      } else {
+        // legacy version output.
+        setTokenProofData({proof: result.data});
       }
     });
   }, [selectedPendingTokenInstances]);
