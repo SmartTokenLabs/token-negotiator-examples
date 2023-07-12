@@ -106,7 +106,7 @@ function App() {
       const provider = new ethers.providers.JsonRpcProvider(SEPOLIA_RPC);
       const wallet = new ethers.Wallet(
         KeyPair.privateFromPEM(
-          devconConfig.ticketIssuesUrlWebsitePrivateKey
+          devconConfig.ticketIssuersUrlWebsitePrivateKey
         ).getPrivateAsHexString(),
         provider
       );
@@ -139,7 +139,7 @@ function App() {
         ticketClass,
         {
           6: KeyPair.privateFromPEM(
-            devconConfig.ticketIssuesUrlWebsitePrivateKey
+            devconConfig.ticketIssuersUrlWebsitePrivateKey
           )
         },
         ticketSecret

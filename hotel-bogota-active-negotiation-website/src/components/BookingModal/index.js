@@ -10,7 +10,7 @@ import {createTheme} from "@material-ui/core/styles";
 import {ThemeProvider} from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import {collectionID, TokenContext} from "./../../TokenContextProvider";
+import {TokenContext} from "./../../TokenContextProvider";
 import "./BookingModal.css";
 
 const theme = createTheme({
@@ -28,6 +28,11 @@ export default function BookingModal({room}) {
   const {type, price, image, frequency} = room;
 
   const {negotiator, tokens, proof} = useContext(TokenContext);
+  let tokenLength = 0;
+
+  for (const key in tokens) {
+    if (tokens[key].tokens) tokenLength += tokens[key].tokens.length;
+  }
 
   const [open, setOpen] = useState(false);
 
@@ -47,24 +52,23 @@ export default function BookingModal({room}) {
   const useToken = async () => {
     try {
       localStorage.setItem("booking-room-type", room.type);
-      
-      if(tokens.length > 1) {
-
-        await negotiator.authenticate(tokens.map((token) => {
-          return { 
-            issuer: collectionID,
-            unsignedToken: token
-           }
-        }));
-
+      if (tokenLength > 1) {
+        let multiTokenAuthRequest = [];
+        for (const key in tokens) {
+          tokens[key].tokens.forEach((token) => {
+            multiTokenAuthRequest.push({
+              issuer: key,
+              unsignedToken: token
+            });
+          });
+        }
+        await negotiator.authenticate(multiTokenAuthRequest);
       } else {
-
         // legacy
         await negotiator.authenticate({
           issuer: collectionID,
           unsignedToken: tokens[0]
         });
-
       }
 
       setLoadingTokenProof(true);
@@ -247,7 +251,7 @@ export default function BookingModal({room}) {
             </DialogContent>
             <div className="booking">
               <DialogActions>
-                {tokens.length > 0 &&
+                {tokenLength > 0 &&
                   !proof &&
                   !loadingTokenProof &&
                   proofFailed === false && (
@@ -260,7 +264,7 @@ export default function BookingModal({room}) {
                       Use Token
                     </Button>
                   )}
-                {tokens.length > 0 && !proof && loadingTokenProof === true && (
+                {tokenLength > 0 && !proof && loadingTokenProof === true && (
                   <Button
                     color="primary"
                     className="paynow"
@@ -285,7 +289,7 @@ export default function BookingModal({room}) {
                     Pay Now
                   </Button>
                 )}
-                {(tokens.length === 0 || proofFailed) && (
+                {(tokenLength === 0 || proofFailed) && (
                   <Button
                     color="primary"
                     className="paynow"
