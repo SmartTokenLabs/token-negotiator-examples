@@ -54,6 +54,16 @@ const outletConfig: OutletInterface = {
 
 new Outlet(outletConfig);
 
+// This is here for authentication purposes only
+let client = new Client({
+  type: "passive",
+  issuers: issuerConfigs as unknown as Issuer[]
+});
+
+client.on("token-proof", (data: any) => {
+  console.log("....PROOF", data);
+});
+
 declare global {
   interface Window {
     authenticateToken?: Function;
