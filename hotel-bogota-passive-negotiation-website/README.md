@@ -27,6 +27,7 @@ If using the examples to build your own solution, when your ready to deploy it t
 from within each project folder. Please note the negotiator requires a client and token outlet to function.
 
 1. build `npm build` or `yarn build`
+
 ### demo walk through (the backend steps use mock end points in the demos provided)
 
 1. When the page opens, the negotiator will then locate the tickets and show how many you have.
@@ -35,6 +36,13 @@ from within each project folder. Please note the negotiator requires a client an
 5. When you select this meta mask will ask you to sign a message, click sign
 6. Once complete, a discount should be applied (and the attestation for the ticket stored inside the Dapp ready for later)
 7. If you choose to click 'Pay Now' the attestion is sent to the backend, where a transaction process can first veryify the ticket with the data given in the previous step.
+
+### to simulate single and multi-authentication tokens
+
+- Select a ticket which will trigger auth
+- Select more tickets to trigger multi-auth
+- The proof response will contain a single or multiple response
+
 ## Development of this library.
 
 See Developers Page inside Wiki
