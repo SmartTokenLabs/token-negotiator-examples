@@ -82,7 +82,9 @@ function App() {
     tokenIssuers.forEach((issuer) => {
       tokens.push(...issuerTokens[issuer.collectionID].tokens);
     });
-    setTokens(tokens);
+    setTimeout(() => {
+      setTokens(tokens);
+    }, 0);
   });
 
   useEffect(() => {
