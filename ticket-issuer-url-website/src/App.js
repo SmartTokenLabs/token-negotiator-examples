@@ -78,7 +78,6 @@ function App() {
   });
 
   window.negotiator.on("tokens", (issuerTokens) => {
-    debugger;
     let tokens = [];
     tokenIssuers.forEach((issuer) => {
       tokens.push(...issuerTokens[issuer.collectionID].tokens);
