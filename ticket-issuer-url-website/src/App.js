@@ -78,12 +78,11 @@ function App() {
   });
 
   window.negotiator.on("tokens", (issuerTokens) => {
+    debugger;
     let tokens = [];
-
     tokenIssuers.forEach((issuer) => {
       tokens.push(...issuerTokens[issuer.collectionID].tokens);
     });
-
     setTokens(tokens);
   });
 
@@ -167,7 +166,7 @@ function App() {
   const openTicketInIframe = async ({event, ticketId, ticketClass}) => {
     event.preventDefault();
 
-    if (!document.getElementById("form")[0].checkValidity()) {
+    if (!document.getElementById("form")[1].checkValidity()) {
       alert("Please enter an email");
       return;
     }
@@ -258,7 +257,7 @@ function App() {
             label={"Email:"}
             id={"email"}
             style={{display: "block"}}
-            required={true}
+            required
           />
         </div>
         <div className="flexCenter">
