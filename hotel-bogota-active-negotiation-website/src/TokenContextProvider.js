@@ -32,9 +32,6 @@ const TokenContextProvider = (props) => {
       if (result.error) return;
       if (result.issuers) {
         setProof(result);
-      } else {
-        // legacy version output.
-        setProof(result.data);
       }
       window.negotiator.getUi().closeOverlay();
     });

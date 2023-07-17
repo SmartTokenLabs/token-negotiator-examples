@@ -59,7 +59,7 @@ export default function BookingModal({
 
   // Close Modal
   const handleClose = () => {
-    // localStorage.removeItem("booking-room-type");
+    localStorage.removeItem("booking-room-type");
     setOpen(false);
   };
 
@@ -69,8 +69,7 @@ export default function BookingModal({
   const viewPrice = price - discountOfferValue;
 
   useEffect(() => {
-    if (discount) {
-      // && localStorage.getItem("booking-room-type") === roomType) {
+    if (discount && localStorage.getItem("booking-room-type") === roomType) {
       localStorage.removeItem("booking-room-type");
       setOpen(true);
     }
