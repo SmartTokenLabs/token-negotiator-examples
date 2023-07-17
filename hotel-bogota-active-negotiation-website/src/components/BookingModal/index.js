@@ -52,9 +52,9 @@ export default function BookingModal({room}) {
   const useToken = async () => {
     try {
       localStorage.setItem("booking-room-type", room.type);
-      if (tokenLength > 1) {
-        let multiTokenAuthRequest = [];
-        for (const key in tokens) {
+      let multiTokenAuthRequest = [];
+      for (const key in tokens) {
+        if (tokens[key].tokens) {
           tokens[key].tokens.forEach((token) => {
             multiTokenAuthRequest.push({
               issuer: key,
@@ -62,15 +62,8 @@ export default function BookingModal({room}) {
             });
           });
         }
-        await negotiator.authenticate(multiTokenAuthRequest);
-      } else {
-        // legacy
-        await negotiator.authenticate({
-          issuer: collectionID,
-          unsignedToken: tokens[0]
-        });
       }
-
+      await negotiator.authenticate(multiTokenAuthRequest);
       setLoadingTokenProof(true);
     } catch (e) {
       console.error(e);
