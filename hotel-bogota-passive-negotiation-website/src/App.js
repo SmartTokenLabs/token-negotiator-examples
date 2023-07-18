@@ -101,6 +101,7 @@ function App() {
         // legacy version output.
         setTokenProofData({proof: result.data});
       }
+      alert("Your discount has been applied");
     });
   }, [selectedPendingTokenInstances]);
 
