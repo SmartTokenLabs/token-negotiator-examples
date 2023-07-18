@@ -7,7 +7,7 @@ import "./Card.css";
 
 function TokenCard({
   tokenInstance,
-  applyDiscount,
+  applyDiscountTicket,
   selectedPendingTokenInstances
 }) {
   let tokenSelected = false;
@@ -20,7 +20,9 @@ function TokenCard({
 
   return (
     <div
-      onClick={(e) => applyDiscount(tokenInstance)}
+      onClick={(e) => {
+        applyDiscountTicket(tokenInstance);
+      }}
       className={"tokenCard" + (tokenSelected ? " selected" : "")}
     >
       <div

@@ -13,6 +13,7 @@ import "./BookingModal.css";
 
 export default function BookingModal({
   roomType,
+  applyDiscountTicket,
   applyDiscount,
   discount,
   price,
@@ -123,7 +124,7 @@ export default function BookingModal({
               <div>
                 {tokens.length > 0 && (
                   <p className="smallCopy">
-                    Select ticket(s) to apply discount:
+                    Select ticket(s) and apply discount:
                   </p>
                 )}
               </div>
@@ -131,9 +132,10 @@ export default function BookingModal({
                 {tokens?.map((token, index) => (
                   <div key={index}>
                     <TokenCard
-                      applyDiscount={(token) => {
-                        applyDiscount(token, roomType);
+                      applyDiscountTicket={(token) => {
+                        applyDiscountTicket(token, roomType);
                       }}
+                      applyDiscount={applyDiscount}
                       tokenInstance={token}
                       discount={discount}
                       selectedPendingTokenInstances={
@@ -142,6 +144,11 @@ export default function BookingModal({
                     />
                   </div>
                 ))}
+              </div>
+              <div style={{display: "flex", justifyContent: "center"}}>
+                <Button onClick={applyDiscount} color="primary">
+                  Apply Discount
+                </Button>
               </div>
               <TextField
                 id="booking-name"

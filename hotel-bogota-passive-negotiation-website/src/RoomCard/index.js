@@ -23,6 +23,7 @@ const useStyles = makeStyles({
 
 export default function RoomCard({
   room,
+  applyDiscountTicket,
   applyDiscount,
   discount,
   tokens,
@@ -47,6 +48,7 @@ export default function RoomCard({
       <CardActions>
         <BookingModal
           book={book}
+          applyDiscountTicket={applyDiscountTicket}
           applyDiscount={applyDiscount}
           tokens={tokens}
           roomType={type}

@@ -120,13 +120,8 @@ function App() {
     return mockRoomData;
   };
 
-  // example to return a discount
-  const getApplicableDiscount = (ticketNum) => {
-    return mockRoomDiscountData * ticketNum;
-  };
-
   // When a ticket is present and user applies it, the discount will be shown
-  const applyDiscount = async (ticket, roomType) => {
+  const applyDiscountTicket = async (ticket, roomType) => {
     // tickets selected, but owner is not yet authenticated.
     let updatedTicketSelection = [];
     if (selectedPendingTokenInstances?.length) {
@@ -148,12 +143,8 @@ function App() {
     localStorage.setItem("booking-room-type", roomType);
   };
 
-  useEffect(() => {
-    localStorage.setItem(
-      "token-instances",
-      JSON.stringify(selectedPendingTokenInstances)
-    );
-    if (selectedPendingTokenInstances && selectedPendingTokenInstances.length) {
+  const applyDiscount = async () => {
+    if (selectedPendingTokenInstances?.length) {
       if (selectedPendingTokenInstances.length === 1) {
         window.negotiator.authenticate({
           issuer: config.collectionID,
@@ -176,7 +167,7 @@ function App() {
         tokenInstance: []
       });
     }
-  }, [selectedPendingTokenInstances]);
+  };
 
   // This is the example at which the hotel would begin a hotel room booking transaction.
   const book = async (formData) => {
@@ -228,6 +219,7 @@ function App() {
               key={index}
               room={room}
               applyDiscount={applyDiscount}
+              applyDiscountTicket={applyDiscountTicket}
               discount={discount}
               tokens={tokens}
               book={book}
