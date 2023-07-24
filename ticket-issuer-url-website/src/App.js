@@ -79,12 +79,12 @@ function App() {
 
   window.negotiator.on("tokens-selected", (issuerTokens) => {
     let tokens = [];
-
     tokenIssuers.forEach((issuer) => {
       tokens.push(...issuerTokens[issuer.collectionID].tokens);
     });
-
-    setTokens(tokens);
+    setTimeout(() => {
+      setTokens(tokens);
+    }, 0);
   });
 
   useEffect(() => {
@@ -106,7 +106,7 @@ function App() {
       const provider = new ethers.providers.JsonRpcProvider(SEPOLIA_RPC);
       const wallet = new ethers.Wallet(
         KeyPair.privateFromPEM(
-          devconConfig.ticketIssuesUrlWebsitePrivateKey
+          devconConfig.ticketIssuersUrlWebsitePrivateKey
         ).getPrivateAsHexString(),
         provider
       );
@@ -139,7 +139,7 @@ function App() {
         ticketClass,
         {
           6: KeyPair.privateFromPEM(
-            devconConfig.ticketIssuesUrlWebsitePrivateKey
+            devconConfig.ticketIssuersUrlWebsitePrivateKey
           )
         },
         ticketSecret
@@ -167,7 +167,7 @@ function App() {
   const openTicketInIframe = async ({event, ticketId, ticketClass}) => {
     event.preventDefault();
 
-    if (!document.getElementById("form")[0].checkValidity()) {
+    if (!document.getElementById("form")[1].checkValidity()) {
       alert("Please enter an email");
       return;
     }
@@ -258,7 +258,7 @@ function App() {
             label={"Email:"}
             id={"email"}
             style={{display: "block"}}
-            required={true}
+            required
           />
         </div>
         <div className="flexCenter">

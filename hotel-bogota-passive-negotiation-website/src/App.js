@@ -33,8 +33,8 @@ const mockRoomData = [
   }
 ];
 
-// mock discount of 10% applied to any ticket selected. In a real world scenario, this maybe different per ticket type and retrieved from a backend service.
-const mockRoomDiscountData = 10;
+// mock discount of 5% * ticket num applied to tickets selected. In a real world scenario, this maybe different per ticket type and retrieved from a backend service.
+const mockRoomDiscountData = 5;
 
 let devonConfig = updateTokenConfig(config);
 
@@ -56,7 +56,6 @@ function App() {
   let [tokens, setTokens] = useState([]);
 
   let [tokenProofData, setTokenProofData] = useState({
-    issuer: null,
     proof: null
   });
 
@@ -69,41 +68,42 @@ function App() {
   // selected token instance to apply discount, with the discount value on hotel booking.
   let [discount, setDiscount] = useState({
     value: undefined,
-    tokenInstance: null
+    tokenInstance: []
   });
 
-  let [selectedPendingTokenInstance, setSelectedPendingTokenInstance] =
-    useState();
+  let [selectedPendingTokenInstances, setSelectedPendingTokenInstances] =
+    useState([]);
 
   let [retryButton, setRetryButton] = useState("");
 
   useEffect(() => {
     window.negotiator.on("tokens-selected", (issuerTokens) => {
       let tokens = [];
-      tokenIssuers.forEach((issuer) => {
-        tokens.push(...issuerTokens[issuer.collectionID].tokens);
-      });
+      if (issuerTokens) {
+        tokenIssuers.forEach((issuer) => {
+          tokens.push(...issuerTokens[issuer.collectionID].tokens);
+        });
+      }
       setTokens(tokens);
       if (tokens.length > 0) {
         setFreeShuttle(true);
       }
     });
-
     window.negotiator.on("token-proof", (result) => {
-      setTimeout(() => {
-        setSelectedPendingTokenInstance(null);
-        setTokenProofData({issuer: result.issuer, proof: result.data.proof});
-        setDiscount({
-          value: getApplicableDiscount(),
-          tokenInstance:
-            selectedPendingTokenInstance ||
-            JSON.parse(localStorage.getItem("token-instance"))
+      console.log("token proof", result);
+      if (result.error) return;
+      if (result.issuers) {
+        // setProof(result);
+        setTokenProofData({
+          proof: result.issuers
         });
-
-        localStorage.removeItem("token-instance");
-      }, 0);
+      } else {
+        // legacy version output.
+        setTokenProofData({proof: result.data});
+      }
+      alert("Your discount has been applied");
     });
-  }, []);
+  }, [selectedPendingTokenInstances]);
 
   window.negotiator.on("error", ({error, issuer}) => {
     if (error.name === "POPUP_BLOCKED") {
@@ -121,29 +121,51 @@ function App() {
     return mockRoomData;
   };
 
-  // example to return a discount
-  const getApplicableDiscount = () => {
-    return mockRoomDiscountData;
+  // When a ticket is present and user applies it, the discount will be shown
+  const applyDiscountTicket = async (ticket, roomType) => {
+    // tickets selected, but owner is not yet authenticated.
+    let updatedTicketSelection = [];
+    if (selectedPendingTokenInstances?.length) {
+      let wasMatch = false;
+      selectedPendingTokenInstances?.forEach((storedTicket) => {
+        // add tickets that were not a match back in place.
+        if (storedTicket.ticketIdNumber === ticket.ticketIdNumber) {
+          wasMatch = true;
+        }
+        if (storedTicket.ticketIdNumber !== ticket.ticketIdNumber) {
+          updatedTicketSelection.push(storedTicket);
+        }
+      });
+      if (!wasMatch) updatedTicketSelection.push(ticket);
+    } else {
+      updatedTicketSelection.push(ticket);
+    }
+    setSelectedPendingTokenInstances(updatedTicketSelection);
+    localStorage.setItem("booking-room-type", roomType);
   };
 
-  // When a ticket is present and user applies it, the discount will be shown
-  const applyDiscount = async (ticket, roomType) => {
-    // toggle room discount offer on/off
-    if (!ticket || ticket === null) {
-      // clear discount
-      setDiscount({value: undefined, tokenInstance: undefined});
-      setTokenProofData({issuer: null, proof: null});
+  const applyDiscount = async () => {
+    if (selectedPendingTokenInstances?.length) {
+      if (selectedPendingTokenInstances.length === 1) {
+        window.negotiator.authenticate({
+          issuer: config.collectionID,
+          unsignedToken: selectedPendingTokenInstances[0]
+        });
+      } else {
+        const multiInput = selectedPendingTokenInstances.map(
+          (unsignedToken) => {
+            return {
+              issuer: config.collectionID,
+              unsignedToken
+            };
+          }
+        );
+        window.negotiator.authenticate(multiInput);
+      }
     } else {
-      // ticket selected, but owner is not yet authenticated.
-      setSelectedPendingTokenInstance(ticket);
-
-      localStorage.setItem("booking-room-type", roomType);
-      localStorage.setItem("token-instance", JSON.stringify(ticket));
-
-      // authenticate ownership of token
-      window.negotiator.authenticate({
-        issuer: config.collectionID,
-        unsignedToken: ticket
+      setDiscount({
+        value: undefined,
+        tokenInstance: []
       });
     }
   };
@@ -157,7 +179,10 @@ function App() {
       bookingData: {formData}
     };
     fetch(checkoutEndPoint + new URLSearchParams(params)).then((_data) => {
-      if (tokenProofData && tokenProofData.proof) {
+      if (
+        tokenProofData &&
+        (tokenProofData.proof || tokenProofData.issuersValidated)
+      ) {
         alert(
           "Transaction Complete with token discount, we look forward to your stay with us!"
         );
@@ -195,10 +220,11 @@ function App() {
               key={index}
               room={room}
               applyDiscount={applyDiscount}
+              applyDiscountTicket={applyDiscountTicket}
               discount={discount}
               tokens={tokens}
               book={book}
-              selectedPendingTokenInstance={selectedPendingTokenInstance}
+              selectedPendingTokenInstances={selectedPendingTokenInstances}
             />
           );
         })}

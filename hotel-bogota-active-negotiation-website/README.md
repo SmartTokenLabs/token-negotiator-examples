@@ -50,6 +50,12 @@ tokens can be utilised.
 5. Once complete, a discount should be applied (and the attestation for the ticket stored inside the Dapp ready for later)
 6. If you choose to click 'Pay Now' the attestion is sent to the backend, where a transaction process can first veryify the ticket with the data given in the previous step.
 
+### to simulate single and multi-authentication tokens
+
+- Select the number of tickets to authenticate via the Token Negotiator UI overlay
+- Select to book
+- The proof response will contain a single or multiple response
+
 ## Development of this library.
 
 See Developers Page inside Wiki
