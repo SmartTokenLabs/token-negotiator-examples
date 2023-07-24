@@ -4,7 +4,10 @@ import {updateTokenConfig} from "../../environment";
 // @ts-ignore
 import configs from "../../multiTokenConfig.json";
 import {Issuer} from "@tokenscript/token-negotiator/dist/client/interface";
-import {OutletInterface, OutletIssuerInterface} from "@tokenscript/token-negotiator/dist/outlet";
+import {
+  OutletInterface,
+  OutletIssuerInterface
+} from "@tokenscript/token-negotiator/dist/outlet";
 
 const issuerConfigs: OutletIssuerInterface[] = [];
 
@@ -62,11 +65,6 @@ function negotiate(active: boolean) {
   client.on("tokens-selected", (tokens: any) => {
     console.log(tokens);
     updateTokens(tokens.selectedTokens);
-  });
-
-  client.on("tokens", (tokens: any) => {
-    console.log(tokens);
-    updateTokens(tokens);
   });
 
   window.authenticateToken = (elem: HTMLElement) => {

@@ -23,13 +23,11 @@ const TokenContextProvider = (props) => {
     window.negotiator.on("tokens-selected", (tokens) => {
       let selectedTokensState = [];
 
-      const {selectedTokens} = tokens;
-
-      tokenKeys.forEach((token) => {
-        selectedTokensState.push(...tokens.selectedTokens[token].tokens);
+      tokenKeys.forEach((key) => {
+        selectedTokensState.push(...tokens[key].tokens);
       });
 
-      console.log("selected tokens", selectedTokens);
+      console.log("selected tokens", selectedTokensState);
 
       setTokens(selectedTokensState);
     });
