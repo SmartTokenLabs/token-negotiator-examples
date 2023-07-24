@@ -1,4 +1,4 @@
-import Analytics from '@tokenscript/analytics-client';
+import Analytics from "@tokenscript/analytics-client";
 
 const analyticsUrl = process.env.ANALYTICS_URL;
 const jwtToken = process.env.ANALYTICS_JWT;
@@ -11,55 +11,55 @@ export function sendWalletConnectedEvent({
   providerType,
   blockchain,
   chainId,
-  address,
+  address
 }) {
   analyticsClient.event({
-    name: 'wallet-connected',
+    name: "wallet-connected",
     eventProperties: {
       provider_type: providerType,
       blockchain,
       chain_id: chainId,
-      address,
-    },
+      address
+    }
   });
 }
 
-export function sendTokensSelectedEvent({ selectedTokens }) {
+export function sendTokensSelectedEvent(tokens) {
   const eventProperties = Object.fromEntries(
-    Object.entries(selectedTokens).map(([collectionId, { tokens }]) => [
+    Object.entries(tokens).map(([collectionId, {tokens}]) => [
       collectionId,
-      tokens.map((token) => token.ticketIdNumber ?? token.tokenId),
+      tokens.map((token) => token.ticketIdNumber ?? token.tokenId)
     ])
   );
 
   analyticsClient.event({
-    name: 'token-selected',
-    eventProperties,
+    name: "token-selected",
+    eventProperties
   });
 }
 
 export function sendTokenProofEvent({
-  data: { address, messageToSign, signature },
-  error,
+  data: {address, messageToSign, signature},
+  error
 }) {
   const eventProperties = error
-    ? { error }
+    ? {error}
     : {
         address,
         messageToSign,
-        signature,
+        signature
       };
 
   analyticsClient.event({
-    name: 'token-proof',
-    eventProperties,
+    name: "token-proof",
+    eventProperties
   });
 }
 
-const AGREE_TO_STATS_KEY = 'bc-agree-stats';
+const AGREE_TO_STATS_KEY = "bc-agree-stats";
 
 export function loadAgreeToStats() {
-  return localStorage.getItem(AGREE_TO_STATS_KEY) === 'true';
+  return localStorage.getItem(AGREE_TO_STATS_KEY) === "true";
 }
 
 export function storeAgreeToStats(value) {

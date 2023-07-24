@@ -117,7 +117,7 @@ const TokenContextProvider = (props) => {
 
       newNegotiator.on("tokens-selected", (tokens) => {
         if (agreeToStatsValue.current) sendTokensSelectedEvent(tokens);
-        setTokens({...tokens.selectedTokens});
+        setTokens({...tokens});
       });
 
       newNegotiator.on("token-proof", (result) => {

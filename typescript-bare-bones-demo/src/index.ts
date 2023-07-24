@@ -223,9 +223,9 @@ window.negotiator.on("tokens-selected", (tokens: any) => {
 
   console.log(tokens);
 
-  for (let issuer in tokens.selectedTokens) {
-    for (let i = 0; i < tokens.selectedTokens[issuer].tokens.length; i++) {
-      let token = tokens.selectedTokens[issuer].tokens[i];
+  for (let issuer in tokens) {
+    for (let i = 0; i < tokens[issuer].tokens.length; i++) {
+      let token = tokens[issuer].tokens[i];
 
       html += `
                 <div class="ticketContainer">
@@ -249,7 +249,7 @@ window.negotiator.on("tokens-selected", (tokens: any) => {
 
   tokensCtn.innerHTML = html;
 
-  curTokens = tokens.selectedTokens;
+  curTokens = tokens;
 });
 
 window.negotiator.on("token-proof", (data: any) => {

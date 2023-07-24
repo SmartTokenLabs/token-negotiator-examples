@@ -82,7 +82,7 @@ function negotiate(active: boolean) {
 
   client.on("tokens-selected", (tokens: any) => {
     console.log(tokens);
-    updateTokens(tokens.selectedTokens);
+    updateTokens(tokens);
   });
 
   window.authenticateToken = (elem: HTMLElement) => {
