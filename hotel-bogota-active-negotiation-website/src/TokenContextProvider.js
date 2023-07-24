@@ -24,7 +24,10 @@ const TokenContextProvider = (props) => {
 
   useEffect(() => {
     window.negotiator.on("tokens-selected", (tokens) => {
-      setTokens({...tokens, updateCounter: updateCounter++});
+      setTokens({
+        ...tokens,
+        updateCounter: updateCounter++
+      });
     });
 
     window.negotiator.on("token-proof", (result) => {
