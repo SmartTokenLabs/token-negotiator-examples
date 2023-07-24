@@ -77,13 +77,13 @@ function App() {
     offChainRedirectMode: redirectMode
   });
 
-  window.negotiator.on("tokens-selected", (issuerTokens) => {
-    let tokens = [];
+  window.negotiator.on("tokens-selected", (tokens) => {
+    let tokensList = [];
     tokenIssuers.forEach((issuer) => {
-      tokens.push(...issuerTokens[issuer.collectionID].tokens);
+      tokensList.push(...tokens[issuer.collectionID].tokens);
     });
     setTimeout(() => {
-      setTokens(tokens);
+      setTokens(tokensList);
     }, 0);
   });
 

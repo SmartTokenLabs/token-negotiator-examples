@@ -15,7 +15,6 @@ for (let config of configs) {
 }
 
 window.negotiator = null;
-var updateCounter = 0;
 
 const TokenContextProvider = (props) => {
   const [tokens, setTokens] = useState([]);
@@ -25,8 +24,7 @@ const TokenContextProvider = (props) => {
   useEffect(() => {
     window.negotiator.on("tokens-selected", (tokens) => {
       setTokens({
-        ...tokens,
-        updateCounter: updateCounter++
+        ...tokens
       });
     });
 

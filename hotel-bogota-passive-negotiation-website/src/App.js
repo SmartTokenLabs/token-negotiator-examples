@@ -77,15 +77,15 @@ function App() {
   let [retryButton, setRetryButton] = useState("");
 
   useEffect(() => {
-    window.negotiator.on("tokens-selected", (issuerTokens) => {
-      let tokens = [];
-      if (issuerTokens) {
+    window.negotiator.on("tokens-selected", (tokens) => {
+      let tokensList = [];
+      if (tokens) {
         tokenIssuers.forEach((issuer) => {
-          tokens.push(...issuerTokens[issuer.collectionID].tokens);
+          tokensList.push(...tokens[issuer.collectionID].tokens);
         });
       }
-      setTokens(tokens);
-      if (tokens.length > 0) {
+      setTokens(tokensList);
+      if (tokensList.length > 0) {
         setFreeShuttle(true);
       }
     });
@@ -101,6 +101,10 @@ function App() {
         // legacy version output.
         setTokenProofData({proof: result.data});
       }
+      setDiscount({
+        value: selectedPendingTokenInstances.length * 5,
+        tokenInstance: selectedPendingTokenInstances
+      });
       alert("Your discount has been applied");
     });
   }, [selectedPendingTokenInstances]);
