@@ -77,7 +77,7 @@ function App() {
   let [retryButton, setRetryButton] = useState("");
 
   useEffect(() => {
-    window.negotiator.on("tokens", (issuerTokens) => {
+    window.negotiator.on("tokens-selected", (issuerTokens) => {
       let tokens = [];
       if (issuerTokens) {
         tokenIssuers.forEach((issuer) => {
