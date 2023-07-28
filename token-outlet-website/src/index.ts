@@ -85,11 +85,6 @@ function negotiate(active: boolean) {
     updateTokens(tokens.selectedTokens);
   });
 
-  client.on("tokens", (tokens: any) => {
-    console.log(tokens);
-    updateTokens(tokens);
-  });
-
   window.authenticateToken = (elem: HTMLElement) => {
     let issuer = elem.dataset.issuer;
     let index = elem.dataset.index;

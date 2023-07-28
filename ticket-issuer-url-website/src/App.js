@@ -77,7 +77,7 @@ function App() {
     offChainRedirectMode: redirectMode
   });
 
-  window.negotiator.on("tokens", (issuerTokens) => {
+  window.negotiator.on("tokens-selected", (issuerTokens) => {
     let tokens = [];
     tokenIssuers.forEach((issuer) => {
       tokens.push(...issuerTokens[issuer.collectionID].tokens);
