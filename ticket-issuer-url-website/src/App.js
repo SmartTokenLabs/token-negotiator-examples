@@ -80,7 +80,7 @@ function App() {
   window.negotiator.on("tokens-selected", (issuerTokens) => {
     let tokens = [];
     tokenIssuers.forEach((issuer) => {
-      tokens.push(...issuerTokens[issuer.collectionID].tokens);
+      tokens.push(...issuerTokens.selectedTokens[issuer.collectionID].tokens);
     });
     setTimeout(() => {
       setTokens(tokens);
