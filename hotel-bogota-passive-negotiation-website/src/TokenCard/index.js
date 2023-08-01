@@ -36,14 +36,6 @@ function TokenCard({
         >
           {tokenInstance.ticketClass.toString()}
         </Typography>
-        <Typography
-          className="devconId"
-          variant="body2"
-          color="textSecondary"
-          component="p"
-        >
-          Devcon ID: {tokenInstance.devconId.toString()}
-        </Typography>
       </div>
       <img className="ticketImg" src="ticket_example_image.svg"></img>
     </div>
