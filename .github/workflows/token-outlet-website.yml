@@ -31,7 +31,6 @@ jobs:
           node-version: 16
           cache: "npm"
           cache-dependency-path: token-outlet-website/package-lock.json
-          registry-url: 'https://npm.pkg.github.com'
       - run: |
           echo -n "Node version: "
           node -v
@@ -41,6 +40,7 @@ jobs:
         env:
           NEGOTIATOR_BRANCH: ${{ inputs.negotiatorBranch }}
           NODE_AUTH_TOKEN: ${{ github.token }}
+          GPR_KEY: ${{ secrets.GITHUB_TOKEN }}
         run: |
           npm install
           
@@ -48,6 +48,11 @@ jobs:
             NEGOTIATOR_BRANCH="${GITHUB_REF_NAME}"
           fi
           if [[ ! -z $NEGOTIATOR_BRANCH && $NEGOTIATOR_BRANCH != "none" ]]; then
+            # Only use github package registry for @tokenscript
+            echo "//npm.pkg.github.com/:_authToken=${GPR_KEY}" >> .npmrc
+            echo "@tokenscript:registry=https://npm.pkg.github.com" >> .npmrc
+            cat .npmrc
+          
             echo "Negotiator branch $NEGOTIATOR_BRANCH requested, updating package.json files"
             scripts/use_negotiator_branch.js $NEGOTIATOR_BRANCH token-outlet-website
           fi
