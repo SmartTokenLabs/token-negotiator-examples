@@ -2769,9 +2769,6 @@ Apache-2.0
    See the License for the specific language governing permissions and
    limitations under the License.
 
-@walletconnect/web3-provider
-Apache-2.0
-
 @walletconnect/window-getters
 MIT
 MIT License
