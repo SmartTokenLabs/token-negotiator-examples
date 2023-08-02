@@ -47,13 +47,6 @@ jobs:
 
           npm install
           
-          if [[ $GITHUB_BASE_REF == "staging" || (! -z $NEGOTIATOR_BRANCH && $NEGOTIATOR_BRANCH != "none") ]]; then
-            # Only use github package registry for @tokenscript
-            echo "//npm.pkg.github.com/:_authToken=${GPR_KEY}" > .npmrc
-            echo "@tokenscript:registry=https://npm.pkg.github.com" >> .npmrc
-            cat .npmrc
-          fi
-
           if [[ $GITHUB_BASE_REF == "staging" ]]; then 
             echo "This is a staging branch PR, updating package.json files to use negotiator staging branch"
             scripts/use_negotiator_branch.js staging
