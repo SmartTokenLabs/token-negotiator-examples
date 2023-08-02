@@ -49,7 +49,7 @@ jobs:
           
           if [[ $GITHUB_BASE_REF == "staging" || (! -z $NEGOTIATOR_BRANCH && $NEGOTIATOR_BRANCH != "none") ]]; then
             # Only use github package registry for @tokenscript
-            echo "//npm.pkg.github.com/:_authToken=${GPR_KEY}" >> .npmrc
+            echo "//npm.pkg.github.com/:_authToken=${GPR_KEY}" > .npmrc
             echo "@tokenscript:registry=https://npm.pkg.github.com" >> .npmrc
             cat .npmrc
           fi
