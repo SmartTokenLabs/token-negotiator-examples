@@ -2,6 +2,7 @@
 
 const concurrently = require('concurrently');
 const path = require('path');
+const {env} = require("shelljs");
 
 let packages = [
 	"art-gallery-medium-article-website",
@@ -27,7 +28,12 @@ packages = packages.filter((path) => {
 });
 
 const cmds = packages.map((pack) => ({
-	command: "npm i @tokenscript/token-negotiator@SNAPSHOT-" + branch,
+	command: `
+		echo "//npm.pkg.github.com/:_authToken=${env.GPR_KEY}" >> .npmrc
+		echo "@tokenscript:registry=https://npm.pkg.github.com" >> .npmrc
+		cat .npmrc
+		npm i @tokenscript/token-negotiator@SNAPSHOT-${branch}
+	`,
 	cwd: path.resolve(__dirname, '..', pack)
 }));
 
