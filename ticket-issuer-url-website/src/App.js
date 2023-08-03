@@ -36,7 +36,8 @@ const mockTicketData = [
 
 const EASContractAddress = "0xC2679fBD37d54388Ce493F1DB75320D236e1815e"; // Sepolia v0.26
 
-const SEPOLIA_RPC = "https://rpc.sepolia.org/";
+const SEPOLIA_RPC =
+  "https://sepolia.infura.io/v3/9f79b2f9274344af90b8d4e244b580ef";
 
 export const EAS_CONFIG = {
   address: EASContractAddress,
