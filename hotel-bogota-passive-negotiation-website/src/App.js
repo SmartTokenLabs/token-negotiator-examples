@@ -81,7 +81,9 @@ function App() {
       let tokens = [];
       if (issuerTokens) {
         tokenIssuers.forEach((issuer) => {
-          tokens.push(...issuerTokens[issuer.collectionID].tokens);
+          tokens.push(
+            ...issuerTokens.selectedTokens[issuer.collectionID].tokens
+          );
         });
       }
       setTokens(tokens);
