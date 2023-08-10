@@ -131,10 +131,10 @@ function App() {
       let wasMatch = false;
       selectedPendingTokenInstances?.forEach((storedTicket) => {
         // add tickets that were not a match back in place.
-        if (storedTicket.ticketIdNumber === ticket.ticketIdNumber) {
+        if (storedTicket.tokenId === ticket.tokenId) {
           wasMatch = true;
         }
-        if (storedTicket.ticketIdNumber !== ticket.ticketIdNumber) {
+        if (storedTicket.tokenId !== ticket.tokenId) {
           updatedTicketSelection.push(storedTicket);
         }
       });
