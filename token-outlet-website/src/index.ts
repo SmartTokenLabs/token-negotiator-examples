@@ -132,15 +132,13 @@ function updateTokens(tokens: any[]) {
                     <h5 class="ticketClass">
                       ${token.ticketClass}
                     </h5>
-                    <p class="ticketId">
-                      ${
+                    <p class="devconId">
+                      Devcon ID: ${
                         token.ticketIdString ??
                         token.ticketIdNumber ??
+                        token.tokenId ??
                         token.ticketId
                       }
-                    </p class="ticketId">
-                    <p class="devconId">
-                      Devcon ID: ${token.devconId}
                     </p>
                     <button class="authButton" onclick="authenticateToken(this);" data-issuer="${issuer}" data-index="${i}">Authenticate</button>
                   </div>
