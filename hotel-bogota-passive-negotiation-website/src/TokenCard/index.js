@@ -13,7 +13,7 @@ function TokenCard({
   let tokenSelected = false;
 
   selectedPendingTokenInstances?.forEach((ticket) => {
-    if (tokenInstance.ticketIdNumber === ticket.ticketIdNumber) {
+    if (tokenInstance.tokenId === ticket.tokenId) {
       tokenSelected = true;
     }
   });
