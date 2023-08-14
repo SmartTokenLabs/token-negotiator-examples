@@ -52,7 +52,9 @@ const outletConfig: OutletInterface = {
   }
 };
 
-new Outlet(outletConfig);
+window.tnOutlet = new Outlet(outletConfig);
+
+tnOutlet.ticketStorage.migrateLegacyTokenStorage("devconnectTokens");
 
 // This is here for authentication purposes only
 let client = new Client({
