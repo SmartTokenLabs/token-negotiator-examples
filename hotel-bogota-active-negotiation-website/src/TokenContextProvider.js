@@ -1,6 +1,6 @@
 import React, {createContext, useState, useEffect} from "react";
 import {Client} from "@tokenscript/token-negotiator";
-import config from "../../tokenConfig.json";
+import configs from "../../multiTokenConfig.json";
 import {updateTokenConfig} from "../../environment";
 
 const TokenContext = createContext({
@@ -8,11 +8,14 @@ const TokenContext = createContext({
   proof: null
 });
 
-export const collectionID = config.collectionID;
+const issuerConfigs = [];
 
-const tokenKeys = [collectionID];
+for (let config of configs) {
+  issuerConfigs.push(updateTokenConfig(config));
+}
 
 window.negotiator = null;
+var updateCounter = 0;
 
 const TokenContextProvider = (props) => {
   const [tokens, setTokens] = useState([]);
@@ -21,31 +24,17 @@ const TokenContextProvider = (props) => {
 
   useEffect(() => {
     window.negotiator.on("tokens-selected", (tokens) => {
-      let selectedTokensState = [];
-
-      const {selectedTokens} = tokens;
-
-      tokenKeys.forEach((token) => {
-        selectedTokensState.push(...tokens.selectedTokens[token].tokens);
-      });
-
-      console.log("selected tokens", selectedTokens);
-
-      setTokens(selectedTokensState);
+      setTokens({...tokens.selectedTokens, updateCounter: updateCounter++});
     });
 
     window.negotiator.on("token-proof", (result) => {
       console.log("token proof", result);
-
-      if (result.error) {
-        return;
+      if (result.error) return;
+      if (result.issuers) {
+        setProof(result);
       }
-
-      setProof(result.data);
-
       window.negotiator.getUi().closeOverlay();
     });
-
     window.negotiator.negotiate();
   }, []);
 
@@ -66,10 +55,6 @@ class TokenNegotiatorInstance extends React.Component {
   constructor(props) {
     super(props);
 
-    let devconConfig = config;
-
-    devconConfig = updateTokenConfig(devconConfig);
-
     const params = new URLSearchParams(document.location.hash.substring(1));
     const redirectMode = params.has("redirectMode")
       ? params.get("redirectMode")
@@ -77,7 +62,7 @@ class TokenNegotiatorInstance extends React.Component {
 
     window.negotiator = new Client({
       type: "active",
-      issuers: [devconConfig],
+      issuers: issuerConfigs,
       uiOptions: {
         openingHeading:
           "Open a new world of perks, benefits and opportunities with your attestation, collectible or token.",

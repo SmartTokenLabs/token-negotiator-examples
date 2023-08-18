@@ -7,8 +7,8 @@ import {updateTokenConfig} from "../../environment";
 import {Ticket} from "@tokenscript/attestation/dist/Ticket";
 import {KeyPair} from "@tokenscript/attestation/dist/libs/KeyPair";
 import {
-    base64toBase64Url,
-    hexStringToBase64Url,
+  base64toBase64Url,
+  hexStringToBase64Url
 } from "@tokenscript/attestation/dist/libs/utils";
 import {MenuItem, Select, TextField} from "@material-ui/core";
 import {ethers} from "ethers";
@@ -36,21 +36,22 @@ const mockTicketData = [
 
 const EASContractAddress = "0xC2679fBD37d54388Ce493F1DB75320D236e1815e"; // Sepolia v0.26
 
-const SEPOLIA_RPC = "https://rpc.sepolia.org/";
+const SEPOLIA_RPC =
+  "https://sepolia.infura.io/v3/9f79b2f9274344af90b8d4e244b580ef";
 
 export const EAS_CONFIG = {
-    address: EASContractAddress,
-    version: "0.26",
-    chainId: 11155111,
+  address: EASContractAddress,
+  version: "0.26",
+  chainId: 11155111
 };
 
 const EAS_TICKET_SCHEMA = {
-    fields: [
-        { name: "devconId", type: "string" },
-        { name: "ticketIdString", type: "string" },
-        { name: "ticketClass", type: "uint8",  },
-        { name: "commitment", type: "bytes", isCommitment: true },
-    ]
+  fields: [
+    {name: "devconId", type: "string"},
+    {name: "ticketIdString", type: "string"},
+    {name: "ticketClass", type: "uint8"},
+    {name: "commitment", type: "bytes", isCommitment: true}
+  ]
 };
 
 function App() {
@@ -77,14 +78,16 @@ function App() {
     offChainRedirectMode: redirectMode
   });
 
-  window.negotiator.on("tokens", (issuerTokens) => {
+  window.negotiator.on("tokens-selected", (issuerTokens) => {
     let tokens = [];
-
     tokenIssuers.forEach((issuer) => {
-      tokens.push(...issuerTokens[issuer.collectionID].tokens);
+      if (issuerTokens.selectedTokens[issuer.collectionID].tokens) {
+        tokens.push(...issuerTokens.selectedTokens[issuer.collectionID].tokens);
+      }
     });
-
-    setTokens(tokens);
+    setTimeout(() => {
+      setTokens(tokens);
+    }, 0);
   });
 
   useEffect(() => {
@@ -100,65 +103,83 @@ function App() {
   });
 
   const generateTicket = async (email, ticketId, ticketClass) => {
+    let ticketInUrl, ticketSecret;
 
-      let ticketInUrl, ticketSecret;
+    if (ticketType === "eas") {
+      const provider = new ethers.providers.JsonRpcProvider(SEPOLIA_RPC);
+      const wallet = new ethers.Wallet(
+        KeyPair.privateFromPEM(
+          devconConfig.ticketIssuersUrlWebsitePrivateKey
+        ).getPrivateAsHexString(),
+        provider
+      );
 
-      if (ticketType === "eas"){
+      const attestationManager = new EasTicketAttestation(EAS_TICKET_SCHEMA, {
+        EASconfig: EAS_CONFIG,
+        signer: wallet
+      });
 
-          const provider = new ethers.providers.JsonRpcProvider(SEPOLIA_RPC);
-          const wallet = new ethers.Wallet(KeyPair.privateFromPEM(devconConfig.ticketIssuesUrlWebsitePrivateKey).getPrivateAsHexString(), provider);
+      await attestationManager.createEasAttestation(
+        {
+          devconId: "6",
+          ticketIdString: ticketId,
+          ticketClass: ticketClass,
+          commitment: email
+        },
+        null
+      );
 
-          const attestationManager = new EasTicketAttestation(
-              EAS_TICKET_SCHEMA,
-              EAS_CONFIG,
-              wallet
-          );
+      ticketSecret = attestationManager.getEasJson().secret;
 
-          await attestationManager.createEasAttestation( {
-              devconId: "6",
-              ticketIdString: ticketId,
-              ticketClass: ticketClass,
-              commitment: email
-          }, null);
+      ticketInUrl = base64toBase64Url(attestationManager.getEncoded());
+    } else {
+      ticketSecret = new AttestationCrypto().makeSecret();
 
-          ticketSecret = attestationManager.getEasJson().secret;
+      let ticket = Ticket.createWithMail(
+        email,
+        "6",
+        ticketId,
+        ticketClass,
+        {
+          6: KeyPair.privateFromPEM(
+            devconConfig.ticketIssuersUrlWebsitePrivateKey
+          )
+        },
+        ticketSecret
+      );
 
-          ticketInUrl = base64toBase64Url(attestationManager.getEncoded());
-
-      } else {
-
-          ticketSecret = new AttestationCrypto().makeSecret();
-
-          let ticket = Ticket.createWithMail(email, "6", ticketId, ticketClass, {"6": KeyPair.privateFromPEM(devconConfig.ticketIssuesUrlWebsitePrivateKey)}, ticketSecret);
-
-          if (!ticket.checkValidity()){
-              throw new Error("Ticket validity check failed");
-          }
-
-          if (!ticket.verify()){
-              throw new Error("Ticket verify failed");
-          }
-
-          ticketInUrl = hexStringToBase64Url(ticket.getDerEncoding());
+      if (!ticket.checkValidity()) {
+        throw new Error("Ticket validity check failed");
       }
 
-      return {
-          type: ticketType,
-          ticket: ticketInUrl,
-          secret: ticketSecret.toString(),
-          id: email
-      };
-  }
+      if (!ticket.verify()) {
+        throw new Error("Ticket verify failed");
+      }
+
+      ticketInUrl = hexStringToBase64Url(ticket.getDerEncoding());
+    }
+
+    return {
+      type: ticketType,
+      ticket: ticketInUrl,
+      secret: ticketSecret.toString(),
+      id: email
+    };
+  };
 
   const openTicketInIframe = async ({event, ticketId, ticketClass}) => {
     event.preventDefault();
 
-    if (!document.getElementById("form")[0].checkValidity()) {
+    if (!document.getElementById("form")[1].checkValidity()) {
       alert("Please enter an email");
       return;
     }
 
-    let genTicket = await generateTicket(document.getElementById("email").value, ticketId, ticketClass);
+    let genTicket = await generateTicket(
+      document.getElementById("email").value,
+      ticketId,
+      ticketClass
+    );
 
     const magicLink = `${config.tokenOrigin}?type=${genTicket.type}&ticket=${genTicket.ticket}&secret=${genTicket.secret}&id=${genTicket.id}`;
 
@@ -222,31 +243,48 @@ function App() {
       </div>
       <p className="flexCenter">Generate ticket:</p>
       <form id={"form"}>
-          <div className="flexCenter" style={{margin: "20px"}}>
-              <Select label={"Format:"} id={"type"} style={{display: "block", width: "200px"}} required={true} value={ticketType}
-                      onChange={(evt) => setTicketType(evt.target.value)}>
-                  <MenuItem value={"asn"}>ASN</MenuItem>
-                  <MenuItem value={"eas"}>EAS</MenuItem>
-              </Select>
-          </div>
-          <div className="flexCenter" style={{margin: "20px"}}>
-            <TextField label={"Email:"} id={"email"} style={{display: "block"}} required={true} />
-          </div>
-          <div className="flexCenter">
-            <div className="ticketWrapper">
-              {
-                mockTicketData.map((mockTicket) => {
-                  return (
-                    <button key={mockTicket.ticketId} className="makeTicket" onClick={event => openTicketInIframe({
+        <div className="flexCenter" style={{margin: "20px"}}>
+          <Select
+            label={"Format:"}
+            id={"type"}
+            style={{display: "block", width: "200px"}}
+            required={true}
+            value={ticketType}
+            onChange={(evt) => setTicketType(evt.target.value)}
+          >
+            <MenuItem value={"asn"}>ASN</MenuItem>
+            <MenuItem value={"eas"}>EAS</MenuItem>
+          </Select>
+        </div>
+        <div className="flexCenter" style={{margin: "20px"}}>
+          <TextField
+            label={"Email:"}
+            id={"email"}
+            style={{display: "block"}}
+            required
+          />
+        </div>
+        <div className="flexCenter">
+          <div className="ticketWrapper">
+            {mockTicketData.map((mockTicket) => {
+              return (
+                <button
+                  key={mockTicket.ticketId}
+                  className="makeTicket"
+                  onClick={(event) =>
+                    openTicketInIframe({
                       event,
                       ticketId: mockTicket.ticketId,
                       ticketClass: mockTicket.ticketClass
-                    })}>Create Ticket</button>
-                  )
-                })
-              }
-            </div>
+                    })
+                  }
+                >
+                  Create Ticket
+                </button>
+              );
+            })}
           </div>
+        </div>
       </form>
     </main>
   );

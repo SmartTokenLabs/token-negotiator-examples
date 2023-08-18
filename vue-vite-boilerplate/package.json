@@ -8,7 +8,7 @@
     "preview": "vite preview --port 4173"
   },
   "dependencies": {
-    "@tokenscript/token-negotiator": "^2.7.0",
+    "@tokenscript/token-negotiator": "^3.0.0",
     "vue": "^3.2.37",
     "vue-router": "^4.1.3"
   },

@@ -39,7 +39,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
-          registry-url: "https://npm.pkg.github.com"
 
       - name: Build
         run: |
@@ -47,7 +46,7 @@ jobs:
           echo "Requested branch: $NEGOTIATOR_BRANCH"
 
           npm install
-
+          
           if [[ $GITHUB_BASE_REF == "staging" ]]; then 
             echo "This is a staging branch PR, updating package.json files to use negotiator staging branch"
             scripts/use_negotiator_branch.js staging
@@ -67,6 +66,7 @@ jobs:
         env:
           NEGOTIATOR_BRANCH: ${{ inputs.negotiatorBranch }}
           NODE_AUTH_TOKEN: ${{ github.token }}
+          GPR_KEY: ${{ secrets.GITHUB_TOKEN }}
 
   sonarcloud:
     needs:
