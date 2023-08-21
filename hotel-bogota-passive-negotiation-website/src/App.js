@@ -33,9 +33,6 @@ const mockRoomData = [
   }
 ];
 
-// mock discount of 5% * ticket num applied to tickets selected. In a real world scenario, this maybe different per ticket type and retrieved from a backend service.
-const mockRoomDiscountData = 5;
-
 let devonConfig = updateTokenConfig(config);
 
 let tokenIssuers = [devonConfig];
@@ -95,17 +92,26 @@ function App() {
       console.log("token proof", result);
       if (result.error) return;
       if (result.issuers) {
-        // setProof(result);
         setTokenProofData({
           proof: result.issuers
+        });
+        setDiscount({
+          value: 5,
+          tokenInstance: selectedPendingTokenInstances[0]
         });
       } else {
         // legacy version output.
         setTokenProofData({proof: result.data});
+        if (result.error === null) {
+          setDiscount({
+            value: 5,
+            tokenInstance: result.data
+          });
+        }
       }
       alert("Your discount has been applied");
     });
-  }, [selectedPendingTokenInstances]);
+  }, [selectedPendingTokenInstances, discount]);
 
   window.negotiator.on("error", ({error, issuer}) => {
     if (error.name === "POPUP_BLOCKED") {

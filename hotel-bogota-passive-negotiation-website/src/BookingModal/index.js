@@ -69,6 +69,8 @@ export default function BookingModal({
   const discountOfferValue = (discountPerc / 100) * price;
   const viewPrice = price - discountOfferValue;
 
+  console.log("applicable discount", discount.value);
+
   useEffect(() => {
     if (discount && localStorage.getItem("booking-room-type") === roomType) {
       localStorage.removeItem("booking-room-type");
