@@ -19,6 +19,14 @@ onMounted(() => {
     type: "active",
     issuers: [
       {
+        blockchain: "ultra",
+        onChain: true,
+        collectionID: "ultranft",
+        contract: "eosio.nft.ft", // static
+        chain: "testnet", // testnet or mainnet
+        factoryId: 2669 // NFT collection
+      },
+      {
         collectionID: "penthouse-panther-club",
         collectionAddress:
           "ff846ef2eed57e5367cf8826e63f4d53fe28d28aa67417accb6e4b48cbd19136",
