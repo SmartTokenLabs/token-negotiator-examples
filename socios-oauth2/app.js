@@ -32,7 +32,7 @@ const tokenNegotiatorServer = new Server({
   }
 });
 
-const corsOptions = { origin: process.env.APPLICATION_URL ?? 'http://localhost.5000' }
+const corsOptions = { origin: process.env.APPLICATION_URL }
 
 app.get("/", function (request, response) {
   response.sendFile(path.join(__dirname, "./public/index.html"));
