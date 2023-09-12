@@ -17,14 +17,6 @@ const sociosClientConfig = () => {
           path: "http://localhost:5000/user-login-callback",
           params: {}
         },
-        userLogout: {
-          path: "http://localhost:5000/user-logout",
-          params: {}
-        },
-        userSignature: {
-          path: 'http://localhost:5000/user-signature',
-          params: {}
-        },
         userBalance: {
           path: 'http://localhost:5000/user-balance',
           params: {}
