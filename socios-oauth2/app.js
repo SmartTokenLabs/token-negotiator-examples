@@ -1,6 +1,6 @@
 import path from "path";
 import express from "express";
-import { Server } from "./../token-negotiator-server/dist/index.js";
+import { Server } from "@tokenscript/token-negotiator-server";
 import { fileURLToPath } from 'url';
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
@@ -32,8 +32,7 @@ const tokenNegotiatorServer = new Server({
   }
 });
 
-// Same origin Cors
-const corsOptions = { origin: 'http://localhost.5000' }
+const corsOptions = { origin: process.env.APPLICATION_URL }
 
 app.get("/", function (request, response) {
   response.sendFile(path.join(__dirname, "./public/index.html"));
