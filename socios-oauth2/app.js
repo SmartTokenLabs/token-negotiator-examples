@@ -9,6 +9,7 @@ import "dotenv/config";
 
 const app = express();
 const port = 5000;
+const hostname = process.env.HOST;
 
 // ES6 solution for __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -68,4 +69,4 @@ app.get("/user-nfts", cors(corsOptions), async (request, response) => {
   response.json(output);
 });
 
-app.listen(port, () => console.info(`App listening on port ${port}`));
+app.listen(port, hostname, () => console.info(`App listening ${hostname ?? ''} on port ${port}`));
