@@ -1,0 +1,76 @@
+name: "socios-oauth2 CI"
+
+on:
+  push:
+    branches:
+      - main
+      - staging
+  pull_request:
+    branches:
+      - "*"
+  workflow_dispatch:
+
+env:
+  PROJ_PATH: socios-oauth2
+  DEPLOY_URL: https://socios-oauth2.tokenscript.org/
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "npm"
+          cache-dependency-path: ${{ env.PROJ_PATH }}/package-lock.json
+      - run: |
+          echo -n "Node version: "
+          node -v
+          echo -n "Npm version: "
+          npm -v
+      - name: build
+        run: |
+          cd "${PROJ_PATH}"
+          npm ci
+          npm run build
+      - uses: actions/upload-artifact@v3
+        with:
+          name: socios-oauth2
+          path: ${{ env.PROJ_PATH }}/dist/
+
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: socios-oauth2
+      url: ${{ env.DEPLOY_URL }}
+    needs:
+      - build
+    if: ${{ contains(
+      fromJson('["push", "workflow_dispatch"]'),
+      github.event_name) &&
+      contains(
+      fromJson('["staging"]'),
+      github.ref_name)
+      }}
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: socios-oauth2
+          path: ${{ env.PROJ_PATH }}/dist/
+      - name: Deploy to EC2
+        uses: easingthemes/ssh-deploy@v4
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: 54.177.203.8
+          REMOTE_USER: ubuntu
+          ARGS: "-aPz --delete"
+          SOURCE: "${{ env.PROJ_PATH }}/dist/"
+          TARGET: /opt/services/socios-oauth2/
+          SCRIPT_AFTER: |
+            sudo systemctl restart socios-oauth2
+      - name: check deploy
+        run: |
+          for i in $(seq 15); do
+            curl -sfL --connect-timeout 30 "${DEPLOY_URL}" && exit || sleep 5
+          done && exit 1

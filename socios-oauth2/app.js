@@ -1,14 +1,15 @@
 import path from "path";
 import express from "express";
 import { Server } from "@tokenscript/token-negotiator-server";
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from "url";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-import cors from 'cors';
-import 'dotenv/config'
+import cors from "cors";
+import "dotenv/config";
 
 const app = express();
 const port = 5000;
+const hostname = process.env.HOST;
 
 // ES6 solution for __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -17,7 +18,7 @@ const __dirname = path.dirname(__filename);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 
 const tokenNegotiatorServer = new Server({
   issuers: {
@@ -28,23 +29,25 @@ const tokenNegotiatorServer = new Server({
       partnerTag: process.env.SOCIOS_PARTNER_TAG,
       redirectURI: process.env.SOCIOS_REDIRECT_URI,
       returnToApplicationURL: process.env.SOCIOS_RETURN_TO_APP_URL,
-    }
-  }
+    },
+  },
 });
 
-const corsOptions = { origin: process.env.APPLICATION_URL }
+const corsOptions = { origin: process.env.APPLICATION_URL };
 
 app.get("/", function (request, response) {
   response.sendFile(path.join(__dirname, "./public/index.html"));
 });
 
 app.get("/user-login-callback", cors(), async (request, response) => {
-
-  const accessTokenData = await tokenNegotiatorServer.socios.getAccessToken(request.query.code, response);
+  const accessTokenData = await tokenNegotiatorServer.socios.getAccessToken(
+    request.query.code,
+    response
+  );
 
   tokenNegotiatorServer.utils.setAccessTokenCookie(
     response,
-    'socios',
+    "socios",
     accessTokenData
   );
 
@@ -53,17 +56,17 @@ app.get("/user-login-callback", cors(), async (request, response) => {
 });
 
 app.get("/user-balance", cors(corsOptions), async (request, response) => {
-  const output = await tokenNegotiatorServer.socios.getFungibleTokenBalance(request.cookies['tn-oauth2-access-token-socios']);
+  const output = await tokenNegotiatorServer.socios.getFungibleTokenBalance(
+    request.cookies["tn-oauth2-access-token-socios"]
+  );
   response.json(output);
 });
 
 app.get("/user-nfts", cors(corsOptions), async (request, response) => {
-  const output = await tokenNegotiatorServer.socios.getNonFungibleTokens(request.cookies['tn-oauth2-access-token-socios']);
+  const output = await tokenNegotiatorServer.socios.getNonFungibleTokens(
+    request.cookies["tn-oauth2-access-token-socios"]
+  );
   response.json(output);
 });
 
-app.listen(port, () => console.info(`App listening on port ${port}`));
-
-
-
-
+app.listen(port, hostname, () => console.info(`App listening ${hostname ?? ''} on port ${port}`));

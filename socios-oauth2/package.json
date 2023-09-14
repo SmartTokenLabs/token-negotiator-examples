@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
     "link": "npm link ../token-negotiator",
-    "unlink": "npm unlink ../token-negotiator"
+    "unlink": "npm unlink ../token-negotiator",
+    "build": "ncc build app.js -sm"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +25,7 @@
     "node-fetch": "^3.3.2"
   },
   "devDependencies": {
+    "@vercel/ncc": "^0.38.0",
     "nodemon": "^2.0.4"
   }
 }
