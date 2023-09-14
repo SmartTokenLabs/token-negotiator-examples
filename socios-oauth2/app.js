@@ -39,7 +39,7 @@ app.get("/", function (request, response) {
   response.sendFile(path.join(__dirname, "./public/index.html"));
 });
 
-app.get("/user-login-callback", async (request, response) => {
+app.get("/user-login-callback", cors(), async (request, response) => {
   const accessTokenData = await tokenNegotiatorServer.socios.getAccessToken(
     request.query.code,
     response
