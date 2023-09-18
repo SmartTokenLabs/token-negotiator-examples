@@ -150,7 +150,7 @@ export const SmartLayer = {
   // TODO: check all these fields
   image:
     "https://pbs.twimg.com/profile_images/1653427962350370816/GiJ0Wh-h_400x400.jpg",
-  tokenOrigin: window.location.origin + "/pass/",
+  tokenOrigin: "https://www.smartlayer.network/pass",
   attestationOrigin: "https://test.attestation.id",
   eas: {
     // schemaUid is the same on both testing and production env
