@@ -1,6 +1,6 @@
 
 const sociosClientConfig = () => {
-  return {
+  return [{
     onChain: true,
     fungible: true,
     chain: "eth",
@@ -24,7 +24,22 @@ const sociosClientConfig = () => {
           path: 'https://socios-oauth2.tokenscript.org/user-nfts',
           params: {}
         },
+        userLogout: {
+          path: 'https://socios-oauth2.tokenscript.org/user-logout',
+          params: {}
+        },
       }
-    }
-  }
+    },
+  },
+    // {
+    //   hideToggle: true,
+    //   noTokenMsg:
+    //     "<p>If you have a token please:</p><p>1. Open your magic link inside this browser.<br/>2. Refresh this page.</p>",
+    //   onChain: true,
+    //   collectionID: "bsc-collection-test",
+    //   contract: "0xF5db804101d8600c26598A1Ba465166c33CdAA4b",
+    //   chain: "bsc",
+    //   blockchain: "evm",
+    // }
+  ]
 }

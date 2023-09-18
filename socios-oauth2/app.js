@@ -1,6 +1,7 @@
 import path from "path";
 import express from "express";
-import { Server } from "@tokenscript/token-negotiator-server";
+// import { Server } from "@tokenscript/token-negotiator-server";
+import { Server } from "./dist/index.js";
 import { fileURLToPath } from "url";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
@@ -64,6 +65,14 @@ app.get("/user-balance", cors(corsOptions), async (request, response) => {
 
 app.get("/user-nfts", cors(corsOptions), async (request, response) => {
   const output = await tokenNegotiatorServer.socios.getNonFungibleTokens(
+    request.cookies["tn-oauth2-access-token-socios"]
+  );
+  response.json(output);
+});
+
+app.post("/user-logout", cors(corsOptions), async (request, response) => {
+  const output = await tokenNegotiatorServer.socios.userLogout(
+    PROCESS.ENV.SOCIOS_AUTH_KEY,
     request.cookies["tn-oauth2-access-token-socios"]
   );
   response.json(output);
