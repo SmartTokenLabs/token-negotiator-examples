@@ -5,15 +5,15 @@ const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 const isModern = false;
 module.exports = {
-  plugins: 
+  plugins:
     [
       new HtmlWebpackPlugin({
-      title: 'typescript example website',
-      template: path.resolve(__dirname, './src/index.html'),
-      filename: 'index.html',
-    }),
-    new NodePolyfillPlugin()
-  ],
+        title: 'typescript example website',
+        template: path.resolve(__dirname, './src/index.html'),
+        filename: 'index.html',
+      }),
+      new NodePolyfillPlugin()
+    ],
   mode: 'development',
   entry: './src/index.ts',
   devtool: 'eval-source-map',
@@ -51,7 +51,7 @@ module.exports = {
       directory: path.join(__dirname, 'public'),
     },
     compress: true,
-    port: 3010,
+    port: 3011,
   },
   optimization: {
     minimize: true,
@@ -67,7 +67,7 @@ module.exports = {
         toplevel: false,
         warnings: false,
         module: false,
-      
+
         parse: {
           bare_returns: false,
           ecma: 2019,

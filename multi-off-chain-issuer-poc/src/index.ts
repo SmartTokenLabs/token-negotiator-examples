@@ -17,11 +17,6 @@ for (let config of configs) {
   issuerConfigs.push(updateTokenConfig(config));
 }
 
-const params = new URLSearchParams(document.location.hash.substring(1));
-const redirectMode = params.has("redirectMode")
-  ? params.get("redirectMode")
-  : undefined;
-
 // ACTIVE
 window.negotiator = new Client({
   type: "active",
@@ -33,13 +28,7 @@ window.negotiator = new Client({
     repeatAction: "try again",
     theme: "dark",
     position: "bottom-right"
-  },
-  offChainRedirectMode: redirectMode
-  //autoLoadTokens: 3,
-  // safeConnectOptions: {
-  //     url: "https://safeconnect.tokenscript.org",
-  //     initialProof: false
-  // }
+  }
 });
 
 const curTokens = [];
@@ -79,9 +68,7 @@ window.negotiator.on("tokens-selected", (tokens: any) => {
             `;
     }
   }
-
   tokensCtn.innerHTML = html;
-
   curTokens = tokens.selectedTokens;
 });
 
@@ -91,61 +78,3 @@ window.negotiator.on("token-proof", (data: any) => {
 
 window.negotiator.negotiate();
 
-window.authenticateToken = (elem) => {
-  let issuer = elem.dataset.issuer;
-  let index = elem.dataset.index;
-
-  // authenticate ownership of token
-  window.negotiator.authenticate({
-    issuer: issuer,
-    unsignedToken: curTokens[issuer].tokens[index]
-  });
-};
-
-window.updateIssuers = () => {
-  // choose 3 random issuers to show
-  let newIssuers = [];
-
-  while (newIssuers.length < 3) {
-    let issuer = issuers[Math.floor(Math.random() * issuers.length)]; //NOSONAR Ignore math.random warning as this isn't used for crypto functions
-
-    if (newIssuers.indexOf(issuer) === -1) newIssuers.push(issuer);
-  }
-
-  window.negotiator.negotiate(newIssuers, true);
-};
-
-window.clearStoredProofs = () => {
-  localStorage.removeItem("tn-proof");
-};
-
-window.negotiator.readProofCallback();
-
-// This is for testing WalletConnect V2 chain switching
-window.sendTransactionOnChain = async (chain: number) => {
-  const wallet = await window.negotiator.getWalletProvider();
-
-  const provider = wallet.getConnectedWalletData()[0].provider;
-  const ethers = wallet.getConnectedWalletData()[0].ethers;
-
-  if ((await provider.getSigner(0).getChainId()) != chain)
-    try {
-      await provider.send("wallet_switchEthereumChain", [
-        {chainId: "0x" + chain.toString(16)}
-      ]);
-    } catch (e) {
-      console.error(e);
-      throw new Error(
-        "Connected to wrong chain, please switch the chain to chainId: " +
-          chain +
-          ", error: " +
-          e.message
-      );
-    }
-
-  let tx = await provider.getSigner(0).sendTransaction({
-    to: "0xcFF805b714b24b3dD30cB4a1bea3745e5C5E73ef",
-    value: ethers.utils.parseUnits("0.0001", "ether").toHexString()
-    //chainId: chain
-  });
-};
