@@ -72,7 +72,7 @@ app.get("/user-nfts", cors(corsOptions), async (request, response) => {
 
 app.post("/user-logout", cors(corsOptions), async (request, response) => {
   const output = await tokenNegotiatorServer.socios.userLogout(
-    PROCESS.ENV.SOCIOS_AUTH_KEY,
+    process.env.SOCIOS_AUTH_KEY,
     request.cookies["tn-oauth2-access-token-socios"]
   );
   response.json(output);
