@@ -1,1 +1,0 @@
-(self.webpackChunkmy_app=self.webpackChunkmy_app||[]).push([[883],{35883:()=>{}}]);

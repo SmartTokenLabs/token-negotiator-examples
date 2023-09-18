@@ -12,6 +12,7 @@
     "hotel-bogota-active-negotiation-website",
     "hotel-bogota-passive-negotiation-website",
     "ticket-issuer-url-website",
-    "token-outlet-website"
+    "token-outlet-website",
+    "multi-off-chain-issuer-poc"
   ]
 }

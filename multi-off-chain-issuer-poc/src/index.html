@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Multi Cross Origin Attestation POC</title>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta name="googlebot" content="noindex">
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <style>
+    .buttons-list {
+      position: fixed;
+      bottom: 20px;
+      left: 12px;
+      display: flex;
+      flex-direction: column;
+      z-index: 999;
+    }
+
+    .buttons-list>* {
+      margin: 5px;
+      align-self: flex-start;
+    }
+  </style>
+</head>
+
+<body>
+
+  [ Multi Cross Origin Attestation POC ]
+
+  <div class="buttons-list">
+    <button onclick="updateIssuers();">Update Issuers</button>
+    <button onclick="clearStoredProofs();">Clear existing proofs</button>
+    <button onclick="sendTransactionOnChain(5);">Send Goerli</button>
+    <button onclick="sendTransactionOnChain(80001);">Send Mumbai</button>
+  </div>
+  <div id="negotiator-inline" class="overlay-tn"></div>
+  <div id="ticketList"></div>
+  <div class="overlay-tn"></div>
+</body>
+
+</html>

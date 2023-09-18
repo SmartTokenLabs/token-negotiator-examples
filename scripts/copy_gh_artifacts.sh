@@ -9,6 +9,7 @@ cp -R hotel-bogota-passive-negotiation-website/build build/hotel-bogota-passive-
 cp -R hotel-bogota-active-negotiation-website/build build/hotel-bogota-active-negotiation-website
 cp -R ticket-issuer-url-website/build build/ticket-issuer-url-website
 cp -R token-outlet-website/build build/token-outlet-website
+cp -R multi-off-chain-issuer-poc/build build/multi-off-chain-issuer-poc
 
 # Ecommerce example
 cp -R ecommerce-store-website/out build/ecommerce-store-website

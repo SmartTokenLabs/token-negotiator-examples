@@ -2,10 +2,11 @@
 
 const concurrently = require('concurrently');
 const path = require('path');
-const {env} = require("shelljs");
+const { env } = require("shelljs");
 
 let packages = [
 	"art-gallery-medium-article-website",
+	"multi-off-chain-issuer-poc",
 	"ecommerce-store-website",
 	"hotel-bogota-active-negotiation-website",
 	"hotel-bogota-passive-negotiation-website",
