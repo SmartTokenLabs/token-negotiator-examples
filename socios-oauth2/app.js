@@ -1,7 +1,6 @@
 import path from "path";
 import express from "express";
-// import { Server } from "@tokenscript/token-negotiator-server";
-import { Server } from "./dist/index.js";
+import { Server } from "@tokenscript/token-negotiator-server";
 import { fileURLToPath } from "url";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
