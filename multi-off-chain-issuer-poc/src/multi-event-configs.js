@@ -139,15 +139,50 @@ export const SmartLayer = {
     "https://www.google.com",
     "android-app://com.google.android.gm",
   ],
-  whitelistDialogRenderer: () => {
-    // this is trying to solve the dialog showing unexpectedly, however, cross origin should be reviewed
-    setTimeout(() => {
-      const acceptBtnEl = document.getElementById("tn-access-accept")
-      if (acceptBtnEl) {
-        acceptBtnEl.click()
-      }
-    }, 0)
-    return `<div style="display:none">${acceptBtn}${denyBtn}</div>`
+  "whitelistDialogRenderer": (permissionContent, acceptBtn, denyBtn) => {
+    return `
+    <style>
+    .btns button {
+        background: #6138e5;
+        color: #fff;
+        border-radius: 10px;
+        font-size: 18px;
+        font-weight: 600;
+        padding: 10px 15px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        border-width: 0;
+        min-width: 100px;
+    }
+</style>
+<div style="
+    font-family: sans-serif; 
+    text-align: center; 
+    position: absolute; 
+    width: 100vw; 
+    min-height: 100vh;
+    top: 0;
+    left: 0;
+    background: #fff;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #000;
+    padding: 20px;
+    font-size: 24px;
+    line-height: 1.2;
+    box-sizing: border-box;">
+        <div>
+            ${permissionContent}
+        </div>
+        <div class="btns">
+        ${acceptBtn}
+        ${denyBtn}
+        </div>
+    </div>
+`;
   },
   image:
     "https://raw.githubusercontent.com/TokenScript/token-negotiator/main/mock-images/devcon.svg",
@@ -171,15 +206,50 @@ export const SmartLayerPass = {
     "https://www.google.com",
     "android-app://com.google.android.gm",
   ],
-  whitelistDialogRenderer: () => {
-    // this is trying to solve the dialog showing unexpectedly, however, cross origin should be reviewed
-    setTimeout(() => {
-      const acceptBtnEl = document.getElementById("tn-access-accept")
-      if (acceptBtnEl) {
-        acceptBtnEl.click()
-      }
-    }, 0)
-    return `<div style="display:none">${acceptBtn}${denyBtn}</div>`
+  "whitelistDialogRenderer": (permissionContent, acceptBtn, denyBtn) => {
+    return `
+    <style>
+    .btns button {
+        background: #6138e5;
+        color: #fff;
+        border-radius: 10px;
+        font-size: 18px;
+        font-weight: 600;
+        padding: 10px 15px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        border-width: 0;
+        min-width: 100px;
+    }
+</style>
+<div style="
+    font-family: sans-serif; 
+    text-align: center; 
+    position: absolute; 
+    width: 100vw; 
+    min-height: 100vh;
+    top: 0;
+    left: 0;
+    background: #fff;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #000;
+    padding: 20px;
+    font-size: 24px;
+    line-height: 1.2;
+    box-sizing: border-box;">
+        <div>
+            ${permissionContent}
+        </div>
+        <div class="btns">
+        ${acceptBtn}
+        ${denyBtn}
+        </div>
+    </div>
+`;
   },
   // TODO: check all these fields
   image:
