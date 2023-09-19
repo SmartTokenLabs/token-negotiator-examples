@@ -3,7 +3,7 @@
 import {Client} from "@tokenscript/token-negotiator";
 import configs from "../../multiTokenConfig.json";
 import {updateTokenConfig} from "../../environment";
-import {GitCoin, SmartLayer} from "./multi-event-configs";
+import {GitCoin, SmartLayer, SmartLayerPass} from "./multi-event-configs";
 import "@tokenscript/token-negotiator/dist/theme/style.css";
 declare global {
   interface Window {
@@ -11,7 +11,7 @@ declare global {
   }
 }
 
-const issuerConfigs = [GitCoin, SmartLayer];
+const issuerConfigs = [GitCoin, SmartLayer, SmartLayerPass];
 
 for (let config of configs) {
   issuerConfigs.push(updateTokenConfig(config));
