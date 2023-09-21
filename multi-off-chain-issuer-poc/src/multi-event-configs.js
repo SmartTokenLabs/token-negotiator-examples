@@ -5,7 +5,7 @@ export const GitCoin = {
   title: "Schelling Point .edu Singapore",
   image: "http://d1w910csv8x9qg.cloudfront.net/gitcoin/wp-content/uploads/sites/6/2023/09/gitcoin_logo_square.png",
   tokenOrigin: "https://schellingpointsingapore.openloyalty.com/outlet/",
-  attestationOrigin: "https://test.attestation.id/",
+  attestationOrigin: "https://attestation-foxgem.vercel.app/",
   "whitelistDialogRenderer": (permissionContent, acceptBtn, denyBtn) => {
     return `
     <style>
@@ -190,7 +190,7 @@ export const SmartLayer = {
   tokenOrigin: window.location.origin + "/pass/",
   // this was 'mail' before, which lead to the id field in localStore empty
   tokenIdName: "id", // the key of email field in the magic link
-  attestationOrigin: "https://attestation.id/",
+  attestationOrigin: "https://attestation-foxgem.vercel.app/",
   unEndPoint: "https://crypto-verify.herokuapp.com/use-devcon-ticket",
   base64senderPublicKeys: {
     "": "MIIBMzCB7AYHKoZIzj0CATCB4AIBATAsBgcqhkjOPQEBAiEA/////////////////////////////////////v///C8wRAQgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHBEEEeb5mfvncu6xVoGKVzocLBwKb/NstzijZWfKBWxb4F5hIOtp3JqPEZV2k+/wOEQio/Re0SKaFVBmcR9CP+xDUuAIhAP////////////////////66rtzmr0igO7/SXozQNkFBAgEBA0IABLmPYBigfL0UZ2C2gMvVMQR8XYEq0sV3G77IUctcsAFvOI74QDf86423uXrdvrh7vkndR37D9F/TorsyZBET+OQ="
@@ -256,7 +256,7 @@ export const SmartLayerPass = {
   image:
     "https://pbs.twimg.com/profile_images/1653427962350370816/GiJ0Wh-h_400x400.jpg",
   tokenOrigin: "https://www.smartlayer.network/pass/",
-  attestationOrigin: "https://test.attestation.id",
+  attestationOrigin: "https://attestation-foxgem.vercel.app/",
   eas: {
     // schemaUid is the same on both testing and production env
     schemaUid:
