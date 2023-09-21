@@ -140,12 +140,16 @@ onMounted(() => {
       }
     ],
     uiOptions: {
-      openingHeading:
-        "Open a new world of perks, benefits and opportunities with your attestation, collectible or token.",
-      issuerHeading: "Get discount with Ticket",
-      repeatAction: "try again",
-      theme: "dark",
-      position: "top-right"
+      openingHeading: "Open a new world of perks, benefits and opportunities with your token.",
+      issuerHeading: "Get discount with token",
+      repeatAction: "Try Again",
+      dismissAction: "Dismiss",
+      loadAction: "Loading...",
+      balanceFoundEvent: "Balance found",
+      nftsFoundEvent: "NFTS found",
+      noTokensFoundEvent: "No tokens found",
+      theme: "light",
+      position: "bottom-right",
     },
     unSupportedUserAgent: {
       authentication: {
