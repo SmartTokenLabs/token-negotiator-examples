@@ -9,7 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@tokenscript/token-negotiator": "^3.0.0",
+    "@tokenscript/token-negotiator": "^3.1.0",
     "core-js": "^3.8.3",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
