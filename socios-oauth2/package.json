@@ -14,7 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tokenscript/token-negotiator": "^3.0.0",
+    "@tokenscript/token-negotiator": "^3.1.0",
     "@tokenscript/token-negotiator-server": "^0.2.0",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",

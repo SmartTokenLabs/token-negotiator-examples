@@ -51,7 +51,7 @@ module.exports = {
       directory: path.join(__dirname, 'public'),
     },
     compress: true,
-    port: 3011,
+    port: 3021,
   },
   optimization: {
     minimize: true,
