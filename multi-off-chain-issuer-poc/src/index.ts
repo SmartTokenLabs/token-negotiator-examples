@@ -1,9 +1,9 @@
 // @ts-nocheck
 
-import {Client} from "@tokenscript/token-negotiator";
+import { Client } from "@tokenscript/token-negotiator";
 import configs from "../../multiTokenConfig.json";
-import {updateTokenConfig} from "../../environment";
-import {GitCoin, SmartLayer, SmartLayerPass} from "./multi-event-configs";
+import { updateTokenConfig } from "../../environment";
+import { GitCoin, SmartLayer, SmartLayerPass } from "./multi-event-configs";
 import "@tokenscript/token-negotiator/dist/theme/style.css";
 declare global {
   interface Window {
@@ -25,9 +25,16 @@ window.negotiator = new Client({
     openingHeading:
       "Open a new world of perks, benefits and opportunities with your attestation, collectible or token.",
     issuerHeading: "Get discount with Ticket",
-    repeatAction: "try again",
     theme: "dark",
-    position: "bottom-right"
+    position: "bottom-right",
+    userCancelIssuerAutoRedirectTimer: 2500,
+    repeatAction: "Retry",
+    dismissAction: 'Dismiss',
+    loadAction: 'Load Collection',
+    noTokensFoundEvent: 'No Tokens Found',
+    balancesFoundEvent: 'Balance Found',
+    nftsFoundEvent: 'Token(s) Found',
+    openingAction: "Let's Go!"
   }
 });
 
