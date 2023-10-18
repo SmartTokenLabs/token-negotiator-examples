@@ -1,7 +1,7 @@
-import React, {createContext, useState, useEffect} from "react";
-import {Client} from "@tokenscript/token-negotiator";
+import React, { createContext, useState, useEffect } from "react";
+import { Client } from "@tokenscript/token-negotiator";
 import configs from "../../multiTokenConfig.json";
-import {updateTokenConfig} from "../../environment";
+import { updateTokenConfig } from "../../environment";
 
 const TokenContext = createContext({
   tokens: [],
@@ -10,40 +10,35 @@ const TokenContext = createContext({
 
 const issuerConfigs = [];
 
+let negotiator;
+
 for (let config of configs) {
   issuerConfigs.push(updateTokenConfig(config));
 }
 
-window.negotiator = null;
-var updateCounter = 0;
-
 const TokenContextProvider = (props) => {
   const [tokens, setTokens] = useState([]);
-
   const [proof, setProof] = useState(null);
 
   useEffect(() => {
-    window.negotiator.on("tokens-selected", (tokens) => {
-      setTokens({...tokens.selectedTokens, updateCounter: updateCounter++});
+    negotiator.on("tokens-selected", ({ selectedTokens }) => {
+      setTokens({ ...selectedTokens });
     });
 
-    window.negotiator.on("token-proof", (result) => {
-      console.log("token proof", result);
+    negotiator.on("token-proof", (result) => {
       if (result.error) return;
-      if (result.issuers) {
-        setProof(result);
-      }
-      window.negotiator.getUi().closeOverlay();
+      if (result.issuers) setProof(result);
+      negotiator.getUi().closeOverlay();
     });
-    window.negotiator.negotiate();
+    negotiator.negotiate();
   }, []);
 
   return (
     <TokenNegotiatorInstance
-      render={({negotiator}) => (
+      render={({ negotiator }) => (
         <TokenContext.Provider
           props={negotiator}
-          value={{tokens, proof, negotiator}}
+          value={{ tokens, proof, negotiator }}
         >
           {props.children}
         </TokenContext.Provider>
@@ -60,7 +55,7 @@ class TokenNegotiatorInstance extends React.Component {
       ? params.get("redirectMode")
       : undefined;
 
-    window.negotiator = new Client({
+    negotiator = new Client({
       type: "active",
       issuers: issuerConfigs,
       uiOptions: {
@@ -76,8 +71,8 @@ class TokenNegotiatorInstance extends React.Component {
   }
 
   render() {
-    return this.props.render({negotiator: window.negotiator});
+    return this.props.render({ negotiator });
   }
 }
 
-export {TokenContext, TokenContextProvider};
+export { TokenContext, TokenContextProvider };

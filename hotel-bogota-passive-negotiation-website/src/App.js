@@ -1,142 +1,75 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import LogoCard from "./LogoCard";
 import RoomCard from "./RoomCard";
 import TokenNotificationCard from "./TokenNotificationCard";
 import Typography from "@material-ui/core/Typography";
 import BookingDate from "./BookingDate";
-import {Client} from "@tokenscript/token-negotiator";
-import "./App.css";
-import config from "../../tokenConfig.json";
-import {updateTokenConfig} from "../../environment";
-import "@tokenscript/token-negotiator/dist/theme/style.css";
 import Button from "@material-ui/core/Button";
-
-// mock data e.g. server side hotel room price database
-const mockRoomData = [
-  {
-    type: "Deluxe Room",
-    price: 200000,
-    frequency: "per night",
-    image: "./hotel_3.jpg"
-  },
-  {
-    type: "King Suite",
-    price: 320000,
-    frequency: "per night",
-    image: "./hotel_2.png"
-  },
-  {
-    type: "Superior Deluxe Suite",
-    price: 250030,
-    frequency: "per night",
-    image: "./hotel_1.jpg"
-  }
-];
-
-let devonConfig = updateTokenConfig(config);
-
-let tokenIssuers = [devonConfig];
-
-const params = new URLSearchParams(document.location.hash.substring(1));
-const redirectMode = params.has("redirectMode")
-  ? params.get("redirectMode")
-  : undefined;
-
-window.negotiator = new Client({
-  type: "passive",
-  issuers: tokenIssuers,
-  offChainRedirectMode: redirectMode
-});
+import mockRoomData from './mock-backend-responses/hotel-bogota/mockRoomData.json';
+import { Client } from "@tokenscript/token-negotiator";
+import config from "../../tokenConfig.json";
+import { updateTokenConfig } from "../../environment";
+import "./App.css";
 
 function App() {
-  // devcont tickets (react state of tokens)
+
+  const devonConfig = updateTokenConfig(config);
+  const tokenIssuers = [devonConfig];
+  const negotiator = new Client({ type: "passive", issuers: tokenIssuers });
+
   let [tokens, setTokens] = useState([]);
 
-  let [tokenProofData, setTokenProofData] = useState({
-    proof: null
-  });
+  let [tokenProofData, setTokenProofData] = useState({ proof: null });
 
-  // react state of token specical offer
   let [freeShuttle, setFreeShuttle] = useState(false);
 
-  // react state of hotel room data
   let [roomTypesData, setRoomTypesData] = useState([]);
 
-  // selected token instance to apply discount, with the discount value on hotel booking.
-  let [discount, setDiscount] = useState({
-    value: undefined,
-    tokenInstance: []
-  });
+  let [discount, setDiscount] = useState({ value: undefined });
 
-  let [selectedPendingTokenInstances, setSelectedPendingTokenInstances] =
-    useState([]);
+  let [selectedPendingTokenInstances, setSelectedPendingTokenInstances] = useState([]);
 
   let [retryButton, setRetryButton] = useState("");
 
-  useEffect(() => {
-    window.negotiator.on("tokens-selected", (issuerTokens) => {
-      let tokens = [];
-      if (issuerTokens) {
-        tokenIssuers.forEach((issuer) => {
-          tokens.push(
-            ...issuerTokens.selectedTokens[issuer.collectionID].tokens
-          );
-        });
-      }
-      setTokens(tokens);
-      if (tokens.length > 0) {
-        setFreeShuttle(true);
-      }
-    });
-    window.negotiator.on("token-proof", (result) => {
-      console.log("token proof", result);
-      if (result.error) return;
-      if (result.issuers) {
-        setTokenProofData({
-          proof: result.issuers
-        });
-        setDiscount({
-          value: 5,
-          tokenInstance: selectedPendingTokenInstances[0]
-        });
-      } else {
-        // legacy version output.
-        setTokenProofData({proof: result.data});
-        if (result.error === null) {
-          setDiscount({
-            value: 5,
-            tokenInstance: result.data
-          });
-        }
-      }
-      alert("Your discount has been applied");
-    });
-  }, [selectedPendingTokenInstances, discount]);
-
-  window.negotiator.on("error", ({error, issuer}) => {
-    if (error.name === "POPUP_BLOCKED") {
-      setRetryButton("Popup blocked");
-    } else if (error.name === "USER_ABORT") {
-      setRetryButton("Action aborted");
-    } else {
-      console.log(error);
-      setRetryButton("An error occurred loading tokens");
+  const applyTokenOffers = (tokens) => {
+    if (tokens.length > 0) {
+      setFreeShuttle(true);
     }
-  });
+  }
 
-  // async example of initial hotel data loaded from source
-  const getRoomTypesData = () => {
-    return mockRoomData;
-  };
+  useEffect(() => {
+    negotiator.on("tokens-selected", ({ selectedTokens, selectedIssuerKeys }) => {
+      let tokens = [];
+      selectedIssuerKeys.map((issuerKey) => {
+        tokens.push(...selectedTokens[issuerKey].tokens)
+      })
+      setTokens(tokens);
+      applyTokenOffers(tokens);
+    });
+    negotiator.on("token-proof", (result) => {
+      if (result.error) {
+        alert("Authentication could not be completed.");
+      };
+      setTokenProofData({ proof: result.issuers });
+      setDiscount({ value: 5 });
+    });
+    negotiator.on("error", ({ error, issuer }) => {
+      if (error.name === "POPUP_BLOCKED") {
+        setRetryButton("Popup blocked");
+      } else if (error.name === "USER_ABORT") {
+        setRetryButton("Action aborted");
+      } else {
+        console.log(error);
+        setRetryButton("An error occurred loading tokens");
+      }
+    });
+  }, []);
 
-  // When a ticket is present and user applies it, the discount will be shown
   const applyDiscountTicket = async (ticket, roomType) => {
-    // tickets selected, but owner is not yet authenticated.
     let updatedTicketSelection = [];
     if (selectedPendingTokenInstances?.length) {
       let wasMatch = false;
       selectedPendingTokenInstances?.forEach((storedTicket) => {
-        // add tickets that were not a match back in place.
         if (storedTicket.tokenId === ticket.tokenId) {
           wasMatch = true;
         }
@@ -153,38 +86,19 @@ function App() {
   };
 
   const applyDiscount = async () => {
-    if (selectedPendingTokenInstances?.length) {
-      if (selectedPendingTokenInstances.length === 1) {
-        window.negotiator.authenticate({
-          issuer: config.collectionID,
-          unsignedToken: selectedPendingTokenInstances[0]
-        });
-      } else {
-        const multiInput = selectedPendingTokenInstances.map(
-          (unsignedToken) => {
-            return {
-              issuer: config.collectionID,
-              unsignedToken
-            };
-          }
-        );
-        window.negotiator.authenticate(multiInput);
-      }
+    if (!selectedPendingTokenInstances) {
+      setDiscount({ value: undefined });
     } else {
-      setDiscount({
-        value: undefined,
-        tokenInstance: []
-      });
+      negotiator.authenticate(selectedPendingTokenInstances);
     }
   };
 
-  // This is the example at which the hotel would begin a hotel room booking transaction.
   const book = async (formData) => {
     const checkoutEndPoint =
       "https://raw.githubusercontent.com/TokenScript/token-negotiator-examples/main/mock-backend-payment-process-request.json?";
     const params = {
       tokenProof: JSON.stringify(tokenProofData),
-      bookingData: {formData}
+      bookingData: { formData }
     };
     fetch(checkoutEndPoint + new URLSearchParams(params)).then((_data) => {
       if (
@@ -203,10 +117,8 @@ function App() {
   };
 
   useEffect(() => {
-    // assign room data to react local state
-    setRoomTypesData(getRoomTypesData());
-    //
-    window.negotiator.negotiate();
+    setRoomTypesData(mockRoomData);
+    negotiator.negotiate();
   }, []);
 
   return (
@@ -216,7 +128,7 @@ function App() {
         <TokenNotificationCard
           tokensNumber={tokens.length}
           refreshTokens={() => {
-            window.negotiator.negotiate(null, false, true);
+            negotiator.negotiate(null, false, true);
           }}
         />
       </div>
@@ -240,7 +152,7 @@ function App() {
       {freeShuttle && (
         <div>
           <Typography
-            style={{padding: "20px"}}
+            style={{ padding: "20px" }}
             className="applyDiscountCopyContainer"
             gutterBottom
             variant="body2"
@@ -252,15 +164,15 @@ function App() {
         </div>
       )}
       {retryButton && (
-        <div style={{color: "#f50057", textAlign: "center"}}>
+        <div style={{ color: "#f50057", textAlign: "center" }}>
           <Typography gutterBottom variant="body2" component="h4">
             {retryButton}
           </Typography>
           <Button
-            style={{background: "#fff8f8"}}
+            style={{ background: "#fff8f8" }}
             onClick={() => {
               setRetryButton("");
-              window.negotiator.negotiate();
+              negotiator.negotiate();
             }}
           >
             Retry

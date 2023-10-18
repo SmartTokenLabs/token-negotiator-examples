@@ -15,11 +15,10 @@ import styles from "./banner.module.scss";
 //	Brand Connector Demo / UI / Components / Banner
 //
 
+export default function Banner({ className, theme, image, headline, text, overlayImage, children, onClick, selectedTokens, authTokens, imageDimensions = [100, 100], imagePosition = "50% 50%" }) {
+	const [claimed, setClaimed] = useState(false);
 
-export default function Banner({ className, theme, image, headline, text, overlayImage, children, onClick, selectedTokens, authTokens, imageDimensions = [ 100, 100 ], imagePosition = "50% 50%" }) {
-	const [ claimed, setClaimed ] = useState( false );
-
-	const [ imageW, imageH ] = imageDimensions;
+	const [imageW, imageH] = imageDimensions;
 
 	const handleOnClick = async () => {
 		// TODO: Actually pass the tokens through component
@@ -30,48 +29,47 @@ export default function Banner({ className, theme, image, headline, text, overla
 				issuer,
 				unsignedToken: selectedTokens[issuer].tokens[0],
 				options: { useRedirect: true }
-				//unsignedToken: {name:"some token", desc: "a really cool token"}
 			});
-			setClaimed( true );
-		} catch (e){
+			setClaimed(true); // Client side demonstration. Reach out to us at STL for full stack application implementation details.
+		} catch (e) {
 			alert(e.message);
 			return;
 		}
 
-		if ( onClick ) onClick();
+		if (onClick) onClick();
 	}
 
 	return (
-		<div className={ clsx( styles[ 'c-banner' ], className, { [ `-t-${ theme }` ]:theme } ) }>
-			{ image && (
-				<div className={ styles[ 'c-banner_bg' ] }>
-					<Image src={ image } width={ imageW } height={ imageH } objectFit="cover" objectPosition={ imagePosition } layout="fill" />
+		<div className={clsx(styles['c-banner'], className, { [`-t-${theme}`]: theme })}>
+			{image && (
+				<div className={styles['c-banner_bg']}>
+					<Image src={image} width={imageW} height={imageH} objectFit="cover" objectPosition={imagePosition} layout="fill" />
 				</div>
 			)}
-			<Tag className={ clsx( styles[ 'c-banner_tag' ], 'f9 -f-caps -f-medium -style-square' ) }>NFT Exclusive</Tag>
-			{ children ? (
+			<Tag className={clsx(styles['c-banner_tag'], 'f9 -f-caps -f-medium -style-square')}>NFT Exclusive</Tag>
+			{children ? (
 				children
 			) : (
-				<div className={ clsx( styles[ 'c-banner_content' ], 'grid -g-cols-2' ) }>
+				<div className={clsx(styles['c-banner_content'], 'grid -g-cols-2')}>
 					<div>
 						<div className="-g-max-4">
-							{ headline && (
+							{headline && (
 								typeof headline !== 'string' ? (
 									headline
 								) : (
-									<h2 className="f4 -f-extra-bold">{ headline }</h2>
+									<h2 className="f4 -f-extra-bold">{headline}</h2>
 								)
 							)}
 						</div>
 						<div className="-g-max-3">
-							{ text && <p className="f7 -mt0 -mb1">{ text }</p> }
+							{text && <p className="f7 -mt0 -mb1">{text}</p>}
 						</div>
-						<div className={ styles[ 'c-banner_actions' ] }>
-							<Button className="-mt1" onClick={ handleOnClick }>{ claimed ? 'Success!' : 'Claim Now' }</Button>
+						<div className={styles['c-banner_actions']}>
+							<Button className="-mt1" onClick={handleOnClick}>{claimed ? 'Success!' : 'Claim Now'}</Button>
 						</div>
 					</div>
-					<div className={ styles[ 'c-banner_overlay' ] }>
-						<Image className={ styles[ 'c-banner_overlay-image' ] } src={ overlayImage } />
+					<div className={styles['c-banner_overlay']}>
+						<Image className={styles['c-banner_overlay-image']} src={overlayImage} />
 					</div>
 				</div>
 			)}

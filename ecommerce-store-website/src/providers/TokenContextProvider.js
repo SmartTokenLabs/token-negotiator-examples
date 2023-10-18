@@ -5,7 +5,7 @@ import React, {
   useMemo,
   useRef
 } from "react";
-import {chainMap} from "src/base/utils/network";
+import { chainMap } from "src/base/utils/network";
 import {
   sendTokensSelectedEvent,
   sendTokenProofEvent,
@@ -115,9 +115,9 @@ const TokenContextProvider = (props) => {
       setNegotiator(newNegotiator);
       window.negotiator = newNegotiator;
 
-      newNegotiator.on("tokens-selected", (tokens) => {
-        if (agreeToStatsValue.current) sendTokensSelectedEvent(tokens);
-        setTokens({...tokens.selectedTokens});
+      newNegotiator.on("tokens-selected", ({ selectedTokens, selectedIssuers }) => {
+        if (agreeToStatsValue.current) sendTokensSelectedEvent(selectedTokens);
+        setTokens({ ...selectedTokens });
       });
 
       newNegotiator.on("token-proof", (result) => {
@@ -178,7 +178,7 @@ const TokenContextProvider = (props) => {
   async function switchChain(nChainId) {
     // Try automatically switching to Goerli
     await wallet.provider.send("wallet_switchEthereumChain", [
-      {chainId: "0x" + Number(nChainId).toString(16)}
+      { chainId: "0x" + Number(nChainId).toString(16) }
     ]);
     resetIssuers(nChainId);
   }
@@ -214,4 +214,4 @@ const TokenContextProvider = (props) => {
   );
 };
 
-export {TokenContextProvider, TokenContext};
+export { TokenContextProvider, TokenContext };
