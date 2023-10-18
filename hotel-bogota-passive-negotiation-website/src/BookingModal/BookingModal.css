@@ -11,11 +11,49 @@
 }
 .subTitle {
   font-size: 1rem;
-  margin: 0px;
-  padding-top: 0;
+  margin: 10px 0 18px 0 !important;
+  padding-top: 0 !important;
 }
+
+.MuiDialogContent-root {
+  margin: 0 !important;
+}
+
+.discountAppliedContainer {
+  margin: 0px;
+  padding: 0px;
+  position: relative;
+  top: 37px;
+  text-align: center;
+  height: 100px;
+}
+.discountTicketContainer, .discountAppliedContainer {
+  max-height: 272px;
+  animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 .smallCopy {
+  font-weight: 500;
+  text-align: center;
   font-size: 0.8rem;
+}
+
+.applyDiscount {
+  margin: 10px 0 1px 0 !important;
+  width: 100%;
+}
+
+.divider {
+  height: 1px;
+  width: 100%;
+  margin: 15px 0 15px 0;
+  background-color: #949494;
 }
 
 .ticketContainer {

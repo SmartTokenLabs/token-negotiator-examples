@@ -24,7 +24,7 @@ export function sendWalletConnectedEvent({
   });
 }
 
-export function sendTokensSelectedEvent({ selectedTokens }) {
+export function sendTokensSelectedEvent(selectedTokens) {
   const eventProperties = Object.fromEntries(
     Object.entries(selectedTokens).map(([collectionId, { tokens }]) => [
       collectionId,
@@ -45,10 +45,10 @@ export function sendTokenProofEvent({
   const eventProperties = error
     ? { error }
     : {
-        address,
-        messageToSign,
-        signature,
-      };
+      address,
+      messageToSign,
+      signature,
+    };
 
   analyticsClient.event({
     name: 'token-proof',
