@@ -1,7 +1,9 @@
 import React, { createContext, useState, useEffect } from "react";
 import { Client } from "@tokenscript/token-negotiator";
+import "./token-negotiator-style-overrides.css";
 import configs from "../../multiTokenConfig.json";
 import { updateTokenConfig } from "../../environment";
+import { Main } from './token-negotiator-view-overrides/Main'
 
 const TokenContext = createContext({
   tokens: [],
@@ -64,7 +66,13 @@ class TokenNegotiatorInstance extends React.Component {
         issuerHeading: "Get discount with Ticket",
         repeatAction: "try again",
         theme: "light",
-        position: "bottom-right"
+        position: "bottom-right",
+        viewOverrides: {
+          "main": {
+            component: Main,
+            options: { viewTransition: "slide-in-bottom" }
+          }
+        }
       },
       offChainRedirectMode: redirectMode
     });
