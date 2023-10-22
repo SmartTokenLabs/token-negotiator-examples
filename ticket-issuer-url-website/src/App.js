@@ -1,19 +1,19 @@
-import React, {useState, useEffect} from "react";
-import {Client} from "@tokenscript/token-negotiator";
+import React, { useState, useEffect } from "react";
+import { Client } from "@tokenscript/token-negotiator";
 import Token from "./components/Token";
 import "./App.css";
 import config from "../../tokenConfig.json";
-import {updateTokenConfig} from "../../environment";
-import {Ticket} from "@tokenscript/attestation/dist/Ticket";
-import {KeyPair} from "@tokenscript/attestation/dist/libs/KeyPair";
+import { updateTokenConfig } from "../../environment";
+import { Ticket } from "@tokenscript/attestation/dist/Ticket";
+import { KeyPair } from "@tokenscript/attestation/dist/libs/KeyPair";
 import {
   base64toBase64Url,
   hexStringToBase64Url
 } from "@tokenscript/attestation/dist/libs/utils";
-import {MenuItem, Select, TextField} from "@material-ui/core";
-import {ethers} from "ethers";
-import {EasTicketAttestation} from "@tokenscript/attestation/dist/eas/EasTicketAttestation";
-import {AttestationCrypto} from "@tokenscript/attestation";
+import { MenuItem, Select, TextField } from "@material-ui/core";
+import { ethers } from "ethers";
+import { EasTicketAttestation } from "@tokenscript/attestation/dist/eas/EasTicketAttestation";
+import { AttestationCrypto } from "@tokenscript/attestation";
 
 const mockTicketData = [
   {
@@ -47,10 +47,10 @@ export const EAS_CONFIG = {
 
 const EAS_TICKET_SCHEMA = {
   fields: [
-    {name: "devconId", type: "string"},
-    {name: "ticketIdString", type: "string"},
-    {name: "ticketClass", type: "uint8"},
-    {name: "commitment", type: "bytes", isCommitment: true}
+    { name: "devconId", type: "string" },
+    { name: "ticketIdString", type: "string" },
+    { name: "ticketClass", type: "uint8" },
+    { name: "commitment", type: "bytes", isCommitment: true }
   ]
 };
 
@@ -78,23 +78,21 @@ function App() {
     offChainRedirectMode: redirectMode
   });
 
-  window.negotiator.on("tokens-selected", (issuerTokens) => {
+  window.negotiator.on("tokens-selected", ({ selectedTokens, selectedIssuerKeys }) => {
     let tokens = [];
-    tokenIssuers.forEach((issuer) => {
-      if (issuerTokens.selectedTokens[issuer.collectionID].tokens) {
-        tokens.push(...issuerTokens.selectedTokens[issuer.collectionID].tokens);
+    selectedIssuerKeys.forEach((issuer) => {
+      if (selectedTokens[issuer].tokens) {
+        tokens.push(...selectedTokens[issuer].tokens);
       }
     });
-    setTimeout(() => {
-      setTokens(tokens);
-    }, 0);
+    setTokens(tokens);
   });
 
   useEffect(() => {
     window.negotiator.negotiate();
   }, []);
 
-  window.negotiator.on("error", ({error, issuer}) => {
+  window.negotiator.on("error", ({ error, issuer }) => {
     if (error.name === "POPUP_BLOCKED") {
       setRetryButton("Popup blocked");
     } else {
@@ -167,7 +165,7 @@ function App() {
     };
   };
 
-  const openTicketInIframe = async ({event, ticketId, ticketClass}) => {
+  const openTicketInIframe = async ({ event, ticketId, ticketClass }) => {
     event.preventDefault();
 
     if (!document.getElementById("form")[1].checkValidity()) {
@@ -227,10 +225,10 @@ function App() {
             </div>
           )}
           <div>
-            {retryButton && <h5 style={{color: "red"}}>{retryButton}</h5>}
+            {retryButton && <h5 style={{ color: "red" }}>{retryButton}</h5>}
             <button
               className="makeTicket"
-              style={{backgroundColor: "#f58b77"}}
+              style={{ backgroundColor: "#f58b77" }}
               onClick={() => {
                 setRetryButton("");
                 window.negotiator.negotiate(null, false, true);
@@ -243,11 +241,11 @@ function App() {
       </div>
       <p className="flexCenter">Generate ticket:</p>
       <form id={"form"}>
-        <div className="flexCenter" style={{margin: "20px"}}>
+        <div className="flexCenter" style={{ margin: "20px" }}>
           <Select
             label={"Format:"}
             id={"type"}
-            style={{display: "block", width: "200px"}}
+            style={{ display: "block", width: "200px" }}
             required={true}
             value={ticketType}
             onChange={(evt) => setTicketType(evt.target.value)}
@@ -256,11 +254,11 @@ function App() {
             <MenuItem value={"eas"}>EAS</MenuItem>
           </Select>
         </div>
-        <div className="flexCenter" style={{margin: "20px"}}>
+        <div className="flexCenter" style={{ margin: "20px" }}>
           <TextField
             label={"Email:"}
             id={"email"}
-            style={{display: "block"}}
+            style={{ display: "block" }}
             required
           />
         </div>
