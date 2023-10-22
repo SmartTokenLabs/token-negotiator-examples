@@ -116,7 +116,8 @@ function App() {
 
       const attestationManager = new EasTicketAttestation(EAS_TICKET_SCHEMA, {
         EASconfig: EAS_CONFIG,
-        signer: wallet
+        signer: wallet,
+        offChainVersion: 0
       });
 
       await attestationManager.createEasAttestation(
@@ -125,8 +126,7 @@ function App() {
           ticketIdString: ticketId,
           ticketClass: ticketClass,
           commitment: email
-        },
-        null
+        }
       );
 
       ticketSecret = attestationManager.getEasJson().secret;

@@ -59,6 +59,7 @@ app.get("/user-balance", cors(corsOptions), async (request, response) => {
   const output = await tokenNegotiatorServer.socios.getFungibleTokenBalance(
     request.cookies["tn-oauth2-access-token-socios"]
   );
+  console.log('get user balance', output.toString());
   response.json(output);
 });
 
@@ -66,6 +67,7 @@ app.get("/user-nfts", cors(corsOptions), async (request, response) => {
   const output = await tokenNegotiatorServer.socios.getNonFungibleTokens(
     request.cookies["tn-oauth2-access-token-socios"]
   );
+  console.log('get user nfts', output.toString());
   response.json(output);
 });
 
@@ -74,6 +76,7 @@ app.post("/user-logout", cors(corsOptions), async (request, response) => {
     process.env.SOCIOS_AUTH_KEY,
     request.cookies["tn-oauth2-access-token-socios"]
   );
+  console.log('user was logged out', output.toString());
   response.json(output);
 });
 
