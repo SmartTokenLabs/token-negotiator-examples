@@ -20,9 +20,9 @@ export class Main extends AbstractView {
       this.render()
     })
 
-    this.client.on('tokens-selected', ({ selectedTokenKeys, selectedTokens }) => {
+    this.client.on('tokens-selected', ({ selectedIssuerKeys, selectedTokens }) => {
       let tokenLength = 0;
-      selectedTokenKeys.forEach(issuer => {
+      selectedIssuerKeys.forEach(issuer => {
         tokenLength += selectedTokens[issuer].tokens.length;
       });
     })
@@ -327,7 +327,6 @@ export class Main extends AbstractView {
     let tokens = []
     tokenData?.map((t, i) => {
       let isSelected = false
-      // TODO Define a constant value that can be checked regardless of which issuer token to speed up this check.
       tokenStore.getSelectedTokens()[issuer]?.tokens.map((st) => {
         if (JSON.stringify(t) === JSON.stringify(st)) isSelected = true
       })

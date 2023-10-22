@@ -1,3 +1,5 @@
+/* re-theme token negotiator directly. Alternatively, you can provide you own entire style sheet. */
+
 .overlay-tn .overlay-content-tn {
   height: 412px !important;
 }
@@ -9,7 +11,6 @@
 .overlay-tn.light-tn .overlay-content-tn {
   border-top: 3px #303052 solid !important;
 }
-
 
 .overlay-tn.light-tn .overlay-content-tn .token-tn .title-tn, .overlay-tn.light-tn .overlay-content-tn .headline-tn {
   font-weight: 400 !important;

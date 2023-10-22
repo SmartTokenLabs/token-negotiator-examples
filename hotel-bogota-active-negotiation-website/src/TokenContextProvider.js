@@ -26,7 +26,12 @@ const TokenContextProvider = (props) => {
     negotiator.on("tokens-selected", ({ selectedTokens }) => {
       setTokens({ ...selectedTokens });
     });
-
+    negotiator.on("page-redirecting", ({ collectionId, tokenOrigin }) => {
+      console.log('page redirecting: ', collectionId, tokenOrigin);
+    });
+    negotiator.on("user-cancel", ({ eventType }) => {
+      console.log('eventType: ', eventType);
+    });
     negotiator.on("token-proof", (result) => {
       if (result.error) return;
       if (result.issuers) setProof(result);
