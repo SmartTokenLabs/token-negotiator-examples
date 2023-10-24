@@ -1,0 +1,7 @@
+node_modules
+build
+dist
+
+# local development library
+src/src
+src/dist

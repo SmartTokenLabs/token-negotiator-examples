@@ -5,7 +5,7 @@
       "title": "Devcon",
       "image": "https://raw.githubusercontent.com/TokenScript/token-negotiator/main/mock-images/devcon.svg",
       "tokenOrigin": "http://localhost:3002/",
-      "attestationOrigin": "https://test.attestation.id/",
+      "attestationOrigin": "https://attestation-foxgem.vercel.app/",
       "base64senderPublicKeys": {
          "6": "MIIBMzCB7AYHKoZIzj0CATCB4AIBATAsBgcqhkjOPQEBAiEA/////////////////////////////////////v///C8wRAQgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHBEEEeb5mfvncu6xVoGKVzocLBwKb/NstzijZWfKBWxb4F5hIOtp3JqPEZV2k+/wOEQio/Re0SKaFVBmcR9CP+xDUuAIhAP////////////////////66rtzmr0igO7/SXozQNkFBAgEBA0IABGMxHraqggr2keTXszIcchTjYjH5WXpDaBOYgXva82mKcGnKgGRORXSmcjWN2suUCMkLQj3UNlZCFWF10wIrrlw="
       },
@@ -19,9 +19,9 @@
       "tokenName": "Devcon6",
       "collectionID": "eeDevconVi",
       "title": "Devcon VI Ticket Attestation",
-      "image" : "https://devcon-vi.attest.tickets/img/nft_bg.png",
+      "image": "https://devcon-vi.attest.tickets/img/nft_bg.png",
       "tokenOrigin": "https://devcon-vi.attest.tickets/outlet.html",
-      "attestationOrigin": "https://test.attestation.id/",
+      "attestationOrigin": "https://attestation-foxgem.vercel.app/",
       "tokenUrlName": "ticket",
       "cryptoVerify": "https://form.smarttokenlabs.com",
       "tokenSecretName": "secret",
@@ -55,7 +55,7 @@
       "title": "Edcon",
       "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMSMZD26jgBM_da7b_0NfT7JZgyDk7rdk6o4iAVh4E12dV9LK-h0thJ_SdRWWptz1EYlk&usqp=CAU",
       "tokenOrigin": "http://localhost:3002/",
-      "attestationOrigin": "https://test.attestation.id/",
+      "attestationOrigin": "https://attestation-foxgem.vercel.app/",
       "base64senderPublicKeys": {
          "6": "MIIBMzCB7AYHKoZIzj0CATCB4AIBATAsBgcqhkjOPQEBAiEA/////////////////////////////////////v///C8wRAQgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHBEEEeb5mfvncu6xVoGKVzocLBwKb/NstzijZWfKBWxb4F5hIOtp3JqPEZV2k+/wOEQio/Re0SKaFVBmcR9CP+xDUuAIhAP////////////////////66rtzmr0igO7/SXozQNkFBAgEBA0IABAjUvEi8UYyC+0rSFu+IwRBos/DEC6YMJV+eCnoYOC4nZU7uayKDJmBxVnmTOSwaM4+gufLbeqqxuovyF5gI3TQ="
       },
@@ -67,7 +67,7 @@
       "title": "Devconnect",
       "image": "https://pbs.twimg.com/profile_images/1653427962350370816/GiJ0Wh-h_400x400.jpg",
       "tokenOrigin": "http://localhost:3002/",
-      "attestationOrigin": "https://test.attestation.id/",
+      "attestationOrigin": "https://attestation-foxgem.vercel.app/",
       "base64senderPublicKeys": {
          "7": "MIIBMzCB7AYHKoZIzj0CATCB4AIBATAsBgcqhkjOPQEBAiEA/////////////////////////////////////v///C8wRAQgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHBEEEeb5mfvncu6xVoGKVzocLBwKb/NstzijZWfKBWxb4F5hIOtp3JqPEZV2k+/wOEQio/Re0SKaFVBmcR9CP+xDUuAIhAP////////////////////66rtzmr0igO7/SXozQNkFBAgEBA0IABAjUvEi8UYyC+0rSFu+IwRBos/DEC6YMJV+eCnoYOC4nZU7uayKDJmBxVnmTOSwaM4+gufLbeqqxuovyF5gI3TQ="
       },
@@ -79,10 +79,12 @@
       "title": "Custom token",
       "image": "https://pbs.twimg.com/profile_images/1653427962350370816/GiJ0Wh-h_400x400.jpg",
       "tokenOrigin": "http://localhost:3002/",
-      "attestationOrigin": "https://test.attestation.id/",
+      "attestationOrigin": "https://attestation-foxgem.vercel.app/",
       "eas": {
          "schemaUid": "0x9dbdfc814762e2f356a87843ea3a0ef969c47bea0d70ee8c4a3a2f29c8c330dd",
-         "idFields": ["tokenId"],
+         "idFields": [
+            "tokenId"
+         ],
          "fields": [
             {
                "name": "tokenId",

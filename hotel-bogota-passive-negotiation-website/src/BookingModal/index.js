@@ -1,4 +1,4 @@
-import React, {useEffect, useReducer} from "react";
+import React, { useEffect, useReducer } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -26,7 +26,7 @@ export default function BookingModal({
 
   // Form state.
   const [formInput, setFormInput] = useReducer(
-    (state, newState) => ({...state, ...newState}),
+    (state, newState) => ({ ...state, ...newState }),
     {
       reference: "Beeple",
       cardNo: "00000000000",
@@ -39,7 +39,7 @@ export default function BookingModal({
   const handleInput = (evt) => {
     const name = evt.target.name;
     const newValue = evt.target.value;
-    setFormInput({[name]: newValue});
+    setFormInput({ [name]: newValue });
   };
 
   // Simple validation check.
@@ -50,7 +50,7 @@ export default function BookingModal({
   // handle form submission.
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    book({formInput, roomType});
+    book({ formInput, roomType });
   };
 
   // Open Modal
@@ -91,23 +91,24 @@ export default function BookingModal({
           <DialogTitle className="title" disableTypography={true}>
             {roomType}
           </DialogTitle>
-          <DialogTitle className="subTitle" disableTypography={true}>
-            {viewPrice} COP per night.{" "}
-            {discount.value ? `(${discount.value}% discount)` : ""}
+          <DialogTitle disableTypography={true}>
+            {viewPrice} COP per night
           </DialogTitle>
           <DialogContent>
+            <div className="divider"></div>
             <form onSubmit={handleSubmit}>
               <div
                 style={{
                   border: "1px solid darkcyan",
+                  marginTop: "27px",
                   padding: "7px 12px",
                   fontSize: "14px",
                   display: "flex",
                   justifyContent: "space-between"
                 }}
               >
-                <div style={{textAlign: "left"}}>check in 01/08/2021</div>
-                <div style={{textAlign: "left"}}>check out 15/08/2021</div>
+                <div style={{ textAlign: "left" }}>check in 01/08/2021</div>
+                <div style={{ textAlign: "left" }}>check out 15/08/2021</div>
               </div>
               <div
                 style={{
@@ -121,35 +122,43 @@ export default function BookingModal({
               >
                 <div>Total {viewPrice * 14} COP</div>
               </div>
-              <div>
-                {tokens.length > 0 && (
-                  <p className="smallCopy">
-                    Select ticket(s) and apply discount:
-                  </p>
-                )}
-              </div>
-              <div className="ticketWrapper">
-                {tokens?.map((token, index) => (
-                  <div key={index}>
-                    <TokenCard
-                      applyDiscountTicket={(token) => {
-                        applyDiscountTicket(token, roomType);
-                      }}
-                      applyDiscount={applyDiscount}
-                      tokenInstance={token}
-                      discount={discount}
-                      selectedPendingTokenInstances={
-                        selectedPendingTokenInstances
-                      }
-                    />
+              {discount.value &&
+                <DialogTitle className="discountAppliedContainer" disableTypography={true}>
+                  {discount.value ? `🎉 ${discount.value}% discount has been applied to your hotel booking 🎉` : ""}
+                </DialogTitle>
+              }
+              {!discount.value &&
+                <div className="discountTicketContainer">
+                  <div style={{ paddingTop: "20px" }}>
+                    {tokens.length > 0 && (
+                      <p className="smallCopy">
+                        select token(s) to apply discount:
+                      </p>
+                    )}
                   </div>
-                ))}
-              </div>
-              <div style={{display: "flex", justifyContent: "center"}}>
-                <Button onClick={applyDiscount} color="primary">
-                  Apply Discount
-                </Button>
-              </div>
+                  <div className="ticketWrapper">
+                    {tokens?.map((token, index) => (
+                      <div key={index}>
+                        <TokenCard
+                          applyDiscountTicket={(token) => {
+                            applyDiscountTicket(token, roomType);
+                          }}
+                          applyDiscount={applyDiscount}
+                          tokenInstance={token}
+                          discount={discount}
+                          selectedPendingTokenInstances={
+                            selectedPendingTokenInstances
+                          }
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  <Button className="applyDiscount" disabled={!selectedPendingTokenInstances.length} onClick={applyDiscount} color="primary" variant="contained">
+                    Apply Discount
+                  </Button>
+                </div>
+              }
+              <div className="divider"></div>
               <TextField
                 id="booking-name"
                 label="Reference name"
@@ -212,12 +221,12 @@ export default function BookingModal({
                 }}
               >
                 <div
-                  style={{color: "grey", fontSize: "12px", marginRight: "5px"}}
+                  style={{ color: "grey", fontSize: "12px", marginRight: "5px" }}
                 >
                   cards accepted
                 </div>
                 <img
-                  style={{width: "100px", height: "24px"}}
+                  style={{ width: "100px", height: "24px" }}
                   src="./cards-accepted-demo.png"
                 ></img>
               </div>

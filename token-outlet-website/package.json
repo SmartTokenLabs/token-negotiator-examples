@@ -4,7 +4,7 @@
   "description": "outlet for tokens.",
   "main": "index.js",
   "dependencies": {
-    "@tokenscript/token-negotiator": "^3.0.0",
+    "@tokenscript/token-negotiator": "3.2.0",
     "asn1js": "^2.0.26",
     "pvutils": "^1.0.17",
     "tsc": "^2.0.4"
