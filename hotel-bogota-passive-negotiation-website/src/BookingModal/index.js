@@ -23,6 +23,7 @@ export default function BookingModal({
 }) {
   // Modal State (open boolean)
   const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
 
   // Form state.
   const [formInput, setFormInput] = useReducer(
@@ -74,7 +75,12 @@ export default function BookingModal({
       localStorage.removeItem("booking-room-type");
       setOpen(true);
     }
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
   }, [discount]);
+
+
 
   return (
     <div>
@@ -127,15 +133,17 @@ export default function BookingModal({
                   {discount.value ? `🎉 ${discount.value}% discount has been applied to your hotel booking 🎉` : ""}
                 </DialogTitle>
               }
-              {!discount.value &&
+              {!discount.value && loading === false &&
+                <div style={{ paddingTop: "20px" }}>
+                  {tokens.length > 0 && (
+                    <p className="smallCopy">
+                      select token(s) to apply discount:
+                    </p>
+                  )}
+                </div>
+              }
+              {!discount.value && loading === false &&
                 <div className="discountTicketContainer">
-                  <div style={{ paddingTop: "20px" }}>
-                    {tokens.length > 0 && (
-                      <p className="smallCopy">
-                        select token(s) to apply discount:
-                      </p>
-                    )}
-                  </div>
                   <div className="ticketWrapper">
                     {tokens?.map((token, index) => (
                       <div key={index}>
@@ -153,10 +161,12 @@ export default function BookingModal({
                       </div>
                     ))}
                   </div>
-                  <Button className="applyDiscount" disabled={!selectedPendingTokenInstances.length} onClick={applyDiscount} color="primary" variant="contained">
-                    Apply Discount
-                  </Button>
                 </div>
+              }
+              {!discount.value && loading === false &&
+                <Button className="applyDiscount" disabled={!selectedPendingTokenInstances.length} onClick={applyDiscount} color="primary" variant="contained">
+                  Apply Discount
+                </Button>
               }
               <div className="divider"></div>
               <TextField
