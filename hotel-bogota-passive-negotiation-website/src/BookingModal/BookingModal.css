@@ -26,16 +26,26 @@
   top: 37px;
   text-align: center;
   height: 100px;
+  max-height: 272px;
+  animation: fadeInSlide 1s;
+  overflow: scroll;
 }
-.discountTicketContainer, .discountAppliedContainer {
+.discountTicketContainer {
   max-height: 272px;
   animation: fadeIn 1s;
+  overflow: scroll;
 }
 
 @keyframes fadeIn {
   0% { opacity: 0; }
-  50% { opacity: 0; }
+  50% { opacity: 0;  }
   100% { opacity: 1; }
+}
+
+@keyframes fadeInSlide {
+  0% { opacity: 0; transform: translateY(-100%); }
+  50% { opacity: 0;  }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 .smallCopy {
@@ -57,6 +67,10 @@
 }
 
 .ticketContainer {
+  transform: scale(0.9);
+}
+
+.ticketWrapper {
   transform: scale(0.9);
 }
 
